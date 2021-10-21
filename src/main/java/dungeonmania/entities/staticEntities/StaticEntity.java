@@ -20,4 +20,7 @@ public abstract class StaticEntity implements IEntity{
     public EntityResponse getInfo() {
         return new EntityResponse(id, type, position, false);
     }
+    public Position getPosition() {
+        return position;
+    }
 }

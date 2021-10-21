@@ -28,26 +28,6 @@ public class CharacterEntity implements IEntity  {
     public Position getPosition() {
         return position;
     }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
     
     
 }

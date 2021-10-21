@@ -10,7 +10,11 @@ public class ControllerExceptionTest {
     @Test
     public void testInvalidDungeonName() {
         DungeonManiaController dungeonManiaController = new DungeonManiaController();
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> dungeonManiaController.newGame("invalid name", "Standard"));
+=======
+        assertThrows(IllegalArgumentException.class, () -> dungeonManiaController.newGame("invalid name", "standard"));
+>>>>>>> dbf8f62 (testing exceptions for new game)
     } 
     @Test
     public void testInvalidMode() {
@@ -20,6 +24,10 @@ public class ControllerExceptionTest {
     @Test
     public void testSimple() {
         DungeonManiaController dungeonManiaController = new DungeonManiaController();
+<<<<<<< HEAD
         assertDoesNotThrow(() -> dungeonManiaController.newGame("maze", "Standard"));
+=======
+        assertDoesNotThrow(() -> dungeonManiaController.newGame("maze", "standard"));
+>>>>>>> dbf8f62 (testing exceptions for new game)
     }
 }

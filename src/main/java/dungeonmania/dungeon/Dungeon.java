@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import dungeonmania.entities.*;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.response.models.*;
+import dungeonmania.util.Direction;
 
 public class Dungeon {
     private int height;
@@ -20,6 +21,7 @@ public class Dungeon {
     private String gameMode;
     private String id;
     private String dungeonName;
+    private CharacterEntity player;
 
     public Dungeon(int height, int width, JsonArray entities, JsonObject goalConditions, String gameMode, String id, String dungeonName) {
         this.height = height;
@@ -35,8 +37,18 @@ public class Dungeon {
                 case "wall":
                     this.entities.add(new WallEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), type));
                     break;
+                case "player":
+                    this.player = new CharacterEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), type);
             }
         }
+    }
+
+    public Dungeon(int height, int width, ArrayList<IEntity> entities, String gameMode, CharacterEntity player) {
+        this.height = height;
+        this.width = width;
+        this.entities = entities;
+        this.gameMode = gameMode;
+        this.player = player;
     }
 
     public DungeonResponse getInfo() {
@@ -44,6 +56,11 @@ public class Dungeon {
         for (IEntity entity : entities) {
             entitiesInfo.add(entity.getInfo());
         }
+        entitiesInfo.add(player.getInfo());
         return new DungeonResponse(id, dungeonName, entitiesInfo, new ArrayList<>(), new ArrayList<>(), "");
+    }
+
+    public void tick(Direction direction) {
+        player.move(direction);
     }
 }

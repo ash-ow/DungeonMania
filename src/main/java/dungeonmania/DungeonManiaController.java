@@ -47,16 +47,19 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse newGame(String dungeonName, String gameMode) throws IllegalArgumentException {
+        if (!dungeons().contains(dungeonName)) {
+            throw new IllegalArgumentException("dungeonName does not exist");
+        }
+        if (!gameMode.equals("standard") && !gameMode.equals("peaceful") && !gameMode.equals("hard")) {
+            throw new IllegalArgumentException("invalid gameMode");
+        }
         try {
             String dungeonJson = FileLoader.loadResourceFile("dungeons/" + dungeonName + ".json");
             JsonObject jsonObject = new Gson().fromJson(dungeonJson, JsonObject.class);
-            System.out.println(jsonObject.getAsJsonObject("goal-condition").get("goal"));
-
             this.dungeon = new Dungeon(jsonObject.get("height").getAsInt(), jsonObject.get("width").getAsInt(), jsonObject.get("entities").getAsJsonArray(), 
                                         jsonObject.getAsJsonObject("goal-condition"), gameMode, "some-random-id", dungeonName);
 
         } catch (IOException e) {
-            System.out.println("File doesnt exist");
         }
         return dungeon.getInfo();
     }

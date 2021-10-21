@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class DungeonManiaController {
     private Dungeon dungeon;
@@ -56,8 +57,11 @@ public class DungeonManiaController {
         try {
             String dungeonJson = FileLoader.loadResourceFile("dungeons/" + dungeonName + ".json");
             JsonObject jsonObject = new Gson().fromJson(dungeonJson, JsonObject.class);
+            String id = UUID.randomUUID().toString(); 
+            System.out.println(id);
+
             this.dungeon = new Dungeon(jsonObject.get("height").getAsInt(), jsonObject.get("width").getAsInt(), jsonObject.get("entities").getAsJsonArray(), 
-                                        jsonObject.getAsJsonObject("goal-condition"), gameMode, "some-random-id", dungeonName);
+                                        jsonObject.getAsJsonObject("goal-condition"), gameMode, id, dungeonName);
 
         } catch (IOException e) {
         }

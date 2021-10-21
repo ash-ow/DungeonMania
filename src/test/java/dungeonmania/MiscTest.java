@@ -1,5 +1,6 @@
 package dungeonmania;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -10,4 +11,10 @@ public class MiscTest {
         assertTrue(DungeonManiaController.dungeons().size() > 0);
         assertTrue(DungeonManiaController.dungeons().contains("maze"));
     }
+
+    @Test
+    public void testInvalidDungeonName() {
+        DungeonManiaController dungeonManiaController = new DungeonManiaController();
+        assertThrows(IllegalArgumentException.class, () -> dungeonManiaController.newGame("invalid name", "standard"));
+    }    
 }

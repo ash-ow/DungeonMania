@@ -20,7 +20,6 @@ public class CharacterEntity implements IEntity  {
         this.position = this.position.translateBy(direction);
     }
 
-    @Override
     public EntityResponse getInfo() {
         return new EntityResponse(id, type, position, true);
     }
@@ -29,5 +28,7 @@ public class CharacterEntity implements IEntity  {
         return position;
     }
     
-    
+    public boolean passable() {
+        return false;
+    }
 }

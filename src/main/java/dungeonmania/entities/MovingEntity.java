@@ -10,4 +10,7 @@ public class MovingEntity implements IEntity {
     public Position getPosition() {
         return null;
     }
+    public boolean passable() {
+        return true;
+    }
 }

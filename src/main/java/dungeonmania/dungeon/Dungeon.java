@@ -13,6 +13,7 @@ import dungeonmania.entities.*;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
+import dungeonmania.util.Position;
 
 public class Dungeon {
     private int height;
@@ -61,6 +62,12 @@ public class Dungeon {
     }
 
     public void tick(Direction direction) {
+        Position target = player.getPosition().translateBy(direction);
+        for (IEntity e : entities) {
+            if (e.getPosition().equals(target) && !e.passable()) {
+                return;
+            }
+        }
         player.move(direction);
     }
 }

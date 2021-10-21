@@ -1,9 +1,14 @@
 package dungeonmania;
 
+import dungeonmania.dungeon.Dungeon;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.FileLoader;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,6 +16,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DungeonManiaController {
+    private Dungeon dungeon;
+
     public DungeonManiaController() {
     }
 
@@ -40,7 +47,18 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse newGame(String dungeonName, String gameMode) throws IllegalArgumentException {
-        return null;
+        try {
+            String dungeonJson = FileLoader.loadResourceFile("dungeons/" + dungeonName + ".json");
+            JsonObject jsonObject = new Gson().fromJson(dungeonJson, JsonObject.class);
+            System.out.println(jsonObject.getAsJsonObject("goal-condition").get("goal"));
+
+            this.dungeon = new Dungeon(jsonObject.get("height").getAsInt(), jsonObject.get("width").getAsInt(), jsonObject.get("entities").getAsJsonArray(), 
+                                        jsonObject.getAsJsonObject("goal-condition"), gameMode, "some-random-id", dungeonName);
+
+        } catch (IOException e) {
+            System.out.println("File doesnt exist");
+        }
+        return dungeon.getInfo();
     }
     
     public DungeonResponse saveGame(String name) throws IllegalArgumentException {

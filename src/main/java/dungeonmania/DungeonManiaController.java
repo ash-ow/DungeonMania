@@ -48,10 +48,11 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse newGame(String dungeonName, String gameMode) throws IllegalArgumentException {
+        System.out.println(gameMode);
         if (!dungeons().contains(dungeonName)) {
             throw new IllegalArgumentException("dungeonName does not exist");
         }
-        if (!gameMode.equals("standard") && !gameMode.equals("peaceful") && !gameMode.equals("hard")) {
+        if (!gameMode.equals("Standard") && !gameMode.equals("Peaceful") && !gameMode.equals("Hard")) {
             throw new IllegalArgumentException("invalid gameMode");
         }
         try {

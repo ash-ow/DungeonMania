@@ -23,10 +23,7 @@ public abstract class StaticEntity implements IEntity{
     public Position getPosition() {
         return position;
     }
-<<<<<<< HEAD
     public boolean passable() {
         return false;
     }
-=======
->>>>>>> dbf8f62 (testing exceptions for new game)
 }

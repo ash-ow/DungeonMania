@@ -10,7 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.*;
-import dungeonmania.entities.staticEntities.WallEntity;
+import dungeonmania.entities.staticEntities.*;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -36,10 +36,20 @@ public class Dungeon {
             String type = entityObj.get("type").getAsString();
             switch (type) {
                 case "wall":
-                    this.entities.add(new WallEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), type));
+                    this.entities.add(new WallEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
+                    break;
+                case "exit":
+                    this.entities.add(new ExitEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
+                    break;
+                case "switch":
+                    this.entities.add(new SwitchEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
+                    break;
+                case "boulder":
+                    this.entities.add(new BoulderEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 1, type));
                     break;
                 case "player":
                     this.player = new CharacterEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), type);
+                    break;
             }
         }
     }

@@ -1,7 +1,5 @@
 package dungeonmania.entities.staticEntities;
 
-import org.w3c.dom.Entity;
-
 import dungeonmania.util.Position;
 
 import dungeonmania.entities.*;
@@ -12,9 +10,10 @@ public abstract class StaticEntity implements IEntity{
     private Position position;
     private String id;
     private String type;
-    public StaticEntity(int x, int y, String type) {
-        this.id = "entity-" + x + "-" + y;
-        this.position = new Position(x, y);
+
+    public StaticEntity(int x, int y, int layer, String type) {
+        this.id = "Entities-" + x + "-" + y + "-" + layer;
+        this.position = new Position(x, y, layer);
         this.type = type;
     }
     public EntityResponse getInfo() {

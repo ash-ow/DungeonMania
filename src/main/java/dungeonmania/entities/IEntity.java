@@ -1,7 +1,5 @@
 package dungeonmania.entities;
 
-import javax.swing.text.html.parser.Entity;
-
 import dungeonmania.response.models.*;
 import dungeonmania.util.Position;
 

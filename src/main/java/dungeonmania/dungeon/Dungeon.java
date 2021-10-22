@@ -41,6 +41,12 @@ public class Dungeon {
                 case "exit":
                     this.entities.add(new ExitEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
                     break;
+                case "Door":
+                    this.entities.add(new DoorEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
+                    break;
+                case "portal":
+                    this.entities.add(new PortalEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
+                    break;
                 case "switch":
                     this.entities.add(new SwitchEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
                     break;

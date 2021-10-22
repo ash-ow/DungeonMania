@@ -1,10 +1,12 @@
-package dungeonmania.entities;
+package dungeonmania.entities.staticEntity;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.ArrayList;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.entities.CharacterEntity;
+import dungeonmania.entities.IEntity;
 import dungeonmania.entities.staticEntities.BoulderEntity;
 import dungeonmania.entities.staticEntities.SwitchEntity;
 import org.junit.jupiter.api.Test;

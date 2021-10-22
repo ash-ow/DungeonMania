@@ -29,7 +29,7 @@
         "switch": "images/tileset/floor_switch.png",
         "invincibility_potion": "images/tileset/items/potion_10.png",
         "sword": "images/tileset/items/sword_silver.png",
-        "door": "/images/tileset/walls/wooden/door_locked_silver.png",
+        "door": "images/tileset/walls/wooden/door_locked_silver.png",
         "portal": "images/tileset/entities/portal_00.png",
         "zombie_spawner": "images/tileset/entities/zombie_spawner.png"
     }

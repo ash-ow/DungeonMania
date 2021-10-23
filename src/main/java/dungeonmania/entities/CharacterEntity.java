@@ -11,7 +11,7 @@ public class CharacterEntity implements IEntity  {
     
 
     public CharacterEntity(int x, int y, String type) {
-        this.id = "entity-" + x + "-" + y;
+        this.id = "player-" + x + "-" + y;
         this.position = new Position(x, y);
         this.type = type;
     }

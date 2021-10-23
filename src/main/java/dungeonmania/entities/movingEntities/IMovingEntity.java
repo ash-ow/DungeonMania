@@ -1,15 +1,10 @@
-package dungeonmania.entities;
+package dungeonmania.entities.movingEntities;
 
+import dungeonmania.entities.IEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public interface IMovingEntity extends IEntity {
-    /**
-     * Sets entity position. This field is readonly because we
-     *  only want to initialise it in the constructor
-     *  and change it by moving
-     * @param position - the new position we move to
-     */
     void setPosition(Position position);
 
     /**

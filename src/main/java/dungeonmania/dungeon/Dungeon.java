@@ -10,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.*;
+import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;

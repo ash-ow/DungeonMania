@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.DungeonManiaController;
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;

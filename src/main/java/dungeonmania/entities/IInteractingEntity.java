@@ -1,5 +1,7 @@
 package dungeonmania.entities;
 
+import dungeonmania.entities.movingEntities.CharacterEntity;
+
 public interface IInteractingEntity extends IEntity {
     /**
      * Stub for the function which will be called in the Dungeon

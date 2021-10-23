@@ -9,7 +9,10 @@ public class CharacterEntity extends Entity implements IMovingEntity {
     }
 
     public CharacterEntity(int x, int y, String type) {
-        super(x, y, type);
+        super(
+            "character-" + x + "-" + y, // id
+            x, y, type
+        );
     }
 
     @Override

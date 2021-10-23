@@ -9,13 +9,14 @@ import dungeonmania.util.Position;
 
 public class SpiderEntity extends Entity implements IInteractingEntity {
     public SpiderEntity() {
-        super("SpyderType");
-        //TODO Auto-generated constructor stub
+        super("SpiderType");
     }
 
     public SpiderEntity(int x, int y, String type) {
-        super(x, y, type);
-        //TODO Auto-generated constructor stub
+        super(
+            "spider-" + x + "-" + y, // id
+            x, y, type
+        );
     }
 
     @Override

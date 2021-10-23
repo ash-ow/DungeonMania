@@ -1,0 +1,40 @@
+
+{
+    "width": 8,
+    "height": 9,
+    "entities": [
+      {
+        "x": 1,
+        "y": 4,
+        "type": "switch"
+      },
+      {
+        "x": 1,
+        "y": 5,
+        "type": "wall"
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "type": "player"
+      },
+      {
+        "x": 1,
+        "y": 4,
+        "type": "boulder"
+      },
+      {
+        "x": 3,
+        "y": 6,
+        "type": "door"
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "type": "portal"
+      }
+    ],
+    "goal-condition": {
+      "goal": "boulders"
+    }
+  }

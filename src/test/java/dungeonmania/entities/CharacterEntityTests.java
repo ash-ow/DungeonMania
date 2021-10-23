@@ -36,7 +36,7 @@ public class CharacterEntityTests implements IMovingEntityTest {
     @Test
     public void testSimpleRestriction() {
         CharacterEntity player = new CharacterEntity(0, 4, "player");
-        WallEntity wall = new WallEntity(0, 3, "wall");
+        WallEntity wall = new WallEntity(0, 3, 0, "wall");
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(wall);
         Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player);

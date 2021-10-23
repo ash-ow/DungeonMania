@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class IMovingEntityTest {
+public interface IMovingEntityTest {
     @Test
     public void TestMove() {
         IMovingEntity character = new CharacterEntity();
@@ -28,7 +28,7 @@ public class IMovingEntityTest {
         assertPositionEquals(character.getPosition(), 0, 0);
     }
 
-    private void assertPositionEquals(Position position, int x, int y) {
+    public default void assertPositionEquals(Position position, int x, int y) {
         assertEquals(new Position(x, y, 0), position);
     }
 }

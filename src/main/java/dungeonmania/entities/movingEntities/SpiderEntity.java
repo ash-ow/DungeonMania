@@ -37,7 +37,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity {
 
     @Override
     public void interactWithPlayer(CharacterEntity character) {
-        // TODO Add proper interaction here
+        System.out.println("Oh shit that's a spider!");
         character.move(Direction.DOWN);
     }
 }

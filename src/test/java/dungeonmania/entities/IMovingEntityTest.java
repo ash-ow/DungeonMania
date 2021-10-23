@@ -1,20 +1,15 @@
 package dungeonmania.entities;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.ArrayList;
-
-import org.junit.jupiter.api.Test;
-
-import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
-import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class CharacterEntityTests implements IMovingEntityTest {
-    
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
+public interface IMovingEntityTest {
     @Test
     public void TestMove() {
         IMovingEntity character = new CharacterEntity();
@@ -33,15 +28,7 @@ public class CharacterEntityTests implements IMovingEntityTest {
         assertPositionEquals(character.getPosition(), 0, 0);
     }
 
-    @Test
-    public void testSimpleRestriction() {
-        CharacterEntity player = new CharacterEntity(0, 4, "player");
-        WallEntity wall = new WallEntity(0, 3, 0, "wall");
-        ArrayList<IEntity> entities = new ArrayList<>();
-        entities.add(wall);
-        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player);
-        assertEquals(player.getPosition(), new Position(0, 4));
-        dungeon.tick(Direction.UP);
-        assertEquals(player.getPosition(), new Position(0, 4));
+    public default void assertPositionEquals(Position position, int x, int y) {
+        assertEquals(new Position(x, y, 0), position);
     }
 }

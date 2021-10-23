@@ -1,8 +1,6 @@
 package dungeonmania.dungeon;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.JsonArray;
@@ -10,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.*;
+import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.staticEntities.*;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;

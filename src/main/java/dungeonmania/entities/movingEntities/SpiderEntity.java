@@ -26,8 +26,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity {
 
     @Override
     public Position getPosition() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.position;
     }
 
     @Override

@@ -29,6 +29,6 @@ public class IMovingEntityTest {
     }
 
     private void assertPositionEquals(Position position, int x, int y) {
-        assertEquals(position, new Position(x, y, 0));
+        assertEquals(new Position(x, y, 0), position);
     }
 }

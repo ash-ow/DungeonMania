@@ -3,13 +3,16 @@ package dungeonmania.entities;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Position;
 
-public class Character implements IMovingEntity  {
+public class CharacterEntity implements IMovingEntity  {
     private Position position;
     private String id;
     private String type;
     
+    public CharacterEntity() {
+        new CharacterEntity(0, 0, "CharacterType");
+    }
 
-    public Character(int x, int y, String type) {
+    public CharacterEntity(int x, int y, String type) {
         this.id = "entity-" + x + "-" + y;
         this.position = new Position(x, y);
         this.type = type;

@@ -1,5 +1,8 @@
-package dungeonmania.entities;
+package dungeonmania.entities.movingEntityTests;
 
+import dungeonmania.entities.IEntityTests;
+import dungeonmania.entities.IInteractingEntityTest;
+import dungeonmania.entities.IMovingEntityTest;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.movingEntities.SpiderEntity;
@@ -10,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class SpiderTest implements IInteractingEntityTest {
+public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTest, IEntityTests {
     @Override
     @Test
     public void TestInteraction() {
@@ -23,5 +26,29 @@ public class SpiderTest implements IInteractingEntityTest {
         // TODO This is only testing the stub in the SpiderEntity class - not the actual interaction between the two
         spider.interactWithPlayer(character); // TODO I think this should be run automatically when positions are equal
         assertEquals(new Position(0,1), character.getPosition());
+    }
+
+    @Override
+    @Test
+    public void TestMove() {
+        // TODO The spider is supposed to loop around its spawn location - this test does not reflect that
+        IMovingEntity spider = new SpiderEntity();
+        assertPositionEquals(spider.getPosition(), 0, 0);
+        
+        spider.move(Direction.DOWN);
+        assertPositionEquals(spider.getPosition(), 0, 1);
+    }
+
+    @Override
+    @Test
+    public void TestEntityResponseInfo() {
+        IMovingEntity spider = new SpiderEntity();
+        assertEntityResponseInfoEquals(
+            spider,
+            "spider-0-0",
+            "spider",
+            new Position(0,0),
+            false
+        );
     }
 }

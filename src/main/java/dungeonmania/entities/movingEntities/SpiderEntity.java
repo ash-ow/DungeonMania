@@ -7,7 +7,7 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
-public class SpiderEntity extends Entity implements IInteractingEntity {
+public class SpiderEntity extends Entity implements IInteractingEntity, IMovingEntity {
     public SpiderEntity() {
         super("SpiderType");
     }
@@ -29,5 +29,10 @@ public class SpiderEntity extends Entity implements IInteractingEntity {
     public void interactWithPlayer(CharacterEntity character) {
         System.out.println("Oh shit that's a spider!");
         character.move(Direction.DOWN);
+    }
+
+    @Override
+    public void setPosition(Position position) {
+        this.position = position;
     }
 }

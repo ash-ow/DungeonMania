@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
-import dungeonmania.entities.CharacterEntity;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.staticEntities.BoulderEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;

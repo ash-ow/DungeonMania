@@ -25,7 +25,6 @@ public class BoulderEntityTests {
         dungeon.tick(Direction.DOWN);
         assertEquals(player.getPosition(), new Position(0, 1));
         assertEquals(boulder.getPosition(), new Position(0, 2, 0));
-
         dungeon.tick(Direction.RIGHT);
         assertEquals(player.getPosition(), new Position(1, 1));
         assertEquals(boulder.getPosition(), new Position(0, 2, 0));

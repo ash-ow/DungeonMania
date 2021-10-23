@@ -78,11 +78,30 @@ public class Dungeon {
 
     public void tick(Direction direction) {
         Position target = player.getPosition().translateBy(direction);
-        for (IEntity e : entities) {
-            if (e.getPosition().equals(target) && !e.passable()) {
-                return;
+        IEntity targetEntity = entityFromPosition(target);
+        
+        if ((targetEntity != null) && targetEntity.getClass().toString().contains("Boulder")) {
+            Position boulderTarget = targetEntity.getPosition().translateBy(direction);
+            if ((entityFromPosition(boulderTarget) == null) || entityFromPosition(boulderTarget).passable()) {
+                BoulderEntity boulder = (BoulderEntity) targetEntity;
+                boulder.setPosition(boulderTarget);
             }
         }
-        player.move(direction);
+
+        targetEntity = entityFromPosition(target);
+
+        if ((targetEntity == null) || targetEntity.passable()) {
+            player.move(direction);
+        }
+    }
+
+    public IEntity entityFromPosition(Position position) {
+        for (IEntity e : entities) {
+            if (e.getPosition().equals(position)) {
+                return e;
+            }
+        }
+        return null;
     }
 }
+ 

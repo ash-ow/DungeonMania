@@ -22,6 +22,9 @@ public abstract class StaticEntity implements IEntity{
     public Position getPosition() {
         return position;
     }
+    public void setPosition(Position position) {
+        this.position = position;
+    }
     public boolean passable() {
         return true;
     }

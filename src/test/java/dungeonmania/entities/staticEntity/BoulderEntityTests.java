@@ -10,6 +10,7 @@ import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.staticEntities.BoulderEntity;
+import dungeonmania.entities.staticEntities.SwitchEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -42,5 +43,19 @@ public class BoulderEntityTests {
         dungeon.tick(Direction.DOWN);
         assertEquals(player.getPosition(), new Position(0, 0));
         assertEquals(boulder.getPosition(), new Position(0, 1, 0));
+    }
+
+    @Test
+    public void testBoulderOverlay() {
+        CharacterEntity player = new CharacterEntity(0, 0, "player");
+        BoulderEntity boulder = new BoulderEntity(0, 1, 1, "boulder");
+        SwitchEntity switches = new SwitchEntity(0, 1, 0, "switch");
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(boulder);
+        entities.add(switches);
+        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player);
+        dungeon.tick(Direction.DOWN);
+        assertEquals(player.getPosition(), new Position(0, 1));
+        assertEquals(boulder.getPosition(), new Position(0, 2, 0));
     }
 }

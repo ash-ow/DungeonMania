@@ -9,7 +9,7 @@ public class CharacterEntity implements IMovingEntity  {
     private String type;
     
     public CharacterEntity() {
-        new CharacterEntity(0, 0, "CharacterType");
+        this(0, 0, "CharacterType");
     }
 
     public CharacterEntity(int x, int y, String type) {

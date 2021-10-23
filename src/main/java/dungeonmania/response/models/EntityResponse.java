@@ -30,4 +30,31 @@ public final class EntityResponse {
     public final Position getPosition() {
         return position;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {return true;}
+        if (!(o instanceof EntityResponse)) {return false;}
+        EntityResponse c = (EntityResponse)o;
+        return this.getId().equals(c.getId()) &&
+            this.getType().equals(c.getType()) &&
+            this.getPosition().equals(c.getPosition()) &&
+            this.isInteractable() == c.isInteractable();
+    }
+
+    @Override
+    public String toString() {
+        var formatString = "EntityResponseInfo\n" +
+            "---------------------------------\n" +
+            "Id             | %s\n" +
+            "Type           | %s\n" +
+            "Position       | %s\n" +
+            "isInteractable | %s";
+        return String.format(formatString,
+            this.getId(),
+            this.getType(),
+            this.getPosition(),
+            this.isInteractable()
+        );
+    }
 }

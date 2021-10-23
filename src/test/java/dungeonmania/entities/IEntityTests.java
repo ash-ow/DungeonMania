@@ -11,6 +11,11 @@ public interface IEntityTests {
     public default void assertEntityResponseInfoEquals(IEntity actualEntity, String id, String type, Position position, boolean isInteractable) {
         EntityResponse expected = new EntityResponse(id, type, position, isInteractable);
         EntityResponse actual = actualEntity.getInfo();
-        assertEquals(expected, actual);
+        assertEquals(
+            expected, actual,
+            "The following EntityResponses were not equal\n\n" +
+            "Expected:\n" + expected.toString() +
+            "\nActual:\n" + actual.toString()
+        );
     }
 }

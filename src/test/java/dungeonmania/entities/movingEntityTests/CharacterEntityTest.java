@@ -19,7 +19,7 @@ import dungeonmania.util.Position;
 public class CharacterEntityTest implements IMovingEntityTest, IEntityTests {
     @Test
     public void TestMove() {
-        IMovingEntity character = new CharacterEntity();
+        CharacterEntity character = new CharacterEntity();
         assertPositionEquals(character.getPosition(), 0, 0);
         
         character.move(Direction.DOWN);
@@ -56,7 +56,7 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests {
             "character-0-4",
             "player",
             new Position(0,4),
-            false
+            true
         );
     }
 }

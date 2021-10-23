@@ -32,7 +32,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Test
     public void TestMove() {
         // TODO The zombie toast is supposed to move randomly - this test does not reflect that
-        IMovingEntity zombie = new ZombieToastEntity();
+        ZombieToastEntity zombie = new ZombieToastEntity();
         assertPositionEquals(zombie.getPosition(), 0, 0);
         
         zombie.move(Direction.DOWN);
@@ -42,13 +42,13 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        IMovingEntity zombie = new ZombieToastEntity();
+        ZombieToastEntity zombie = new ZombieToastEntity(0, 0, "ZombieToastType");
         assertEntityResponseInfoEquals(
             zombie,
-            "zombieToast-0-4",
-            "zombieToast",
+            "zombieToast-0-0",
+            "ZombieToastType",
             new Position(0,0),
-            false
+            true
         );
     }
 }

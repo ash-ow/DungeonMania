@@ -10,6 +10,7 @@ import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.staticEntities.BoulderEntity;
+import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -24,5 +25,23 @@ public class BoulderEntityTests {
         dungeon.tick(Direction.DOWN);
         assertEquals(player.getPosition(), new Position(0, 1));
         assertEquals(boulder.getPosition(), new Position(0, 2, 0));
+
+        dungeon.tick(Direction.RIGHT);
+        assertEquals(player.getPosition(), new Position(1, 1));
+        assertEquals(boulder.getPosition(), new Position(0, 2, 0));
+    }
+
+    @Test
+    public void testBoulderBlocked() {
+        CharacterEntity player = new CharacterEntity(0, 0, "player");
+        BoulderEntity boulder = new BoulderEntity(0, 1, 0, "boulder");
+        WallEntity wall = new WallEntity(0, 2, 0, "wall");
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(boulder);
+        entities.add(wall);
+        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player);
+        dungeon.tick(Direction.DOWN);
+        assertEquals(player.getPosition(), new Position(0, 0));
+        assertEquals(boulder.getPosition(), new Position(0, 1, 0));
     }
 }

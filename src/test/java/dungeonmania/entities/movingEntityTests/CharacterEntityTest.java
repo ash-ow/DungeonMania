@@ -1,4 +1,4 @@
-package dungeonmania.entities;
+package dungeonmania.entities.movingEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -7,17 +7,19 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.entities.IEntity;
+import dungeonmania.entities.IEntityTests;
+import dungeonmania.entities.IMovingEntityTest;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class CharacterEntityTests implements IMovingEntityTest {
-    
+public class CharacterEntityTest implements IMovingEntityTest, IEntityTests {
     @Test
     public void TestMove() {
-        IMovingEntity character = new CharacterEntity();
+        CharacterEntity character = new CharacterEntity();
         assertPositionEquals(character.getPosition(), 0, 0);
         
         character.move(Direction.DOWN);
@@ -43,5 +45,18 @@ public class CharacterEntityTests implements IMovingEntityTest {
         assertEquals(player.getPosition(), new Position(0, 4));
         dungeon.tick(Direction.UP);
         assertEquals(player.getPosition(), new Position(0, 4));
+    }
+
+    @Override
+    @Test
+    public void TestEntityResponseInfo() {
+        CharacterEntity player = new CharacterEntity(0, 4, "player");
+        assertEntityResponseInfoEquals(
+            player,
+            "character-0-4",
+            "player",
+            new Position(0,4),
+            true
+        );
     }
 }

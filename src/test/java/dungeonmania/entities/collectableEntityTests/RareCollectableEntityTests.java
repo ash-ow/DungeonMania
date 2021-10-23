@@ -1,4 +1,4 @@
-package dungeonmania.entities.collectableEntities;
+package dungeonmania.entities.collectableEntityTests;
 
 public class RareCollectableEntityTests extends CollectableEntityTests {
     

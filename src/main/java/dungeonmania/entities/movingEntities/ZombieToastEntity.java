@@ -2,19 +2,18 @@ package dungeonmania.entities.movingEntities;
 
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IInteractingEntity;
-import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
-public class SpiderEntity extends Entity implements IInteractingEntity, IMovingEntity {
-    public SpiderEntity() {
-        super("SpiderType");
+public class ZombieToastEntity extends Entity implements IInteractingEntity, IMovingEntity {
+    public ZombieToastEntity() {
+        super("ZombieToastType");
     }
 
-    public SpiderEntity(int x, int y, String type) {
+    public ZombieToastEntity(int x, int y, String type) {
         super(
-            "spider-" + x + "-" + y, // id
+            "zombieToast-" + x + "-" + y, // id
             x, y, type
         );
     }
@@ -27,7 +26,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
 
     @Override
     public void interactWithPlayer(CharacterEntity character) {
-        System.out.println("Oh shit that's a spider!");
+        System.out.println("zombie toast?? For real?");
         character.move(Direction.DOWN);
     }
 

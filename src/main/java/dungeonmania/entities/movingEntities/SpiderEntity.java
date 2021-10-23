@@ -3,12 +3,13 @@ package dungeonmania.entities.movingEntities;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.response.models.EntityResponse;
+import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
 public class SpiderEntity extends Entity implements IInteractingEntity {
     public SpiderEntity() {
-        super();
+        super("SpyderType");
         //TODO Auto-generated constructor stub
     }
 
@@ -37,8 +38,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity {
 
     @Override
     public void interactWithPlayer(CharacterEntity character) {
-        // TODO Auto-generated method stub
-        
+        // TODO Add proper interaction here
+        character.move(Direction.DOWN);
     }
-    
 }

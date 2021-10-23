@@ -33,27 +33,33 @@ public class Dungeon {
         for (JsonElement entityInfo : entities) {
             JsonObject entityObj = entityInfo.getAsJsonObject();
             String type = entityObj.get("type").getAsString();
+            Integer xAxis = entityObj.get("x").getAsInt();
+            Integer yAxis = entityObj.get("y").getAsInt();
+            Integer layer = 0;
+            if (entityFromPosition(new Position(xAxis, yAxis)) != null) {
+                layer = 1;
+            }
             switch (type) {
                 case "wall":
-                    this.entities.add(new WallEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
+                    this.entities.add(new WallEntity(xAxis, yAxis, layer, type));
                     break;
                 case "exit":
-                    this.entities.add(new ExitEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
+                    this.entities.add(new ExitEntity(xAxis, yAxis, layer, type));
                     break;
                 case "door":
-                    this.entities.add(new DoorEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
+                    this.entities.add(new DoorEntity(xAxis, yAxis, layer, type));
                     break;
                 case "portal":
-                    this.entities.add(new PortalEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
+                    this.entities.add(new PortalEntity(xAxis, yAxis, layer, type));
                     break;
                 case "switch":
-                    this.entities.add(new SwitchEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
+                    this.entities.add(new SwitchEntity(xAxis, yAxis, layer, type));
                     break;
                 case "boulder":
-                    this.entities.add(new BoulderEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 1, type));
+                    this.entities.add(new BoulderEntity(xAxis, yAxis, layer, type));
                     break;
                 case "player":
-                    this.player = new CharacterEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), type);
+                    this.player = new CharacterEntity(xAxis, yAxis, type);
                     break;
             }
         }
@@ -95,7 +101,7 @@ public class Dungeon {
         }
     }
 
-    public IEntity entityFromPosition(Position position) {
+    private IEntity entityFromPosition(Position position) {
         for (IEntity e : entities) {
             if (e.getPosition().equals(position)) {
                 return e;

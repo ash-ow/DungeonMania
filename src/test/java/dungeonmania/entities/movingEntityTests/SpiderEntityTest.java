@@ -42,7 +42,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        IMovingEntity spider = new SpiderEntity(0, 0, "SpiderType");
+        SpiderEntity spider = new SpiderEntity(0, 0, "SpiderType");
         assertEntityResponseInfoEquals(
             spider,
             "spider-0-0",

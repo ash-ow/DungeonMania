@@ -24,4 +24,12 @@ public class GoalsTest {
         assertEquals("exit", g.getGoals());
     }
 
+    @Test
+    public void testReqString() {
+        String jsonGoals = "{\"goal-condition\": { \"goal\": \"AND\", \"subgoals\": [{\"goal\": \"enemies\"}, {\"goal\": \"OR\", \"subgoals\": [{\"goal\": \"exit\"}, {\"goal\": \"treasure\"}]}]}";
+        JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
+        Goals g = new Goals(j);
+        assertEquals("(enemies && (exit || treasure))" , g.getGoals());
+    }
+
 }

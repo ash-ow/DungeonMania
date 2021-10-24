@@ -2,6 +2,7 @@ package dungeonmania.entities.collectableEntities.buildableEntities;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.HashMap;
 
 import dungeonmania.entities.Entity;
@@ -20,19 +21,23 @@ public abstract class BuildableEntity extends Entity implements ICollectableEnti
     
     public Map<ICollectableEntity, Integer> requiredComponents = new HashMap<ICollectableEntity, Integer>();
     public boolean isBuildable(List<ICollectableEntity> inventory) {
-        System.out.println("Required:");
         for (Map.Entry<ICollectableEntity, Integer> entry : requiredComponents.entrySet()) {
             ICollectableEntity component = entry.getKey();
             int quantity = entry.getValue();
-            System.out.println(" >" + quantity + "x " + component.getId());
+            if (numberOfComponentItemsInInventory(inventory, component) < quantity) {
+                System.out.println("Needs more " + component.getId());
+                return false;
+            }
         }
-
-        System.out.println("\nInventory:\n");
-        for (ICollectableEntity item : inventory) {
-            System.out.println(" >" + item.getId());
-        }
-        
         return true;
+    }
+
+    private int numberOfComponentItemsInInventory(List<ICollectableEntity> inventory, ICollectableEntity component) {
+        return inventory
+            .stream()
+            .filter(ent -> ent.getClass().equals(component.getClass()))
+            .collect(Collectors.toList())
+            .size();
     }
 
     protected abstract void initialiseRequiredComponents();

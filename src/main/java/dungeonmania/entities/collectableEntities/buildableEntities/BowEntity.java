@@ -1,5 +1,6 @@
 package dungeonmania.entities.collectableEntities.buildableEntities;
 
+import dungeonmania.entities.collectableEntities.Arrows;
 import dungeonmania.entities.collectableEntities.Wood;
 
 public class BowEntity extends BuildableEntity {
@@ -13,7 +14,8 @@ public class BowEntity extends BuildableEntity {
     
     @Override
     public void initialiseRequiredComponents() {
-        this.requiredComponents.put(new Wood(), 2);
+        this.requiredComponents.put(new Wood(), 1);
+        this.requiredComponents.put(new Arrows(), 3);
     }
 
     @Override

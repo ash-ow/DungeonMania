@@ -21,7 +21,7 @@ import dungeonmania.util.Position;
 
 public class ExitGoalTests implements IGoalTests {
     @Test
-    public void SimpleExitTest() {
+    public void SimpleGoalTest() {
         CharacterEntity player = new CharacterEntity(0, 4, "player");
         ExitEntity exit = new ExitEntity(0, 3, 0, "exit");
         ArrayList<IEntity> entities = new ArrayList<>();

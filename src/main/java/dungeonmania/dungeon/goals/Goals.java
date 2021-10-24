@@ -18,6 +18,8 @@ public class Goals {
     private HashMap<String, Boolean> goalsMap;
     private String reqString;
     private String frontEndString;
+    static String REQTYPE = "req";
+    static String FRONTTYPE = "front";
 
     public Goals(JsonObject goalConditions) {
         this.goalsMap = new HashMap<>();
@@ -26,67 +28,57 @@ public class Goals {
         this.frontEndString = frontEndStringBuilder(goalConditions);  
     }
 
+
     public String reqStringBuilder(JsonObject goalConditions) {
-        String reqString = "";
         String goal = goalConditions.get("goal").getAsString();
         if (goal.equals("AND")) {
-            JsonArray subGoals = goalConditions.getAsJsonArray("subgoals");
-            reqString += "(";
-            for (int i = 0; i < subGoals.size() - 1; i++) {
-                JsonObject goalObj = subGoals.get(i).getAsJsonObject();
-                reqString += reqStringBuilder(goalObj) + " && ";
-            }
-            JsonObject goalObj = subGoals.get(subGoals.size()-1).getAsJsonObject();
-            reqString += reqStringBuilder(goalObj) + ")";
+            return "(" + readSubGoals(" && ", goalConditions, REQTYPE) + ")";
         }
         else if (goal.equals("OR")) {
-            JsonArray subGoals = goalConditions.getAsJsonArray("subgoals");
-            reqString += "(";
-            for (int i = 0; i < subGoals.size() - 1; i++) {
-                JsonObject goalObj = subGoals.get(i).getAsJsonObject();
-                reqString += reqStringBuilder(goalObj) + " || ";
-            }
-            JsonObject goalObj = subGoals.get(subGoals.size()-1).getAsJsonObject();
-            reqString += reqStringBuilder(goalObj) + ")";
+            return "(" + readSubGoals(" || ", goalConditions, REQTYPE) + ")";
         } else {
-            reqString = goal;
             goalsMap.put(goal, false);
+            addGoal(goal);
+            return goal;
         }
-        return reqString;
     }
 
     public String frontEndStringBuilder(JsonObject goalConditions) {
-        String reqString = "";
         String goal = goalConditions.get("goal").getAsString();
         if (goal.equals("AND")) {
-            JsonArray subGoals = goalConditions.getAsJsonArray("subgoals");
-            for (int i = 0; i < subGoals.size() - 1; i++) {
-                JsonObject goalObj = subGoals.get(i).getAsJsonObject();
-                reqString += frontEndStringBuilder(goalObj) + " AND ";
-            }
-            JsonObject goalObj = subGoals.get(subGoals.size()-1).getAsJsonObject();
-            reqString += frontEndStringBuilder(goalObj);
+            return readSubGoals(" AND ", goalConditions, FRONTTYPE);
         }
         else if (goal.equals("OR")) {
-            JsonArray subGoals = goalConditions.getAsJsonArray("subgoals");
-            for (int i = 0; i < subGoals.size() - 1; i++) {
-                JsonObject goalObj = subGoals.get(i).getAsJsonObject();
-                reqString += frontEndStringBuilder(goalObj) + "/";
-            }
-            JsonObject goalObj = subGoals.get(subGoals.size()-1).getAsJsonObject();
-            reqString += frontEndStringBuilder(goalObj);
+            return readSubGoals("/", goalConditions, FRONTTYPE);
         } else {
-            reqString = ":" + goal;
-            goalsMap.put(goal, false);
-            addGoal(goal);
+            return ":" + goal;           
         }
+    }
+
+    public String readSubGoals(String input, JsonObject goalConditions, String type) {
+        JsonArray subGoals = goalConditions.getAsJsonArray("subgoals");
+        String reqString = "";
+        for (int i = 0; i < subGoals.size() - 1; i++) {
+            JsonObject goalObj = subGoals.get(i).getAsJsonObject();
+            if (type.equals("req")) {
+                reqString += reqStringBuilder(goalObj) + input;
+            } else {
+                reqString += frontEndStringBuilder(goalObj) + input;
+            }           
+        }
+        JsonObject goalObj = subGoals.get(subGoals.size()-1).getAsJsonObject();
+        if (type.equals("req")) {
+            reqString += reqStringBuilder(goalObj);
+        } else {
+            reqString += frontEndStringBuilder(goalObj);
+        } 
         return reqString;
     }
 
     public void addGoal(String goal) {
         switch (goal) {
             case "exit":
-                goals.add(new ExitGoal("exit"));
+                goals.add(new ExitGoal());
                 break;
             case "enemies":
                 goals.add(new DestroyGoal());
@@ -107,7 +99,7 @@ public class Goals {
     public String checkGoals(Dungeon dungeon) {
         System.out.println(reqString);
         for (IGoal goal : goals) {
-            goal.checkGoal(dungeon, goalsMap);
+            goalsMap.put(goal.getType(), goal.checkGoal(dungeon));
         }
         String boolParse = reqString;
         for (String key : goalsMap.keySet()) {
@@ -132,19 +124,5 @@ public class Goals {
 
     public String getFrontEndString() {
         return frontEndString;
-    }
-
-    public static void main(String[] args) {
-        String boolParse = "true && true";
-        ScriptEngineManager sem = new ScriptEngineManager();
-        ScriptEngine se = sem.getEngineByName("JavaScript");
-        try {
-            System.out.println(se.eval(boolParse));
-
-        } catch (ScriptException e) {
-
-            System.out.println("Invalid Expression");
-
-        }
     }
 }

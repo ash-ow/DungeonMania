@@ -9,5 +9,6 @@ import dungeonmania.dungeon.Dungeon;
 
 */
 public interface IGoal {
-    public void checkGoal(Dungeon dungeon, HashMap<String, Boolean> goalsMap);
+    public boolean checkGoal(Dungeon dungeon);
+    public String getType();
 }

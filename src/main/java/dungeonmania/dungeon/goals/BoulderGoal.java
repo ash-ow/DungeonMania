@@ -5,6 +5,17 @@ import java.util.HashMap;
 import dungeonmania.dungeon.Dungeon;
 
 public class BoulderGoal implements IGoal {
-    public void checkGoal(Dungeon dungeon, HashMap<String, Boolean> goalsMap) {
+    private String type;
+
+    public BoulderGoal() {
+        this.type = "boulders";
+    }
+
+    public boolean checkGoal(Dungeon dungeon) {
+        return false;
+    }
+    
+    public String getType() {
+        return type;
     }
 }

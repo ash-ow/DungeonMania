@@ -10,15 +10,24 @@ import dungeonmania.util.Position;
 
 public class ExitGoal implements IGoal {
     private String type;
-    public ExitGoal(String type) {
-        this.type = type;
+    public ExitGoal() {
+        this.type = "exit";
     }
 
-    public void checkGoal(Dungeon dungeon, HashMap<String, Boolean> goalsMap) {
+    public boolean checkGoal(Dungeon dungeon) {
         for (IEntity e : dungeon.getEntities()) {
-            if (e.getInfo().getType().equals("exit") && dungeon.getPlayer().isInSamePositionAs(e)) {
-                goalsMap.put(type, true);
+            if (exitPlayerCheck(dungeon, e)) {
+                return true;
             }
         }
+        return false;
+    }
+
+    public boolean exitPlayerCheck(Dungeon dungeon, IEntity entity) {
+        return entity.getInfo().getType().equals("exit") && dungeon.getPlayer().isInSamePositionAs(entity);
+    }
+
+    public String getType() {
+        return type;
     }
 }

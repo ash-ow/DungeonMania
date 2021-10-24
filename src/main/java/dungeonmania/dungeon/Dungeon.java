@@ -7,6 +7,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import dungeonmania.dungeon.goals.Goals;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.staticEntities.*;
@@ -22,6 +23,7 @@ public class Dungeon {
     private String id;
     private String dungeonName;
     private CharacterEntity player;
+    private Goals goals;
 
     public Dungeon(int height, int width, JsonArray entities, JsonObject goalConditions, String gameMode, String id, String dungeonName) {
         this.height = height;
@@ -57,6 +59,7 @@ public class Dungeon {
                     break;
             }
         }
+        this.goals = new Goals(goalConditions);
     }
 
     public Dungeon(int height, int width, ArrayList<IEntity> entities, String gameMode, CharacterEntity player) {

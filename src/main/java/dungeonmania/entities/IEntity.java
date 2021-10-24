@@ -4,6 +4,7 @@ import dungeonmania.response.models.*;
 import dungeonmania.util.Position;
 
 public interface IEntity {
+    public String getId();
     public EntityResponse getInfo();
     public Position getPosition();
     public boolean passable();

@@ -11,7 +11,7 @@ public abstract class StaticEntity implements IEntity{
     private String id;
     private String type;
 
-    public StaticEntity(int x, int y, int layer, String type) {
+    protected StaticEntity(int x, int y, int layer, String type) {
         this.id = "Entities-" + x + "-" + y + "-" + layer;
         this.position = new Position(x, y, layer);
         this.type = type;
@@ -27,5 +27,8 @@ public abstract class StaticEntity implements IEntity{
     }
     public boolean passable() {
         return true;
+    }
+    public String getId() {
+        return this.id;
     }
 }

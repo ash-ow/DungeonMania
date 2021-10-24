@@ -8,11 +8,11 @@ public abstract class Entity implements IEntity {
     private String id;
     private String type;
 
-    public Entity(String type) {
+    protected Entity(String type) {
         this(type, 0, 0, type);
     }
     
-    public Entity(String id, int x, int y, String type) {
+    protected Entity(String id, int x, int y, String type) {
         this.id = id;
         this.position = new Position(x, y);
         this.type = type;

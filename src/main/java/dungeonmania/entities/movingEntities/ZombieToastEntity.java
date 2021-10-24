@@ -6,7 +6,7 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
-public class ZombieToastEntity extends Entity implements IInteractingEntity, IMovingEntity {
+public class ZombieToastEntity extends Entity implements IInteractingEntity, IMovingEntity, IBattlingEntity {
     public ZombieToastEntity() {
         super("ZombieToastType");
     }
@@ -34,4 +34,28 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IMo
     public void setPosition(Position position) {
         this.position = position;
     }
+
+//region Description
+    private float health = 100;
+
+    @Override
+    public float getHealth() {
+        return this.health;
+    }
+
+    @Override
+    public void setHealth(float health) {
+        this.health = health;
+    }
+
+    public int getDamage() {
+        // TODO determine correct ZombieToast damage
+        return 3;
+    }
+
+    @Override
+    public void loseHealth(float enemyHealth, int enemyDamage) {
+        this.health -= ((enemyHealth * enemyDamage) / 5);
+    }
+//endregion
 }

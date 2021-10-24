@@ -6,5 +6,5 @@ package dungeonmania.dungeon.goals;
 
 */
 public interface IGoal {
-    public String getGoal();
+    //public String getGoal();
 }

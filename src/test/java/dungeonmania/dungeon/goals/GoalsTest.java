@@ -13,7 +13,7 @@ public class GoalsTest {
         String jsonGoals = "{\"goal-condition\": { \"goal\": \"AND\", \"subgoals\": [{\"goal\": \"enemies\"}, {\"goal\": \"treasure\"}]}}";
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
         Goals g = new Goals(j);
-        assertEquals("enemies treasure", g.getGoals());
+        assertEquals("(enemies && treasure)", g.getReqString());
     }
 
     @Test
@@ -21,15 +21,14 @@ public class GoalsTest {
         String jsonGoals = "{\"goal-condition\": { \"goal\": \"exit\"}}";
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
         Goals g = new Goals(j);
-        assertEquals("exit", g.getGoals());
+        assertEquals("exit", g.getReqString());
     }
 
     @Test
     public void testReqString() {
-        String jsonGoals = "{\"goal-condition\": { \"goal\": \"AND\", \"subgoals\": [{\"goal\": \"enemies\"}, {\"goal\": \"OR\", \"subgoals\": [{\"goal\": \"exit\"}, {\"goal\": \"treasure\"}]}]}";
+        String jsonGoals = "{\"goal-condition\": { \"goal\": \"AND\", \"subgoals\": [{\"goal\": \"enemies\"}, {\"goal\": \"OR\", \"subgoals\": [{\"goal\": \"exit\"}, {\"goal\": \"treasure\"}]}]}}";
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
         Goals g = new Goals(j);
-        assertEquals("(enemies && (exit || treasure))" , g.getGoals());
+        assertEquals("(enemies && (exit || treasure))" , g.getReqString());
     }
-
 }

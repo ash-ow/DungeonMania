@@ -14,15 +14,9 @@ public class Goals {
     private String frontEndString;
 
     public Goals(JsonObject goalConditions) {
-        String goal = goalConditions.get("goal").getAsString();
-
-
-        if (goal.equals("AND")) {
-            JsonArray subGoals = goalConditions.getAsJsonArray("subgoals");
-            for (JsonElement g : subGoals) {
-                JsonObject goalObj = g.getAsJsonObject();
-            }
-        }
+        JsonObject goals = goalConditions.getAsJsonObject("goal-condition");
+        this.goalsMap = new HashMap<>();
+        this.reqString = reqStringBuilder(goals);       
     }
 
     public String reqStringBuilder(JsonObject goalConditions) {
@@ -30,21 +24,45 @@ public class Goals {
         String goal = goalConditions.get("goal").getAsString();
         if (goal.equals("AND")) {
             JsonArray subGoals = goalConditions.getAsJsonArray("subgoals");
-            for (JsonElement g : subGoals) {
-                JsonObject goalObj = g.getAsJsonObject();
-                reqString += reqStringBuilder(goalObj);
+            reqString += "(";
+            for (int i = 0; i < subGoals.size() - 1; i++) {
+                JsonObject goalObj = subGoals.get(i).getAsJsonObject();
+                reqString += reqStringBuilder(goalObj) + " && ";
             }
+            JsonObject goalObj = subGoals.get(subGoals.size()-1).getAsJsonObject();
+            reqString += reqStringBuilder(goalObj) + ")";
+        }
+        else if (goal.equals("OR")) {
+            JsonArray subGoals = goalConditions.getAsJsonArray("subgoals");
+            reqString += "(";
+            for (int i = 0; i < subGoals.size() - 1; i++) {
+                JsonObject goalObj = subGoals.get(i).getAsJsonObject();
+                reqString += reqStringBuilder(goalObj) + " || ";
+            }
+            JsonObject goalObj = subGoals.get(subGoals.size()-1).getAsJsonObject();
+            reqString += reqStringBuilder(goalObj) + ")";
+        } else {
+            reqString = goal;
+            goalsMap.put(goal, false);
         }
         return reqString;
     }
 
-
-    public String getGoals() {
-        String goalReturn = "";
-        for (IGoal goal : goals) {
-            goalReturn += goal.getGoal();
+    public void addGoal(String goal) {
+        switch (goal) {
+            case "exit":
+                goals.add(new ExitGoal());
+                break;
+            case "enemies":
+                goals.add(new ExitGoal());
+                break;
+            case "boulders":
+                goals.add(new ExitGoal());
+                break;
+            case "treasure":
+                goals.add(new ExitGoal());
+                break;
         }
-        return goalReturn;
     }
 
     public void completeGoal(IGoal completed) {

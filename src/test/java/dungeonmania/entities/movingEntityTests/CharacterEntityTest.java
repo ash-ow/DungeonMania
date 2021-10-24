@@ -12,11 +12,12 @@ import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IMovingEntityTest;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
+import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class CharacterEntityTest implements IMovingEntityTest, IEntityTests {
+public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBattlingEntityTest {
     @Test
     public void TestMove() {
         CharacterEntity character = new CharacterEntity();
@@ -58,5 +59,33 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests {
             new Position(0,4),
             true
         );
+    }
+
+    @Test
+    public void TestBattle() {
+        CharacterEntity character = new CharacterEntity();
+        CharacterEntity character2 = new CharacterEntity();
+
+        assertEquals(100, character.getHealth());
+        assertEquals(100, character2.getHealth());
+
+        character2.Battle(character);
+
+        assertEquals(100, character.getHealth());
+        assertEquals(100, character2.getHealth());
+    }
+
+    @Test
+    public void TestDeath() {
+        CharacterEntity character = new CharacterEntity();
+        ZombieToastEntity zombie = new ZombieToastEntity();
+        
+        character.setHealth(2);
+        zombie.Battle(character);
+
+        assertEquals(-28, character.getHealth());
+        assertEquals(98.8, zombie.getHealth(), 0.1);
+
+        // TODO add assertions for character death
     }
 }

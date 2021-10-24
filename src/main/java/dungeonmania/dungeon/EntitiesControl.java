@@ -26,18 +26,11 @@ public class EntitiesControl {
     }
 
     public List<IEntity> entitiesFromPosition(Position position) {
-        // for (IEntity entity : this.entities) {
-            
-        // }
         return this.entities.stream().filter(entity -> entity.getPosition().equals(position)).collect(Collectors.toList());
     }
 
-    public IEntity entitiesContainsType(String type) {
-        return this.entities.stream().filter(entity -> entity.getInfo().getType().equals(type)).findAny().orElse(null);
-    }
-
-    public static IEntity entitiesContainsType(List<IEntity> entityList, String type) {
-        return entityList.stream().filter(entity -> entity.getInfo().getType().equals(type)).findAny().orElse(null);
+    public static IEntity entitiesContainsType(List<IEntity> entityList, Class<?> cls) {
+        return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findAny().orElse(null);
     }
 
     public static boolean entitiesUnpassable(List<IEntity> entityList) {

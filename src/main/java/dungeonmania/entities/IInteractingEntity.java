@@ -1,12 +1,7 @@
 package dungeonmania.entities;
 
-import java.util.List;
-
 import dungeonmania.dungeon.EntitiesControl;
-import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.util.Direction;
-import dungeonmania.util.Position;
 
 public interface IInteractingEntity extends IEntity {
     /**

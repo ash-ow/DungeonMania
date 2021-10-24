@@ -2,8 +2,6 @@ package dungeonmania.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -12,7 +10,6 @@ import com.google.gson.JsonObject;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.staticEntities.*;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
@@ -89,7 +86,7 @@ public class Dungeon {
     public void tick(Direction direction) {
         Position target = player.getPosition().translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.entitiesFromPosition(target);
-        IInteractingEntity boulder = (IInteractingEntity) EntitiesControl.entitiesContainsType(targetEntities, "boulder");
+        IInteractingEntity boulder = (IInteractingEntity) EntitiesControl.entitiesContainsType(targetEntities, BoulderEntity.class);
 
         if (boulder != null) {
             if (boulder.interactWithPlayer(entitiesControl, direction)) {

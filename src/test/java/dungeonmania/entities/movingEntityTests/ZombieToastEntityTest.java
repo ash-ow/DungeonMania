@@ -4,7 +4,6 @@ import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
 import dungeonmania.entities.IMovingEntityTest;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -13,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEntityTest, IEntityTests {
+public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEntityTest, IEntityTests, IBattlingEntityTest {
     @Override
     @Test
     public void TestInteraction() {
@@ -50,5 +49,33 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
             new Position(0,0),
             true
         );
+    }
+
+    @Test
+    public void TestBattle() {
+        CharacterEntity character = new CharacterEntity();
+        ZombieToastEntity zombie = new ZombieToastEntity();
+
+        assertEquals(100, character.getHealth());
+        assertEquals(100, zombie.getHealth());
+
+        zombie.Battle(character);
+
+        assertEquals(70, character.getHealth());
+        assertEquals(40, zombie.getHealth());
+    }
+
+    @Test
+    public void TestDeath() {
+        CharacterEntity character = new CharacterEntity();
+        ZombieToastEntity zombie = new ZombieToastEntity();
+        
+        zombie.setHealth(2);
+        zombie.Battle(character);
+
+        assertEquals(99.4, character.getHealth(), 0.1);
+        assertEquals(-58, zombie.getHealth());
+
+        // TODO add assertions for zombie death
     }
 }

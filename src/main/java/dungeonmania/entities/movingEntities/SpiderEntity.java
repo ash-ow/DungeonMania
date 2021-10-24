@@ -7,8 +7,6 @@ import dungeonmania.util.Position;
 
 
 public class SpiderEntity extends Entity implements IInteractingEntity, IMovingEntity, IBattlingEntity {
-    private float health;
-
     public SpiderEntity() {
         super("SpiderType");
     }
@@ -18,7 +16,6 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
             "spider-" + x + "-" + y, // id
             x, y, type
         );
-        this.health = 100;
     }
 
     @Override
@@ -38,6 +35,9 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
         this.position = position;
     }
 
+//region Description
+    private float health = 100;
+
     @Override
     public float getHealth() {
         return this.health;
@@ -47,4 +47,15 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
     public void setHealth(float health) {
         this.health = health;
     }
+
+    public int getDamage() {
+        // TODO determine correct Spider damage
+        return 2;
+    }
+
+    @Override
+    public void loseHealth(float enemyHealth, int enemyDamage) {
+        this.health -= ((enemyHealth * enemyDamage) / 5);
+    }
+//endregion
 }

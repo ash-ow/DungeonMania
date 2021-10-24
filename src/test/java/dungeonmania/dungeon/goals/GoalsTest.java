@@ -13,7 +13,7 @@ public class GoalsTest {
         String jsonGoals = "{\"goal-condition\": { \"goal\": \"AND\", \"subgoals\": [{\"goal\": \"enemies\"}, {\"goal\": \"treasure\"}]}}";
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
         Goals g = new Goals(j);
-        assertEquals("enemies AND treasure", g.getGoals());
+        assertEquals("enemies treasure", g.getGoals());
     }
 
     @Test

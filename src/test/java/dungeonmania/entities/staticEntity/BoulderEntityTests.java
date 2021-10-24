@@ -58,4 +58,18 @@ public class BoulderEntityTests {
         assertEquals(player.getPosition(), new Position(0, 1));
         assertEquals(boulder.getPosition(), new Position(0, 2, 0));
     }
+
+    @Test
+    public void testBoulderPushToSwitch() {
+        CharacterEntity player = new CharacterEntity(0, 0, "player");
+        BoulderEntity boulder = new BoulderEntity(0, 1, 1, "boulder");
+        SwitchEntity switches = new SwitchEntity(0, 2, 0, "switch");
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(boulder);
+        entities.add(switches);
+        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player);
+        dungeon.tick(Direction.DOWN);
+        assertEquals(player.getPosition(), new Position(0, 1));
+        assertEquals(boulder.getPosition(), new Position(0, 2, 0));
+    }
 }

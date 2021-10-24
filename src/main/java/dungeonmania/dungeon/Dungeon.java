@@ -89,14 +89,15 @@ public class Dungeon {
         if (entitiesContainsType(targetEntities, "boulder") != null) {
             BoulderEntity boulder = (BoulderEntity) entitiesContainsType(targetEntities, "boulder");
             Position boulderTarget = target.translateBy(direction);
-            if ((entitiesFromPosition(boulderTarget).size() == 0) || entitiesPassable(targetEntities)) {
+            List<IEntity> BoulderTargetEntities = entitiesFromPosition(boulderTarget);
+            if ((entitiesFromPosition(boulderTarget).size() == 0) || !entitiesUnPassable(BoulderTargetEntities)) {
                 boulder.move(direction);
             }
         }
 
         targetEntities = entitiesFromPosition(target);
 
-        if ((targetEntities.size() == 0) || entitiesPassable(targetEntities)) {
+        if ((targetEntities.size() == 0) || !entitiesUnPassable(targetEntities)) {
             player.move(direction);
         }
     }
@@ -115,8 +116,8 @@ public class Dungeon {
         return entityList.stream().filter(entity -> entity.getInfo().getType().equals(type)).findAny().orElse(null);
     }
 
-    private boolean entitiesPassable(List<IEntity> entityList) {
-        return entityList.stream().anyMatch(entity -> entity.passable());
+    private boolean entitiesUnPassable(List<IEntity> entityList) {
+        return entityList.stream().anyMatch(entity -> !entity.passable());
     }
 }
  

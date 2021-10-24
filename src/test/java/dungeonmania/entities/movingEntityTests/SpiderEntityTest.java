@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTest, IEntityTests {
+public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTest, IEntityTests, IBattlingEntityTest {
     @Override
     @Test
     public void TestInteraction() {
@@ -50,5 +50,33 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
             new Position(0,0),
             true
         );
+    }
+
+    @Test
+    public void TestBattle() {
+        CharacterEntity character = new CharacterEntity();
+        SpiderEntity spider = new SpiderEntity();
+
+        assertEquals(100, character.getHealth());
+        assertEquals(100, spider.getHealth());
+
+        spider.Battle(character);
+
+        assertEquals(80, character.getHealth());
+        assertEquals(40, spider.getHealth());
+    }
+
+    @Test
+    public void TestDeath() {
+        CharacterEntity character = new CharacterEntity();
+        SpiderEntity spider = new SpiderEntity();
+        
+        spider.setHealth(2);
+        spider.Battle(character);
+
+        assertEquals(99.6, character.getHealth(), 0.1);
+        assertEquals(-58, spider.getHealth());
+
+        // TODO add assertions for spider death
     }
 }

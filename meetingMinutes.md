@@ -45,15 +45,22 @@ Meeting Summary:
 -   Clarified the purpose of an inventory system
 -   Baktiar gained a better understanding
 
+# Meeting 4  
+Date: 23/10/2021
+Attendees: Baktiar, Ari
+Meeting Summary:
+-   Helped each other on points we were stuck on
+
 # In person meetup
 Date: 24/10/2021
-Attendess: Koonatai, Ashley, Ariel, Baktiar, Wilson
+Attendess: Koonatai, Ashley, Ariel, Baktiar
 Agenda:
--   Midway checkup of Milestone 1 and Milestone 2 Progress. Ensure everyone is on track and knows what specific tasks they are doing
+-   Get together and hammer out some of the difficult parts of the code
 Meeting Summary:
--   Demonstration of current progress of the project i.e. characters, movement and other mechanics and
--   Clarified the purpose of an inventory system
--   Baktiar gained a better understanding
+-   Ari - a few more entities and actions
+-   Ashley - goal setting framework and reading goal instructions
+-   Baktiar - Collectable Entities
+-   Koonatai - Boulder
 
 # Template
 Date: xx/xx/xxxx

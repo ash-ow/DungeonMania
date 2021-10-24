@@ -23,7 +23,7 @@ public class ExitGoalTests implements IGoalTests {
     @Test
     public void SimpleExitTest() {
         CharacterEntity player = new CharacterEntity(0, 4, "player");
-        ExitEntity exit = new ExitEntity(0, 3, 0, "wall");
+        ExitEntity exit = new ExitEntity(0, 3, 0, "exit");
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(exit);
         String jsonGoals = "{ \"goal\": \"exit\"}";
@@ -32,6 +32,5 @@ public class ExitGoalTests implements IGoalTests {
         assertEquals(player.getPosition(), new Position(0, 4));
         dungeon.tick(Direction.UP);
         assertEquals("", dungeon.getGoals());
-    }
-    
+    }    
 }

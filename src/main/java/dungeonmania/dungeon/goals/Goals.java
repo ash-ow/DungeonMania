@@ -3,9 +3,15 @@ package dungeonmania.dungeon.goals;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import dungeonmania.dungeon.Dungeon;
 
 public class Goals {
     private ArrayList<IGoal> goals;
@@ -15,6 +21,7 @@ public class Goals {
 
     public Goals(JsonObject goalConditions) {
         this.goalsMap = new HashMap<>();
+        this.goals = new ArrayList<>();
         this.reqString = reqStringBuilder(goalConditions);     
         this.frontEndString = frontEndStringBuilder(goalConditions);  
     }
@@ -71,6 +78,7 @@ public class Goals {
         } else {
             reqString = ":" + goal;
             goalsMap.put(goal, false);
+            addGoal(goal);
         }
         return reqString;
     }
@@ -78,7 +86,7 @@ public class Goals {
     public void addGoal(String goal) {
         switch (goal) {
             case "exit":
-                goals.add(new ExitGoal());
+                goals.add(new ExitGoal("exit"));
                 break;
             case "enemies":
                 goals.add(new DestroyGoal());
@@ -96,7 +104,47 @@ public class Goals {
         return reqString;
     }
 
+    public String checkGoals(Dungeon dungeon) {
+        System.out.println(reqString);
+        for (IGoal goal : goals) {
+            goal.checkGoal(dungeon, goalsMap);
+        }
+        String boolParse = reqString;
+        for (String key : goalsMap.keySet()) {
+            boolParse = boolParse.replace(key, goalsMap.get(key).toString());
+        }
+        System.out.println(boolParse);
+        ScriptEngineManager sem = new ScriptEngineManager();
+        ScriptEngine se = sem.getEngineByName("JavaScript");
+        boolean check = false;
+        try {
+            check = (Boolean) se.eval(boolParse);
+        } catch (ScriptException e) {
+            System.out.println("Invalid Expression");
+        }
+        System.out.println(check);
+        if (check) {
+            return "";
+        } else {
+            return frontEndString;
+        }
+    }
+
     public String getFrontEndString() {
         return frontEndString;
+    }
+
+    public static void main(String[] args) {
+        String boolParse = "true && true";
+        ScriptEngineManager sem = new ScriptEngineManager();
+        ScriptEngine se = sem.getEngineByName("JavaScript");
+        try {
+            System.out.println(se.eval(boolParse));
+
+        } catch (ScriptException e) {
+
+            System.out.println("Invalid Expression");
+
+        }
     }
 }

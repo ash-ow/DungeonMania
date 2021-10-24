@@ -3,6 +3,7 @@ package dungeonmania.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -77,7 +78,7 @@ public class Dungeon {
             entitiesInfo.add(entity.getInfo());
         }
         entitiesInfo.add(player.getInfo());
-        return new DungeonResponse(id, dungeonName, entitiesInfo, new ArrayList<>(), new ArrayList<>(), goals.getFrontEndString());
+        return new DungeonResponse(id, dungeonName, entitiesInfo, new ArrayList<>(), new ArrayList<>(), goals.checkGoals(this));
     }
 
     public void tick(Direction direction) {
@@ -91,6 +92,14 @@ public class Dungeon {
     }
 
     public String getGoals() {
-        return goals.getFrontEndString();
+        return goals.checkGoals(this);
+    }
+
+    public CharacterEntity getPlayer() {
+        return player;
+    }
+
+    public ArrayList<IEntity> getEntities() {
+        return entities;
     }
 }

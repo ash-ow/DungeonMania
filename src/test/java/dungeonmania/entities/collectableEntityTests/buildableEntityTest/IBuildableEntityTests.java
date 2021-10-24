@@ -1,4 +1,4 @@
-package dungeonmania.entities.buildableEntityTest;
+package dungeonmania.entities.collectableEntityTests.buildableEntityTest;
 
 public interface IBuildableEntityTests {
     public void TestIsBuildable();

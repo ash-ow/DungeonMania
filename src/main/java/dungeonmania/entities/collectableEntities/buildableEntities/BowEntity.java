@@ -3,7 +3,7 @@ package dungeonmania.entities.collectableEntities.buildableEntities;
 import dungeonmania.entities.collectableEntities.Wood;
 
 public class BowEntity extends BuildableEntity {
-    protected BowEntity() {
+    public BowEntity() {
         super("BowType");
     }
 
@@ -13,7 +13,7 @@ public class BowEntity extends BuildableEntity {
     
     @Override
     public void initialiseRequiredComponents() {
-        this.requiredComponents.put(new Wood(), 1);
+        this.requiredComponents.put(new Wood(), 2);
     }
 
     @Override

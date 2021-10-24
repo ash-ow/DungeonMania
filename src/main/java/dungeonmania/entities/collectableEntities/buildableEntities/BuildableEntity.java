@@ -18,16 +18,16 @@ public abstract class BuildableEntity extends Entity implements ICollectableEnti
         initialiseRequiredComponents();
     }
     
-    public static Map<ICollectableEntity, Integer> requiredComponents = new HashMap<ICollectableEntity, Integer>();
-    public static boolean isBuildable(List<ICollectableEntity> inventory) {
-        System.out.println("Required:\n");
+    public Map<ICollectableEntity, Integer> requiredComponents = new HashMap<ICollectableEntity, Integer>();
+    public boolean isBuildable(List<ICollectableEntity> inventory) {
+        System.out.println("Required:");
         for (Map.Entry<ICollectableEntity, Integer> entry : requiredComponents.entrySet()) {
             ICollectableEntity component = entry.getKey();
             int quantity = entry.getValue();
-            System.out.println(" >" + quantity + "x " + component.toString());
+            System.out.println(" >" + quantity + "x " + component.getId());
         }
 
-        System.out.println("\nInventory\n");
+        System.out.println("\nInventory:\n");
         for (ICollectableEntity item : inventory) {
             System.out.println(" >" + item.getId());
         }

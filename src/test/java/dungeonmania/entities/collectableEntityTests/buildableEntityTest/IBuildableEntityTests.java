@@ -1,6 +1,6 @@
 package dungeonmania.entities.buildableEntityTest;
 
 public interface IBuildableEntityTests {
-    public void TestIsBuildable() {
-    }
+    public void TestIsBuildable();
+    public void TestIsNotBuildable();
 }

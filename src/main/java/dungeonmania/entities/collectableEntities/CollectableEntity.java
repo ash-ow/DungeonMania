@@ -3,7 +3,7 @@ package dungeonmania.entities.collectableEntities;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Position;
 
-public abstract class CollectableEntity implements ICollectableEntities {
+public abstract class CollectableEntity implements ICollectableEntity {
     @Override
     public boolean passable() {
         return true;

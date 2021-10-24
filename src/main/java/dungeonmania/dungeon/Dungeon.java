@@ -8,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.*;
+import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.staticEntities.*;
 import dungeonmania.response.models.*;
@@ -35,10 +36,8 @@ public class Dungeon {
             String type = entityObj.get("type").getAsString();
             Integer xAxis = entityObj.get("x").getAsInt();
             Integer yAxis = entityObj.get("y").getAsInt();
-            Integer layer = 0;
-            if (entityFromPosition(new Position(xAxis, yAxis)) != null) {
-                layer = 1;
-            }
+            Integer layer = entitiesFromPosition(new Position(xAxis, yAxis)).size();
+
             switch (type) {
                 case "wall":
                     this.entities.add(new WallEntity(xAxis, yAxis, layer, type));
@@ -84,30 +83,40 @@ public class Dungeon {
 
     public void tick(Direction direction) {
         Position target = player.getPosition().translateBy(direction);
-        IEntity targetEntity = entityFromPosition(target);
+        List<IEntity> targetEntities = entitiesFromPosition(target);
+
         
-        if ((targetEntity != null) && targetEntity.getClass().toString().contains("Boulder")) {
-            Position boulderTarget = targetEntity.getPosition().translateBy(direction);
-            if ((entityFromPosition(boulderTarget) == null) || entityFromPosition(boulderTarget).passable()) {
-                BoulderEntity boulder = (BoulderEntity) targetEntity;
-                boulder.setPosition(boulderTarget);
+        if (entitiesContainsType(targetEntities, "boulder") != null) {
+            BoulderEntity boulder = (BoulderEntity) entitiesContainsType(targetEntities, "boulder");
+            Position boulderTarget = target.translateBy(direction);
+            if ((entitiesFromPosition(boulderTarget).size() == 0) || entitiesPassable(targetEntities)) {
+                boulder.move(direction);
             }
         }
 
-        targetEntity = entityFromPosition(target);
+        targetEntities = entitiesFromPosition(target);
 
-        if ((targetEntity == null) || targetEntity.passable()) {
+        if ((targetEntities.size() == 0) || entitiesPassable(targetEntities)) {
             player.move(direction);
         }
     }
 
-    private IEntity entityFromPosition(Position position) {
+    private List<IEntity> entitiesFromPosition(Position position) {
+        List<IEntity> foundEntities = new ArrayList<>();
         for (IEntity e : entities) {
             if (e.getPosition().equals(position)) {
-                return e;
+                foundEntities.add(e);
             }
         }
-        return null;
+        return foundEntities;
+    }
+
+    private IEntity entitiesContainsType(List<IEntity> entityList, String type) {
+        return entityList.stream().filter(entity -> entity.getInfo().getType().equals(type)).findAny().orElse(null);
+    }
+
+    private boolean entitiesPassable(List<IEntity> entityList) {
+        return entityList.stream().anyMatch(entity -> entity.passable());
     }
 }
  

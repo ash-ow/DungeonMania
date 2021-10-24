@@ -13,7 +13,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
             "character-" + x + "-" + y, // id
             x, y, type
         );
-        this.health = 100;
     }
 
     @Override

@@ -8,7 +8,7 @@ import dungeonmania.util.Position;
 public interface IEntityTests {
     public void TestEntityResponseInfo();
 
-    public default void assertEntityResponseInfoEquals(IEntity actualEntity, String id, String type, Position position, boolean isInteractable) {
+    public default void assertEntityResponseInfoEquals(Entity actualEntity, String id, String type, Position position, boolean isInteractable) {
         EntityResponse expected = new EntityResponse(id, type, position, isInteractable);
         EntityResponse actual = actualEntity.getInfo();
         assertEquals(

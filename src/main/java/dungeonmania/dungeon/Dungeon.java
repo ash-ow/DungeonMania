@@ -2,6 +2,8 @@ package dungeonmania.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -90,25 +92,20 @@ public class Dungeon {
             BoulderEntity boulder = (BoulderEntity) entitiesContainsType(targetEntities, "boulder");
             Position boulderTarget = target.translateBy(direction);
             List<IEntity> BoulderTargetEntities = entitiesFromPosition(boulderTarget);
-            if ((entitiesFromPosition(boulderTarget).size() == 0) || !entitiesUnPassable(BoulderTargetEntities)) {
-                boulder.move(direction);
+            if ((entitiesFromPosition(boulderTarget).size() == 0) || !entitiesUnpassable(BoulderTargetEntities)) {
+                boulder.move(direction, BoulderTargetEntities.size());
             }
         }
 
         targetEntities = entitiesFromPosition(target);
 
-        if ((targetEntities.size() == 0) || !entitiesUnPassable(targetEntities)) {
+        if ((targetEntities.size() == 0) || !entitiesUnpassable(targetEntities)) {
             player.move(direction);
         }
     }
 
     private List<IEntity> entitiesFromPosition(Position position) {
-        List<IEntity> foundEntities = new ArrayList<>();
-        for (IEntity e : entities) {
-            if (e.getPosition().equals(position)) {
-                foundEntities.add(e);
-            }
-        }
+        List<IEntity> foundEntities = this.entities.stream().filter(entity -> entity.getPosition().equals(position)).collect(Collectors.toList());
         return foundEntities;
     }
 
@@ -116,7 +113,7 @@ public class Dungeon {
         return entityList.stream().filter(entity -> entity.getInfo().getType().equals(type)).findAny().orElse(null);
     }
 
-    private boolean entitiesUnPassable(List<IEntity> entityList) {
+    private boolean entitiesUnpassable(List<IEntity> entityList) {
         return entityList.stream().anyMatch(entity -> !entity.passable());
     }
 }

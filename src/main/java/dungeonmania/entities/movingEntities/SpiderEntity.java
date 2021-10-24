@@ -21,7 +21,6 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
 
     @Override
     public boolean passable() {
-        // TODO Auto-generated method stub
         return false;
     }
 

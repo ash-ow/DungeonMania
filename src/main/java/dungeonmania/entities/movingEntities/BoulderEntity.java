@@ -3,6 +3,7 @@ package dungeonmania.entities.movingEntities;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.staticEntities.StaticEntity;
 import dungeonmania.response.models.EntityResponse;
+import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class BoulderEntity extends Entity implements IMovingEntity {
@@ -31,4 +32,5 @@ public class BoulderEntity extends Entity implements IMovingEntity {
     public EntityResponse getInfo() {
         return new EntityResponse(this.getId(), this.getType(), this.getPosition(), false);
     }
+
 }

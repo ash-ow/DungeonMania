@@ -16,7 +16,8 @@ public class Goals {
     public Goals(JsonObject goalConditions) {
         JsonObject goals = goalConditions.getAsJsonObject("goal-condition");
         this.goalsMap = new HashMap<>();
-        this.reqString = reqStringBuilder(goals);       
+        this.reqString = reqStringBuilder(goals);     
+        this.frontEndString = frontEndStringBuilder(goals);  
     }
 
     public String reqStringBuilder(JsonObject goalConditions) {
@@ -48,19 +49,46 @@ public class Goals {
         return reqString;
     }
 
+    public String frontEndStringBuilder(JsonObject goalConditions) {
+        String reqString = "";
+        String goal = goalConditions.get("goal").getAsString();
+        if (goal.equals("AND")) {
+            JsonArray subGoals = goalConditions.getAsJsonArray("subgoals");
+            for (int i = 0; i < subGoals.size() - 1; i++) {
+                JsonObject goalObj = subGoals.get(i).getAsJsonObject();
+                reqString += frontEndStringBuilder(goalObj) + " AND ";
+            }
+            JsonObject goalObj = subGoals.get(subGoals.size()-1).getAsJsonObject();
+            reqString += frontEndStringBuilder(goalObj);
+        }
+        else if (goal.equals("OR")) {
+            JsonArray subGoals = goalConditions.getAsJsonArray("subgoals");
+            for (int i = 0; i < subGoals.size() - 1; i++) {
+                JsonObject goalObj = subGoals.get(i).getAsJsonObject();
+                reqString += frontEndStringBuilder(goalObj) + "/";
+            }
+            JsonObject goalObj = subGoals.get(subGoals.size()-1).getAsJsonObject();
+            reqString += frontEndStringBuilder(goalObj);
+        } else {
+            reqString = ":" + goal;
+            goalsMap.put(goal, false);
+        }
+        return reqString;
+    }
+
     public void addGoal(String goal) {
         switch (goal) {
             case "exit":
                 goals.add(new ExitGoal());
                 break;
             case "enemies":
-                goals.add(new ExitGoal());
+                goals.add(new DestroyGoal());
                 break;
             case "boulders":
-                goals.add(new ExitGoal());
+                goals.add(new BoulderGoal());
                 break;
             case "treasure":
-                goals.add(new ExitGoal());
+                goals.add(new CollectingGoal());
                 break;
         }
     }

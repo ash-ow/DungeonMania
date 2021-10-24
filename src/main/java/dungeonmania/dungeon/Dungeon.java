@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.staticEntities.*;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -30,33 +28,33 @@ public class Dungeon {
         this.id = id;
         this.dungeonName = dungeonName;
         this.entities = new ArrayList<>();
-        for (JsonElement entityInfo : entities) {
-            JsonObject entityObj = entityInfo.getAsJsonObject();
-            String type = entityObj.get("type").getAsString();
-            switch (type) {
-                case "wall":
-                    this.entities.add(new WallEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
-                    break;
-                case "exit":
-                    this.entities.add(new ExitEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
-                    break;
-                case "door":
-                    this.entities.add(new DoorEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
-                    break;
-                case "portal":
-                    this.entities.add(new PortalEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
-                    break;
-                case "switch":
-                    this.entities.add(new SwitchEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
-                    break;
-                case "boulder":
-                    this.entities.add(new BoulderEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 1, type));
-                    break;
-                case "player":
-                    this.player = new CharacterEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), type);
-                    break;
-            }
-        }
+        // for (JsonElement entityInfo : entities) {
+        //     JsonObject entityObj = entityInfo.getAsJsonObject();
+        //     String type = entityObj.get("type").getAsString();
+        //     switch (type) {
+        //         case "wall":
+        //             this.entities.add(new WallEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
+        //             break;
+        //         case "exit":
+        //             this.entities.add(new ExitEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
+        //             break;
+        //         case "door":
+        //             this.entities.add(new DoorEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
+        //             break;
+        //         case "portal":
+        //             this.entities.add(new PortalEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
+        //             break;
+        //         case "switch":
+        //             this.entities.add(new SwitchEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 0, type));
+        //             break;
+        //         case "boulder":
+        //             this.entities.add(new BoulderEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), 1, type));
+        //             break;
+        //         case "player":
+        //             this.player = new CharacterEntity(entityObj.get("x").getAsInt(), entityObj.get("y").getAsInt(), type);
+        //             break;
+        //     }
+        // }
     }
 
     public Dungeon(int height, int width, ArrayList<IEntity> entities, String gameMode, CharacterEntity player) {
@@ -79,7 +77,7 @@ public class Dungeon {
     public void tick(Direction direction) {
         Position target = player.getPosition().translateBy(direction);
         for (IEntity e : entities) {
-            if (e.getPosition().equals(target) && !e.passable()) {
+            if (e.getPosition().equals(target) && !e.isPassable()) {
                 return;
             }
         }

@@ -2,7 +2,6 @@ package dungeonmania.entities.movingEntityTests;
 
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
-import dungeonmania.entities.IMovingEntityTest;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.util.Direction;
@@ -17,7 +16,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Test
     public void TestInteraction() {
         ZombieToastEntity spider = new ZombieToastEntity();
-        CharacterEntity character = new CharacterEntity(0, 1, "CharacterType");
+        CharacterEntity character = new CharacterEntity(0, 1, 0);
 
         character.move(Direction.UP);
         assertEquals(spider.getPosition(), character.getPosition());
@@ -41,13 +40,13 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        ZombieToastEntity zombie = new ZombieToastEntity(0, 0, "ZombieToastType");
+        ZombieToastEntity zombie = new ZombieToastEntity(0, 0, 0);
         assertEntityResponseInfoEquals(
             zombie,
-            "zombieToast-0-0",
-            "ZombieToastType",
+            "zombieToast-0-0-0",
+            "zombieToast",
             new Position(0,0),
-            true
+            false
         );
     }
 

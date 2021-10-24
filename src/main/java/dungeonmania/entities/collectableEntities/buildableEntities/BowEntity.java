@@ -1,26 +1,25 @@
 package dungeonmania.entities.collectableEntities.buildableEntities;
 
-import dungeonmania.entities.collectableEntities.Arrows;
-import dungeonmania.entities.collectableEntities.Wood;
+import dungeonmania.entities.collectableEntities.ArrowsEntity;
+import dungeonmania.entities.collectableEntities.WoodEntity;
 
 public class BowEntity extends BuildableEntity {
     public BowEntity() {
-        super("BowType");
+        this(0, 0, 0);
     }
-
-    protected BowEntity(String id, int x, int y, String type) {
-        super(id, x, y, type);
+    
+    public BowEntity(int x, int y, int layer) {
+        super(x, y, layer, "bow");
     }
     
     @Override
     public void initialiseRequiredComponents() {
-        this.requiredComponents.put(new Wood(), 1);
-        this.requiredComponents.put(new Arrows(), 3);
+        this.requiredComponents.put(new WoodEntity(), 1);
+        this.requiredComponents.put(new ArrowsEntity(), 3);
     }
 
     @Override
-    public boolean passable() {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean isPassable() {
+        return true;
     }
 }

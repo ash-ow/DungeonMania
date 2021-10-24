@@ -2,12 +2,13 @@ package dungeonmania.entities.movingEntities;
 
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IInteractingEntity;
-import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
-public class SpiderEntity extends Entity implements IInteractingEntity, IMovingEntity {
+public class SpiderEntity extends Entity implements IInteractingEntity, IMovingEntity, IBattlingEntity {
+    private float health;
+
     public SpiderEntity() {
         super("SpiderType");
     }
@@ -17,6 +18,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
             "spider-" + x + "-" + y, // id
             x, y, type
         );
+        this.health = 100;
     }
 
     @Override
@@ -34,5 +36,15 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
     @Override
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    @Override
+    public float getHealth() {
+        return this.health;
+    }
+
+    @Override
+    public void setHealth(float health) {
+        this.health = health;
     }
 }

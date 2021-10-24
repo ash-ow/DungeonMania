@@ -10,12 +10,13 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class BoulderEntityTests {
+public class BoulderEntityTests implements IMovingEntityTest, IEntityTests {
     @Test
     public void testBoulderMove() {
         CharacterEntity player = new CharacterEntity(0, 0, 0);
@@ -28,5 +29,23 @@ public class BoulderEntityTests {
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 1, 0), player.getPosition());
         assertEquals(new Position(0, 2, 0), boulder.getPosition());
+    }
+
+    @Override
+    public void TestEntityResponseInfo() {
+        BoulderEntity boulder = new BoulderEntity(0, 0, 0);
+        assertEntityResponseInfoEquals(
+            boulder,
+            "boulder-0-0-0",
+            "boulder",
+            new Position(0,0),
+            false
+        );
+        
+
+    @Override
+    public void TestMove() {
+        // TODO Auto-generated method stub
+        
     }
 }

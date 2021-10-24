@@ -57,7 +57,6 @@ public class DungeonManiaController {
             String dungeonJson = FileLoader.loadResourceFile("dungeons/" + dungeonName + ".json");
             JsonObject jsonObject = new Gson().fromJson(dungeonJson, JsonObject.class);
             String id = UUID.randomUUID().toString(); 
-
             this.dungeon = new Dungeon(jsonObject.get("height").getAsInt(), jsonObject.get("width").getAsInt(), jsonObject.get("entities").getAsJsonArray(), 
                                         jsonObject.getAsJsonObject("goal-condition"), gameMode, id, dungeonName);
 

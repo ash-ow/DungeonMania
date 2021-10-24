@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 
+import com.google.gson.*;
+
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
@@ -40,7 +42,9 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         WallEntity wall = new WallEntity(0, 3, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(wall);
-        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player);
+        String jsonGoals = "{ \"goal\": \"exit\"}";
+        JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
+        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player, j);
         assertEquals(player.getPosition(), new Position(0, 4));
         dungeon.tick(Direction.UP);
         assertEquals(player.getPosition(), new Position(0, 4));

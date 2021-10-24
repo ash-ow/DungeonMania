@@ -15,4 +15,13 @@ public class GoalsTest {
         Goals g = new Goals(j);
         assertEquals("enemies AND treasure", g.getGoals());
     }
+
+    @Test
+    public void testSingleGoal() {
+        String jsonGoals = "{\"goal-condition\": { \"goal\": \"exit\"}}";
+        JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
+        Goals g = new Goals(j);
+        assertEquals("exit", g.getGoals());
+    }
+
 }

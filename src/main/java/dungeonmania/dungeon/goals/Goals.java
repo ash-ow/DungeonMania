@@ -21,7 +21,10 @@ public class Goals {
 
     public String getGoals() {
         String goalReturn = "";
-        
+        for (IGoal goal : goals) {
+            goalReturn += goal.getGoal();
+        }
+        return goalReturn;
     }
 
 }

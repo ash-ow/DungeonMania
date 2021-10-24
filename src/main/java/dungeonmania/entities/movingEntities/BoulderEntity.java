@@ -1,12 +1,18 @@
 package dungeonmania.entities.movingEntities;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.IEntity;
+import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.staticEntities.StaticEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class BoulderEntity extends Entity implements IMovingEntity {
+public class BoulderEntity extends Entity implements IMovingEntity, IInteractingEntity {
 
     public BoulderEntity() {
         super("boulder");
@@ -18,6 +24,7 @@ public class BoulderEntity extends Entity implements IMovingEntity {
             x, y, type
         );
     }
+
     @Override
     public boolean passable() {
         return false;
@@ -32,5 +39,17 @@ public class BoulderEntity extends Entity implements IMovingEntity {
     public EntityResponse getInfo() {
         return new EntityResponse(this.getId(), this.getType(), this.getPosition(), false);
     }
+
+    @Override
+    public boolean interactWithPlayer(EntitiesControl entities, Direction direction) {
+        Position target = this.getPosition().translateBy(direction);
+        List<IEntity> targetEntities = entities.entitiesFromPosition(target);
+        if ((targetEntities.size() == 0) || !EntitiesControl.entitiesUnpassable(targetEntities)) {
+            this.move(direction, targetEntities.size());
+            return true;
+        }
+        return false;
+    }
+
 
 }

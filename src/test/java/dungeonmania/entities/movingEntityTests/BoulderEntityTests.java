@@ -1,4 +1,4 @@
-package dungeonmania.entities.staticEntity;
+package dungeonmania.entities.movingEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -1,5 +1,6 @@
 package dungeonmania.entities.movingEntities;
 
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.util.Direction;
@@ -20,13 +21,8 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
 
     @Override
     public boolean passable() {
+         // TODO Auto-generated method stub
         return false;
-    }
-
-    @Override
-    public void interactWithPlayer(CharacterEntity character) {
-        System.out.println("Oh shit that's a spider!");
-        character.move(Direction.DOWN);
     }
 
     @Override
@@ -57,4 +53,12 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
         this.health -= ((enemyHealth * enemyDamage) / 5);
     }
 //endregion
+
+    @Override
+    public boolean interactWithPlayer(EntitiesControl entities, Direction direction) {
+        // To do!!!!
+        System.out.println("Oh shit that's a spider!");
+        this.move(Direction.DOWN);
+        return false;
+    }
 }

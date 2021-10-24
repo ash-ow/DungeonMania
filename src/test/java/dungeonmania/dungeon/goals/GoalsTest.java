@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 public class GoalsTest {
     @Test
     public void testReqStringMultiple() {
-        String jsonGoals = "{\"goal-condition\": { \"goal\": \"AND\", \"subgoals\": [{\"goal\": \"enemies\"}, {\"goal\": \"treasure\"}]}}";
+        String jsonGoals = "{ \"goal\": \"AND\", \"subgoals\": [{\"goal\": \"enemies\"}, {\"goal\": \"treasure\"}]}";
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
         Goals g = new Goals(j);
         assertEquals("(enemies && treasure)", g.getReqString());
@@ -18,7 +18,7 @@ public class GoalsTest {
 
     @Test
     public void testReqStringSingle() {
-        String jsonGoals = "{\"goal-condition\": { \"goal\": \"exit\"}}";
+        String jsonGoals = "{ \"goal\": \"exit\"}";
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
         Goals g = new Goals(j);
         assertEquals("exit", g.getReqString());
@@ -26,7 +26,7 @@ public class GoalsTest {
 
     @Test
     public void testReqStringComplex() {
-        String jsonGoals = "{\"goal-condition\": { \"goal\": \"AND\", \"subgoals\": [{\"goal\": \"enemies\"}, {\"goal\": \"OR\", \"subgoals\": [{\"goal\": \"exit\"}, {\"goal\": \"treasure\"}]}]}}";
+        String jsonGoals = "{ \"goal\": \"AND\", \"subgoals\": [{\"goal\": \"enemies\"}, {\"goal\": \"OR\", \"subgoals\": [{\"goal\": \"exit\"}, {\"goal\": \"treasure\"}]}]}";
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
         Goals g = new Goals(j);
         assertEquals("(enemies && (exit || treasure))" , g.getReqString());
@@ -34,7 +34,7 @@ public class GoalsTest {
 
     @Test
     public void frontEndStringMultiple() {
-        String jsonGoals = "{\"goal-condition\": { \"goal\": \"AND\", \"subgoals\": [{\"goal\": \"enemies\"}, {\"goal\": \"treasure\"}]}}";
+        String jsonGoals = "{ \"goal\": \"AND\", \"subgoals\": [{\"goal\": \"enemies\"}, {\"goal\": \"treasure\"}]}";
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
         Goals g = new Goals(j);
         assertEquals(":enemies AND :treasure", g.getFrontEndString());
@@ -42,7 +42,7 @@ public class GoalsTest {
 
     @Test
     public void frontEndStringSingle() {
-        String jsonGoals = "{\"goal-condition\": { \"goal\": \"exit\"}}";
+        String jsonGoals = "{ \"goal\": \"exit\"}";
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
         Goals g = new Goals(j);
         assertEquals(":exit", g.getFrontEndString());
@@ -50,7 +50,7 @@ public class GoalsTest {
 
     @Test
     public void frontEndStringComplex() {
-        String jsonGoals = "{\"goal-condition\": { \"goal\": \"AND\", \"subgoals\": [{\"goal\": \"enemies\"}, {\"goal\": \"OR\", \"subgoals\": [{\"goal\": \"exit\"}, {\"goal\": \"treasure\"}]}]}}";
+        String jsonGoals = "{ \"goal\": \"AND\", \"subgoals\": [{\"goal\": \"enemies\"}, {\"goal\": \"OR\", \"subgoals\": [{\"goal\": \"exit\"}, {\"goal\": \"treasure\"}]}]}";
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
         Goals g = new Goals(j);
         assertEquals(":enemies AND :exit/:treasure" , g.getFrontEndString());

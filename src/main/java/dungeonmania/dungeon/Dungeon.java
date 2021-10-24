@@ -62,12 +62,13 @@ public class Dungeon {
         this.goals = new Goals(goalConditions);
     }
 
-    public Dungeon(int height, int width, ArrayList<IEntity> entities, String gameMode, CharacterEntity player) {
+    public Dungeon(int height, int width, ArrayList<IEntity> entities, String gameMode, CharacterEntity player, JsonObject goalConditions) {
         this.height = height;
         this.width = width;
         this.entities = entities;
         this.gameMode = gameMode;
         this.player = player;
+        this.goals = new Goals(goalConditions);
     }
 
     public DungeonResponse getInfo() {
@@ -76,7 +77,7 @@ public class Dungeon {
             entitiesInfo.add(entity.getInfo());
         }
         entitiesInfo.add(player.getInfo());
-        return new DungeonResponse(id, dungeonName, entitiesInfo, new ArrayList<>(), new ArrayList<>(), "");
+        return new DungeonResponse(id, dungeonName, entitiesInfo, new ArrayList<>(), new ArrayList<>(), goals.getFrontEndString());
     }
 
     public void tick(Direction direction) {
@@ -87,5 +88,9 @@ public class Dungeon {
             }
         }
         player.move(direction);
+    }
+
+    public String getGoals() {
+        return goals.getFrontEndString();
     }
 }

@@ -14,10 +14,9 @@ public class Goals {
     private String frontEndString;
 
     public Goals(JsonObject goalConditions) {
-        JsonObject goals = goalConditions.getAsJsonObject("goal-condition");
         this.goalsMap = new HashMap<>();
-        this.reqString = reqStringBuilder(goals);     
-        this.frontEndString = frontEndStringBuilder(goals);  
+        this.reqString = reqStringBuilder(goalConditions);     
+        this.frontEndString = frontEndStringBuilder(goalConditions);  
     }
 
     public String reqStringBuilder(JsonObject goalConditions) {
@@ -91,10 +90,6 @@ public class Goals {
                 goals.add(new CollectingGoal());
                 break;
         }
-    }
-
-    public void completeGoal(IGoal completed) {
-        
     }
 
     public String getReqString() {

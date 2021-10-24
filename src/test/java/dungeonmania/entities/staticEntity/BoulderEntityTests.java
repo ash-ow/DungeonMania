@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 
+import com.google.gson.*;
+
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
@@ -20,7 +22,9 @@ public class BoulderEntityTests {
         BoulderEntity boulder = new BoulderEntity(0, 1, 0, "boulder");
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(boulder);
-        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player);
+        String jsonGoals = "{ \"goal\": \"exit\"}";
+        JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
+        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player, j);
         dungeon.tick(Direction.DOWN);
         assertEquals(player.getPosition(), new Position(0, 1));
         assertEquals(boulder.getPosition(), new Position(0, 2, 0));

@@ -1,6 +1,7 @@
 package dungeonmania.entities.movingEntities;
 
 import dungeonmania.entities.Entity;
+import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Position;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
@@ -10,6 +11,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     
     public CharacterEntity(int x, int y, int layer) {
         super(x, y, layer, "character");
+    }
+
+    public EntityResponse getInfo() {
+        return new EntityResponse(this.getId(), this.getType(), this.getPosition(), false);
     }
 
     @Override
@@ -22,7 +27,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.position = position;
     }
 
-//region Description
+//region Battling
     private float health = 100;
 
     @Override

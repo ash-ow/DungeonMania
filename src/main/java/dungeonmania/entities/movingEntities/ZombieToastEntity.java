@@ -1,5 +1,6 @@
 package dungeonmania.entities.movingEntities;
 
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.util.Direction;
@@ -19,12 +20,6 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IMo
     public boolean isPassable() {
         // TODO Auto-generated method stub
         return false;
-    }
-
-    @Override
-    public void interactWithPlayer(CharacterEntity character) {
-        System.out.println("zombie toast?? For real?");
-        character.move(Direction.DOWN);
     }
 
     @Override
@@ -55,4 +50,12 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IMo
         this.health -= ((enemyHealth * enemyDamage) / 5);
     }
 //endregion
+
+    @Override
+    public boolean interactWithPlayer(EntitiesControl entities, Direction direction) {
+        // To do!!!!
+        System.out.println("zombie toast?? For real?");
+        this.move(Direction.DOWN);
+        return false;
+    }
 }

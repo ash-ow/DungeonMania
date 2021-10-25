@@ -19,6 +19,7 @@ public class ControllerExceptionTest {
     @Test
     public void testSimple() {
         DungeonManiaController dungeonManiaController = new DungeonManiaController();
+        dungeonManiaController.newGame("maze", "Standard");
         assertDoesNotThrow(() -> dungeonManiaController.newGame("maze", "Standard"));
     }
 }

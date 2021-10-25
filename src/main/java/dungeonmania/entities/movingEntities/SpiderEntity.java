@@ -27,7 +27,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
         this.position = position;
     }
 
-//region Description
+//region Battle
     private float health = 100;
 
     @Override
@@ -53,7 +53,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
 
     @Override
     public boolean interactWithPlayer(EntitiesControl entities, Direction direction) {
-        // To do!!!!
+        // TODO
         System.out.println("Oh shit that's a spider!");
         this.move(Direction.DOWN);
         return false;

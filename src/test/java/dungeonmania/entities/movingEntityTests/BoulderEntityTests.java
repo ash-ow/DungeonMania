@@ -9,6 +9,7 @@ import com.google.gson.*;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.dungeon.goals.IGoalTests;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.movingEntities.BoulderEntity;
@@ -18,7 +19,7 @@ import dungeonmania.util.Position;
 import dungeonmania.entities.staticEntities.SwitchEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 
-public class BoulderEntityTests implements IMovingEntityTest, IEntityTests {
+public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoalTests {
     @Override
     @Test
     public void TestEntityResponseInfo() {
@@ -34,7 +35,7 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests {
 
     @Override
     @Test
-    public void TestPlayerMovesBoulder() {
+    public void TestMove() {
         CharacterEntity player = new CharacterEntity(0, 0, 0);
         BoulderEntity boulder = new BoulderEntity(0, 1, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
@@ -99,7 +100,7 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests {
 
     @Override
     @Test
-    public void TestMove() {
+    public void SimpleGoalTest() {
         CharacterEntity player = new CharacterEntity(0, 0, 0);
         BoulderEntity boulder = new BoulderEntity(0, 1, 0);
         ArrayList<IEntity> entities = new ArrayList<>();

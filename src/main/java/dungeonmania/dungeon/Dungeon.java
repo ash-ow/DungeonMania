@@ -40,7 +40,11 @@ public class Dungeon {
             Integer xAxis = entityObj.get("x").getAsInt();
             Integer yAxis = entityObj.get("y").getAsInt();
             Integer layer = this.entitiesControl.entitiesFromPosition(new Position(xAxis, yAxis)).size();
-            this.entitiesControl.createEntity(xAxis, yAxis, layer, type);
+            if (type.equals("player")) {
+                this.player = new CharacterEntity(xAxis, yAxis, layer);
+            } else {
+                this.entitiesControl.createEntity(xAxis, yAxis, layer, type);
+            }
         }
         this.goals = new Goals(goalConditions);
     }
@@ -74,9 +78,9 @@ public class Dungeon {
     }
 
     public void tick(Direction direction) {
-        Position target = player.getPosition().translateBy(direction);
-        List<IEntity> targetEntities = entitiesControl.entitiesFromPosition(target);
-        IInteractingEntity boulder = (IInteractingEntity)EntitiesControl.getAllEntitiesOfType(targetEntities, BoulderEntity.class);
+        Position playerTargetPosition = player.getPosition().translateBy(direction);
+        List<IEntity> entitiesInTargetPosition = entitiesControl.entitiesFromPosition(playerTargetPosition);
+        IInteractingEntity boulder = (IInteractingEntity)EntitiesControl.getAllEntitiesOfType(entitiesInTargetPosition, BoulderEntity.class);
 
         if (boulder != null) {
             if (boulder.interactWithPlayer(entitiesControl, direction)) {
@@ -85,7 +89,7 @@ public class Dungeon {
             }
         }
 
-        if ((targetEntities.size() == 0) || !EntitiesControl.entitiesUnpassable(targetEntities)) {
+        if ((entitiesInTargetPosition.size() == 0) || !EntitiesControl.entitiesUnpassable(entitiesInTargetPosition)) {
             player.move(direction);
         }
     }

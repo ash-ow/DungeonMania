@@ -61,8 +61,8 @@ public class EntitiesControl {
             case "boulder":
                 ent = new BoulderEntity(xAxis, yAxis, layer);
                 break;
-            case "player":
-                this.player = new CharacterEntity(xAxis, yAxis, layer);
+            default:
+                ent = null;
                 break;
         }
         this.entities.add(ent);

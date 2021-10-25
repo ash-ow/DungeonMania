@@ -24,14 +24,16 @@ import dungeonmania.util.Position;
 public class BoulderGoalTests implements IGoalTests {
     @Test
     public void SimpleGoalTest() {
-        CharacterEntity player = new CharacterEntity(0, 4, "player");
-        BoulderEntity boulder = new BoulderEntity(0, 3, 0, "boulder");
-        SwitchEntity switchEntity = new SwitchEntity(0, 2, 0, "switch");
+        CharacterEntity player = new CharacterEntity(0, 1, "player");
+        BoulderEntity boulder = new BoulderEntity(0, 2, 0, "boulder");
+        SwitchEntity switchEntity = new SwitchEntity(0, 3, 0, "switch");
         ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(boulder);
+        entities.add(switchEntity);
         String jsonGoals = "{ \"goal\": \"boulders\"}";
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
         Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player, j);
-        dungeon.tick(Direction.UP);
+        dungeon.tick(Direction.DOWN);
         assertEquals(boulder.getPosition(), switchEntity.getPosition());
         assertEquals("", dungeon.getGoals());
     }

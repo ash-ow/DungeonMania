@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.ArrayList;
 
+import com.google.gson.*;
+
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -20,6 +22,8 @@ public class StaticEntityTest {
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(boulder);
         entities.add(switches);
-        assertDoesNotThrow(() -> new Dungeon(20, 20, entities, "Standard", player));
+        String jsonGoals = "{ \"goal\": \"exit\"}";
+        JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
+        assertDoesNotThrow(() -> new Dungeon(20, 20, entities, "Standard", player, j));
     }
 }

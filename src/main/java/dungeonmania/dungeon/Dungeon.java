@@ -3,10 +3,12 @@ package dungeonmania.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import dungeonmania.dungeon.goals.Goals;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -23,6 +25,7 @@ public class Dungeon {
     private String id;
     private String dungeonName;
     private CharacterEntity player;
+    private Goals goals;
 
     public Dungeon(int height, int width, JsonArray entities, JsonObject goalConditions, String gameMode, String id, String dungeonName) {
         this.height = height;
@@ -63,6 +66,7 @@ public class Dungeon {
                     break;
             }
         }
+        this.goals = new Goals(goalConditions);
     }
 
     public Dungeon(int height, int width, ArrayList<IEntity> entities, String gameMode, CharacterEntity player) {
@@ -74,13 +78,23 @@ public class Dungeon {
         this.player = player;
     }
 
+    public Dungeon(int height, int width, ArrayList<IEntity> entities, String gameMode, CharacterEntity player, JsonObject goalConditions) {
+        this.height = height;
+        this.width = width;
+        this.entitiesControl = new EntitiesControl();
+        this.entitiesControl.setEntities(entities);
+        this.gameMode = gameMode;
+        this.player = player;
+        this.goals = new Goals(goalConditions);
+    }
+
     public DungeonResponse getInfo() {
         List<EntityResponse> entitiesInfo = new ArrayList<>();
         for (IEntity entity : entitiesControl.getEntities()) {
             entitiesInfo.add(entity.getInfo());
         }
         entitiesInfo.add(player.getInfo());
-        return new DungeonResponse(id, dungeonName, entitiesInfo, new ArrayList<>(), new ArrayList<>(), "");
+        return new DungeonResponse(id, dungeonName, entitiesInfo, new ArrayList<>(), new ArrayList<>(), getGoals());
     }
 
     public void tick(Direction direction) {
@@ -98,6 +112,18 @@ public class Dungeon {
         if ((targetEntities.size() == 0) || !EntitiesControl.entitiesUnpassable(targetEntities)) {
             player.move(direction);
         }
+    }
+
+    public String getGoals() {
+        return goals.checkGoals(this);
+    }
+
+    public CharacterEntity getPlayer() {
+        return this.player;
+    }
+
+    public List<IEntity> getEntities() {
+        return this.entitiesControl.getEntities();
     }
 }
  

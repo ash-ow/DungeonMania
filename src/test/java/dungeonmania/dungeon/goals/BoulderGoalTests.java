@@ -22,6 +22,7 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class BoulderGoalTests implements IGoalTests {
+    @Override
     @Test
     public void SimpleGoalTest() {
         CharacterEntity player = new CharacterEntity(0, 1, "player");

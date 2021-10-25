@@ -1,6 +1,11 @@
 package dungeonmania.dungeon.goals;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.staticEntities.ExitEntity;
@@ -14,27 +19,9 @@ public class BoulderGoal implements IGoal {
     }
 
     public boolean checkGoal(Dungeon dungeon) {
-        boolean switchesCovered = false;
-        for (IEntity entity : dungeon.getEntities()) {
-            if (entity.getInfo().getType().equals("switch")) {
-                if (switchCoveredByBoulder(entity, dungeon)) {
-                    switchesCovered = true;
-                } else {
-                    return false;
-                }
-                    
-            }
-        }
-        return switchesCovered;
-    }
-    
-    public boolean switchCoveredByBoulder(IEntity switchEntity, Dungeon dungeon) {
-        for (IEntity entity : dungeon.getEntities()) {
-            if (entity.getInfo().getType().equals("boulder") && entity.isInSamePositionAs(switchEntity)) {
-                return true;
-            }
-        }
-        return false;
+        List<Position> switchPosition = dungeon.getEntities("switch").stream().map(e -> e.getPosition()).collect(Collectors.toList());
+        List<Position> boulderPosition = dungeon.getEntities("boulder").stream().map(e -> e.getPosition()).collect(Collectors.toList());
+        return boulderPosition.containsAll(switchPosition);
     }
 
     public String getType() {

@@ -20,6 +20,7 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class ExitGoalTests implements IGoalTests {
+    @Override
     @Test
     public void SimpleGoalTest() {
         CharacterEntity player = new CharacterEntity(0, 4, "player");

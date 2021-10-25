@@ -36,4 +36,14 @@ public class EntitiesControl {
     public static boolean entitiesUnpassable(List<IEntity> entityList) {
         return entityList.stream().anyMatch(entity -> !entity.passable());
     }
+
+    public List<IEntity> entitiesOfSameType(String type) {
+        List<IEntity> sameType = new ArrayList<>();
+        for (IEntity entity : entities) {
+            if (entity.getInfo().getType().equals(type)) {
+                sameType.add(entity);
+            }
+        }
+        return sameType;
+    }
 }

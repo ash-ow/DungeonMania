@@ -9,18 +9,15 @@ import dungeonmania.util.Position;
 
 public class ZombieToastEntity extends Entity implements IInteractingEntity, IMovingEntity, IBattlingEntity {
     public ZombieToastEntity() {
-        super("ZombieToastType");
+        this(0, 0, 0);
     }
-
-    public ZombieToastEntity(int x, int y, String type) {
-        super(
-            "zombieToast-" + x + "-" + y, // id
-            x, y, type
-        );
+    
+    public ZombieToastEntity(int x, int y, int layer) {
+        super(x, y, layer, "zombieToast");
     }
 
     @Override
-    public boolean passable() {
+    public boolean isPassable() {
         // TODO Auto-generated method stub
         return false;
     }

@@ -3,7 +3,6 @@ package dungeonmania.entities.movingEntityTests;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
-import dungeonmania.entities.IMovingEntityTest;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.movingEntities.SpiderEntity;
@@ -19,7 +18,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
     @Test
     public void TestInteraction() {
         SpiderEntity spider = new SpiderEntity();
-        CharacterEntity character = new CharacterEntity(0, 1, "CharacterType");
+        CharacterEntity character = new CharacterEntity(0, 1, 0);
 
         character.move(Direction.UP);
         assertEquals(spider.getPosition(), character.getPosition());
@@ -43,13 +42,13 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        SpiderEntity spider = new SpiderEntity(0, 0, "SpiderType");
+        SpiderEntity spider = new SpiderEntity(0, 0, 0);
         assertEntityResponseInfoEquals(
             spider,
-            "spider-0-0",
-            "SpiderType",
+            "spider-0-0-0",
+            "spider",
             new Position(0,0),
-            true
+            false
         );
     }
 

@@ -1,26 +1,26 @@
 package dungeonmania.entities.collectableEntities.buildableEntities;
 
-import dungeonmania.entities.collectableEntities.Arrows;
-import dungeonmania.entities.collectableEntities.Wood;
+import dungeonmania.entities.collectableEntities.ArrowsEntity;
+import dungeonmania.entities.collectableEntities.WoodEntity;
 
 public class ShieldEntity extends BuildableEntity {
     public ShieldEntity() {
-        super("ShieldType");
+        this(0, 0, 0);
     }
-
-    protected ShieldEntity(String id, int x, int y, String type) {
-        super(id, x, y, type);
+    
+    public ShieldEntity(int x, int y, int layer) {
+        super(x, y, layer, "shield");
     }
     
     @Override
     public void initialiseRequiredComponents() {
         // TODO Get real required components
-        this.requiredComponents.put(new Wood(), 1);
-        this.requiredComponents.put(new Arrows(), 3);
+        this.requiredComponents.put(new WoodEntity(), 1);
+        this.requiredComponents.put(new ArrowsEntity(), 3);
     }
 
     @Override
-    public boolean passable() {
+    public boolean isPassable() {
         // TODO Auto-generated method stub
         return false;
     }

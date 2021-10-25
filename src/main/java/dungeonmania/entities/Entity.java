@@ -5,25 +5,17 @@ import dungeonmania.util.Position;
 
 public abstract class Entity implements IEntity {
     protected Position position;
-    private String id;
-    private String type;
-
-    protected Entity(String type) {
-        this(type, 0, 0, type);
-    }
+    protected String id;
+    protected String type;
     
-    protected Entity(String id, int x, int y, String type) {
-        this.id = id;
-        this.position = new Position(x, y);
+    protected Entity(int x, int y, int layer, String type) {
         this.type = type;
+        this.position = new Position(x, y, layer);
+        this.id = type + "-" + x + "-" + y + "-" + layer;
     }
 
     public EntityResponse getInfo() {
-        return new EntityResponse(id, type, position, true);
-    }
-
-    public Position getPosition() {
-        return this.position;
+        return new EntityResponse(id, type, position, isPassable());
     }
 
     public String getId() {
@@ -32,5 +24,13 @@ public abstract class Entity implements IEntity {
 
     public String getType() {
         return this.type;
+    }
+
+    public Position getPosition() {
+        return this.position;
+    }
+
+	public boolean isInSamePositionAs(IEntity ent) {
+        return this.getPosition().equals(ent.getPosition());
     }
 }

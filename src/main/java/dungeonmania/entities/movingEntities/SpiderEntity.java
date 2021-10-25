@@ -9,19 +9,16 @@ import dungeonmania.util.Position;
 
 public class SpiderEntity extends Entity implements IInteractingEntity, IMovingEntity, IBattlingEntity {
     public SpiderEntity() {
-        super("SpiderType");
+        this(0, 0, 0);
     }
-
-    public SpiderEntity(int x, int y, String type) {
-        super(
-            "spider-" + x + "-" + y, // id
-            x, y, type
-        );
+    
+    public SpiderEntity(int x, int y, int layer) {
+        super(x, y, layer, "spider");
     }
 
     @Override
-    public boolean passable() {
-         // TODO Auto-generated method stub
+    public boolean isPassable() {
+        // TODO Auto-generated method stub
         return false;
     }
 
@@ -30,7 +27,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
         this.position = position;
     }
 
-//region Description
+//region Battle
     private float health = 100;
 
     @Override

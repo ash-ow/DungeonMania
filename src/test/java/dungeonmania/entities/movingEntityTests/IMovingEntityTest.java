@@ -1,4 +1,4 @@
-package dungeonmania.entities;
+package dungeonmania.entities.movingEntityTests;
 
 import dungeonmania.util.Position;
 

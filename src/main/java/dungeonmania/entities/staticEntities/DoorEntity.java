@@ -1,12 +1,19 @@
 package dungeonmania.entities.staticEntities;
 
-public class DoorEntity extends StaticEntity {
+import dungeonmania.entities.Entity;
 
-    public DoorEntity(int x, int y, int layer, String type) {
-        super(x, y, layer, type);
+public class DoorEntity extends Entity {
+    public DoorEntity() {
+        this(0, 0, 0);
     }
+    
+    public DoorEntity(int x, int y, int layer) {
+        super(x, y, layer, "door");
+    }
+    
     @Override
-    public boolean passable() {
+    public boolean isPassable() {
+        // TODO implement locking
         return false;
     }
 }

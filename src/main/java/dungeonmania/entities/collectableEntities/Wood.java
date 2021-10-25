@@ -1,6 +1,7 @@
 package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.Entity;
+import dungeonmania.util.Position;
 
 public class Wood extends Entity implements ICollectableEntity {
     public Wood() {
@@ -17,5 +18,10 @@ public class Wood extends Entity implements ICollectableEntity {
     public boolean passable() {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    @Override
+    public void setPosition(Position position) {
+        this.position = position;
     }
 }

@@ -1,6 +1,7 @@
 package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.Entity;
+import dungeonmania.util.Position;
 
 public class Bomb extends Entity implements ICollectableEntity {
     public Bomb() {
@@ -18,4 +19,14 @@ public class Bomb extends Entity implements ICollectableEntity {
         // TODO Auto-generated method stub
         return false;
     }
+
+    @Override
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public void explode(){
+        
+    }
+
 }

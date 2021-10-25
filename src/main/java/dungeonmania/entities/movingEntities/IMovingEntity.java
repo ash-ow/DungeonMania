@@ -16,4 +16,10 @@ public interface IMovingEntity extends IEntity {
             this.getPosition().translateBy(direction)
         );
     }
+
+    public default void move(Direction direction, int layer) {
+        this.setPosition(
+            this.getPosition().translateBy(direction).asLayer(layer)
+        );
+    }
 }

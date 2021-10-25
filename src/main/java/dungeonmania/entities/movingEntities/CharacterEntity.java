@@ -1,10 +1,14 @@
 package dungeonmania.entities.movingEntities;
 
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.IEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Position;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
+    private EntitiesControl inventory = new EntitiesControl();
+
     public CharacterEntity() {
         super("CharacterType");
     }
@@ -53,4 +57,16 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.health -= ((enemyHealth * enemyDamage) / 10);
     }
 //endregion
+
+    public void addEntityToInventory(IEntity entity) {
+
+    }
+
+    public EntitiesControl getInventory() {
+        return inventory;
+    }
+
+    public void removeEntityFromInventory(IEntity entity) {
+
+    }
 }

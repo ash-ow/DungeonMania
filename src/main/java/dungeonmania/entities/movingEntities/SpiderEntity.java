@@ -56,6 +56,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
         // To do!!!!
         System.out.println("Oh shit that's a spider!");
         this.move(Direction.DOWN);
-        return false;
+        //player.move(direction);
+        return true;
     }
 }

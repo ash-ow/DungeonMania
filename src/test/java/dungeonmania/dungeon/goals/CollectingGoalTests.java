@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
-import dungeonmania.entities.IMovingEntityTest;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;

@@ -81,10 +81,13 @@ public class Dungeon {
         Position target = player.getPosition().translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.entitiesFromPosition(target);
         List <IInteractingEntity> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);
+        boolean interacted = false;
         for (IInteractingEntity entity : targetInteractable) { // Slight bug if player interacts with many things stacked on top of each other- keeps moving
-            entity.interactWithPlayer(entitiesControl, direction, player);
+            if (entity.interactWithPlayer(entitiesControl, direction, player)) {
+                interacted = true;
+            }
         }
-        if ((targetEntities.size() == 0) || !EntitiesControl.entitiesUnpassable(targetEntities)) {
+        if ((targetEntities.size() == 0) || (!EntitiesControl.entitiesUnpassable(targetEntities) && !interacted)) {
             player.move(direction);
         }
     }

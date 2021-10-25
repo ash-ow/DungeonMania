@@ -23,7 +23,15 @@ public class Armour extends Entity implements ICollectableEntity {
         return false;
     }
 
-    @Override
+    // public void useArmour(Character character) {
+    //     if (durability > 0) {
+    //         durability--;
+    //     }
+    //     if (durability == 0) {
+    //          To do: Player function to remove armour     
+    //     }
+    // }
+
     public void setPosition(Position position) {
         this.position = position;
     }

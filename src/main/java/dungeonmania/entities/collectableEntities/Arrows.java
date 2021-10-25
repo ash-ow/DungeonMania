@@ -20,7 +20,7 @@ public class Arrows extends Entity implements ICollectableEntity {
         return false;
     }
 
-    @Override
+    
     public void setPosition(Position position) {
         this.position = position;
     }

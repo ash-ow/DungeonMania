@@ -2,6 +2,7 @@ package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.Entity;
 import dungeonmania.util.Position;
+import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public class Sword extends Entity implements ICollectableEntity {
     public int durability;
@@ -22,11 +23,19 @@ public class Sword extends Entity implements ICollectableEntity {
         // TODO Auto-generated method stub
         return false;
     }
-
-    @Override
+    
     public void setPosition(Position position) {
         this.position = position;
     }
+
+    // public void useSword(Character character) {
+    //     if (durability > 0) {
+    //         durability--;
+    //     }
+    //      if (durability == 0) {
+    //          To do: Player function to remove armour     
+    //     }
+    // }
 
     public int getDurability(){
         return this.durability;

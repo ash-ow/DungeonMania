@@ -55,7 +55,7 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IMo
 //endregion
 
     @Override
-    public boolean interactWithPlayer(EntitiesControl entities, Direction direction) {
+    public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
         // To do!!!!
         System.out.println("zombie toast?? For real?");
         this.move(Direction.DOWN);

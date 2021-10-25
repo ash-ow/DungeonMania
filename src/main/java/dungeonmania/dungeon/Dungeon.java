@@ -100,15 +100,10 @@ public class Dungeon {
     public void tick(Direction direction) {
         Position target = player.getPosition().translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.entitiesFromPosition(target);
-        IInteractingEntity boulder = (IInteractingEntity) EntitiesControl.entitiesContainsType(targetEntities, BoulderEntity.class);
-
-        if (boulder != null) {
-            if (boulder.interactWithPlayer(entitiesControl, direction)) {
-                player.move(direction);
-                return;
-            }
+        List <IInteractingEntity> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);
+        for (IInteractingEntity entity : targetInteractable) { // Slight bug if player interacts with many things stacked on top of each other- keeps moving
+            entity.interactWithPlayer(entitiesControl, direction, player);
         }
-
         if ((targetEntities.size() == 0) || !EntitiesControl.entitiesUnpassable(targetEntities)) {
             player.move(direction);
         }

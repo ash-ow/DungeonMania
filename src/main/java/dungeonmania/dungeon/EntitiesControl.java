@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.util.Position;
 
 public class EntitiesControl {
@@ -31,6 +32,10 @@ public class EntitiesControl {
 
     public static IEntity entitiesContainsType(List<IEntity> entityList, Class<?> cls) {
         return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findAny().orElse(null);
+    }
+
+    public List<IInteractingEntity> entitiesInteractableInRange(List<IEntity> entityList) {
+        return entityList.stream().filter(entity -> entity instanceof IInteractingEntity).map(IInteractingEntity.class::cast).collect(Collectors.toList());
     }
 
     public static boolean entitiesUnpassable(List<IEntity> entityList) {

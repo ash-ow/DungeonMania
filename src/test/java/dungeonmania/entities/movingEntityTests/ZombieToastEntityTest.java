@@ -24,7 +24,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         assertEquals(spider.getPosition(), character.getPosition());
         
         // TODO This is only testing the stub in the ZombieToastEntity class - not the actual interaction between the two
-        spider.interactWithPlayer(new EntitiesControl(), Direction.DOWN); // TODO I think this should be run automatically when positions are equal
+        spider.interactWithPlayer(new EntitiesControl(), Direction.DOWN, character); // TODO I think this should be run automatically when positions are equal
         assertEquals(new Position(0,1), character.getPosition());
     }
 

@@ -3,7 +3,6 @@ package dungeonmania.entities.movingEntityTests;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
-import dungeonmania.entities.IMovingEntityTest;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.util.Direction;
@@ -17,15 +16,15 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Override
     @Test
     public void TestInteraction() {
-        ZombieToastEntity spider = new ZombieToastEntity();
-        CharacterEntity character = new CharacterEntity(0, 1, "CharacterType");
+        ZombieToastEntity zombie = new ZombieToastEntity();
+        CharacterEntity character = new CharacterEntity(0, 1, 0);
 
         character.move(Direction.UP);
-        assertEquals(spider.getPosition(), character.getPosition());
+        assertEquals(zombie.getPosition(), character.getPosition());
         
         // TODO This is only testing the stub in the ZombieToastEntity class - not the actual interaction between the two
-        spider.interactWithPlayer(new EntitiesControl(), Direction.DOWN); // TODO I think this should be run automatically when positions are equal
-        assertEquals(new Position(0,1), character.getPosition());
+        zombie.interactWithPlayer(new EntitiesControl(), Direction.DOWN); // TODO I think this should be run automatically when positions are equal
+        assertEquals(new Position(0,1), zombie.getPosition());
     }
 
     @Override
@@ -42,13 +41,13 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        ZombieToastEntity zombie = new ZombieToastEntity(0, 0, "ZombieToastType");
+        ZombieToastEntity zombie = new ZombieToastEntity(0, 0, 0);
         assertEntityResponseInfoEquals(
             zombie,
-            "zombieToast-0-0",
-            "ZombieToastType",
+            "zombieToast-0-0-0",
+            "zombieToast",
             new Position(0,0),
-            true
+            false
         );
     }
 

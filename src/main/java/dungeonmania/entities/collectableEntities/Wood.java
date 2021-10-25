@@ -4,6 +4,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.util.Position;
 
 public class Wood extends Entity implements ICollectableEntity {
+    
     public Wood() {
         super("WoodType");
         //TODO Auto-generated constructor stub
@@ -15,13 +16,23 @@ public class Wood extends Entity implements ICollectableEntity {
     }
 
     @Override
-    public boolean passable() {
+    public boolean isPassable() {
         // TODO Auto-generated method stub
         return false;
     }
 
-    @Override
+
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    @Override
+    public void collected(){
+
+    }
+
+    @Override
+    public void used(){
+
     }
 }

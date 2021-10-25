@@ -1,7 +1,7 @@
 package dungeonmania.entities.collectableEntities;
 
-import dungeonmania.response.models.EntityResponse;
-import dungeonmania.util.Position;
-
-public class RareCollectableEntity extends CollectableEntity {    
+public abstract class RareCollectableEntity extends CollectableEntity {
+    protected RareCollectableEntity(int x, int y, int layer, String type) {
+        super(x, y, layer, type);
+    }    
 }

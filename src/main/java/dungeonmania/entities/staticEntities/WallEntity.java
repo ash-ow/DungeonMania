@@ -1,13 +1,18 @@
 package dungeonmania.entities.staticEntities;
 
-public class WallEntity extends StaticEntity{
+import dungeonmania.entities.Entity;
 
-    public WallEntity(int x, int y, int layer, String type) {
-        super(x, y, layer, type);
+public class WallEntity extends Entity {
+    public WallEntity() {
+        this(0, 0, 0);
+    }
+    
+    public WallEntity(int x, int y, int layer) {
+        super(x, y, layer, "wall");
     }
     
     @Override
-    public boolean passable() {
+    public boolean isPassable() {
         return false;
     }
 }

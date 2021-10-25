@@ -16,10 +16,10 @@ public class BowTest implements IBuildableEntityTests {
     public void TestIsBuildable() {
         BowEntity bow = new BowEntity();
         List<ICollectableEntity> inventory = new ArrayList<ICollectableEntity>();
-        inventory.add(new Wood());
-        inventory.add(new Arrows());
-        inventory.add(new Arrows());
-        inventory.add(new Arrows());
+        inventory.add(new WoodEntity());
+        inventory.add(new ArrowsEntity());
+        inventory.add(new ArrowsEntity());
+        inventory.add(new ArrowsEntity());
         assertTrue(bow.isBuildable(inventory));
     }
 
@@ -36,8 +36,8 @@ public class BowTest implements IBuildableEntityTests {
     public void TestIsNotBuildable_InventoryFullOfWrongItems() {
         BowEntity bow = new BowEntity();
         List<ICollectableEntity> inventory = new ArrayList<ICollectableEntity>();
-        inventory.add(new Arrows());
-        inventory.add(new Bomb());
+        inventory.add(new ArrowsEntity());
+        inventory.add(new BombEntity());
         assertFalse(bow.isBuildable(inventory));
         
     }
@@ -47,9 +47,9 @@ public class BowTest implements IBuildableEntityTests {
     public void TestIsNotBuildable_InsufficientCorrectItems() {
         BowEntity bow = new BowEntity();
         List<ICollectableEntity> inventory = new ArrayList<ICollectableEntity>();
-        inventory.add(new Wood());
-        inventory.add(new Arrows());
-        inventory.add(new Arrows());
+        inventory.add(new WoodEntity());
+        inventory.add(new ArrowsEntity());
+        inventory.add(new ArrowsEntity());
         assertFalse(bow.isBuildable(inventory));
         
     }

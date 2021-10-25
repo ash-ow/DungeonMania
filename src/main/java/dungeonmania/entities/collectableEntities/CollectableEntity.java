@@ -1,29 +1,9 @@
 package dungeonmania.entities.collectableEntities;
 
-import dungeonmania.response.models.EntityResponse;
-import dungeonmania.util.Position;
+import dungeonmania.entities.Entity;
 
-public abstract class CollectableEntity implements ICollectableEntity {
-    @Override
-    public boolean passable() {
-        return true;
-    }
-
-    @Override
-    public String getId() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public EntityResponse getInfo() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Position getPosition() {
-        // TODO Auto-generated method stub
-        return null;
+public abstract class CollectableEntity extends Entity implements ICollectableEntity {
+    protected CollectableEntity(int x, int y, int layer, String type) {
+        super(x, y, layer, type);
     }
 }

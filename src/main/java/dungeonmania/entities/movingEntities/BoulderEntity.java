@@ -2,8 +2,8 @@ package dungeonmania.entities.movingEntities;
 
 import java.util.List;
 
-import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.response.models.EntityResponse;
@@ -11,23 +11,19 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class BoulderEntity extends Entity implements IMovingEntity, IInteractingEntity {
-
     public BoulderEntity() {
-        super("boulder");
+        this(0, 0, 0);
     }
-
-    public BoulderEntity(int x, int y, int layer, String type) {
-        super(
-            "boulder-" + x + "-" + y, // id
-            x, y, type
-        );
+    
+    public BoulderEntity(int x, int y, int layer) {
+        super(x, y, layer, "boulder");
     }
-
+    
     @Override
-    public boolean passable() {
+    public boolean isPassable() {
         return false;
     }
-
+    
     @Override
     public void setPosition(Position position) {
         this.position = position;
@@ -48,6 +44,4 @@ public class BoulderEntity extends Entity implements IMovingEntity, IInteracting
         }
         return false;
     }
-
-
 }

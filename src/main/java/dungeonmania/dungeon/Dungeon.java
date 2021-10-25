@@ -9,10 +9,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import dungeonmania.dungeon.goals.Goals;
-import dungeonmania.entities.*;
+import dungeonmania.entities.IEntity;
+import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.staticEntities.*;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -39,31 +39,11 @@ public class Dungeon {
             String type = entityObj.get("type").getAsString();
             Integer xAxis = entityObj.get("x").getAsInt();
             Integer yAxis = entityObj.get("y").getAsInt();
-            List<IEntity> entitiesInPosition = this.entitiesControl.entitiesFromPosition(new Position(xAxis, yAxis));
-            Integer layer = entitiesInPosition.size();
-
-            switch (type) {
-                case "wall":
-                    this.entitiesControl.addEntities(new WallEntity(xAxis, yAxis, layer, type));
-                    break;
-                case "exit":
-                    this.entitiesControl.addEntities(new ExitEntity(xAxis, yAxis, layer, type));
-                    break;
-                case "door":
-                    this.entitiesControl.addEntities(new DoorEntity(xAxis, yAxis, layer, type));
-                    break;
-                case "portal":
-                    this.entitiesControl.addEntities(new PortalEntity(xAxis, yAxis, layer, type));
-                    break;
-                case "switch":
-                    this.entitiesControl.addEntities(new SwitchEntity(xAxis, yAxis, layer, type));
-                    break;
-                case "boulder":
-                    this.entitiesControl.addEntities(new BoulderEntity(xAxis, yAxis, layer, type));
-                    break;
-                case "player":
-                    this.player = new CharacterEntity(xAxis, yAxis, type);
-                    break;
+            Integer layer = this.entitiesControl.entitiesFromPosition(new Position(xAxis, yAxis)).size();
+            if (type.equals("player")) {
+                this.player = new CharacterEntity(xAxis, yAxis, layer);
+            } else {
+                this.entitiesControl.createEntity(xAxis, yAxis, layer, type);
             }
         }
         this.goals = new Goals(goalConditions);
@@ -98,9 +78,9 @@ public class Dungeon {
     }
 
     public void tick(Direction direction) {
-        Position target = player.getPosition().translateBy(direction);
-        List<IEntity> targetEntities = entitiesControl.entitiesFromPosition(target);
-        IInteractingEntity boulder = (IInteractingEntity) EntitiesControl.entitiesContainsType(targetEntities, BoulderEntity.class);
+        Position playerTargetPosition = player.getPosition().translateBy(direction);
+        List<IEntity> entitiesInTargetPosition = entitiesControl.entitiesFromPosition(playerTargetPosition);
+        IInteractingEntity boulder = (IInteractingEntity)EntitiesControl.getAllEntitiesOfType(entitiesInTargetPosition, BoulderEntity.class);
 
         if (boulder != null) {
             if (boulder.interactWithPlayer(entitiesControl, direction)) {
@@ -109,7 +89,7 @@ public class Dungeon {
             }
         }
 
-        if ((targetEntities.size() == 0) || !EntitiesControl.entitiesUnpassable(targetEntities)) {
+        if ((entitiesInTargetPosition.size() == 0) || !EntitiesControl.entitiesUnpassable(entitiesInTargetPosition)) {
             player.move(direction);
         }
     }

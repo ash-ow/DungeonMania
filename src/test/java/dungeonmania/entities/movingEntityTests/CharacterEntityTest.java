@@ -11,9 +11,7 @@ import org.junit.jupiter.api.Test;
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
-import dungeonmania.entities.IMovingEntityTest;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
@@ -40,8 +38,8 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
 
     @Test
     public void testSimpleRestriction() {
-        CharacterEntity player = new CharacterEntity(0, 4, "player");
-        WallEntity wall = new WallEntity(0, 3, 0, "wall");
+        CharacterEntity player = new CharacterEntity(0, 4, 0);
+        WallEntity wall = new WallEntity(0, 3, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(wall);
         String jsonGoals = "{ \"goal\": \"exit\"}";
@@ -55,13 +53,13 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        CharacterEntity player = new CharacterEntity(0, 4, "player");
+        CharacterEntity player = new CharacterEntity(0, 4, 0);
         assertEntityResponseInfoEquals(
             player,
-            "character-0-4",
-            "player",
+            "character-0-4-0",
+            "character",
             new Position(0,4),
-            true
+            false
         );
     }
 

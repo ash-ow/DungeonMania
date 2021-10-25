@@ -6,14 +6,11 @@ import dungeonmania.util.Position;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
     public CharacterEntity() {
-        super("CharacterType");
+        this(0, 0, 0);
     }
-
-    public CharacterEntity(int x, int y, String type) {
-        super(
-            "character-" + x + "-" + y, // id
-            x, y, type
-        );
+    
+    public CharacterEntity(int x, int y, int layer) {
+        super(x, y, layer, "character");
     }
 
     public EntityResponse getInfo() {
@@ -21,7 +18,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     @Override
-    public boolean passable() {
+    public boolean isPassable() {
         return false;
     }
 
@@ -30,7 +27,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.position = position;
     }
 
-//region Description
+//region Battling
     private float health = 100;
 
     @Override

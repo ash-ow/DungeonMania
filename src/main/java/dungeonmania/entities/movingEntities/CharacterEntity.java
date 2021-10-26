@@ -21,7 +21,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
     
     public CharacterEntity(int x, int y, int layer) {
-        super(x, y, layer, "character");
+        super(x, y, layer, "player");
     }
 
     public EntityResponse getInfo() {

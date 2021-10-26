@@ -13,9 +13,10 @@ import dungeonmania.entities.movingEntities.*;
 import dungeonmania.entities.staticEntities.*;
 
 public class EntitiesControl {
-    private List<IEntity> entities = new ArrayList<IEntity>();
+    private List<IEntity> entities;
 
     public EntitiesControl() {
+        entities = new ArrayList<IEntity>();
     }
 
     public void addEntities(IEntity entity) {
@@ -47,7 +48,7 @@ public class EntitiesControl {
     }
 
     public List<IEntity> entitiesFromPosition(Position position) {
-        return this.entities.stream().filter(entity -> entity.getPosition().equals(position)).collect(Collectors.toList());
+        return this.entities.stream().filter(entity -> entity != null && entity.getPosition().equals(position)).collect(Collectors.toList());
     }
 
     public List<IInteractingEntity> entitiesInteractableInRange(List<IEntity> entityList) {
@@ -59,31 +60,26 @@ public class EntitiesControl {
     }
 
     public void createEntity(Integer xAxis, Integer yAxis, Integer layer, String type) {
-        IEntity ent;
         switch (type) {
             case "wall":
-                ent = new WallEntity(xAxis, yAxis, layer);
+                this.entities.add(new WallEntity(xAxis, yAxis, layer));
                 break;
             case "exit":
-                ent = new ExitEntity(xAxis, yAxis, layer);
+                this.entities.add(new ExitEntity(xAxis, yAxis, layer));
                 break;
             case "door":
-                ent = new DoorEntity(xAxis, yAxis, layer);
+                this.entities.add(new DoorEntity(xAxis, yAxis, layer));
                 break;
             case "portal":
-                ent = new PortalEntity(xAxis, yAxis, layer);
+                this.entities.add(new PortalEntity(xAxis, yAxis, layer));
                 break;
             case "switch":
-                ent = new SwitchEntity(xAxis, yAxis, layer);
+                this.entities.add(new SwitchEntity(xAxis, yAxis, layer));
                 break;
             case "boulder":
-                ent = new BoulderEntity(xAxis, yAxis, layer);
-                break;
-            default:
-                ent = null;
+                this.entities.add(new BoulderEntity(xAxis, yAxis, layer));
                 break;
         }
-        this.entities.add(ent);
     }
 
     public List<IEntity> entitiesOfSameType(String type) {

@@ -74,7 +74,7 @@ public class Dungeon {
             entitiesInfo.add(entity.getInfo());
         }
         entitiesInfo.add(player.getInfo());
-        return new DungeonResponse(id, dungeonName, entitiesInfo, new ArrayList<>(), new ArrayList<>(), getGoals());
+        return new DungeonResponse(id, dungeonName, entitiesInfo, player.getInventoryInfo(), new ArrayList<>(), getGoals());
     }
 
     public void tick(Direction direction) {

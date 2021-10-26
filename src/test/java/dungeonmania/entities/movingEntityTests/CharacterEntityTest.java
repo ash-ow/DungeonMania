@@ -9,8 +9,10 @@ import com.google.gson.*;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
+import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
@@ -89,5 +91,16 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         assertEquals(98.8, zombie.getHealth(), 0.1);
 
         // TODO add assertions for character death
+    }
+
+    @Test
+    public void TestInventory() {
+        CharacterEntity character = new CharacterEntity();
+        WoodEntity wood = new WoodEntity();
+        character.addEntityToInventory(wood);
+        EntitiesControl inventory = character.getInventory();
+        assertEquals(1, inventory.getEntities().size());
+        character.removeEntityFromInventory(wood);
+        assertEquals(0, inventory.getEntities().size());
     }
 }

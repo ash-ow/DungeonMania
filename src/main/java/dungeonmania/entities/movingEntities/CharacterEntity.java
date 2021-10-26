@@ -7,8 +7,10 @@ import java.util.stream.Collectors;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
+import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
@@ -81,4 +83,21 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return info;
     }
 //endregion
+
+    @Override
+    public void move(Direction direction, EntitiesControl entitiesControl) {
+        Position target = position.translateBy(direction);
+        List<IEntity> targetEntities = entitiesControl.entitiesFromPosition(target);
+        List <IInteractingEntity> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);
+        boolean interacted = false;
+        for (IInteractingEntity entity : targetInteractable) { // Slight bug if player interacts with many things stacked on top of each other- keeps moving
+            if (entity.interactWithPlayer(entitiesControl, direction, this)) {
+                interacted = true;
+                this.move(direction);
+            }
+        }
+        if ((targetEntities.size() == 0) || (!EntitiesControl.entitiesUnpassable(targetEntities) && !interacted)) {
+            this.move(direction);
+        }
+    }
 }

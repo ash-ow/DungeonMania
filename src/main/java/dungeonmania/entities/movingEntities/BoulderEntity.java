@@ -40,7 +40,6 @@ public class BoulderEntity extends Entity implements IMovingEntity, IInteracting
         List<IEntity> targetEntities = entities.entitiesFromPosition(target);
         if ((targetEntities.size() == 0) || !EntitiesControl.entitiesUnpassable(targetEntities)) {
             this.move(direction, targetEntities.size());
-            player.move(direction);
             return true;
         }
         return false;

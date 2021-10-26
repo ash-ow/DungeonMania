@@ -23,14 +23,14 @@ public class Armour extends Entity implements ICollectableEntity {
         return false;
     }
 
-    // public void useArmour(Character character) {
-    //     if (durability > 0) {
-    //         durability--;
-    //     }
-    //     if (durability == 0) {
-    //          To do: Player function to remove armour     
-    //     }
-    // }
+    public void useArmour(Character character) {
+        // INCOMPLETE
+        if (durability > 0) {
+            durability--;
+        }
+        if (durability == 0) {     
+        }
+    }
 
     public void setPosition(Position position) {
         this.position = position;
@@ -42,6 +42,16 @@ public class Armour extends Entity implements ICollectableEntity {
 
     public void setDurability(int durability){
         this.durability = durability;
+    }
+
+    @Override
+    public void collected(){
+
+    }
+
+    @Override
+    public void used(){
+
     }
 
 }

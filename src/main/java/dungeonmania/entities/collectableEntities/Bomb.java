@@ -29,4 +29,13 @@ public class Bomb extends Entity implements ICollectableEntity {
         
     }
 
+    @Override
+    public void collected(){
+
+    }
+
+    @Override
+    public void used(){
+
+    }
 }

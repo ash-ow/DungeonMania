@@ -28,14 +28,15 @@ public class Sword extends Entity implements ICollectableEntity {
         this.position = position;
     }
 
-    // public void useSword(Character character) {
-    //     if (durability > 0) {
-    //         durability--;
-    //     }
-    //      if (durability == 0) {
-    //          To do: Player function to remove armour     
-    //     }
-    // }
+    public void useSword(Character character) {
+        // INCOMPLETE
+        if (durability > 0) {
+            durability--;
+        }
+         if (durability == 0) {
+             
+        }
+    }
 
     public int getDurability(){
         return this.durability;
@@ -45,4 +46,13 @@ public class Sword extends Entity implements ICollectableEntity {
         this.durability = durability;
     }
 
+    @Override
+    public void collected(){
+
+    }
+
+    @Override
+    public void used(){
+
+    }
 }

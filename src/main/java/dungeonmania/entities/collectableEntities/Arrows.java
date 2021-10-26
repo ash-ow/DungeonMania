@@ -15,7 +15,7 @@ public class Arrows extends Entity implements ICollectableEntity {
     }
 
     @Override
-    public boolean passable() {
+    public boolean isPassable() {
         // TODO Auto-generated method stub
         return false;
     }
@@ -23,6 +23,16 @@ public class Arrows extends Entity implements ICollectableEntity {
     
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    @Override
+    public void collected(){
+
+    }
+
+    @Override
+    public void used(){
+
     }
 
 }

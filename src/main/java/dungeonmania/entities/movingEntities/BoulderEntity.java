@@ -35,7 +35,7 @@ public class BoulderEntity extends Entity implements IInteractingEntity {
         Position target = this.getPosition().translateBy(direction);
         List<IEntity> targetEntities = entities.entitiesFromPosition(target);
         if ((targetEntities.size() == 0) || !EntitiesControl.entitiesUnpassable(targetEntities)) {
-            this.move(direction, targetEntities.size());
+            position = position.translateBy(direction).asLayer(targetEntities.size());
             return true;
         }
         return false;

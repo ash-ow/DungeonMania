@@ -10,10 +10,7 @@ import com.google.gson.JsonObject;
 
 import dungeonmania.dungeon.goals.Goals;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IInteractingEntity;
-import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.movingEntities.SpiderEntity;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -80,6 +77,7 @@ public class Dungeon {
 
     public void tick(Direction direction) {
         player.move(direction, entitiesControl);
+        entitiesControl.MovingEntities(direction, player);
     }
 
     public String getGoals() {

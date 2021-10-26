@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
@@ -33,8 +34,16 @@ public class EntitiesControl {
         this.entities = entities;
     }
 
-    public List<IMovingEntity> getMovingEntities() {
-        return entities.stream().filter(entity -> entity instanceof IMovingEntity).map(IMovingEntity.class::cast).collect(Collectors.toList());
+    public void MovingEntities(Direction direction, CharacterEntity player) {
+        List<IMovingEntity> movingEntities = entities.stream()
+            .filter(entity -> entity instanceof IMovingEntity)
+            .map(IMovingEntity.class::cast)
+            .collect(Collectors.toList());
+
+        for (IMovingEntity entity : movingEntities) {
+            entity.move(direction, this, player);
+        }
+
     }
 
     public List<IEntity> entitiesFromPosition(Position position) {

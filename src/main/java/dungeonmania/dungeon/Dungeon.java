@@ -71,7 +71,7 @@ public class Dungeon {
     public DungeonResponse getInfo() {
         List<EntityResponse> entitiesInfo = new ArrayList<>();
         for (IEntity entity : entitiesControl.getEntities()) {
-            entitiesInfo.add(entity.getInfo());
+            entitiesInfo.add(entity.getInfo());          
         }
         entitiesInfo.add(player.getInfo());
         return new DungeonResponse(id, dungeonName, entitiesInfo, player.getInventoryInfo(), new ArrayList<>(), getGoals());

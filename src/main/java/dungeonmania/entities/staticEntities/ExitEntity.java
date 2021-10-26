@@ -13,6 +13,6 @@ public class ExitEntity extends Entity {
     
     @Override
     public boolean isPassable() {
-        return false;
+        return true;
     }
 }

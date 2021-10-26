@@ -16,7 +16,7 @@ public class SwitchEntityTest implements IEntityTests {
             "switch-0-0-0",
             "switch",
             new Position(0,0,0),
-            true
+            false
         );
     }
 }

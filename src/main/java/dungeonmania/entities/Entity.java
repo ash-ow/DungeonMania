@@ -15,7 +15,7 @@ public abstract class Entity implements IEntity {
     }
 
     public EntityResponse getInfo() {
-        return new EntityResponse(id, type, position, isPassable());
+        return new EntityResponse(id, type, position, false);
     }
 
     public String getId() {

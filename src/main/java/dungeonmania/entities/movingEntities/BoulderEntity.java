@@ -35,11 +35,12 @@ public class BoulderEntity extends Entity implements IMovingEntity, IInteracting
     }
 
     @Override
-    public boolean interactWithPlayer(EntitiesControl entities, Direction direction) {
+    public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
         Position target = this.getPosition().translateBy(direction);
         List<IEntity> targetEntities = entities.entitiesFromPosition(target);
         if ((targetEntities.size() == 0) || !EntitiesControl.entitiesUnpassable(targetEntities)) {
             this.move(direction, targetEntities.size());
+            player.move(direction);
             return true;
         }
         return false;

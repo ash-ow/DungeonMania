@@ -24,8 +24,8 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         assertEquals(spider.getPosition(), character.getPosition());
         
         // TODO This is only testing the stub in the SpiderEntity class - not the actual interaction between the two
-        spider.interactWithPlayer(new EntitiesControl(), Direction.DOWN); // TODO I think this should be run automatically when positions are equal
-        assertEquals(new Position(0,1), spider.getPosition());
+        spider.interactWithPlayer(new EntitiesControl(), Direction.UP, character); // TODO I think this should be run automatically when positions are equal
+        assertEquals(new Position(0,0), character.getPosition());
     }
 
     @Override

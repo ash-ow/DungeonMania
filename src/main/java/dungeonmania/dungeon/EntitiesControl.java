@@ -72,4 +72,14 @@ public class EntitiesControl {
         }
         this.entities.add(ent);
     }
+
+    public List<IEntity> entitiesOfSameType(String type) {
+        List<IEntity> sameType = new ArrayList<>();
+        for (IEntity entity : entities) {
+            if (entity.getInfo().getType().equals(type)) {
+                sameType.add(entity);
+            }
+        }
+        return sameType;
+    }
 }

@@ -97,7 +97,6 @@ public class Goals {
     }
 
     public String checkGoals(Dungeon dungeon) {
-        System.out.println(reqString);
         for (IGoal goal : goals) {
             goalsMap.put(goal.getType(), goal.checkGoal(dungeon));
         }
@@ -105,7 +104,6 @@ public class Goals {
         for (String key : goalsMap.keySet()) {
             boolParse = boolParse.replace(key, goalsMap.get(key).toString());
         }
-        System.out.println(boolParse);
         ScriptEngineManager sem = new ScriptEngineManager();
         ScriptEngine se = sem.getEngineByName("JavaScript");
         boolean check = false;
@@ -114,7 +112,6 @@ public class Goals {
         } catch (ScriptException e) {
             System.out.println("Invalid Expression");
         }
-        System.out.println(check);
         if (check) {
             return "";
         } else {

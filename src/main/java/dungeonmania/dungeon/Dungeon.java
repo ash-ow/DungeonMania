@@ -100,8 +100,8 @@ public class Dungeon {
         return this.player;
     }
 
-    public List<IEntity> getEntities() {
-        return this.entitiesControl.getEntities();
+    public List<IEntity> getEntities(String type) {
+        return this.entitiesControl.entitiesOfSameType(type);
     }
 }
  

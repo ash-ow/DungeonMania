@@ -15,7 +15,7 @@ public class ExitGoal implements IGoal {
     }
 
     public boolean checkGoal(Dungeon dungeon) {
-        for (IEntity e : dungeon.getEntities()) {
+        for (IEntity e : dungeon.getEntities("exit")) {
             if (exitPlayerCheck(dungeon, e)) {
                 return true;
             }
@@ -24,7 +24,7 @@ public class ExitGoal implements IGoal {
     }
 
     public boolean exitPlayerCheck(Dungeon dungeon, IEntity entity) {
-        return entity.getInfo().getType().equals("exit") && dungeon.getPlayer().isInSamePositionAs(entity);
+        return dungeon.getPlayer().isInSamePositionAs(entity);
     }
 
     public String getType() {

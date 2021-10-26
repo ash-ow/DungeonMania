@@ -52,10 +52,11 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
 //endregion
 
     @Override
-    public boolean interactWithPlayer(EntitiesControl entities, Direction direction) {
-        // TODO
+    public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
+        // To do!!!!
         System.out.println("Oh shit that's a spider!");
         this.move(Direction.DOWN);
-        return false;
+        //player.move(direction);
+        return true;
     }
 }

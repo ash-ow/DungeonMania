@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.util.Position;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
@@ -20,6 +21,10 @@ public class EntitiesControl {
         entities.add(entity);
     }
 
+    public void removeEntity(IEntity entity) {
+        entities.remove(entity);
+    }
+
     public List<IEntity> getEntities() {
         return entities;
     }
@@ -32,8 +37,8 @@ public class EntitiesControl {
         return this.entities.stream().filter(entity -> entity.getPosition().equals(position)).collect(Collectors.toList());
     }
 
-    public static IEntity getAllEntitiesOfType(List<IEntity> entityList, Class<?> cls) {
-        return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findAny().orElse(null);
+    public List<IInteractingEntity> entitiesInteractableInRange(List<IEntity> entityList) {
+        return entityList.stream().filter(entity -> entity instanceof IInteractingEntity).map(IInteractingEntity.class::cast).collect(Collectors.toList());
     }
 
     public static boolean entitiesUnpassable(List<IEntity> entityList) {
@@ -66,5 +71,15 @@ public class EntitiesControl {
                 break;
         }
         this.entities.add(ent);
+    }
+
+    public List<IEntity> entitiesOfSameType(String type) {
+        List<IEntity> sameType = new ArrayList<>();
+        for (IEntity entity : entities) {
+            if (entity.getInfo().getType().equals(type)) {
+                sameType.add(entity);
+            }
+        }
+        return sameType;
     }
 }

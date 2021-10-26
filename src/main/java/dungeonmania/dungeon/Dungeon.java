@@ -74,22 +74,20 @@ public class Dungeon {
             entitiesInfo.add(entity.getInfo());
         }
         entitiesInfo.add(player.getInfo());
-        return new DungeonResponse(id, dungeonName, entitiesInfo, new ArrayList<>(), new ArrayList<>(), getGoals());
+        return new DungeonResponse(id, dungeonName, entitiesInfo, player.getInventoryInfo(), new ArrayList<>(), getGoals());
     }
 
     public void tick(Direction direction) {
-        Position playerTargetPosition = player.getPosition().translateBy(direction);
-        List<IEntity> entitiesInTargetPosition = entitiesControl.entitiesFromPosition(playerTargetPosition);
-        IInteractingEntity boulder = (IInteractingEntity)EntitiesControl.getAllEntitiesOfType(entitiesInTargetPosition, BoulderEntity.class);
-
-        if (boulder != null) {
-            if (boulder.interactWithPlayer(entitiesControl, direction)) {
-                player.move(direction);
-                return;
+        Position target = player.getPosition().translateBy(direction);
+        List<IEntity> targetEntities = entitiesControl.entitiesFromPosition(target);
+        List <IInteractingEntity> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);
+        boolean interacted = false;
+        for (IInteractingEntity entity : targetInteractable) { // Slight bug if player interacts with many things stacked on top of each other- keeps moving
+            if (entity.interactWithPlayer(entitiesControl, direction, player)) {
+                interacted = true;
             }
         }
-
-        if ((entitiesInTargetPosition.size() == 0) || !EntitiesControl.entitiesUnpassable(entitiesInTargetPosition)) {
+        if ((targetEntities.size() == 0) || (!EntitiesControl.entitiesUnpassable(targetEntities) && !interacted)) {
             player.move(direction);
         }
     }
@@ -102,8 +100,8 @@ public class Dungeon {
         return this.player;
     }
 
-    public List<IEntity> getEntities() {
-        return this.entitiesControl.getEntities();
+    public List<IEntity> getEntities(String type) {
+        return this.entitiesControl.entitiesOfSameType(type);
     }
 }
  

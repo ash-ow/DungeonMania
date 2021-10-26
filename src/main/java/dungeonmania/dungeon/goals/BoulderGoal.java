@@ -1,8 +1,15 @@
 package dungeonmania.dungeon.goals;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.entities.IEntity;
+import dungeonmania.entities.staticEntities.ExitEntity;
+import dungeonmania.util.Position;
 
 public class BoulderGoal implements IGoal {
     private String type;
@@ -12,9 +19,11 @@ public class BoulderGoal implements IGoal {
     }
 
     public boolean checkGoal(Dungeon dungeon) {
-        return false;
+        List<Position> switchPosition = dungeon.getEntities("switch").stream().map(e -> e.getPosition()).collect(Collectors.toList());
+        List<Position> boulderPosition = dungeon.getEntities("boulder").stream().map(e -> e.getPosition()).collect(Collectors.toList());
+        return boulderPosition.containsAll(switchPosition);
     }
-    
+
     public String getType() {
         return type;
     }

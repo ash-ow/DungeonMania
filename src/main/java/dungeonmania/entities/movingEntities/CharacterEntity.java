@@ -55,8 +55,9 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 //endregion
 
+//region Inventory
     public void addEntityToInventory(IEntity entity) {
-
+        inventory.addEntities(entity);
     }
 
     public EntitiesControl getInventory() {
@@ -64,6 +65,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     public void removeEntityFromInventory(IEntity entity) {
-
+        inventory.removeEntity(entity);
     }
+//endregion
 }

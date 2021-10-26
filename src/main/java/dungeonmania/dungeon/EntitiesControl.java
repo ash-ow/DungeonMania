@@ -21,6 +21,10 @@ public class EntitiesControl {
         entities.add(entity);
     }
 
+    public void removeEntity(IEntity entity) {
+        entities.remove(entity);
+    }
+
     public List<IEntity> getEntities() {
         return entities;
     }
@@ -31,10 +35,6 @@ public class EntitiesControl {
 
     public List<IEntity> entitiesFromPosition(Position position) {
         return this.entities.stream().filter(entity -> entity.getPosition().equals(position)).collect(Collectors.toList());
-    }
-
-    public static IEntity getAllEntitiesOfType(List<IEntity> entityList, Class<?> cls) {
-        return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findAny().orElse(null);
     }
 
     public List<IInteractingEntity> entitiesInteractableInRange(List<IEntity> entityList) {

@@ -1,8 +1,11 @@
 package dungeonmania.entities.movingEntityTests;
 
+import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
+import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.movingEntities.SpiderEntity;
@@ -11,6 +14,7 @@ import dungeonmania.util.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,7 +38,6 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
     @Override
     @Test
     public void TestMove() {
-        // TODO The spider is supposed to loop around its spawn location - this test does not reflect that
         SpiderEntity spider = new SpiderEntity(5, 5, 0);
         assertPositionEquals(spider.getPosition(), 5, 5);
 
@@ -47,6 +50,26 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         }
     }
 
+    @Test
+    public void TestMoveHitBoulder() {
+        CharacterEntity player = new CharacterEntity(0, 0, 0);
+        SpiderEntity spider = new SpiderEntity(5, 5, 0);
+        BoulderEntity boulder = new BoulderEntity(6, 5, 0);
+        ArrayList<IEntity> entities = new ArrayList<>();
+
+        entities.add(boulder);
+        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player);
+
+        List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(6, 4), new Position(6, 4),
+            new Position(5, 4), new Position(4, 4), new Position(4, 5), new Position(4, 6), new Position(5, 6), new Position(6, 6),
+            new Position(6, 6));
+        
+        for (int i = 0; i < expectPositions.size(); i++) {
+            dungeon.tick(Direction.RIGHT);
+            assertEquals(spider.getPosition(), expectPositions.get(i));
+        }
+    }
+    
     @Override
     @Test
     public void TestEntityResponseInfo() {

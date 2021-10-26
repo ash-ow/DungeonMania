@@ -33,6 +33,10 @@ public class EntitiesControl {
         this.entities = entities;
     }
 
+    public List<IMovingEntity> getMovingEntities() {
+        return entities.stream().filter(entity -> entity instanceof IMovingEntity).map(IMovingEntity.class::cast).collect(Collectors.toList());
+    }
+
     public List<IEntity> entitiesFromPosition(Position position) {
         return this.entities.stream().filter(entity -> entity.getPosition().equals(position)).collect(Collectors.toList());
     }

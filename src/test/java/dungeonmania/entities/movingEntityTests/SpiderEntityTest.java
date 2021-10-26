@@ -11,6 +11,9 @@ import dungeonmania.util.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTest, IEntityTests, IBattlingEntityTest {
@@ -32,11 +35,16 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
     @Test
     public void TestMove() {
         // TODO The spider is supposed to loop around its spawn location - this test does not reflect that
-        IMovingEntity spider = new SpiderEntity();
-        assertPositionEquals(spider.getPosition(), 0, 0);
+        SpiderEntity spider = new SpiderEntity(5, 5, 0);
+        assertPositionEquals(spider.getPosition(), 5, 5);
+
+        List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(6, 4), new Position(6, 5),
+            new Position(6, 6), new Position(5, 6), new Position(4, 6), new Position(4, 5), new Position(4, 4), new Position(5, 4));
         
-        spider.move(Direction.DOWN);
-        assertPositionEquals(spider.getPosition(), 0, 1);
+        for (int i = 0; i < expectPositions.size(); i++) {
+            spider.move(Direction.DOWN, 0);
+            assertEquals(spider.getPosition(), expectPositions.get(i));
+        }
     }
 
     @Override

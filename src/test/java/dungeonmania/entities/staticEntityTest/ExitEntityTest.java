@@ -16,7 +16,7 @@ public class ExitEntityTest implements IEntityTests {
             "exit-0-0-0",
             "exit",
             new Position(0,0,0),
-            false
+            true
         );
     }
 }

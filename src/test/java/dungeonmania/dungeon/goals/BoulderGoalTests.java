@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
-import dungeonmania.entities.IMovingEntityTest;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
@@ -25,9 +24,9 @@ public class BoulderGoalTests implements IGoalTests {
     @Override
     @Test
     public void SimpleGoalTest() {
-        CharacterEntity player = new CharacterEntity(0, 1, "player");
-        BoulderEntity boulder = new BoulderEntity(0, 2, 0, "boulder");
-        SwitchEntity switchEntity = new SwitchEntity(0, 3, 0, "switch");
+        CharacterEntity player = new CharacterEntity(0, 1, 0);
+        BoulderEntity boulder = new BoulderEntity(0, 2, 0);
+        SwitchEntity switchEntity = new SwitchEntity(0, 3, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(boulder);
         entities.add(switchEntity);

@@ -19,16 +19,6 @@ public class SwordEntity extends Entity implements ICollectableEntity {
         return true;
     }
 
-    public void useSword(Character character) {
-        // INCOMPLETE
-        if (durability > 0) {
-            durability--;
-        }
-         if (durability == 0) {
-             
-        }
-    }
-
     public int getDurability(){
         return this.durability;
     }

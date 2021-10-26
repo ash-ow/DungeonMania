@@ -4,6 +4,8 @@ import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.util.Direction;
+import dungeonmania.util.Position;
 
 import java.util.List;
 
@@ -11,19 +13,16 @@ public interface ICollectableEntity extends IInteractingEntity {
     /**
      * Adds the collectable entity into the character's inventory and removes the entity from the dungeon
      */
-     
-    public default void collected(CharacterEntity player, List<IEntity> entities) {
-        for(int i=0; i<entities.size(); i++) {
-            if (this.getId() == entities.get(i).getId()) {
-                entities.remove(i);
-                break;
-            }
-        }
-        // Add collectable entity to player inventory
+    @Override    
+    public default boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
+        player.addEntityToInventory(this);
+        entities.removeEntity(this);
+        return true;
     }
 
     /**
-     * Uses the collectable entity according to it's effect
+     * Decrements the amount of times a collectable entity can still be used and removes it from inventory
+     * if no more uses
      */
     void used(CharacterEntity player);
 }

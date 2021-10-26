@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.util.Position;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
@@ -65,6 +66,21 @@ public class EntitiesControl {
                 break;
             case "boulder":
                 ent = new BoulderEntity(xAxis, yAxis, layer);
+                break;
+            case "wood":
+                ent = new WoodEntity(xAxis, yAxis, layer);
+                break;
+            case "arrows":
+                ent = new ArrowsEntity(xAxis, yAxis, layer);
+                break;
+            case "bomb":
+                ent = new BombEntity(xAxis, yAxis, layer);
+                break;
+            case "sword":
+                ent = new SwordEntity(xAxis, yAxis, layer);
+                break;
+            case "armour":
+                ent = new ArmourEntity(xAxis, yAxis, layer);
                 break;
             default:
                 ent = null;

@@ -9,17 +9,12 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 
 public abstract class BuildableEntity extends Entity implements ICollectableEntity {
-    protected BuildableEntity(String type) {
-        super(type);
-        initialiseRequiredComponents();
-    }
-
-    protected BuildableEntity(String id, int x, int y, String type) {
-        super(id, x, y, type);
+    protected BuildableEntity(int x, int y, int layer, String type) {
+        super(x, y, layer, type);
         initialiseRequiredComponents();
     }
     
-    public Map<ICollectableEntity, Integer> requiredComponents = new HashMap<ICollectableEntity, Integer>();
+    protected Map<ICollectableEntity, Integer> requiredComponents = new HashMap<ICollectableEntity, Integer>();
     public boolean isBuildable(List<ICollectableEntity> inventory) {
         for (Map.Entry<ICollectableEntity, Integer> entry : requiredComponents.entrySet()) {
             ICollectableEntity component = entry.getKey();

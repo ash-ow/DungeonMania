@@ -9,13 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IEntityTests;
-import dungeonmania.entities.IMovingEntityTest;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.movingEntities.IMovingEntity;
-import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.ExitEntity;
-import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -23,8 +18,8 @@ public class ExitGoalTests implements IGoalTests {
     @Override
     @Test
     public void SimpleGoalTest() {
-        CharacterEntity player = new CharacterEntity(0, 4, "player");
-        ExitEntity exit = new ExitEntity(0, 3, 0, "exit");
+        CharacterEntity player = new CharacterEntity(0, 4, 0);
+        ExitEntity exit = new ExitEntity(0, 3, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(exit);
         String jsonGoals = "{ \"goal\": \"exit\"}";

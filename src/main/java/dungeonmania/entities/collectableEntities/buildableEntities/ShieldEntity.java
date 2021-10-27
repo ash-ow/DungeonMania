@@ -2,6 +2,7 @@ package dungeonmania.entities.collectableEntities.buildableEntities;
 
 import dungeonmania.entities.collectableEntities.ArrowsEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
+import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public class ShieldEntity extends BuildableEntity {
     public ShieldEntity() {
@@ -23,6 +24,10 @@ public class ShieldEntity extends BuildableEntity {
     public boolean isPassable() {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    @Override
+    public void used(CharacterEntity player){
     }
 
 }

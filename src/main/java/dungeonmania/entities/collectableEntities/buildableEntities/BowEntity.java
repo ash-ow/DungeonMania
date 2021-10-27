@@ -2,6 +2,7 @@ package dungeonmania.entities.collectableEntities.buildableEntities;
 
 import dungeonmania.entities.collectableEntities.ArrowsEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
+import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public class BowEntity extends BuildableEntity {
     public BowEntity() {
@@ -22,4 +23,9 @@ public class BowEntity extends BuildableEntity {
     public boolean isPassable() {
         return true;
     }
+
+    @Override
+    public void used(CharacterEntity player){
+    }
+
 }

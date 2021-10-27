@@ -1,15 +1,14 @@
 package dungeonmania.entities.collectableEntities;
-
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public class WoodEntity extends Entity implements ICollectableEntity {
-    public WoodEntity() {
+public class ArmourEntity extends Entity implements ICollectableEntity {
+    public ArmourEntity() {
         this(0, 0, 0);
     }
 
-    public WoodEntity(int x, int y, int layer) {
-        super(x, y, layer, "wood");
+    public ArmourEntity(int x, int y, int layer) {
+        super(x, y, layer, "armour");
     }
 
     @Override
@@ -19,5 +18,5 @@ public class WoodEntity extends Entity implements ICollectableEntity {
 
     @Override
     public void used(CharacterEntity player){
-    }
+    }    
 }

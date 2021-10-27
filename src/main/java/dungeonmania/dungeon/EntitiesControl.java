@@ -86,6 +86,21 @@ public class EntitiesControl {
             case "armour":
                 this.entities.add(new ArmourEntity(xAxis, yAxis, layer));
                 break;
+            case "treasure":
+                this.entities.add(new TreasureEntity(xAxis, yAxis, layer));
+                break;
+            case "key":
+                this.entities.add(new KeyEntity(xAxis, yAxis, layer));
+                break;
+            case "health_potion":
+                this.entities.add(new HealthPotionEntity(xAxis, yAxis, layer));
+                break;
+            case "invisibility_potion":
+                this.entities.add(new InvisibilityPotionEntity(xAxis, yAxis, layer));
+                break;
+            case "invincibility_potion":
+                this.entities.add(new InvincibilityPotionEntity(xAxis, yAxis, layer));
+                break;
         }
     }
 

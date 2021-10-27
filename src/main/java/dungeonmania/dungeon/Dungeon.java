@@ -97,7 +97,7 @@ public class Dungeon {
 
     private void spiderGenerator() {
         List<IEntity> spiders = entitiesControl.entitiesOfSameType("spider");
-        if (spiders.size() > 5) {
+        if (spiders.size() > 4) {
             return;
         }
 

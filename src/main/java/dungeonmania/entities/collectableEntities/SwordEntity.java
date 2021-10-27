@@ -29,6 +29,12 @@ public class SwordEntity extends Entity implements ICollectableEntity {
 
     @Override
     public void used(CharacterEntity player){
-
+        player.setDamage(1);
+        if (this.durability > 0) {
+            setDurability(this.durability - 1);
+            if(this.durability == 0) {
+                player.removeEntityFromInventory(this);
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@ public interface IBattlingEntity extends IEntity {
     public float getHealth();
     public void setHealth(float health);
     public int getDamage();
+    public void setDamage(int damage);
     
     public void loseHealth(float enemyHealth, int enemyDamage);
 

@@ -54,9 +54,14 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.health = health;
     }
 
+    public int damage = 0;
+
     public int getDamage() {
-        // TODO determine correct Character damage
-        return 3;
+        return this.damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     @Override

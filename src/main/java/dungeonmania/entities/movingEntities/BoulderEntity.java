@@ -24,7 +24,6 @@ public class BoulderEntity extends Entity implements IInteractingEntity {
         return false;
     }
 
-
     @Override
     public EntityResponse getInfo() {
         return new EntityResponse(this.getId(), this.getType(), this.getPosition(), false);

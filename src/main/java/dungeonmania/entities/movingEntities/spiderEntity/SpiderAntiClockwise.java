@@ -35,8 +35,8 @@ public class SpiderAntiClockwise implements SpiderState {
 
     private Direction getDirection(Integer movementIndex) {
         if (movementIndex < 0) {
-            return movementReversePattern.get(movementReversePattern.size() + movementIndex);
+            return movementReversePattern.get((movementReversePattern.size() + movementIndex) % 8);
         } 
-        return movementReversePattern.get(movementIndex);
+        return movementReversePattern.get(movementIndex % 8);
     }
 }

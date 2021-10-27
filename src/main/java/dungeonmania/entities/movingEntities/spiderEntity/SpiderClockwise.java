@@ -30,7 +30,7 @@ public class SpiderClockwise implements SpiderState {
         if (EntitiesControl.entitiesContainsType(targetEntities, BoulderEntity.class) != null) {
             return false;
         }
-        nextDirection = movementPattern.get(movementIndex);
+        nextDirection = getDirection(movementIndex);
         spider.setPosition(
             spider.getPosition().translateBy(direction)
         );
@@ -40,8 +40,8 @@ public class SpiderClockwise implements SpiderState {
 
     private Direction getDirection(Integer movementIndex) {
         if (movementIndex < 0) {
-            return movementPattern.get(movementPattern.size() + movementIndex);
+            return movementPattern.get((movementPattern.size() + movementIndex) % 8);
         } 
-        return movementPattern.get(movementIndex);
+        return movementPattern.get(movementIndex % 8);
     }
 }

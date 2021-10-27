@@ -2,6 +2,7 @@ package dungeonmania.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import dungeonmania.entities.IEntity;
@@ -16,6 +17,7 @@ import dungeonmania.entities.staticEntities.*;
 
 public class EntitiesControl {
     private List<IEntity> entities;
+    private Random rand = new Random();
 
     public EntitiesControl() {
         entities = new ArrayList<IEntity>();
@@ -37,7 +39,7 @@ public class EntitiesControl {
         this.entities = entities;
     }
 
-    public void MovingEntities(Direction direction, CharacterEntity player) {
+    public void moveAllMovingEntities(Direction direction, CharacterEntity player) {
         List<IMovingEntity> movingEntities = entities.stream()
             .filter(entity -> entity instanceof IMovingEntity)
             .map(IMovingEntity.class::cast)
@@ -66,6 +68,15 @@ public class EntitiesControl {
 
     public static IEntity entitiesContainsType(List<IEntity> entityList, Class<?> cls) {
         return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findAny().orElse(null);
+    }
+
+    public boolean positionContainsEntityType(Position position, Class<?> cls) {
+        List<IEntity> entityList =  this.entitiesFromPosition(position);
+        
+        if (entitiesContainsType(entityList, cls) != null) {
+            return true;
+        }
+        return false;
     }
 
     public void createEntity(Integer xAxis, Integer yAxis, Integer layer, String type) {
@@ -109,6 +120,11 @@ public class EntitiesControl {
         }
     }
 
+    public void createEntity(Integer xAxis, Integer yAxis, String type) {
+        Integer layer = this.entitiesFromPosition(this.getLargestCoordinate()).size();
+        createEntity(xAxis, yAxis, layer, type);
+    }
+
     public List<IEntity> entitiesOfSameType(String type) {
         List<IEntity> sameType = new ArrayList<>();
         for (IEntity entity : entities) {
@@ -130,5 +146,28 @@ public class EntitiesControl {
             }
         }
         return new Position(x, y);
+    }
+
+    public void generateEnemyEntities() {
+        generateSpider();
+    }
+
+    private void generateSpider() {
+        List<IEntity> spiders = this.entitiesOfSameType("spider");
+        if (spiders.size() < 4) {
+            Position largestCoordinate = this.getLargestCoordinate();
+            int largestX = largestCoordinate.getX();
+            int largestY = largestCoordinate.getY();
+            int randomX = rand.nextInt(largestX);
+            int randomY = rand.nextInt(largestY);
+            if (getRandomBoolean((float) .05) 
+                && !this.positionContainsEntityType(new Position(randomX, randomY), BoulderEntity.class)) {
+                this.createEntity(randomX, randomY, "spider");
+            }
+        }
+    }
+
+    public boolean getRandomBoolean(float p){
+        return rand.nextFloat() < p;
     }
 }

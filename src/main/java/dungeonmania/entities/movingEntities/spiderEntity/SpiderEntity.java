@@ -15,8 +15,10 @@ import dungeonmania.util.Position;
 
 
 public class SpiderEntity extends Entity implements IInteractingEntity, IMovingEntity, IBattlingEntity {
-    private Integer movementPatternIndex;
+    private Integer movementPatternIndex = 0;
     private SpiderState spiderMovement;
+    private Position firstPosition;
+    private boolean startLoop = false;
 
     public SpiderEntity() {
         this(0, 0, 0);
@@ -24,20 +26,25 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
     
     public SpiderEntity(int x, int y, int layer) {
         super(x, y, layer, "spider");
-        movementPatternIndex = 0;
         spiderMovement = new SpiderClockwise();
+        firstPosition = this.position;
     }
 
     @Override
     public void move(Direction direction, EntitiesControl entities, CharacterEntity player) {
+
         if (!spiderMovement.moveSpider(movementPatternIndex, this, entities)) {
-            movementPatternIndex = (movementPatternIndex - 3) % 8;
-            if (spiderMovement instanceof SpiderClockwise) {
-                spiderMovement = new SpiderAntiClockwise(movementPatternIndex);
-            } else {
-                spiderMovement = new SpiderClockwise(movementPatternIndex);
+            if (!this.position.equals(firstPosition) && startLoop) {
+                movementPatternIndex = (movementPatternIndex - 3) % 8;
+                if (spiderMovement instanceof SpiderClockwise) {
+                    spiderMovement = new SpiderAntiClockwise(movementPatternIndex);
+                } else {
+                    spiderMovement = new SpiderClockwise(movementPatternIndex);
+                }
             }
-        } 
+        } else {
+            startLoop = true;
+        }
         
         movementPatternIndex = (movementPatternIndex + 1) % 8;
     }

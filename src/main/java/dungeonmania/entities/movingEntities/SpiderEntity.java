@@ -5,17 +5,15 @@ import java.util.List;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
 public class SpiderEntity extends Entity implements IInteractingEntity, IMovingEntity, IBattlingEntity {
-    private List<Direction> movementPattern = Arrays.asList(Direction.RIGHT, Direction.DOWN, Direction.DOWN, Direction.LEFT, 
-    Direction.LEFT, Direction.UP, Direction.UP, Direction.RIGHT);
-
-    private Direction nextDirection;
     private Integer movementPatternIndex;
+    private SpiderState spiderMovement;
 
     public SpiderEntity() {
         this(0, 0, 0);
@@ -23,24 +21,27 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
     
     public SpiderEntity(int x, int y, int layer) {
         super(x, y, layer, "spider");
-        nextDirection = Direction.UP;
         movementPatternIndex = 0;
+        spiderMovement = new SpiderClockwise();
     }
 
     @Override
-    public void move(Direction direction, int layer) {
-        direction = nextDirection;
-        nextDirection = movementPattern.get(movementPatternIndex);
+    public void move(Direction direction, EntitiesControl entities, CharacterEntity player) {
+        if (!spiderMovement.moveSpider(movementPatternIndex, this, entities)) {
+            movementPatternIndex = (movementPatternIndex - 3) % 8;
+            if (spiderMovement instanceof SpiderClockwise) {
+                spiderMovement = new SpiderAntiClockwise(movementPatternIndex);
+            } else {
+                spiderMovement = new SpiderClockwise(movementPatternIndex);
+            }
+        } 
+        
         movementPatternIndex = (movementPatternIndex + 1) % 8;
-        this.setPosition(
-            this.getPosition().translateBy(direction).asLayer(layer)
-        );
     }
 
     @Override
     public boolean isPassable() {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override

@@ -9,6 +9,7 @@ import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.movingEntities.SpiderEntity;
+import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -45,29 +46,48 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
             new Position(6, 6), new Position(5, 6), new Position(4, 6), new Position(4, 5), new Position(4, 4), new Position(5, 4));
         
         for (int i = 0; i < expectPositions.size(); i++) {
-            spider.move(Direction.DOWN, 0);
+            spider.move(Direction.DOWN, new EntitiesControl(), new CharacterEntity());
+            System.out.println(spider.getPosition());
             assertEquals(spider.getPosition(), expectPositions.get(i));
         }
     }
+    
 
     @Test
     public void TestMoveHitBoulder() {
         CharacterEntity player = new CharacterEntity(0, 0, 0);
         SpiderEntity spider = new SpiderEntity(5, 5, 0);
         BoulderEntity boulder = new BoulderEntity(6, 5, 0);
-        ArrayList<IEntity> entities = new ArrayList<>();
+        EntitiesControl entities = new EntitiesControl();
 
-        entities.add(boulder);
-        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player);
+        entities.addEntities(boulder);
+        entities.addEntities(spider);
 
         List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(6, 4), new Position(6, 4),
             new Position(5, 4), new Position(4, 4), new Position(4, 5), new Position(4, 6), new Position(5, 6), new Position(6, 6),
-            new Position(6, 6));
+            new Position(6, 6), new Position(5, 6), new Position(4, 6), new Position(4, 5), new Position(4, 4), new Position(5, 4),
+            new Position(6, 4));
         
         for (int i = 0; i < expectPositions.size(); i++) {
-            dungeon.tick(Direction.RIGHT);
+            entities.MovingEntities(Direction.DOWN, player);
+            System.out.println(spider.getPosition());
             assertEquals(spider.getPosition(), expectPositions.get(i));
         }
+    }
+
+    @Test
+    public void TestMoveWall() {
+        CharacterEntity player = new CharacterEntity(0, 5, 0);
+        SpiderEntity spider = new SpiderEntity(0, 4, 0);
+        WallEntity wall = new WallEntity(0, 4, 0);
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(spider);
+        entities.add(wall);
+
+        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player);
+        dungeon.tick(Direction.UP);
+
+        assertEquals(player.getPosition(), new Position(0, 5));
     }
     
     @Override

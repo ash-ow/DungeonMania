@@ -2,6 +2,7 @@ package dungeonmania.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -24,6 +25,7 @@ public class Dungeon {
     private String dungeonName;
     private CharacterEntity player;
     private Goals goals;
+    private Random rand = new Random();
 
     public Dungeon(int height, int width, JsonArray entities, JsonObject goalConditions, String gameMode, String id, String dungeonName) {
         this.height = height;
@@ -78,6 +80,7 @@ public class Dungeon {
     public void tick(Direction direction) {
         player.move(direction, entitiesControl);
         entitiesControl.MovingEntities(direction, player);
+        spiderGenerator();
     }
 
     public String getGoals() {
@@ -90,6 +93,28 @@ public class Dungeon {
 
     public List<IEntity> getEntities(String type) {
         return this.entitiesControl.entitiesOfSameType(type);
+    }
+
+    private void spiderGenerator() {
+        List<IEntity> spiders = entitiesControl.entitiesOfSameType("spider");
+        if (spiders.size() > 5) {
+            return;
+        }
+
+        Position largestCoordinate = entitiesControl.getLargestCoordinate();
+        int largestX = largestCoordinate.getX();
+        int largestY = largestCoordinate.getY();
+        int randomX = rand.nextInt(largestX);
+        int randomY = rand.nextInt(largestY);
+        System.out.println("x: " + randomX + " y: " + randomY);
+        if (getRandomBoolean((float) .05)) {
+            System.out.println(largestCoordinate);
+            entitiesControl.createEntity(randomX, randomY, entitiesControl.entitiesFromPosition(largestCoordinate).size(), "spider");
+        }
+    }
+
+    public boolean getRandomBoolean(float p){
+        return rand.nextFloat() < p;
     }
 }
  

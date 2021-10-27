@@ -58,6 +58,13 @@ public class EntitiesControl {
     public static boolean entitiesUnpassable(List<IEntity> entityList) {
         return entityList.stream().anyMatch(entity -> !entity.isPassable());
     }
+    public static boolean interactingEntitiesUnpassable(List<IInteractingEntity> entityList) {
+        return entityList.stream().anyMatch(entity -> !entity.isPassable());
+    }
+
+    public static IEntity entitiesContainsType(List<IEntity> entityList, Class<?> cls) {
+        return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findAny().orElse(null);
+    }
 
     public void createEntity(Integer xAxis, Integer yAxis, Integer layer, String type) {
         switch (type) {
@@ -79,6 +86,9 @@ public class EntitiesControl {
             case "boulder":
                 this.entities.add(new BoulderEntity(xAxis, yAxis, layer));
                 break;
+            case "spider":
+                this.entities.add(new SpiderEntity(xAxis, yAxis, layer));
+                break;
         }
     }
 
@@ -90,5 +100,18 @@ public class EntitiesControl {
             }
         }
         return sameType;
+    }
+
+    public Position getLargestCoordinate() {
+        int x = 1, y = 1;
+        for (IEntity entity : entities) {
+            if (entity.getPosition().getX() > x) {
+                x = entity.getPosition().getX();
+            }
+            if (entity.getPosition().getX() > y) {
+                y = entity.getPosition().getX();
+            }
+        }
+        return new Position(x, y);
     }
 }

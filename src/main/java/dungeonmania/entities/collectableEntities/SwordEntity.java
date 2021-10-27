@@ -34,6 +34,7 @@ public class SwordEntity extends Entity implements ICollectableEntity {
             setDurability(this.durability - 1);
             if(this.durability == 0) {
                 player.removeEntityFromInventory(this);
+                player.setDamage(0);
             }
         }
     }

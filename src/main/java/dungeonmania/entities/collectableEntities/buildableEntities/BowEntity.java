@@ -44,6 +44,7 @@ public class BowEntity extends BuildableEntity {
         }
         if(this.durability == 0) {
             player.removeEntityFromInventory(this);
+            player.setDamage(0);
         }
     }
 }

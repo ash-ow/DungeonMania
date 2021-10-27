@@ -15,6 +15,7 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.entities.collectableEntities.buildableEntities.*;
+import dungeonmania.entities.collectableEntities.*;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
     private EntitiesControl inventory = new EntitiesControl();
@@ -66,6 +67,9 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     @Override
     public void loseHealth(float enemyHealth, int enemyDamage) {
+        if(this.containedInInventory("armour")) {
+            //ArmourEntity armour = findFirstInInventory("armour");
+        }
         this.health -= ((enemyHealth * enemyDamage) / 10);
     }
 //endregion
@@ -90,6 +94,27 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         }
         return info;
     }
+
+    public boolean containedInInventory(String type) {
+        for (IEntity entity: inventory.getEntities()) {
+            if(entity.getType() == type) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // intention here is that this will be a helper function which will find and return the first instance of an entity
+    public IEntity findFirstInInventory(String type) {
+        for (IEntity entity: inventory.getEntities()) {
+            if(entity.getType() == type) {
+                return entity;
+            }
+        }
+        return null;
+    }
+
+
 //endregion
 
     @Override
@@ -109,30 +134,27 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         }
     }
 
-    // Build
+// region Build
     public void build(String buildable) {
         List<ICollectableEntity> playerInventory = this.getInventory().entitiesFromCollectables();
         if (buildable == "bow") {
             BowEntity bow = new BowEntity(0,0,0);
             if (bow.isBuildable(playerInventory)) {
                 this.addEntityToInventory(bow);
-                List<IEntity> woodInInventory = this.getInventory().entitiesOfSameType("wood"); 
-                int woodRemoved = 0;
-                while (woodRemoved < 1) {
-                    for (IEntity wood : woodInInventory) {
-                        removeEntityFromInventory(wood);
-                        woodRemoved++;
-                    }
-                }
-                List<IEntity> arrowsInInventory = this.getInventory().entitiesOfSameType("arrow"); 
-                int arrowsRemoved = 0;
-                while (arrowsRemoved < 3) {
-                    for (IEntity arrow : arrowsInInventory) {
-                        removeEntityFromInventory(arrow);
-                        arrowsRemoved++;
-                    }
-                }
+                removeBuildMaterials("wood", 1);
+                removeBuildMaterials("arrow", 3);
             }
         }
     }
+
+    public void removeBuildMaterials(String type, int amount) {
+        int removed = 0;
+        while(removed < amount) {
+            for(IEntity material : this.getInventory().entitiesOfSameType(type)) {
+                removeEntityFromInventory(material);
+                removed++;
+            }
+        }
+    }
+//endregion 
 }

@@ -8,7 +8,7 @@ import dungeonmania.entities.IInteractingEntityTest;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
-import dungeonmania.entities.movingEntities.SpiderEntity;
+import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;

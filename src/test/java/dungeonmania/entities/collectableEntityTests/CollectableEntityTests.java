@@ -20,7 +20,7 @@ public class CollectableEntityTests implements IEntityTests {
         assertEntityResponseInfoEquals(wood, "wood-0-0-0", "wood", new Position(0,0), false);
 
         ArrowsEntity arrows = new ArrowsEntity(0,1,0);
-        assertEntityResponseInfoEquals(arrows, "arrows-0-1-0", "arrows", new Position(0,1), false);
+        assertEntityResponseInfoEquals(arrows, "arrow-0-1-0", "arrow", new Position(0,1), false);
 
         BombEntity bomb = new BombEntity(0,2,0);
         assertEntityResponseInfoEquals(bomb, "bomb-0-2-0", "bomb", new Position(0,2), false);

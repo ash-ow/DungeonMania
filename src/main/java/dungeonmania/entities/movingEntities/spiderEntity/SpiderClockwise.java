@@ -1,10 +1,11 @@
-package dungeonmania.entities.movingEntities;
+package dungeonmania.entities.movingEntities.spiderEntity;
 
 import java.util.Arrays;
 import java.util.List;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.util.Direction;
 
 public class SpiderClockwise implements SpiderState {

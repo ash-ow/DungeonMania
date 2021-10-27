@@ -11,6 +11,7 @@ import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.util.Position;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
+import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
 import dungeonmania.entities.staticEntities.*;
 
 public class EntitiesControl {
@@ -89,6 +90,7 @@ public class EntitiesControl {
                 break;
             case "spider":
                 this.entities.add(new SpiderEntity(xAxis, yAxis, layer));
+                break;
             case "wood":
                 this.entities.add(new WoodEntity(xAxis, yAxis, layer));
                 break;

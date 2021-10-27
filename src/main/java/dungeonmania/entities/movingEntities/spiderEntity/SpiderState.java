@@ -1,4 +1,4 @@
-package dungeonmania.entities.movingEntities;
+package dungeonmania.entities.movingEntities.spiderEntity;
 
 import dungeonmania.dungeon.EntitiesControl;
 

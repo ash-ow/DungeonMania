@@ -1,4 +1,4 @@
-package dungeonmania.entities.movingEntities;
+package dungeonmania.entities.movingEntities.spiderEntity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,6 +7,9 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.IBattlingEntity;
+import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 

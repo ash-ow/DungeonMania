@@ -106,7 +106,6 @@ public class Dungeon {
         int largestY = largestCoordinate.getY();
         int randomX = rand.nextInt(largestX);
         int randomY = rand.nextInt(largestY);
-        System.out.println("x: " + randomX + " y: " + randomY);
         if (getRandomBoolean((float) .05)) {
             System.out.println(largestCoordinate);
             entitiesControl.createEntity(randomX, randomY, entitiesControl.entitiesFromPosition(largestCoordinate).size(), "spider");

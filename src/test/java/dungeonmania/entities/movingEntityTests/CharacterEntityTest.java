@@ -15,6 +15,7 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.collectableEntities.ArrowsEntity;
+import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
@@ -123,6 +124,23 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         List<ItemResponse> inventory = player.getInventoryInfo();
         for (ItemResponse item : inventory) {
             assertEquals(item.getType(), "bow");
+        }
+        assertTrue(player.getInventoryInfo().size() == 1);
+    }
+
+    @Test
+    public void TestBuildShield() {
+        CharacterEntity player = new CharacterEntity();
+        WoodEntity wood = new WoodEntity();
+        WoodEntity wood2 = new WoodEntity();
+        TreasureEntity treasure = new TreasureEntity();
+        player.addEntityToInventory(wood);
+        player.addEntityToInventory(wood2);
+        player.addEntityToInventory(treasure);
+        player.build("shield");
+        List<ItemResponse> inventory = player.getInventoryInfo();
+        for (ItemResponse item : inventory) {
+            assertEquals(item.getType(), "shield");
         }
         assertTrue(player.getInventoryInfo().size() == 1);
     }

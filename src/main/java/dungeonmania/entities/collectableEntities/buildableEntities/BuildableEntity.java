@@ -28,7 +28,7 @@ public abstract class BuildableEntity extends Entity implements ICollectableEnti
         return true;
     }
 
-    private int numberOfComponentItemsInInventory(List<ICollectableEntity> inventory, ICollectableEntity component) {
+    protected int numberOfComponentItemsInInventory(List<ICollectableEntity> inventory, ICollectableEntity component) {
         return inventory
             .stream()
             .filter(ent -> ent.getClass().equals(component.getClass()))

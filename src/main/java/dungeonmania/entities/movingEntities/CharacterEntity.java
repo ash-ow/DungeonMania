@@ -144,6 +144,17 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
                 removeBuildMaterials("wood", 1);
                 removeBuildMaterials("arrow", 3);
             }
+        } else if (buildable == "shield") {
+            ShieldEntity shield = new ShieldEntity(0,0,0);
+            if (shield.isBuildable(playerInventory)) {
+                this.addEntityToInventory(shield);
+                removeBuildMaterials("wood", 2);
+                if(this.containedInInventory("treasure")) {
+                    removeBuildMaterials("treasure", 1);
+                } else if (this.containedInInventory("key")) {
+                    removeBuildMaterials("key", 1);
+                }
+            }
         }
     }
 
@@ -151,6 +162,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         int removed = 0;
         while(removed < amount) {
             for(IEntity material : this.getInventory().entitiesOfSameType(type)) {
+                //Might have to go through the entity itself so that there aren't empty functions
                 removeEntityFromInventory(material);
                 removed++;
             }

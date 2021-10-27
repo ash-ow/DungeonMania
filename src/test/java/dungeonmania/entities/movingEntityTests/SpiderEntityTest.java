@@ -109,7 +109,25 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
             assertEquals(spider.getPosition(), expectPositions.get(i));
         }
     }
-    
+
+    @Test
+    public void TestMovedBoulderAboveSpiderSpawn() {
+        CharacterEntity player = new CharacterEntity(6, 4, 0);
+        SpiderEntity spider = new SpiderEntity(5, 5, 0);
+        BoulderEntity boulder = new BoulderEntity(5, 4, 0);
+        EntitiesControl entities = new EntitiesControl();
+
+        entities.addEntities(boulder);
+        entities.addEntities(spider);
+
+        entities.moveAllMovingEntities(Direction.DOWN, player);
+        assertEquals(spider.getPosition(), new Position(5, 5));
+
+        player.move(Direction.LEFT, entities);
+        entities.moveAllMovingEntities(Direction.DOWN, player);
+        assertEquals(spider.getPosition(), new Position(5, 4));
+    }
+
     @Override
     @Test
     public void TestEntityResponseInfo() {

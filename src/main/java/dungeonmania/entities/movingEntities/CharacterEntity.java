@@ -8,10 +8,13 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.collectableEntities.buildableEntities.BowEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
+import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.buildableEntities.*;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
     private EntitiesControl inventory = new EntitiesControl();
@@ -98,6 +101,33 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         }
         if ((targetEntities.size() == 0) || (!EntitiesControl.entitiesUnpassable(targetEntities) && !interacted)) {
             this.move(direction);
+        }
+    }
+
+    // Build
+    public void build(String buildable) {
+        List<ICollectableEntity> playerInventory = this.getInventory().entitiesFromCollectables();
+        if (buildable == "bow") {
+            BowEntity bow = new BowEntity(0,0,0);
+            if (bow.isBuildable(playerInventory)) {
+                this.addEntityToInventory(bow);
+                List<IEntity> woodInInventory = this.getInventory().entitiesOfSameType("wood"); 
+                int woodRemoved = 0;
+                while (woodRemoved < 1) {
+                    for (IEntity wood : woodInInventory) {
+                        removeEntityFromInventory(wood);
+                        woodRemoved++;
+                    }
+                }
+                List<IEntity> arrowsInInventory = this.getInventory().entitiesOfSameType("arrow"); 
+                int arrowsRemoved = 0;
+                while (arrowsRemoved < 3) {
+                    for (IEntity arrow : arrowsInInventory) {
+                        removeEntityFromInventory(arrow);
+                        arrowsRemoved++;
+                    }
+                }
+            }
         }
     }
 }

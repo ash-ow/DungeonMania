@@ -1,8 +1,10 @@
 package dungeonmania.entities.movingEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.*;
 
@@ -12,10 +14,12 @@ import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
+import dungeonmania.entities.collectableEntities.ArrowsEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
+import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -102,5 +106,24 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         assertEquals(1, inventory.getEntities().size());
         character.removeEntityFromInventory(wood);
         assertEquals(0, inventory.getEntities().size());
+    }
+
+    @Test
+    public void TestBuildBow() {
+        CharacterEntity player = new CharacterEntity();
+        WoodEntity wood = new WoodEntity();
+        ArrowsEntity arrow1 = new ArrowsEntity();
+        ArrowsEntity arrow2 = new ArrowsEntity();
+        ArrowsEntity arrow3 = new ArrowsEntity();
+        player.addEntityToInventory(wood);
+        player.addEntityToInventory(arrow1);
+        player.addEntityToInventory(arrow2);
+        player.addEntityToInventory(arrow3);
+        player.build("bow");
+        List<ItemResponse> inventory = player.getInventoryInfo();
+        for (ItemResponse item : inventory) {
+            assertEquals(item.getType(), "bow");
+        }
+        assertTrue(player.getInventoryInfo().size() == 1);
     }
 }

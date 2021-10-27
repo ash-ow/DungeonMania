@@ -16,8 +16,9 @@ public class ShieldEntity extends BuildableEntity {
     @Override
     public void initialiseRequiredComponents() {
         // TODO Get real required components
-        this.requiredComponents.put(new WoodEntity(), 1);
+        this.requiredComponents.put(new WoodEntity(), 2);
         this.requiredComponents.put(new ArrowsEntity(), 3);
+        
     }
 
     @Override
@@ -29,5 +30,10 @@ public class ShieldEntity extends BuildableEntity {
     @Override
     public void used(CharacterEntity player){
     }
+
+    // @Override
+    // public void build(CharacterEntity player) {
+    
+    // }
 
 }

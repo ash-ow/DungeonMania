@@ -43,6 +43,10 @@ public class EntitiesControl {
         return entityList.stream().filter(entity -> entity instanceof IInteractingEntity).map(IInteractingEntity.class::cast).collect(Collectors.toList());
     }
 
+    public List<ICollectableEntity> entitiesFromCollectables() {
+        return this.entities.stream().filter(entity -> entity instanceof ICollectableEntity).map(ICollectableEntity.class::cast).collect(Collectors.toList());
+    }
+
     public static boolean entitiesUnpassable(List<IEntity> entityList) {
         return entityList.stream().anyMatch(entity -> !entity.isPassable());
     }

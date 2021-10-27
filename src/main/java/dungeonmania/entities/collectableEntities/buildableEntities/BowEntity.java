@@ -28,4 +28,8 @@ public class BowEntity extends BuildableEntity {
     public void used(CharacterEntity player){
     }
 
+    // @Override
+    // public void build(CharacterEntity player){
+    //     if isBuildable(player.getInventory()) {}
+    // }
 }

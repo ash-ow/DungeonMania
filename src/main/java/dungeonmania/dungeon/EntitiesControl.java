@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.util.Direction;
+import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.util.Position;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
@@ -88,6 +89,20 @@ public class EntitiesControl {
                 break;
             case "spider":
                 this.entities.add(new SpiderEntity(xAxis, yAxis, layer));
+            case "wood":
+                this.entities.add(new WoodEntity(xAxis, yAxis, layer));
+                break;
+            case "arrow":
+                this.entities.add(new ArrowsEntity(xAxis, yAxis, layer));
+                break;
+            case "bomb":
+                this.entities.add(new BombEntity(xAxis, yAxis, layer));
+                break;
+            case "sword":
+                this.entities.add(new SwordEntity(xAxis, yAxis, layer));
+                break;
+            case "armour":
+                this.entities.add(new ArmourEntity(xAxis, yAxis, layer));
                 break;
         }
     }

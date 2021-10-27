@@ -70,7 +70,7 @@ public class EntitiesControl {
             case "wood":
                 this.entities.add(new WoodEntity(xAxis, yAxis, layer));
                 break;
-            case "arrows":
+            case "arrow":
                 this.entities.add(new ArrowsEntity(xAxis, yAxis, layer));
                 break;
             case "bomb":

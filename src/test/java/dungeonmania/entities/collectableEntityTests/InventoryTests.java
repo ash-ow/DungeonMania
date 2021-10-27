@@ -1,6 +1,10 @@
 package dungeonmania.entities.collectableEntityTests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,9 +13,11 @@ import dungeonmania.entities.collectableEntities.ArrowsEntity;
 import dungeonmania.entities.collectableEntities.SwordEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.collectableEntities.BombEntity;
+import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.ArmourEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.response.models.ItemResponse;
 
 public class InventoryTests{
     @Test
@@ -27,6 +33,11 @@ public class InventoryTests{
 
         assertTrue(player.getInventoryInfo().size() == 1);
         assertTrue(entities.getEntities().size() == 0);
+
+        List<ItemResponse> inventory = player.getInventoryInfo();
+        for (ItemResponse item : inventory) {
+            assertEquals(item.getType(), "wood");
+        }
     }
 
     @Test
@@ -42,6 +53,11 @@ public class InventoryTests{
 
         assertTrue(player.getInventoryInfo().size() == 1);
         assertTrue(entities.getEntities().size() == 0);
+
+        List<ItemResponse> inventory = player.getInventoryInfo();
+        for (ItemResponse item : inventory) {
+            assertEquals(item.getType(), "arrow");
+        }
     }
 
     @Test
@@ -57,6 +73,11 @@ public class InventoryTests{
 
         assertTrue(player.getInventoryInfo().size() == 1);
         assertTrue(entities.getEntities().size() == 0);
+
+        List<ItemResponse> inventory = player.getInventoryInfo();
+        for (ItemResponse item : inventory) {
+            assertEquals(item.getType(), "bomb");
+        }
     }
 
     @Test
@@ -72,6 +93,11 @@ public class InventoryTests{
 
         assertTrue(player.getInventoryInfo().size() == 1);
         assertTrue(entities.getEntities().size() == 0);
+
+        List<ItemResponse> inventory = player.getInventoryInfo();
+        for (ItemResponse item : inventory) {
+            assertEquals(item.getType(), "sword");
+        }
     }
 
     @Test
@@ -87,6 +113,11 @@ public class InventoryTests{
 
         assertTrue(player.getInventoryInfo().size() > 0);
         assertTrue(entities.getEntities().size() == 0);
+
+        List<ItemResponse> inventory = player.getInventoryInfo();
+        for (ItemResponse item : inventory) {
+            assertEquals(item.getType(), "armour");
+        }
     }
 
     @Test
@@ -110,6 +141,19 @@ public class InventoryTests{
         assertTrue(player.getInventoryInfo().size() == 2);
 
         assertTrue(entities.getEntities().size() == 0);
+
+        List<ItemResponse> inventory = player.getInventoryInfo();
+        
+        List<IEntity> expected = new ArrayList<>();
+        expected.add(armour);
+        expected.add(sword);
+
+        int i = 0;
+        for (ItemResponse item : inventory) {
+            assertEquals(item.getType(), expected.get(i).getType());
+            i++;
+        }
+
     }
 
 }

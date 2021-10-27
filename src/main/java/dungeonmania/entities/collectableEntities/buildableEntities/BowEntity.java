@@ -19,7 +19,6 @@ public class BowEntity extends BuildableEntity {
         this.requiredComponents.put(new ArrowsEntity(), 3);
     }
 
-    @Override
     public boolean isPassable() {
         return true;
     }
@@ -27,9 +26,4 @@ public class BowEntity extends BuildableEntity {
     @Override
     public void used(CharacterEntity player){
     }
-
-    // @Override
-    // public void build(CharacterEntity player){
-    //     if isBuildable(player.getInventory()) {}
-    // }
 }

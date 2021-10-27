@@ -21,7 +21,6 @@ public class ShieldEntity extends BuildableEntity {
         
     }
 
-    @Override
     public boolean isPassable() {
         // TODO Auto-generated method stub
         return false;
@@ -30,10 +29,5 @@ public class ShieldEntity extends BuildableEntity {
     @Override
     public void used(CharacterEntity player){
     }
-
-    // @Override
-    // public void build(CharacterEntity player) {
-    
-    // }
 
 }

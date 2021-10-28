@@ -8,6 +8,7 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
@@ -107,5 +108,21 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
             return true;
         }
         return false;
+    }
+    
+    public void useItem(String type) {
+        for (IEntity ent : this.inventory.getEntities()) {
+            if (ent instanceof ICollectableEntity) {
+                ICollectableEntity item = (ICollectableEntity)ent;
+                if (item.getType().equals(type)) {
+                    // TODO create an ItemType class with constant strings
+                    // TODO decrement the amount of arrows in the inventory
+                    System.out.println("using " + type);
+                    item.used(this);
+                }
+            } else {
+                // TODO re-implement inventory so it just contains ICollectableEntities. You can base it off of the EntityControl
+            }
+        }
     }
 }

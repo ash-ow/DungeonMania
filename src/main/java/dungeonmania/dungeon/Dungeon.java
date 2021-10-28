@@ -89,7 +89,7 @@ public class Dungeon {
     }
 
     public List<IEntity> getEntities(String type) {
-        return this.entitiesControl.entitiesOfSameType(type);
+        return this.entitiesControl.entitiesOfType(type);
     }
 }
  

@@ -135,12 +135,16 @@ public class EntitiesControl {
         }
     }
 
-    public void createEntity(Integer xAxis, Integer yAxis, String type) {
-        Integer layer = this.entitiesFromPosition(this.getLargestCoordinate()).size();
-        createEntity(xAxis, yAxis, layer, type);
+    public void createEntity(Integer x, Integer y, String type) {
+        Integer layer = getNumberOfEntitiesInPosition(new Position(x, y));
+        createEntity(x, y, layer, type);
     }
 
-    public List<IEntity> entitiesOfSameType(String type) {
+    private Integer getNumberOfEntitiesInPosition(Position position) {
+        return this.entitiesFromPosition(this.getLargestCoordinate()).size();
+    }
+
+    public List<IEntity> entitiesOfType(String type) {
         List<IEntity> sameType = new ArrayList<>();
         for (IEntity entity : entities) {
             if (entity.getInfo().getType().equals(type)) {
@@ -168,7 +172,7 @@ public class EntitiesControl {
     }
 
     private void generateSpider() {
-        List<IEntity> spiders = this.entitiesOfSameType("spider");
+        List<IEntity> spiders = this.entitiesOfType("spider");
         if (spiders.size() < 4) {
             Position largestCoordinate = this.getLargestCoordinate();
             int largestX = largestCoordinate.getX();

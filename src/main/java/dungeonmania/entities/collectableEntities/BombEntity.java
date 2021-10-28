@@ -20,6 +20,6 @@ public class BombEntity extends Entity implements ICollectableEntity {
 
     @Override
     public void used(CharacterEntity player){
-
+        this.position = player.getPosition();
     }
 }

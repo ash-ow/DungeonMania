@@ -40,9 +40,15 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IMo
         this.health = health;
     }
 
+    protected int damage = 0;
+
     public int getDamage() {
         // TODO determine correct ZombieToast damage
         return 3;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;   
     }
 
     @Override

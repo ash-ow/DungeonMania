@@ -5,6 +5,7 @@ import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public class BowEntity extends BuildableEntity {
+    //TODO: set default durability
     int durability;
 
     public BowEntity() {

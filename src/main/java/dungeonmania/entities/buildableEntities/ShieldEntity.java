@@ -10,6 +10,7 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 
 public class ShieldEntity extends BuildableEntity {
+    //TODO: set default durability
     int durability;
     
     public ShieldEntity() {

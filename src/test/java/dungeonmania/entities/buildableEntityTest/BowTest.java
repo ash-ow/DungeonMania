@@ -1,4 +1,4 @@
-package dungeonmania.entities.collectableEntityTests.buildableEntityTest;
+package dungeonmania.entities.buildableEntityTest;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,8 +8,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import dungeonmania.entities.buildableEntities.BowEntity;
 import dungeonmania.entities.collectableEntities.*;
-import dungeonmania.entities.collectableEntities.buildableEntities.BowEntity;
+import dungeonmania.util.Position;
 
 public class BowTest implements IBuildableEntityTests {
     @Test
@@ -52,5 +53,11 @@ public class BowTest implements IBuildableEntityTests {
         inventory.add(new ArrowsEntity());
         assertFalse(bow.isBuildable(inventory));
         
+    }
+
+    @Override
+    public void TestEntityResponseInfo() {
+        BowEntity bow = new BowEntity();
+        assertEntityResponseInfoEquals(bow, "bow-0-0-0", "bow", new Position(0,0,0), true);
     }
 }

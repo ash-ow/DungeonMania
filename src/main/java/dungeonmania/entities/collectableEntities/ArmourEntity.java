@@ -18,5 +18,5 @@ public class ArmourEntity extends Entity implements ICollectableEntity {
 
     @Override
     public void used(CharacterEntity player){
-    }    
+    } 
 }

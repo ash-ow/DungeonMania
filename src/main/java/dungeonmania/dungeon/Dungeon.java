@@ -3,15 +3,12 @@ package dungeonmania.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import dungeonmania.dungeon.goals.Goals;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IInteractingEntity;
-import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
@@ -89,6 +86,8 @@ public class Dungeon {
 
     public void tick(Direction direction) {
         player.move(direction, entitiesControl);
+        entitiesControl.moveAllMovingEntities(direction, player);
+        entitiesControl.generateEnemyEntities();
     }
 
     public String getGoals() {

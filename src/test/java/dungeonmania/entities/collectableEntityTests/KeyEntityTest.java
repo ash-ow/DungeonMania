@@ -1,26 +1,21 @@
 package dungeonmania.entities.collectableEntityTests;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.util.Position;
 import dungeonmania.entities.collectableEntities.KeyEntity;
 
-import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IEntityTests;
 import dungeonmania.util.Direction;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.response.models.ItemResponse;
 
 
-public class KeyEntityTest implements IEntityTests{
+public class KeyEntityTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestEntityResponseInfo() {
@@ -34,26 +29,14 @@ public class KeyEntityTest implements IEntityTests{
         );
     }
 
-    @Test
-    public void TestKeyCollect() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
+    @Override
+    public void TestCollect() {
         KeyEntity key = new KeyEntity(0,0,0);
-        EntitiesControl entities = new EntitiesControl();
-        
-        entities.addEntities(key);
-        assertTrue(entities.getEntities().size() == 1);
-
-        key.interactWithPlayer(entities, Direction.RIGHT, player);
-
-        assertTrue(player.getInventoryInfo().size() == 1);
-        assertTrue(entities.getEntities().size() == 0);
-
-        List<ItemResponse> inventory = player.getInventoryInfo();
-        for (ItemResponse item : inventory) {
-            assertEquals(item.getType(), "key");
-        }
-
+        assertEntityIsCollected(key);
     }
 
-    
+    @Override
+    public void TestUseCollectable() {
+        // TODO Auto-generated method stub
+    }
 }

@@ -39,6 +39,9 @@ public class Dungeon {
             Integer layer = this.entitiesControl.entitiesFromPosition(new Position(xAxis, yAxis)).size();
             if (type.equals("player")) {
                 this.player = new CharacterEntity(xAxis, yAxis, layer);
+            } else if (type.equals("key") || type.equals("door")) {
+                Integer key = entityObj.get("key").getAsInt();
+                this.entitiesControl.createEntity(xAxis, yAxis, layer, key, type);
             } else {
                 this.entitiesControl.createEntity(xAxis, yAxis, layer, type);
             }

@@ -105,10 +105,6 @@ public class EntitiesControl {
             case "exit":
                 this.entities.add(new ExitEntity(xAxis, yAxis, layer));
                 break;
-            case "door":
-                // TODO pass the key number through
-                this.entities.add(new DoorEntity(xAxis, yAxis, layer, 0));
-                break;
             case "portal":
                 this.entities.add(new PortalEntity(xAxis, yAxis, layer));
                 break;
@@ -138,10 +134,6 @@ public class EntitiesControl {
                 break;
             case "treasure":
                 this.entities.add(new TreasureEntity(xAxis, yAxis, layer));
-                break;
-            case "key":
-                // TODO pass the key number through
-                this.entities.add(new KeyEntity(xAxis, yAxis, layer, 0));
                 break;
             case "health_potion":
                 this.entities.add(new HealthPotionEntity(xAxis, yAxis, layer));
@@ -240,4 +232,15 @@ public class EntitiesControl {
             return null;
         }
     }
+
+	public void createEntity(Integer xAxis, Integer yAxis, Integer layer, Integer keyNumber, String type) {
+        switch (type) {
+            case "door":
+                this.entities.add(new DoorEntity(xAxis, yAxis, layer, keyNumber));
+                break;
+            case "key":
+                this.entities.add(new KeyEntity(xAxis, yAxis, layer, keyNumber));
+                break;
+        }
+	}
 }

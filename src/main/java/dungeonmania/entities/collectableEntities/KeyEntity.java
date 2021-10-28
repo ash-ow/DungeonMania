@@ -33,7 +33,6 @@ public class KeyEntity extends Entity implements ICollectableEntity {
     }
 
     public boolean unlocks(DoorEntity door) {
-        // TODO implement
-        return true;
+        return this.keyNumber == door.getKeyNumber();
     }
 }

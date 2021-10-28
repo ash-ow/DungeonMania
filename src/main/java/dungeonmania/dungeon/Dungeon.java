@@ -77,6 +77,7 @@ public class Dungeon {
     public void tick(Direction direction) {
         player.move(direction, entitiesControl);
         entitiesControl.moveAllMovingEntities(direction, player);
+        entitiesControl.tick();
         entitiesControl.generateEnemyEntities();
     }
 
@@ -89,7 +90,7 @@ public class Dungeon {
     }
 
     public List<IEntity> getEntities(String type) {
-        return this.entitiesControl.entitiesOfType(type);
+        return this.entitiesControl.getAllEntitiesOfType(type);
     }
 }
  

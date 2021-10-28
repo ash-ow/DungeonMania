@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.util.Position;
@@ -39,16 +37,34 @@ public class EntitiesControl {
         this.entities = entities;
     }
 
-    public void moveAllMovingEntities(Direction direction, CharacterEntity player) {
-        List<IMovingEntity> movingEntities = entities.stream()
-            .filter(entity -> entity instanceof IMovingEntity)
-            .map(IMovingEntity.class::cast)
+
+    public void tick() {
+        List<ITicker> tickers = getAllTickingEntities();
+        for (ITicker ticker : tickers) {
+            ticker.tick(this);
+        }
+    }
+
+    public List<ITicker> getAllTickingEntities() {
+        return this.entities.stream()
+            .filter(ITicker.class::isInstance)
+            .map(ITicker.class::cast)
             .collect(Collectors.toList());
+    }
+
+    public void moveAllMovingEntities(Direction direction, CharacterEntity player) {
+        List<IMovingEntity> movingEntities = getAllMovingEntities();
 
         for (IMovingEntity entity : movingEntities) {
             entity.move(direction, this, player);
         }
+    }
 
+    public List<IMovingEntity> getAllMovingEntities() {
+        return entities.stream()
+            .filter(IMovingEntity.class::isInstance)
+            .map(IMovingEntity.class::cast)
+            .collect(Collectors.toList());
     }
 
     public List<IEntity> entitiesFromPosition(Position position) {
@@ -59,7 +75,7 @@ public class EntitiesControl {
         return entityList.stream().filter(entity -> entity instanceof IInteractingEntity).map(IInteractingEntity.class::cast).collect(Collectors.toList());
     }
 
-    public static boolean entitiesUnpassable(List<IEntity> entityList) {
+    public static boolean containsUnpassableEntities(List<IEntity> entityList) {
         return entityList.stream().anyMatch(entity -> !entity.isPassable());
     }
     public static boolean interactingEntitiesUnpassable(List<IInteractingEntity> entityList) {
@@ -144,9 +160,14 @@ public class EntitiesControl {
         return this.entitiesFromPosition(this.getLargestCoordinate()).size();
     }
 
-    public List<IEntity> entitiesOfType(String type) {
+    public List<IEntity> getAllEntitiesOfType(String type) {
+        return this.entitiesOfType(this.entities, type);
+    }
+
+    public List<IEntity> entitiesOfType(List<IEntity> entitiyList, String type) {
+        // TODO refactor to accept Class<?> instead of string type
         List<IEntity> sameType = new ArrayList<>();
-        for (IEntity entity : entities) {
+        for (IEntity entity : entitiyList) {
             if (entity.getInfo().getType().equals(type)) {
                 sameType.add(entity);
             }
@@ -172,7 +193,7 @@ public class EntitiesControl {
     }
 
     private void generateSpider() {
-        List<IEntity> spiders = this.entitiesOfType("spider");
+        List<IEntity> spiders = this.getAllEntitiesOfType("spider");
         if (spiders.size() < 4) {
             Position largestCoordinate = this.getLargestCoordinate();
             int largestX = largestCoordinate.getX();
@@ -188,5 +209,9 @@ public class EntitiesControl {
 
     public boolean getRandomBoolean(float p){
         return rand.nextFloat() < p;
+    }
+
+    public List<IEntity> getAllAdjacentEntities(Position position) {
+        return this.entities.stream().filter(entity -> Position.isAdjacent(position, entity.getPosition())).collect(Collectors.toList());
     }
 }

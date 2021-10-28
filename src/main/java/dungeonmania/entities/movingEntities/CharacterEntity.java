@@ -91,18 +91,25 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         List<IEntity> targetEntities = entitiesControl.entitiesFromPosition(target);
         List<IInteractingEntity> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);
         boolean interacted = false;
-        for (IInteractingEntity entity : targetInteractable) { // Slight bug if player interacts with many things stacked on top of each other- keeps moving
+        for (IInteractingEntity entity : targetInteractable) {
+            // TODO fix bug where player interacts with many things stacked on top of each other and keeps moving
             interacted = interact(entity, entitiesControl, target, direction);
         }
-        if ((targetEntities.size() == 0) || (!EntitiesControl.entitiesUnpassable(targetEntities) && !interacted)) {
+        if (
+            targetLocationIsEmpty(targetEntities) ||
+            (!EntitiesControl.containsUnpassableEntities(targetEntities) && !interacted)) {
             this.move(direction);
         }
+    }
+
+    boolean targetLocationIsEmpty(List<IEntity> targetEntities) {
+        return targetEntities.size() == 0;
     }
 
     private boolean interact(IInteractingEntity entity, EntitiesControl entitiesControl, Position target, Direction direction) {
         if (entity.interactWithPlayer(entitiesControl, direction, this)) {
             List<IEntity> newTargetEntities = entitiesControl.entitiesFromPosition(target);
-            if (!EntitiesControl.entitiesUnpassable(newTargetEntities)) {
+            if (!EntitiesControl.containsUnpassableEntities(newTargetEntities)) {
                 this.move(direction);
             }
             return true;

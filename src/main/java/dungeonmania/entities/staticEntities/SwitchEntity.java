@@ -1,8 +1,10 @@
 package dungeonmania.entities.staticEntities;
 
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.ITicker;
 
-public class SwitchEntity extends Entity {
+public class SwitchEntity extends Entity implements ITicker {
     public SwitchEntity() {
         this(0, 0, 0);
     }
@@ -13,6 +15,16 @@ public class SwitchEntity extends Entity {
     
     @Override
     public boolean isPassable() {
+        return true;
+    }
+
+    @Override
+    public void tick(EntitiesControl entitiesControl) {
+        // TODO switches check if there is a bomb in their location and change their state to Active
+    }
+
+    public boolean isActive() {
+        // TODO true if there is a boulder on the switch
         return true;
     }
 }

@@ -33,7 +33,7 @@ public class BoulderEntity extends Entity implements IInteractingEntity {
     public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
         Position target = this.getPosition().translateBy(direction);
         List<IEntity> targetEntities = entities.entitiesFromPosition(target);
-        if ((targetEntities.size() == 0) || !EntitiesControl.entitiesUnpassable(targetEntities)) {
+        if ((targetEntities.size() == 0) || !EntitiesControl.containsUnpassableEntities(targetEntities)) {
             position = position.translateBy(direction).asLayer(targetEntities.size());
             return true;
         }

@@ -63,6 +63,7 @@ public class BombEntityTests implements ICollectableEntityTest {
         }
     }
     
+    @Test
     public void TestExplode() {
         ArrayList<IEntity> entities = new ArrayList<>();
 

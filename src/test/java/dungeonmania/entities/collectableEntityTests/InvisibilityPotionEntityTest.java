@@ -19,7 +19,7 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.response.models.ItemResponse;
 
 
-public class  InvisibilityPotionEntityTest implements IEntityTests{
+public class  InvisibilityPotionEntityTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestEntityResponseInfo() {
@@ -34,7 +34,8 @@ public class  InvisibilityPotionEntityTest implements IEntityTests{
     }
 
     @Test
-    public void TestInvisibilityPotionCollect() {
+    @Override
+    public void TestCollect() {
         CharacterEntity player = new CharacterEntity(0, 0, 0);
         InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0,0,0);
         EntitiesControl entities = new EntitiesControl();
@@ -50,8 +51,9 @@ public class  InvisibilityPotionEntityTest implements IEntityTests{
         }
     }
 
-
-
-
-    
+    @Override
+    public void TestUseCollectable() {
+        // TODO Auto-generated method stub
+        
+    }
 }

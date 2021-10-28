@@ -25,4 +25,10 @@ public interface ICollectableEntity extends IInteractingEntity {
      * if no more uses
      */
     void used(CharacterEntity player);
+
+    /**
+     * Adds the collectable item to the player inventory
+     * @param player
+     */
+    void collect(CharacterEntity player);
 }

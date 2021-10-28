@@ -1,26 +1,21 @@
 package dungeonmania.entities.collectableEntityTests;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.util.Position;
 import dungeonmania.entities.collectableEntities.HealthPotionEntity;
 
-import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IEntityTests;
 import dungeonmania.util.Direction;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.response.models.ItemResponse;
 
 
-public class HealthPotionEntityTest implements IEntityTests{
+public class HealthPotionEntityTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestEntityResponseInfo() {
@@ -35,18 +30,20 @@ public class HealthPotionEntityTest implements IEntityTests{
     }
 
     @Test
-    public void TestHealthPotionCollect() {
+
+    @Override
+    public void TestCollect() {
         CharacterEntity player = new CharacterEntity(0, 0, 0);
         HealthPotionEntity health_potion = new HealthPotionEntity(0,0,0);
         EntitiesControl entities = new EntitiesControl();
         
         entities.addEntities(health_potion);
-        assertTrue(entities.getEntities().size() == 1);
+        assertEquals(1, entities.getEntities().size());
 
         health_potion.interactWithPlayer(entities, Direction.RIGHT, player);
 
-        assertTrue(player.getInventoryInfo().size() == 1);
-        assertTrue(entities.getEntities().size() == 0);
+        assertEquals(1, player.getInventoryInfo().size());
+        assertEquals(0, entities.getEntities().size());
 
         List<ItemResponse> inventory = player.getInventoryInfo();
         for (ItemResponse item : inventory) {
@@ -54,6 +51,8 @@ public class HealthPotionEntityTest implements IEntityTests{
         }
     }
 
-
-    
+    @Override
+    public void TestUseCollectable() {
+        // TODO Auto-generated method stub
+    }
 }

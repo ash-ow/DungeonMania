@@ -17,10 +17,4 @@ public class TreasureEntity extends Entity implements ICollectableEntity {
     public boolean isPassable() {
         return true;
     }
-
-    @Override
-    public void used(CharacterEntity player){
-
-    }
-
 }

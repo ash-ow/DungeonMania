@@ -17,7 +17,7 @@ import dungeonmania.response.models.ItemResponse;
 import dungeonmania.entities.collectableEntities.SwordEntity;
 import dungeonmania.entities.collectableEntities.ArmourEntity;
 
-public class InventoryTests{
+public class InventoryTest{
     @Test
     public void TestMultipleItemsCollect() {
         CharacterEntity player = new CharacterEntity(0, 0, 0);

@@ -26,7 +26,56 @@ public class Goals {
     static String REQTYPE = "req";
     static String FRONTTYPE = "front";
 
+    private IGoal goal;
+
     public Goals(JsonObject goalConditions) {
+        this.goal = buildGoal(goalConditions);
+    }
+
+    private IGoal buildGoal(JsonObject goalConditions) {
+        String goal = goalConditions.get("goal").getAsString();
+        JsonArray jsonSubGoals = goalConditions.getAsJsonArray("subgoals");
+        List<IGoal> subGoals = new ArrayList<>();
+        switch (goal) {
+            case "exit":
+                return new ExitGoal();
+            case "enemies":
+                return new DestroyGoal();
+            case "boulders":
+                return new BoulderGoal();
+            case "treasure":
+                return new CollectingGoal();
+            case "AND":               
+                for (JsonElement goalElement : jsonSubGoals) {
+                    IGoal addedGoal = buildGoal(goalElement.getAsJsonObject());
+                    subGoals.add(addedGoal);
+                }
+                return new ANDGoal(subGoals);
+            case "OR":
+                for (JsonElement goalElement : jsonSubGoals) {
+                    IGoal addedGoal = buildGoal(goalElement.getAsJsonObject());
+                    subGoals.add(addedGoal);
+                }
+                return new ORGoal(subGoals);
+            default:
+                return null;
+        }
+    }
+
+    public String checkGoals(Dungeon dungeon) {
+        if (goal.checkGoal(dungeon)) {
+            return "";
+        } else {
+            return goal.getFrontendString();
+        }
+    }
+
+    public String getFrontEndString() {
+        return goal.getFrontendString();
+    }
+
+
+    /*public Goals(JsonObject goalConditions) {
         this.goalsMap = new HashMap<>();
         this.goals = new ArrayList<>();
         if (goalConditions == null) {
@@ -37,6 +86,9 @@ public class Goals {
             this.frontEndString = frontEndStringBuilder(goalConditions);  
         }
     }
+
+    
+
 
 
     public String reqStringBuilder(JsonObject goalConditions) {
@@ -153,5 +205,5 @@ public class Goals {
         } catch (ScriptException e) {
             System.out.println("Invalid Expression");
         }
-    }
+    }*/
 }

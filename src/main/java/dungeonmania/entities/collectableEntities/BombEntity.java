@@ -17,9 +17,7 @@ public class BombEntity extends Entity implements ICollectableEntity {
         return false;
     }
     
-
-    @Override
     public void used(CharacterEntity player){
-
+        // TODO: Remove from inventory
     }
 }

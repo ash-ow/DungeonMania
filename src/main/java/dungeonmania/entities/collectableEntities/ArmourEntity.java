@@ -16,7 +16,7 @@ public class ArmourEntity extends Entity implements ICollectableEntity {
         return true;
     }
 
-    @Override
     public void used(CharacterEntity player){
+        // TODO: Remove from inventory
     }    
 }

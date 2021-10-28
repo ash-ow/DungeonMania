@@ -17,8 +17,7 @@ public class ArrowsEntity extends Entity implements ICollectableEntity {
         return true;
     }
 
-    @Override
     public void used(CharacterEntity player){
-
+        // TODO: Remove from inventory
     }
 }

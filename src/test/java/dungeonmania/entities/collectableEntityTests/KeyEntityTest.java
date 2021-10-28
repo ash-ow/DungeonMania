@@ -31,23 +31,8 @@ public class KeyEntityTest implements ICollectableEntityTest {
 
     @Override
     public void TestCollect() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
         KeyEntity key = new KeyEntity(0,0,0);
-        EntitiesControl entities = new EntitiesControl();
-        
-        entities.addEntities(key);
-        assertEquals(1, entities.getEntities().size());
-
-        key.interactWithPlayer(entities, Direction.RIGHT, player);
-
-        assertEquals(1, player.getInventoryInfo().size());
-        assertEquals(0, entities.getEntities().size());
-
-        List<ItemResponse> inventory = player.getInventoryInfo();
-        for (ItemResponse item : inventory) {
-            assertEquals(item.getType(), "key");
-        }
-
+        assertEntityIsCollected(key);
     }
 
     @Override

@@ -29,21 +29,7 @@ public class ArrowsEntityTests implements ICollectableEntityTest {
     @Test
     @Override
     public void TestCollect() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
         ArrowsEntity arrows = new ArrowsEntity(0,0,0);
-        EntitiesControl entities = new EntitiesControl();
-        
-        entities.addEntities(arrows);
-        assertEquals(1, entities.getEntities().size());
-
-        arrows.interactWithPlayer(entities, Direction.RIGHT, player);
-
-        assertEquals(1, player.getInventoryInfo().size());
-        assertEquals(0, entities.getEntities().size());
-
-        List<ItemResponse> inventory = player.getInventoryInfo();
-        for (ItemResponse item : inventory) {
-            assertEquals(item.getType(), "arrows");
-        }
+        assertEntityIsCollected(arrows);
     }
 }

@@ -46,22 +46,8 @@ public class BombEntityTests implements ICollectableEntityTest {
     @Test
     @Override
     public void TestCollect() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
         BombEntity bomb = new BombEntity(0,0,0);
-        EntitiesControl entities = new EntitiesControl();
-        
-        entities.addEntities(bomb);
-        assertEquals(1, entities.getEntities().size());
-
-        bomb.interactWithPlayer(entities, Direction.RIGHT, player);
-
-        assertEquals(1, player.getInventoryInfo().size());
-        assertEquals(0, entities.getEntities().size());
-
-        List<ItemResponse> inventory = player.getInventoryInfo();
-        for (ItemResponse item : inventory) {
-            assertEquals(item.getType(), "bomb");
-        }
+        assertEntityIsCollected(bomb);
     }
     
     @Test

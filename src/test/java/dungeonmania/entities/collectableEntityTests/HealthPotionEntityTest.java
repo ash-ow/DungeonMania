@@ -33,22 +33,8 @@ public class HealthPotionEntityTest implements ICollectableEntityTest {
 
     @Override
     public void TestCollect() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
         HealthPotionEntity health_potion = new HealthPotionEntity(0,0,0);
-        EntitiesControl entities = new EntitiesControl();
-        
-        entities.addEntities(health_potion);
-        assertEquals(1, entities.getEntities().size());
-
-        health_potion.interactWithPlayer(entities, Direction.RIGHT, player);
-
-        assertEquals(1, player.getInventoryInfo().size());
-        assertEquals(0, entities.getEntities().size());
-
-        List<ItemResponse> inventory = player.getInventoryInfo();
-        for (ItemResponse item : inventory) {
-            assertEquals(item.getType(), "health_potion");
-        }
+        assertEntityIsCollected(health_potion);
     }
 
     @Override

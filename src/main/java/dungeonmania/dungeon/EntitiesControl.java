@@ -2,6 +2,7 @@ package dungeonmania.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.function.BooleanSupplier;
 import java.util.stream.Collectors;
@@ -223,14 +224,17 @@ public class EntitiesControl {
         return adjacentEntities;
     }
 
-    public IEntity getEntityById(String id) {
-        return this.entities.stream()
-            .filter(entity -> entity.getId().equals(id))
-            .findFirst()
-            .get();
-    }
-
     public boolean contains(Entity entity) {
         return this.entities.stream().anyMatch(ent -> ent.equals(entity));
+    
+    public IEntity getEntityById(String id) {
+        try {
+            return this.entities.stream()
+                .filter(entity -> entity.getId().equals(id))
+                .findFirst()
+                .get();
+        } catch (NoSuchElementException e) {
+            return null;
+        }
     }
 }

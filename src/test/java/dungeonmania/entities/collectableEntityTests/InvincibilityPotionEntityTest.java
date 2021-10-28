@@ -33,20 +33,8 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestCollect() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
         InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0,0,0);
-        EntitiesControl entities = new EntitiesControl();
-        
-        entities.addEntities(invincibility_potion);
-        assertEquals(1, entities.getEntities().size());
-
-        invincibility_potion.interactWithPlayer(entities, Direction.RIGHT, player);
-
-        List<ItemResponse> inventory = player.getInventoryInfo();
-        for (ItemResponse item : inventory) {
-            assertEquals(item.getType(), "invincibility_potion");
-        }
-    
+        assertEntityIsCollected(invincibility_potion);
     }
     @Override
     public void TestUseCollectable() {

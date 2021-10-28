@@ -1,4 +1,4 @@
-package dungeonmania.entities.collectableEntityTests.buildableEntityTest;
+package dungeonmania.entities.buildableEntityTest;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,8 +8,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import dungeonmania.entities.buildableEntities.ShieldEntity;
 import dungeonmania.entities.collectableEntities.*;
-import dungeonmania.entities.collectableEntities.buildableEntities.ShieldEntity;
+import dungeonmania.util.Position;
 
 public class ShieldTest implements IBuildableEntityTests {
     @Test
@@ -52,5 +53,11 @@ public class ShieldTest implements IBuildableEntityTests {
         inventory.add(new ArrowsEntity());
         assertFalse(shield.isBuildable(inventory));
         
+    }
+
+    @Override
+    public void TestEntityResponseInfo() {
+        ShieldEntity shield = new ShieldEntity();
+        assertEntityResponseInfoEquals(shield, "shield-0-0-0", "shield", new Position(0,0,0), false);
     }
 }

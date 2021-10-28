@@ -1,7 +1,6 @@
 package dungeonmania.entities.collectableEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.collectableEntities.SwordEntity;
+import dungeonmania.entities.collectableEntities.ArmourEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.response.models.ItemResponse;
@@ -26,18 +27,18 @@ public class InventoryTests{
         
         entities.addEntities(armour);
         entities.addEntities(sword);
-        assertTrue(entities.getEntities().size() == 2);
+        assertEquals(2, entities.getEntities().size());
 
         // Pick up first item
         armour.interactWithPlayer(entities, Direction.RIGHT, player);
-        assertTrue(player.getInventoryInfo().size() == 1);
-        assertTrue(entities.getEntities().size() == 1);
+        assertEquals(1, player.getInventoryInfo().size());
+        assertEquals(1, entities.getEntities().size());
 
         // Pick up second item
         sword.interactWithPlayer(entities, Direction.RIGHT, player);
-        assertTrue(player.getInventoryInfo().size() == 2);
+        assertEquals(2, player.getInventoryInfo().size());
 
-        assertTrue(entities.getEntities().size() == 0);
+        assertEquals(0, entities.getEntities().size());
 
         List<ItemResponse> inventory = player.getInventoryInfo();
         
@@ -50,7 +51,5 @@ public class InventoryTests{
             assertEquals(item.getType(), expected.get(i).getType());
             i++;
         }
-
     }
-
 }

@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.junit.jupiter.api.Assertions;
@@ -39,18 +40,9 @@ public class DoorEntityTest implements IEntityTests {
 
     @Test
     public void TestUnlockDoor() {
-        ArrayList<IEntity> entities = new ArrayList<>();
+        Dungeon dungeon = getDungeonWithDoorTestData();
+        CharacterEntity player = (CharacterEntity) dungeon.entitiesControl.getEntityById("player-0-0-0");
 
-        CharacterEntity player = new CharacterEntity();
-        entities.add(player);
-        KeyEntity key = new KeyEntity(0, 1, 0, 1);
-        entities.add(key);
-        DoorEntity doorCorrect = new DoorEntity(0, 2, 0, 1);
-        entities.add(doorCorrect);
-        DoorEntity doorIncorrect = new DoorEntity(0, 3, 0, 2);
-        entities.add(doorIncorrect);
-        
-        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player);
         dungeon.tick(Direction.DOWN);
         assertNotNull(player.getInventory().getEntityById("key-0-1-0"), "Inventory should contain the key");
 
@@ -63,13 +55,11 @@ public class DoorEntityTest implements IEntityTests {
 
     @Test
     public void TestCreateDoor() {
-        String dungeonJson = "{\"entities\": [{\"x\": 0,\"y\": 0,\"type\": \"door\",\"key\": 1},{\"x\": 0,\"y\": 1,\"type\": \"key\",\"key\": 1},{\"x\": 0,\"y\": 2,\"type\": \"key\",\"key\": 2}]}";
-        JsonObject jsonObject = new Gson().fromJson(dungeonJson, JsonObject.class);
-        Dungeon dungeon = new Dungeon(20, 20, jsonObject.get("entities").getAsJsonArray(), new JsonObject(), "", "", "");
+        Dungeon dungeon = getDungeonWithDoorTestData();
 
-        DoorEntity door = (DoorEntity) dungeon.entitiesControl.getEntityById("door-0-0-0");
+        DoorEntity door = (DoorEntity) dungeon.entitiesControl.getEntityById("door-0-2-0");
         KeyEntity key = (KeyEntity) dungeon.entitiesControl.getEntityById("key-0-1-0");
-        KeyEntity key2 = (KeyEntity) dungeon.entitiesControl.getEntityById("key-0-2-0");
+        KeyEntity key2 = (KeyEntity) dungeon.entitiesControl.getEntityById("key-0-4-0");
 
         Assertions.assertAll(
                 () -> assertNotNull(door, "Door should exist"),
@@ -82,5 +72,25 @@ public class DoorEntityTest implements IEntityTests {
                 () -> assertFalse(key2.unlocks(door))
             );
 
+    }
+
+    private Dungeon getDungeonWithDoorTestData() {
+        /*
+        Map:
+
+            0
+        0   P
+        1   K1
+        2   D1
+        3   D2
+        4   K2
+        5   Exit
+        
+        */
+        String entities = "{\"entities\": [{\"x\": 0,\"y\": 0,\"type\": \"player\"},{\"x\": 0,\"y\": 1,\"type\": \"key\",\"key\": 1},{\"x\": 0,\"y\": 2,\"type\": \"door\",\"key\": 1},{\"x\": 0,\"y\": 3,\"type\": \"door\",\"key\": 2},{\"x\": 0,\"y\": 4,\"type\": \"key\",\"key\": 2},{\"x\": 0,\"y\": 5,\"type\": \"exit\"}]}";
+        String goals = "{\"goal-condition\": {\"goal\": \"exit\"}}";
+        JsonArray entitiesJson = new Gson().fromJson(entities, JsonObject.class).get("entities").getAsJsonArray();
+        JsonObject goalsJson = new Gson().fromJson(goals, JsonObject.class).get("goal-condition").getAsJsonObject();
+        return new Dungeon(20, 20, entitiesJson, goalsJson, "", "", "");
     }
 }

@@ -226,6 +226,7 @@ public class EntitiesControl {
 
     public boolean contains(Entity entity) {
         return this.entities.stream().anyMatch(ent -> ent.equals(entity));
+    }
     
     public IEntity getEntityById(String id) {
         try {

@@ -15,10 +15,9 @@ import dungeonmania.util.Position;
 
 
 public class SpiderEntity extends Entity implements IInteractingEntity, IMovingEntity, IBattlingEntity {
-    private Integer movementPatternIndex = 0;
     private SpiderState spiderMovement;
     private Position firstPosition;
-    private boolean startLoop = false;
+    private Integer movementCount = 0;
 
     public SpiderEntity() {
         this(0, 0, 0);
@@ -33,20 +32,14 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
     @Override
     public void move(Direction direction, EntitiesControl entities, CharacterEntity player) {
 
-        if (!spiderMovement.moveSpider(movementPatternIndex, this, entities)) {
-            if (!this.position.equals(firstPosition) && startLoop) {
-                movementPatternIndex = (movementPatternIndex - 3) % 8;
-                if (spiderMovement instanceof SpiderClockwise) {
-                    spiderMovement = new SpiderAntiClockwise(movementPatternIndex);
-                } else {
-                    spiderMovement = new SpiderClockwise(movementPatternIndex);
-                }
+        if (!spiderMovement.moveSpider(movementCount, this, entities)) {
+            if (!this.position.equals(firstPosition) && movementCount > 0) {
+                movementCount = (movementCount - 2) % 8;
+                changeDirection();
             }
         } else {
-            startLoop = true;
+            movementCount = (movementCount + 1) % 8;
         }
-        
-        movementPatternIndex = (movementPatternIndex + 1) % 8;
     }
 
     @Override
@@ -57,6 +50,15 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
     @Override
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    private SpiderState changeDirection() {
+        if (spiderMovement instanceof SpiderClockwise) {
+            spiderMovement = new SpiderAntiClockwise(movementCount);
+        } else {
+            spiderMovement = new SpiderClockwise(movementCount);
+        }
+        return spiderMovement;
     }
 
 //region Battle

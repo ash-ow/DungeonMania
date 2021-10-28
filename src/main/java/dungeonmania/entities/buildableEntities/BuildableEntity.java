@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
-import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public abstract class BuildableEntity extends Entity implements ICollectableEntity{
     protected BuildableEntity(int x, int y, int layer, String type) {

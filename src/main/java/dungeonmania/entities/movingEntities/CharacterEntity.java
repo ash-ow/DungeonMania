@@ -8,12 +8,11 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
-import dungeonmania.entities.collectableEntities.buildableEntities.BowEntity;
+import dungeonmania.entities.buildableEntities.*;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
-import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.entities.collectableEntities.*;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
@@ -110,10 +109,18 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return false;
     }
 
-    // intention here is that this will be a helper function which will find and return the first instance of an entity
     public ICollectableEntity findFirstInInventory(String type) {
         for (ICollectableEntity entity: inventory) {
             if(entity.getType() == type) {
+                return entity;
+            }
+        }
+        return null;
+    }
+
+    public ICollectableEntity findCollectableById(String id) {
+        for (ICollectableEntity entity: inventory) {
+            if(entity.getId() == id) {
                 return entity;
             }
         }

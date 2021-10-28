@@ -16,13 +16,18 @@ public interface ICollectableEntityTest extends IEntityTests {
     // can we add a default / helper method like in IMovingEntities?
     public void TestCollect();
     
+    // public default void assertItemInInventory(String id, CharacterEntity player, EntitiesControl entitiesControl) {
+    //     assertNotNull(player.getInventory().getEntityById(id), "Inventory should contain entity " + id);
+    //     assertNull(entitiesControl.getEntityById(id), "EntitiesControl should not contain entity " + id);
+    // }
+
     public default void assertItemInInventory(String id, CharacterEntity player, EntitiesControl entitiesControl) {
-        assertNotNull(player.getInventory().getEntityById(id), "Inventory should contain entity " + id);
+        assertNotNull(player.findCollectableById(id), "Inventory should contain entity " + id);
         assertNull(entitiesControl.getEntityById(id), "EntitiesControl should not contain entity " + id);
     }
     
     public default void assertItemNotInInventory(String id, CharacterEntity player, EntitiesControl entitiesControl) {
-        assertNull(player.getInventory().getEntityById(id), "Inventory should not contain entity " + id);
+        assertNull(player.findCollectableById(id), "Inventory should not contain entity " + id);
         assertNotNull(entitiesControl.getEntityById(id), "EntitiesControl should contain entity " + id);
     }
 

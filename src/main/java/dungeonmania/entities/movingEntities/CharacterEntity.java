@@ -127,13 +127,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public void move(Direction direction, EntitiesControl entitiesControl) {
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.entitiesFromPosition(target);
-        List <IInteractingEntity> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);
+        List<IInteractingEntity> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);
         boolean interacted = false;
         for (IInteractingEntity entity : targetInteractable) { // Slight bug if player interacts with many things stacked on top of each other- keeps moving
-            if (entity.interactWithPlayer(entitiesControl, direction, this)) {
-                interacted = true;
-                this.move(direction);
-            }
+            interacted = interact(entity, entitiesControl, target, direction);
         }
         if ((targetEntities.size() == 0) || (!EntitiesControl.entitiesUnpassable(targetEntities) && !interacted)) {
             this.move(direction);
@@ -189,4 +186,14 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return buildable;
     }
 //endregion 
+    private boolean interact(IInteractingEntity entity, EntitiesControl entitiesControl, Position target, Direction direction) {
+        if (entity.interactWithPlayer(entitiesControl, direction, this)) {
+            List<IEntity> newTargetEntities = entitiesControl.entitiesFromPosition(target);
+            if (!EntitiesControl.entitiesUnpassable(newTargetEntities)) {
+                this.move(direction);
+            }
+            return true;
+        }
+        return false;
+    }
 }

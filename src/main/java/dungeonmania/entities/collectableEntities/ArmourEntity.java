@@ -36,9 +36,9 @@ public class ArmourEntity extends Entity implements ICollectableEntity {
         }
     }
     
-    public float reduceDamage(float enemyHealth, int enemyDamage, CharacterEntity player) {
+    public float reduceDamage(float damage, CharacterEntity player) {
         this.used(player);
-        float damage = ((enemyHealth * enemyDamage) / 10)/2;
+        damage = damage/2;
         return damage;
     }
 }

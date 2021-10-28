@@ -15,6 +15,7 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.collectableEntities.ArrowsEntity;
+import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
@@ -105,10 +106,10 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         CharacterEntity character = new CharacterEntity();
         WoodEntity wood = new WoodEntity();
         character.addEntityToInventory(wood);
-        EntitiesControl inventory = character.getInventory();
-        assertEquals(1, inventory.getEntities().size());
+        List<ICollectableEntity> inventory = character.getInventory();
+        assertEquals(1, inventory.size());
         character.removeEntityFromInventory(wood);
-        assertEquals(0, inventory.getEntities().size());
+        assertEquals(0, inventory.size());
     }
 
     @Test
@@ -123,11 +124,11 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         player.addEntityToInventory(arrow2);
         player.addEntityToInventory(arrow3);
         player.build("bow");
-        List<ItemResponse> inventory = player.getInventoryInfo();
-        for (ItemResponse item : inventory) {
+        List<ICollectableEntity> inventory = player.getInventory();
+        for (ICollectableEntity item : inventory) {
             assertEquals(item.getType(), "bow");
         }
-        assertTrue(player.getInventoryInfo().size() == 1);
+        assertTrue(player.getInventory().size() == 1);
     }
 
     @Test
@@ -144,7 +145,7 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         for (ItemResponse item : inventory) {
             assertEquals(item.getType(), "shield");
         }
-        assertTrue(player.getInventoryInfo().size() == 1);
+        assertTrue(player.getInventory().size() == 1);
     }
 
     @Test
@@ -161,7 +162,7 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         for (ItemResponse item : inventory) {
             assertEquals(item.getType(), "shield");
         }
-        assertTrue(player.getInventoryInfo().size() == 1);
+        assertTrue(player.getInventory().size() == 1);
     }
 
     @Test
@@ -188,7 +189,7 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
             assertEquals(item.getType(), expected.get(i).getType());
             i++;
         }
-        assertTrue(player.getInventoryInfo().size() == 2);
+        assertTrue(player.getInventory().size() == 2);
     }
 
 

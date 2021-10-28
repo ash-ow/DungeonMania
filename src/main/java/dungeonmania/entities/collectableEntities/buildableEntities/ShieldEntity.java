@@ -81,8 +81,9 @@ public class ShieldEntity extends BuildableEntity {
         }
     }
     
-    public float reduceDamage(float enemyHealth, int enemyDamage) {
-        float damage = ((enemyHealth * enemyDamage) / 10)/2;
+    public float reduceDamage(float damage, CharacterEntity player) {
+        this.used(player);
+        damage = damage/2;
         return damage;
     }
 

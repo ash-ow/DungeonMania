@@ -36,5 +36,4 @@ public class ANDGoal implements IGoal{
         frontend += subGoals.get(subGoals.size() - 1).getFrontendString();
         return frontend;
     }
-    
 }

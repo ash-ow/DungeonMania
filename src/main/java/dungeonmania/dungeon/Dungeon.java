@@ -42,7 +42,25 @@ public class Dungeon {
                 this.entitiesControl.createEntity(entityObj);
             }
         }
-        this.goals = new Goals(goalConditions);
+    }
+
+    public Dungeon(JsonArray entities, String gameMode, String id, String dungeonName) {
+        this.gameMode = gameMode;
+        this.id = id;
+        this.dungeonName = dungeonName;
+        this.entitiesControl = new EntitiesControl();
+        for (JsonElement entityInfo : entities) {
+            JsonObject entityObj = entityInfo.getAsJsonObject();
+            String type = entityObj.get("type").getAsString();
+            Integer xAxis = entityObj.get("x").getAsInt();
+            Integer yAxis = entityObj.get("y").getAsInt();
+            Integer layer = this.entitiesControl.entitiesFromPosition(new Position(xAxis, yAxis)).size();
+            if (type.equals("player")) {
+                this.player = new CharacterEntity(xAxis, yAxis, layer);
+            } else {
+                this.entitiesControl.createEntity(entityObj);
+            }
+        }
     }
 
     public Dungeon(ArrayList<IEntity> entities, String gameMode, CharacterEntity player) {
@@ -74,6 +92,9 @@ public class Dungeon {
     }
 
     public String getGoals() {
+        if (goals == null) {
+            return "";
+        }
         return goals.checkGoals(this);
     }
 

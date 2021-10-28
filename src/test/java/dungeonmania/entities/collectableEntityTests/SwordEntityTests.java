@@ -7,18 +7,18 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
-import dungeonmania.entities.collectableEntities.WoodEntity;
+import dungeonmania.entities.collectableEntities.SwordEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class WoodEntityTests implements ICollectableEntityTest {
+public class SwordEntityTests implements ICollectableEntityTest {
     @Test
     @Override
     public void TestEntityResponseInfo() {
-        WoodEntity wood = new WoodEntity(0, 0, 0);
-        assertEntityResponseInfoEquals(wood, "wood-0-0-0", "wood", new Position(0,0), false);
+        SwordEntity sword = new SwordEntity(0, 0, 0);
+        assertEntityResponseInfoEquals(sword, "sword-0-0-0", "sword", new Position(0,0), false);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class WoodEntityTests implements ICollectableEntityTest {
     @Test
     @Override
     public void TestCollect() {
-        WoodEntity wood = new WoodEntity(0,0,0);
-        assertEntityIsCollected(wood);
+        SwordEntity sword = new SwordEntity(0,0,0);
+        assertEntityIsCollected(sword);
     }
 }

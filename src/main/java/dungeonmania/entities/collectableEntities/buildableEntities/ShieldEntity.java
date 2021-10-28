@@ -31,21 +31,31 @@ public class ShieldEntity extends BuildableEntity {
     
     @Override
     public boolean isBuildable(List<ICollectableEntity> inventory) {
+        boolean wood = false;
+        boolean treasure = false;
+        boolean key = false;
         for (Map.Entry<ICollectableEntity, Integer> entry : requiredComponents.entrySet()) {
             ICollectableEntity component = entry.getKey();
             int quantity = entry.getValue();
-            if (numberOfComponentItemsInInventory(inventory, new WoodEntity()) < quantity) {
+            if (numberOfComponentItemsInInventory(inventory, new WoodEntity()) >= quantity) {
                 System.out.println("Needs more " + component.getId());
-                return false;
+                wood = true;
             }
-            if (numberOfComponentItemsInInventory(inventory, new TreasureEntity()) < quantity) {
+            if (numberOfComponentItemsInInventory(inventory, new TreasureEntity()) >= quantity) {
                 System.out.println("Needs more " + component.getId());
-            } else if (numberOfComponentItemsInInventory(inventory, new KeyEntity()) < quantity) {
+                treasure = true;
+            } 
+            if (numberOfComponentItemsInInventory(inventory, new KeyEntity()) >= quantity) {
                 System.out.println("Needs more " + component.getId());
-                return false;
+                key = true;
             }
         }
-        return true;
+        if (treasure || key) {
+            if (wood) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isPassable() {

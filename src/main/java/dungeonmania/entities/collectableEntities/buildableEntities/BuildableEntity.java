@@ -37,6 +37,4 @@ public abstract class BuildableEntity extends Entity implements ICollectableEnti
     }
 
     protected abstract void initialiseRequiredComponents();
-
-    //public abstract void build(CharacterEntity player);
 }

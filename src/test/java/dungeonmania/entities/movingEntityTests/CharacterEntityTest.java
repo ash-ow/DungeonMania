@@ -15,8 +15,10 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.collectableEntities.ArrowsEntity;
+import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
+import dungeonmania.entities.collectableEntities.buildableEntities.ShieldEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
@@ -129,7 +131,7 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
     }
 
     @Test
-    public void TestBuildShield() {
+    public void TestBuildShieldWithTreasure() {
         CharacterEntity player = new CharacterEntity();
         WoodEntity wood = new WoodEntity();
         WoodEntity wood2 = new WoodEntity();
@@ -144,4 +146,50 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         }
         assertTrue(player.getInventoryInfo().size() == 1);
     }
+
+    @Test
+    public void TestBuildShieldWithKey() {
+        CharacterEntity player = new CharacterEntity();
+        WoodEntity wood = new WoodEntity();
+        WoodEntity wood2 = new WoodEntity();
+        KeyEntity key = new KeyEntity();
+        player.addEntityToInventory(wood);
+        player.addEntityToInventory(wood2);
+        player.addEntityToInventory(key);
+        player.build("shield");
+        List<ItemResponse> inventory = player.getInventoryInfo();
+        for (ItemResponse item : inventory) {
+            assertEquals(item.getType(), "shield");
+        }
+        assertTrue(player.getInventoryInfo().size() == 1);
+    }
+
+    @Test
+    public void TestBuildShieldHasBoth() {
+        CharacterEntity player = new CharacterEntity();
+        WoodEntity wood = new WoodEntity();
+        WoodEntity wood2 = new WoodEntity();
+        TreasureEntity treasure = new TreasureEntity();
+        KeyEntity key = new KeyEntity();
+        player.addEntityToInventory(wood);
+        player.addEntityToInventory(wood2);
+        player.addEntityToInventory(treasure);
+        player.addEntityToInventory(key);
+        player.build("shield");
+
+        ShieldEntity shield = new ShieldEntity();
+        List<IEntity> expected = new ArrayList<>();
+        expected.add(key);
+        expected.add(shield);
+
+        int i = 0;
+        List<ItemResponse> inventory = player.getInventoryInfo();
+        for (ItemResponse item : inventory) {
+            assertEquals(item.getType(), expected.get(i).getType());
+            i++;
+        }
+        assertTrue(player.getInventoryInfo().size() == 2);
+    }
+
+
 }

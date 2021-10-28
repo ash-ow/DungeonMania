@@ -138,14 +138,14 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public void build(String buildable) {
         List<ICollectableEntity> playerInventory = this.getInventory().entitiesFromCollectables();
         if (buildable == "bow") {
-            BowEntity bow = new BowEntity(0,0,0);
+            BowEntity bow = new BowEntity();
             if (bow.isBuildable(playerInventory)) {
                 this.addEntityToInventory(bow);
                 removeBuildMaterials("wood", 1);
                 removeBuildMaterials("arrow", 3);
             }
         } else if (buildable == "shield") {
-            ShieldEntity shield = new ShieldEntity(0,0,0);
+            ShieldEntity shield = new ShieldEntity();
             if (shield.isBuildable(playerInventory)) {
                 this.addEntityToInventory(shield);
                 removeBuildMaterials("wood", 2);
@@ -167,6 +167,20 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
                 removed++;
             }
         }
+    }
+
+    public List<String> getBuildableList() {
+        List<ICollectableEntity> playerInventory = this.getInventory().entitiesFromCollectables();
+        List<String> buildable = new ArrayList<>();
+        BowEntity bow = new BowEntity();
+        if (bow.isBuildable(playerInventory)) {
+            buildable.add(bow.getType());
+        }
+        ShieldEntity shield = new ShieldEntity();
+        if (shield.isBuildable(playerInventory)) {
+            buildable.add(shield.getType());
+        }
+        return buildable;
     }
 //endregion 
 }

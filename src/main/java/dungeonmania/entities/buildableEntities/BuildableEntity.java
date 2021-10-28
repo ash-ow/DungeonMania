@@ -1,4 +1,4 @@
-package dungeonmania.entities.collectableEntities.buildableEntities;
+package dungeonmania.entities.buildableEntities;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +9,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public abstract class BuildableEntity extends Entity implements ICollectableEntity {
+public abstract class BuildableEntity extends Entity implements ICollectableEntity{
     protected BuildableEntity(int x, int y, int layer, String type) {
         super(x, y, layer, type);
         initialiseRequiredComponents();

@@ -1,14 +1,12 @@
-package dungeonmania.entities.collectableEntities.buildableEntities;
+package dungeonmania.entities.buildableEntities;
 
 import java.util.List;
 import java.util.Map;
 
-import dungeonmania.entities.collectableEntities.ArrowsEntity;
 import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 
 public class ShieldEntity extends BuildableEntity {

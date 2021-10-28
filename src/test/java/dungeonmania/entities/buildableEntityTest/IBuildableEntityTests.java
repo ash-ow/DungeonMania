@@ -1,6 +1,8 @@
-package dungeonmania.entities.collectableEntityTests.buildableEntityTest;
+package dungeonmania.entities.buildableEntityTest;
 
-public interface IBuildableEntityTests {
+import dungeonmania.entities.IEntityTests;
+
+public interface IBuildableEntityTests extends IEntityTests {
     public void TestIsBuildable();
     public void TestIsNotBuildable_EmptyInventory();
     public void TestIsNotBuildable_InventoryFullOfWrongItems();

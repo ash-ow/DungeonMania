@@ -2,6 +2,7 @@ package dungeonmania.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -188,5 +189,16 @@ public class EntitiesControl {
 
     public boolean getRandomBoolean(float p){
         return rand.nextFloat() < p;
+    }
+    
+    public IEntity getEntityById(String id) {
+        try {
+            return this.entities.stream()
+                .filter(entity -> entity.getId().equals(id))
+                .findFirst()
+                .get();
+        } catch (NoSuchElementException e) {
+            return null;
+        }
     }
 }

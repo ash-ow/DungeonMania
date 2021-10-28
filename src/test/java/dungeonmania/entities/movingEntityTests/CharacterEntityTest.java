@@ -191,6 +191,4 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         }
         assertTrue(player.getInventory().size() == 2);
     }
-
-
 }

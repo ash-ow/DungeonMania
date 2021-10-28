@@ -169,14 +169,18 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     public void removeBuildMaterials(String type, int amount) {
         int removed = 0;
+        List<ICollectableEntity> toRemove = new ArrayList<>();
         while(removed < amount) {
             for(ICollectableEntity material : this.inventory) {
                 //Might have to go through the entity itself so that there aren't empty functions
                 if (material.getType() == type) {
-                    removeEntityFromInventory(material);
+                    toRemove.add(material);
                     removed++;
                 }
             }
+        }
+        for (ICollectableEntity material : toRemove) {
+            removeEntityFromInventory(material);
         }
     }
 

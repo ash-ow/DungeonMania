@@ -2,18 +2,22 @@ package dungeonmania.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.util.Direction;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.util.Position;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
+import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
 import dungeonmania.entities.staticEntities.*;
 
 public class EntitiesControl {
     private List<IEntity> entities;
+    private Random rand = new Random();
 
     public EntitiesControl() {
         entities = new ArrayList<IEntity>();
@@ -35,6 +39,18 @@ public class EntitiesControl {
         this.entities = entities;
     }
 
+    public void moveAllMovingEntities(Direction direction, CharacterEntity player) {
+        List<IMovingEntity> movingEntities = entities.stream()
+            .filter(entity -> entity instanceof IMovingEntity)
+            .map(IMovingEntity.class::cast)
+            .collect(Collectors.toList());
+
+        for (IMovingEntity entity : movingEntities) {
+            entity.move(direction, this, player);
+        }
+
+    }
+
     public List<IEntity> entitiesFromPosition(Position position) {
         return this.entities.stream().filter(entity -> entity != null && entity.getPosition().equals(position)).collect(Collectors.toList());
     }
@@ -45,6 +61,22 @@ public class EntitiesControl {
 
     public static boolean entitiesUnpassable(List<IEntity> entityList) {
         return entityList.stream().anyMatch(entity -> !entity.isPassable());
+    }
+    public static boolean interactingEntitiesUnpassable(List<IInteractingEntity> entityList) {
+        return entityList.stream().anyMatch(entity -> !entity.isPassable());
+    }
+
+    public static IEntity entitiesContainsType(List<IEntity> entityList, Class<?> cls) {
+        return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findAny().orElse(null);
+    }
+
+    public boolean positionContainsEntityType(Position position, Class<?> cls) {
+        List<IEntity> entityList =  this.entitiesFromPosition(position);
+        
+        if (entitiesContainsType(entityList, cls) != null) {
+            return true;
+        }
+        return false;
     }
 
     public void createEntity(Integer xAxis, Integer yAxis, Integer layer, String type) {
@@ -66,6 +98,9 @@ public class EntitiesControl {
                 break;
             case "boulder":
                 this.entities.add(new BoulderEntity(xAxis, yAxis, layer));
+                break;
+            case "spider":
+                this.entities.add(new SpiderEntity(xAxis, yAxis, layer));
                 break;
             case "wood":
                 this.entities.add(new WoodEntity(xAxis, yAxis, layer));
@@ -100,6 +135,11 @@ public class EntitiesControl {
         }
     }
 
+    public void createEntity(Integer xAxis, Integer yAxis, String type) {
+        Integer layer = this.entitiesFromPosition(this.getLargestCoordinate()).size();
+        createEntity(xAxis, yAxis, layer, type);
+    }
+
     public List<IEntity> entitiesOfSameType(String type) {
         List<IEntity> sameType = new ArrayList<>();
         for (IEntity entity : entities) {
@@ -108,5 +148,41 @@ public class EntitiesControl {
             }
         }
         return sameType;
+    }
+
+    public Position getLargestCoordinate() {
+        int x = 1, y = 1;
+        for (IEntity entity : entities) {
+            if (entity.getPosition().getX() > x) {
+                x = entity.getPosition().getX();
+            }
+            if (entity.getPosition().getX() > y) {
+                y = entity.getPosition().getX();
+            }
+        }
+        return new Position(x, y);
+    }
+
+    public void generateEnemyEntities() {
+        generateSpider();
+    }
+
+    private void generateSpider() {
+        List<IEntity> spiders = this.entitiesOfSameType("spider");
+        if (spiders.size() < 4) {
+            Position largestCoordinate = this.getLargestCoordinate();
+            int largestX = largestCoordinate.getX();
+            int largestY = largestCoordinate.getY();
+            int randomX = rand.nextInt(largestX);
+            int randomY = rand.nextInt(largestY);
+            if (getRandomBoolean((float) .05) 
+                && !this.positionContainsEntityType(new Position(randomX, randomY), BoulderEntity.class)) {
+                this.createEntity(randomX, randomY, "spider");
+            }
+        }
+    }
+
+    public boolean getRandomBoolean(float p){
+        return rand.nextFloat() < p;
     }
 }

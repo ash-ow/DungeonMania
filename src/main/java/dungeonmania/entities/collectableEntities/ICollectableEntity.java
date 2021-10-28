@@ -1,13 +1,9 @@
 package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.IInteractingEntity;
-import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.util.Direction;
-import dungeonmania.util.Position;
-
-import java.util.List;
 
 public interface ICollectableEntity extends IInteractingEntity {
     /**
@@ -25,10 +21,4 @@ public interface ICollectableEntity extends IInteractingEntity {
      * if no more uses
      */
     void used(CharacterEntity player);
-
-    /**
-     * Adds the collectable item to the player inventory
-     * @param player
-     */
-    void collect(CharacterEntity player);
 }

@@ -16,8 +16,4 @@ public class WoodEntity extends Entity implements ICollectableEntity {
     public boolean isPassable() {
         return true;
     }
-
-    public void used(CharacterEntity player){
-        // TODO: Remove from inventory
-    }
 }

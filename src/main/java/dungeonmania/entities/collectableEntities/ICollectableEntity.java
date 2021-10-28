@@ -17,8 +17,9 @@ public interface ICollectableEntity extends IInteractingEntity {
     }
 
     /**
-     * Decrements the amount of times a collectable entity can still be used and removes it from inventory
-     * if no more uses
+     * Deletes an item from the players inventory after it has been used.
      */
-    void used(CharacterEntity player);
+    public default void used(CharacterEntity player) {
+        player.removeEntityFromInventory(this);
+    }
 }

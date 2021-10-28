@@ -36,13 +36,14 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker {
             for (IEntity entity : adjacentEntities) {
                 explodeEntityIfPossible(entity, entitiesControl);
             }
+            entitiesControl.removeEntity(this);
         }
     }
 
     private void explodeEntityIfPossible(IEntity entity, EntitiesControl entitiesControl) {
         if ( 
             !(entity instanceof CharacterEntity) && 
-            !(entity instanceof CollectableEntity)
+            !(entity instanceof ICollectableEntity)
         ) {
             entitiesControl.removeEntity(entity);
         }

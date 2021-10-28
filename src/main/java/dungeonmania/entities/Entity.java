@@ -33,4 +33,12 @@ public abstract class Entity implements IEntity {
 	public boolean isInSamePositionAs(IEntity ent) {
         return this.getPosition().equals(ent.getPosition());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {return true;}
+        if (!(o instanceof Entity)) {return false;}
+        Entity c = (Entity)o;
+        return this.getId().equals(c.getId());
+    }
 }

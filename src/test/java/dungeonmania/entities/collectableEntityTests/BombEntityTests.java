@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
@@ -70,10 +71,10 @@ public class BombEntityTests implements ICollectableEntityTest {
         /*
                 0 1 2 3
             0   . . . .
-            1   . W . .
+            1   X W . .
             2   W S B P
-            3   I O . .
-            4   X A . .
+            3   I O W .
+            4   X A X .
         */
 
         // exploding entities
@@ -81,10 +82,14 @@ public class BombEntityTests implements ICollectableEntityTest {
         entities.add(boulder);
         BombEntity bomb = new BombEntity(1,3,0); // O
         entities.add(bomb);
-        SpiderEntity spider = new SpiderEntity(0, 4, 0); // X
-        entities.add(spider);
-        WallEntity wall = new WallEntity(0, 2, 0); // W
-        entities.add(wall);
+        SpiderEntity spider_botleft = new SpiderEntity(0, 4, 0); // X
+        entities.add(spider_botleft);
+        SpiderEntity spider_botright = new SpiderEntity(2, 4, 0); // X
+        entities.add(spider_botright);
+        WallEntity wall_topleft = new WallEntity(0, 2, 0); // W
+        entities.add(wall_topleft);
+        WallEntity wall_right = new WallEntity(2, 3, 0); // W
+        entities.add(wall_right);
         SwitchEntity switches = new SwitchEntity(1, 2, 0); // S
         entities.add(switches);
 
@@ -95,23 +100,30 @@ public class BombEntityTests implements ICollectableEntityTest {
         entities.add(wood);
         ArrowsEntity arrows = new ArrowsEntity(1, 4, 0); // A
         entities.add(arrows);
-        WallEntity wall2 = new WallEntity(1, 1, 0); // W
-        entities.add(wall2);
+        WallEntity wall_upup = new WallEntity(1, 1, 0); // W
+        entities.add(wall_upup);
+        SpiderEntity spider_upupleft = new SpiderEntity(0,1, 0); // X
+        entities.add(spider_upupleft);
         
         // Move the player left to push the boulder into the bomb
         Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player);
         dungeon.tick(Direction.LEFT);
 
-        assertFalse(entities.contains(boulder), "Entity controller should no longer contain boulder");
-        assertFalse(entities.contains(bomb), "Entity controller should no longer contain bomb");
-        assertFalse(entities.contains(spider), "Entity controller should no longer contain spider");
-        assertFalse(entities.contains(wall), "Entity controller should no longer contain wall");
-        assertFalse(entities.contains(switches), "Entity controller should no longer contain switches");
+        Assertions.assertAll(
+                () -> assertFalse(dungeon.entitiesControl.contains(boulder), "Entity controller should no longer contain boulder"),
+                () -> assertFalse(dungeon.entitiesControl.contains(bomb), "Entity controller should no longer contain bomb"),
+                () -> assertFalse(dungeon.entitiesControl.contains(spider_botleft), "Entity controller should no longer contain spider_botleft"),
+                () -> assertFalse(dungeon.entitiesControl.contains(spider_botright), "Entity controller should no longer contain spider_botright"),
+                () -> assertFalse(dungeon.entitiesControl.contains(wall_topleft), "Entity controller should no longer contain wall_topleft"),
+                () -> assertFalse(dungeon.entitiesControl.contains(wall_right), "Entity controller should no longer contain wall_right"),
+                () -> assertFalse(dungeon.entitiesControl.contains(switches), "Entity controller should no longer contain switches"),
 
-        assertTrue(entities.contains(player), "Entity controller should still contain wood");
-        assertTrue(entities.contains(wood), "Entity controller should still contain wood");
-        assertTrue(entities.contains(arrows), "Entity controller should still contain arrows");
-        assertTrue(entities.contains(wall2), "Entity controller should still contain wall2");
-    }
+                () -> assertTrue(dungeon.entitiesControl.contains(player), "Entity controller should still contain wood"),
+                () -> assertTrue(dungeon.entitiesControl.contains(wood), "Entity controller should still contain wood"),
+                () -> assertTrue(dungeon.entitiesControl.contains(arrows), "Entity controller should still contain arrows"),
+                () -> assertTrue(dungeon.entitiesControl.contains(spider_upupleft), "Entity controller should contain spider_upupleft"),
+                () -> assertTrue(dungeon.entitiesControl.contains(wall_upup), "Entity controller should still contain wall_upup")
+            );
+        }
 
 }

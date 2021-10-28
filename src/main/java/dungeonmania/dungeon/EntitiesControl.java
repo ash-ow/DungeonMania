@@ -3,6 +3,7 @@ package dungeonmania.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.BooleanSupplier;
 import java.util.stream.Collectors;
 
 import dungeonmania.util.Direction;
@@ -212,6 +213,24 @@ public class EntitiesControl {
     }
 
     public List<IEntity> getAllAdjacentEntities(Position position) {
-        return this.entities.stream().filter(entity -> Position.isAdjacent(position, entity.getPosition())).collect(Collectors.toList());
+        List<IEntity> adjacentEntities = new ArrayList<IEntity>();
+        for (IEntity ent : this.entities) {
+            Position entPosition = ent.getPosition();
+            if (Position.isAdjacent(position, entPosition)) {
+                adjacentEntities.add(ent);
+            }
+        }
+        return adjacentEntities;
+    }
+
+    public IEntity getEntityById(String id) {
+        return this.entities.stream()
+            .filter(entity -> entity.getId().equals(id))
+            .findFirst()
+            .get();
+    }
+
+    public boolean contains(Entity entity) {
+        return this.entities.stream().anyMatch(ent -> ent.equals(entity));
     }
 }

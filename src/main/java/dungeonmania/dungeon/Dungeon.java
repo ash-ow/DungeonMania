@@ -17,7 +17,7 @@ import dungeonmania.util.Position;
 public class Dungeon {
     private int height;
     private int width;
-    private EntitiesControl entitiesControl;
+    public EntitiesControl entitiesControl;
     private String gameMode;
     private String id;
     private String dungeonName;

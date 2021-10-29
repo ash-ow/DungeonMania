@@ -59,10 +59,12 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         assertEquals(100, character.getHealth());
         assertEquals(100, zombie.getHealth());
 
+        zombie.setDamage(5);
+        character.setDamage(2);
         zombie.Battle(character);
 
-        assertEquals(70, character.getHealth());
-        assertEquals(40, zombie.getHealth());
+        assertEquals(50, character.getHealth());
+        assertEquals(60, zombie.getHealth());
     }
 
     @Test
@@ -70,12 +72,13 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         CharacterEntity character = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity();
         
-        zombie.setHealth(2);
+        zombie.setHealth(10);
+        zombie.setDamage(5);
+        character.setDamage(1);
         zombie.Battle(character);
 
-        assertEquals(99.4, character.getHealth(), 0.1);
-        assertEquals(-58, zombie.getHealth());
-
+        assertEquals(95, character.getHealth());
+        assertEquals(-10, zombie.getHealth());
         // TODO add assertions for zombie death
     }
 }

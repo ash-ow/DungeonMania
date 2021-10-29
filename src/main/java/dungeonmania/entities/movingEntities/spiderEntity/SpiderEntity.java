@@ -72,8 +72,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
     protected int damage = 0;
 
     public int getDamage() {
-        // TODO determine correct Spider damage
-        return 2;
+        return this.damage;
     }
 
     public void setDamage(int damage) {

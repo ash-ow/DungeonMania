@@ -172,10 +172,12 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         assertEquals(100, character.getHealth());
         assertEquals(100, spider.getHealth());
 
+        spider.setDamage(5);
+        character.setDamage(2);
         spider.Battle(character);
 
-        assertEquals(80, character.getHealth());
-        assertEquals(40, spider.getHealth());
+        assertEquals(50, character.getHealth());
+        assertEquals(60, spider.getHealth());
     }
 
     @Test
@@ -183,11 +185,13 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         CharacterEntity character = new CharacterEntity();
         SpiderEntity spider = new SpiderEntity();
         
-        spider.setHealth(2);
+        spider.setHealth(10);
+        spider.setDamage(5);
+        character.setDamage(1);
         spider.Battle(character);
 
-        assertEquals(99.6, character.getHealth(), 0.1);
-        assertEquals(-58, spider.getHealth());
+        assertEquals(95, character.getHealth());
+        assertEquals(-10, spider.getHealth());
 
         // TODO add assertions for spider death
     }

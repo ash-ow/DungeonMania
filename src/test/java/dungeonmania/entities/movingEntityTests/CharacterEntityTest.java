@@ -92,12 +92,13 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         CharacterEntity character = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity();
         
-        character.setHealth(2);
-        zombie.setDamage(5);
+        character.setHealth(100);
+        character.setDamage(2);
+        zombie.setDamage(20);
         zombie.Battle(character);
 
-        assertEquals(-48, character.getHealth());
-        assertEquals(100, zombie.getHealth());
+        assertEquals(-100, character.getHealth());
+        assertEquals(60, zombie.getHealth());
 
         // TODO add assertions for character death
     }

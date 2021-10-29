@@ -32,7 +32,7 @@ public class BoulderGoalTests implements IGoalTests {
         entities.add(switchEntity);
         String jsonGoals = "{ \"goal\": \"boulders\"}";
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
-        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player, j);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player, j);
         dungeon.tick(Direction.DOWN);
         assertEquals(boulder.getPosition(), switchEntity.getPosition());
         assertEquals("", dungeon.getGoals());

@@ -18,4 +18,9 @@ public class CollectingGoal  implements IGoal {
     public String getType() {
         return type;
     }
+
+    @Override
+    public String getFrontendString() {
+        return ":treasure";
+    }
 }

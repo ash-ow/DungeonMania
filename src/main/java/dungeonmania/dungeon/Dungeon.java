@@ -15,7 +15,7 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class Dungeon {
-    private EntitiesControl entitiesControl;
+    public EntitiesControl entitiesControl;
     private String gameMode;
     private String id;
     private String dungeonName;

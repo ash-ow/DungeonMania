@@ -2,6 +2,7 @@ package dungeonmania.entities.collectableEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class BombEntityTest implements ICollectableEntityTest {
         assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should be able to move off the bomb");
         dungeon.tick(Direction.UP);
         assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should not be able to move back onto the bomb once it has been placed");
+        assertNull(player.getInventory().getEntityById(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
     }
 
     @Test

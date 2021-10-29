@@ -51,7 +51,7 @@ public class BombEntityTest implements ICollectableEntityTest {
         assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should be able to move off the bomb");
         dungeon.tick(Direction.UP);
         assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should not be able to move back onto the bomb once it has been placed");
-        assertNull(player.getInventory().getEntityById(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
+        assertNull(player.findCollectableById(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
     }
 
     @Test

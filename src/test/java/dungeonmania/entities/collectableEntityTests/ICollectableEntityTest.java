@@ -46,7 +46,7 @@ public interface ICollectableEntityTest extends IEntityTests {
         entities.addEntities(entity);
         entity.interactWithPlayer(entities, Direction.UP, player);
         entity.used(player);
-        assertNull(player.getInventory().getEntityById(entity.getId()), "Inventory should not contain entity " + entity.getId());
+        assertNull(player.findCollectableById(entity.getId()), "Inventory should not contain entity " + entity.getId());
     }
 
 }

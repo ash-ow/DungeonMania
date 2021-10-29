@@ -86,4 +86,9 @@ public class ShieldEntity extends BuildableEntity {
         return damage;
     }
 
+    @Override
+    public boolean isPlacedAfterUsing() {
+        return false;
+    }
+
 }

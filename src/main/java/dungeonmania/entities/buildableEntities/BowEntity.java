@@ -48,4 +48,9 @@ public class BowEntity extends BuildableEntity {
             player.setDamage(0);
         }
     }
+
+    @Override
+    public boolean isPlacedAfterUsing() {
+        return false;
+    }
 }

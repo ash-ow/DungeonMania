@@ -31,11 +31,27 @@ public class MercenaryEntityTests implements IMovingEntityTest{
 
     @Test
     public void TestCorrectMove() {
-
+        CharacterEntity player = new CharacterEntity();
+        MercenaryEntity mercenary = new MercenaryEntity(5, 5, 0);
+        WallEntity wall = new WallEntity(4, 5, 0);
+        EntitiesControl entitiesControl = new EntitiesControl();
+        entitiesControl.addEntities(mercenary);
+        entitiesControl.addEntities(wall);
+        mercenary.move(entitiesControl, player);
+        assertEquals(new Position(5, 4), mercenary.getPosition());
     }
 
     @Test
     public void TestBlocked() {
-        
+        CharacterEntity player = new CharacterEntity();
+        MercenaryEntity mercenary = new MercenaryEntity(5, 5, 0);
+        WallEntity wall = new WallEntity(4, 5, 0);
+        WallEntity wall2 = new WallEntity(5, 4, 0);
+        EntitiesControl entitiesControl = new EntitiesControl();
+        entitiesControl.addEntities(mercenary);
+        entitiesControl.addEntities(wall);
+        entitiesControl.addEntities(wall2);
+        mercenary.move(entitiesControl, player);
+        assertEquals(new Position(5, 5), mercenary.getPosition());
     }
 }

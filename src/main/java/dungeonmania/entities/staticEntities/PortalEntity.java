@@ -49,7 +49,7 @@ public class PortalEntity extends Entity implements IInteractingEntity{
         }
         Position target = portalPair.getPosition().translateBy(direction);
         List<IEntity> targetEntities = entities.entitiesFromPosition(target);
-        if (EntitiesControl.entitiesUnpassable(targetEntities)) {
+        if (EntitiesControl.containsUnpassableEntities(targetEntities)) {
             return false;
         }
         player.setPosition(portalPair.getPosition());

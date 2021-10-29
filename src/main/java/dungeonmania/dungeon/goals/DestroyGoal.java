@@ -19,4 +19,9 @@ public class DestroyGoal implements IGoal {
     public String getType() {
         return type;
     }
+
+    @Override
+    public String getFrontendString() {
+        return ":mercenary";
+    }
 }

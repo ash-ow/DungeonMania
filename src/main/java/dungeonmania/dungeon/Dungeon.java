@@ -24,9 +24,12 @@ public class Dungeon {
     private CharacterEntity player;
     private Goals goals;
 
-    public Dungeon(int height, int width, JsonArray entities, JsonObject goalConditions, String gameMode, String id, String dungeonName) {
-        this.height = height;
-        this.width = width;
+    /**
+     * Main Dungeon Constructor if goalConditions exist
+     * @param type
+     * @return
+     */
+    public Dungeon(JsonArray entities, JsonObject goalConditions, String gameMode, String id, String dungeonName) {
         this.gameMode = gameMode;
         this.id = id;
         this.dungeonName = dungeonName;
@@ -40,24 +43,22 @@ public class Dungeon {
             if (type.equals("player")) {
                 this.player = new CharacterEntity(xAxis, yAxis, layer);
             } else {
-                this.entitiesControl.createEntity(xAxis, yAxis, layer, type);
+                this.entitiesControl.createEntity(entityObj);
             }
         }
-        this.goals = new Goals(goalConditions);
+        if (goalConditions != null) {
+            this.goals = new Goals(goalConditions);
+        }
     }
 
-    public Dungeon(int height, int width, ArrayList<IEntity> entities, String gameMode, CharacterEntity player) {
-        this.height = height;
-        this.width = width;
+    public Dungeon(ArrayList<IEntity> entities, String gameMode, CharacterEntity player) {
         this.entitiesControl = new EntitiesControl();
         this.entitiesControl.setEntities(entities);
         this.gameMode = gameMode;
         this.player = player;
     }
 
-    public Dungeon(int height, int width, ArrayList<IEntity> entities, String gameMode, CharacterEntity player, JsonObject goalConditions) {
-        this.height = height;
-        this.width = width;
+    public Dungeon(ArrayList<IEntity> entities, String gameMode, CharacterEntity player, JsonObject goalConditions) {
         this.entitiesControl = new EntitiesControl();
         this.entitiesControl.setEntities(entities);
         this.gameMode = gameMode;
@@ -82,6 +83,9 @@ public class Dungeon {
     }
 
     public String getGoals() {
+        if (goals == null) {
+            return "";
+        }
         return goals.checkGoals(this);
     }
 

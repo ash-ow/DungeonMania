@@ -8,6 +8,7 @@ public interface IEntity {
     public String getType();
     public EntityResponse getInfo();
     public Position getPosition();
+    public void setPosition(Position position);
     public boolean isPassable();
 	public boolean isInSamePositionAs(IEntity ent);
 }

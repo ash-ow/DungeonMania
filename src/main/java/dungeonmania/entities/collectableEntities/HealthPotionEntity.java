@@ -11,14 +11,14 @@ public class HealthPotionEntity extends Entity implements ICollectableEntity {
     public HealthPotionEntity(int x, int y, int layer) {
         super(x, y, layer, "health_potion");
     }
-    
+
     @Override
-    public boolean isPassable() {
-        return true;
+    public void used(CharacterEntity player) {
+        // TODO Auto-generated method stub
     }
 
     @Override
-    public void used(CharacterEntity player){
+    public boolean isPlacedAfterUsing() {
+        return false;
     }   
-
 }

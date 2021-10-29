@@ -17,12 +17,6 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IMo
     }
 
     @Override
-    public boolean isPassable() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
     public void setPosition(Position position) {
         this.position = position;
     }

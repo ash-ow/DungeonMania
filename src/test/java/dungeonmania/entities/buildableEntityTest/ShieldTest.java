@@ -18,9 +18,8 @@ public class ShieldTest implements IBuildableEntityTests {
         ShieldEntity shield = new ShieldEntity();
         List<ICollectableEntity> inventory = new ArrayList<ICollectableEntity>();
         inventory.add(new WoodEntity());
-        inventory.add(new ArrowsEntity());
-        inventory.add(new ArrowsEntity());
-        inventory.add(new ArrowsEntity());
+        inventory.add(new WoodEntity());
+        inventory.add(new TreasureEntity());
         assertTrue(shield.isBuildable(inventory));
     }
 

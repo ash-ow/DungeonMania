@@ -13,6 +13,7 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -172,7 +173,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         assertEquals(100, character.getHealth());
         assertEquals(100, spider.getHealth());
 
-        spider.Battle(character);
+        spider.doBattle(character);
 
         assertEquals(80, character.getHealth());
         assertEquals(40, spider.getHealth());
@@ -182,13 +183,10 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
     public void TestDeath() {
         CharacterEntity character = new CharacterEntity();
         SpiderEntity spider = new SpiderEntity();
-        
-        spider.setHealth(2);
-        spider.Battle(character);
-
-        assertEquals(99.6, character.getHealth(), 0.1);
-        assertEquals(-58, spider.getHealth());
-
+        EntitiesControl entitiesControl = new EntitiesControl();
+        entitiesControl.addEntities(spider);
+        spider.Battle(entitiesControl, character);
+        assertFalse(entitiesControl.contains(spider));
         // TODO add assertions for spider death
     }
 }

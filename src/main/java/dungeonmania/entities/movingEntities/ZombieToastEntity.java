@@ -49,7 +49,7 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IMo
     public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
         // To do!!!!
         System.out.println("zombie toast?? For real?");
-        Battle(player);
+        Battle(entities, player);
         return false;
     }
 

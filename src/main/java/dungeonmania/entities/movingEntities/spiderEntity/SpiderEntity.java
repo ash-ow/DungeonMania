@@ -89,7 +89,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
     public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
         // To do!!!!
         System.out.println("Oh shit that's a spider!");
-        Battle(player);
+        Battle(entities, player);
         return true;
     }
 }

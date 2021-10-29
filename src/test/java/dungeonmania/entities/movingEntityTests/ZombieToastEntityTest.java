@@ -9,6 +9,7 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
@@ -59,7 +60,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         assertEquals(100, character.getHealth());
         assertEquals(100, zombie.getHealth());
 
-        zombie.Battle(character);
+        zombie.doBattle(character);
 
         assertEquals(70, character.getHealth());
         assertEquals(40, zombie.getHealth());
@@ -69,13 +70,9 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     public void TestDeath() {
         CharacterEntity character = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity();
-        
-        zombie.setHealth(2);
-        zombie.Battle(character);
-
-        assertEquals(99.4, character.getHealth(), 0.1);
-        assertEquals(-58, zombie.getHealth());
-
-        // TODO add assertions for zombie death
+        EntitiesControl entitiesControl = new EntitiesControl();
+        entitiesControl.addEntities(zombie);
+        zombie.Battle(entitiesControl, character);
+        assertFalse(entitiesControl.contains(zombie));
     }
 }

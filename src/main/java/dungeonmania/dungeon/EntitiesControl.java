@@ -159,6 +159,8 @@ public class EntitiesControl {
             case "invincibility_potion":
                 this.addEntities(new InvincibilityPotionEntity(xAxis, yAxis, layer));
                 break;
+            case "mercenary":
+                this.addEntities(new MercenaryEntity(xAxis, yAxis, layer));
         }
     }
 

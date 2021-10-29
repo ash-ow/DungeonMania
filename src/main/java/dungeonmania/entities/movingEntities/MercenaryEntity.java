@@ -53,7 +53,7 @@ public class MercenaryEntity extends Entity implements IInteractingEntity, IMovi
     @Override
     public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
         System.out.println("Oh shit that's a mercenary!");
-        Battle(player);
+        Battle(entities, player);
         return true;
     }
 

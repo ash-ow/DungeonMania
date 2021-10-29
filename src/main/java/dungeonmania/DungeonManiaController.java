@@ -58,13 +58,8 @@ public class DungeonManiaController {
             JsonObject jsonObject = new Gson().fromJson(dungeonJson, JsonObject.class);
             String id = UUID.randomUUID().toString(); 
             JsonObject goalCondition = jsonObject.getAsJsonObject("goal-condition");
-            if (goalCondition != null) {
-                this.dungeon = new Dungeon(jsonObject.get("entities").getAsJsonArray(), goalCondition , gameMode, id, dungeonName);
-            } else {
-                this.dungeon = new Dungeon(jsonObject.get("entities").getAsJsonArray(), gameMode, id, dungeonName);
-            }
+            this.dungeon = new Dungeon(jsonObject.get("entities").getAsJsonArray(), goalCondition , gameMode, id, dungeonName);           
             
-
         } catch (IOException e) {
         }
         return dungeon.getInfo();

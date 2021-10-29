@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.google.gson.JsonObject;
@@ -60,6 +61,10 @@ public class EntitiesControl {
         return this.entities.stream().filter(entity -> entity != null && entity.getPosition().equals(position)).collect(Collectors.toList());
     }
 
+    public List<IEntity> entitiesOfType(String type) {
+        return this.entities.stream().filter(entity -> entity.getType().equals(type)).collect(Collectors.toList());
+    }
+
     public List<IInteractingEntity> entitiesInteractableInRange(List<IEntity> entityList) {
         return entityList.stream().filter(entity -> entity instanceof IInteractingEntity).map(IInteractingEntity.class::cast).collect(Collectors.toList());
     }
@@ -67,6 +72,7 @@ public class EntitiesControl {
     public static boolean entitiesUnpassable(List<IEntity> entityList) {
         return entityList.stream().anyMatch(entity -> !entity.isPassable());
     }
+
     public static boolean interactingEntitiesUnpassable(List<IInteractingEntity> entityList) {
         return entityList.stream().anyMatch(entity -> !entity.isPassable());
     }

@@ -22,6 +22,11 @@ public class Dungeon {
     private CharacterEntity player;
     private Goals goals;
 
+    /**
+     * Main Dungeon Constructor if goalConditions exist
+     * @param type
+     * @return
+     */
     public Dungeon(JsonArray entities, JsonObject goalConditions, String gameMode, String id, String dungeonName) {
         this.gameMode = gameMode;
         this.id = id;
@@ -39,24 +44,8 @@ public class Dungeon {
                 this.entitiesControl.createEntity(entityObj);
             }
         }
-    }
-
-    public Dungeon(JsonArray entities, String gameMode, String id, String dungeonName) {
-        this.gameMode = gameMode;
-        this.id = id;
-        this.dungeonName = dungeonName;
-        this.entitiesControl = new EntitiesControl();
-        for (JsonElement entityInfo : entities) {
-            JsonObject entityObj = entityInfo.getAsJsonObject();
-            String type = entityObj.get("type").getAsString();
-            Integer xAxis = entityObj.get("x").getAsInt();
-            Integer yAxis = entityObj.get("y").getAsInt();
-            Integer layer = this.entitiesControl.entitiesFromPosition(new Position(xAxis, yAxis)).size();
-            if (type.equals("player")) {
-                this.player = new CharacterEntity(xAxis, yAxis, layer);
-            } else {
-                this.entitiesControl.createEntity(entityObj);
-            }
+        if (goalConditions != null) {
+            this.goals = new Goals(goalConditions);
         }
     }
 

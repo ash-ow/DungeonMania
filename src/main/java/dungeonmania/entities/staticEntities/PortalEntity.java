@@ -16,14 +16,17 @@ import dungeonmania.util.Position;
 
 public class PortalEntity extends Entity implements IInteractingEntity{
     String colour;
+    Boolean passable;
 
     public PortalEntity() {
         this(0, 0, 0, "BLUE");
+        this.passable = false;
     }
     
     public PortalEntity(int x, int y, int layer, String colour) {
         super(x, y, layer, "portal");
         this.colour = colour;
+        this.passable = false;
     }
 
     public String getColour() {

@@ -10,11 +10,9 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Direction;
 
 public interface ICollectableEntityTest extends IEntityTests {
-    public void TestUseCollectable();
 
-    // TODO collect functionality is very similar for all ICollectableEntities 
-    // can we add a default / helper method like in IMovingEntities?
     public void TestCollect();
+    public void TestUseCollectable();
     
     // public default void assertItemInInventory(String id, CharacterEntity player, EntitiesControl entitiesControl) {
     //     assertNotNull(player.getInventory().getEntityById(id), "Inventory should contain entity " + id);
@@ -41,4 +39,14 @@ public interface ICollectableEntityTest extends IEntityTests {
         entity.interactWithPlayer(entities, Direction.UP, player);
         assertItemInInventory(entity.getId(), player, entities);
     }
+
+    public default void assertEntityIsUsed(ICollectableEntity entity) {
+        CharacterEntity player = new CharacterEntity(0, 1, 0);
+        EntitiesControl entities = new EntitiesControl();
+        entities.addEntities(entity);
+        entity.interactWithPlayer(entities, Direction.UP, player);
+        entity.used(player);
+        assertNull(player.getInventory().getEntityById(entity.getId()), "Inventory should not contain entity " + entity.getId());
+    }
+
 }

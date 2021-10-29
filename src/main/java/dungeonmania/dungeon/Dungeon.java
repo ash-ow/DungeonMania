@@ -15,7 +15,7 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class Dungeon {
-    private EntitiesControl entitiesControl;
+    public EntitiesControl entitiesControl;
     private String gameMode;
     private String id;
     private String dungeonName;
@@ -92,10 +92,6 @@ public class Dungeon {
 
     public List<IEntity> getEntities(String type) {
         return this.entitiesControl.entitiesOfSameType(type);
-    }
-
-    public void removeEntity(IEntity entity) {
-        this.entitiesControl.removeEntity(entity);
     }
 }
  

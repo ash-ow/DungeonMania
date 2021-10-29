@@ -12,11 +12,6 @@ public class KeyEntity extends Entity implements ICollectableEntity {
     public KeyEntity(int x, int y, int layer) {
         super(x, y, layer, "key");
     }
-    
-    @Override
-    public boolean isPassable() {
-        return true;
-    }
 
     @Override
     public void used(CharacterEntity player){

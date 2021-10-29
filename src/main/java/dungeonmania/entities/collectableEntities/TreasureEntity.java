@@ -12,11 +12,6 @@ public class TreasureEntity extends Entity implements ICollectableEntity {
     public TreasureEntity(int x, int y, int layer) {
         super(x, y, layer, "treasure");
     }
-    
-    @Override
-    public boolean isPassable() {
-        return true;
-    }
 
     @Override
     public void used(CharacterEntity player){

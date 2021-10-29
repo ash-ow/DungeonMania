@@ -11,11 +11,6 @@ public class InvisibilityPotionEntity extends Entity implements ICollectableEnti
     public InvisibilityPotionEntity(int x, int y, int layer) {
         super(x, y, layer, "invisibility_potion");
     }
-    
-    @Override
-    public boolean isPassable() {
-        return true;
-    }
 
     @Override
     public void used(CharacterEntity player){

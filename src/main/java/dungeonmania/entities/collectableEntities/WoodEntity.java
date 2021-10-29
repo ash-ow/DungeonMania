@@ -13,11 +13,6 @@ public class WoodEntity extends Entity implements ICollectableEntity {
     }
 
     @Override
-    public boolean isPassable() {
-        return true;
-    }
-
-    @Override
     public void used(CharacterEntity player){
     }
 }

@@ -30,11 +30,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     @Override
-    public boolean isPassable() {
-        return false;
-    }
-
-    @Override
     public void setPosition(Position position) {
         this.position = position;
     }
@@ -126,6 +121,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
                     // TODO decrement the amount of arrows in the inventory
                     System.out.println("using " + type);
                     item.used(this);
+                    return;
                 }
             } else {
                 // TODO re-implement inventory so it just contains ICollectableEntities. You can base it off of the EntityControl

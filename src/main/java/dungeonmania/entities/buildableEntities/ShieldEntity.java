@@ -18,10 +18,4 @@ public class ShieldEntity extends BuildableEntity {
         this.requiredComponents.put(new WoodEntity(), 1);
         this.requiredComponents.put(new ArrowsEntity(), 3);
     }
-
-    @Override
-    public boolean isPassable() {
-        // TODO Auto-generated method stub
-        return false;
-    }
 }

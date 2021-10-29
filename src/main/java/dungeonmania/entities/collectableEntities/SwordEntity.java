@@ -14,11 +14,6 @@ public class SwordEntity extends Entity implements ICollectableEntity {
         super(x, y, layer, "sword");
     }
 
-    @Override
-    public boolean isPassable() {
-        return true;
-    }
-
     public int getDurability(){
         return this.durability;
     }

@@ -73,7 +73,7 @@ public class MercenaryEntity extends Entity implements IInteractingEntity, IMovi
             Position target = this.position.translateBy(d);
             if (!isThereUnpassable(target, entitiesControl)) {
                 this.move(d);
-                return;
+                break;
             }
         }
         if (this.position.equals(player.getPosition())) {

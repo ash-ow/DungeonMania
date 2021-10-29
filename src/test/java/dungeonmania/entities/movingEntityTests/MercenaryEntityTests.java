@@ -2,6 +2,7 @@ package dungeonmania.entities.movingEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -81,4 +82,35 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         mercenary.Battle(entitiesControl, character);
         assertFalse(entitiesControl.contains(mercenary));        
     }
+
+    @Test
+    public void TestWalkInBattle() {
+        CharacterEntity character = new CharacterEntity();
+        MercenaryEntity mercenary = new MercenaryEntity(1,0,0);
+        EntitiesControl entitiesControl = new EntitiesControl();
+        entitiesControl.addEntities(mercenary);
+        assertEquals(100, character.getHealth());
+        assertEquals(100, mercenary.getHealth());
+        character.moveCharacter(Direction.RIGHT, entitiesControl);
+        assertFalse(entitiesControl.contains(mercenary));         
+    }
+
+    @Test
+    public void TestBothWalkInBattle() {
+        CharacterEntity character = new CharacterEntity();
+        MercenaryEntity mercenary = new MercenaryEntity(2,0,0);
+        EntitiesControl entitiesControl = new EntitiesControl();
+        entitiesControl.addEntities(mercenary);
+        assertEquals(100, character.getHealth());
+        assertEquals(100, mercenary.getHealth());
+        character.moveCharacter(Direction.RIGHT, entitiesControl);
+        assertTrue(entitiesControl.contains(mercenary));     
+        assertEquals(new Position(1, 0), character.getPosition());
+        mercenary.move(entitiesControl, character);   
+        assertEquals(new Position(1, 0), character.getPosition());
+        assertEquals(new Position(1, 0), mercenary.getPosition());
+        assertFalse(entitiesControl.contains(mercenary));     
+        
+    }
+
 }

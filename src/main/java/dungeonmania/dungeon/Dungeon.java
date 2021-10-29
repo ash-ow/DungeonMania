@@ -39,7 +39,7 @@ public class Dungeon {
             String type = entityObj.get("type").getAsString();
             Integer xAxis = entityObj.get("x").getAsInt();
             Integer yAxis = entityObj.get("y").getAsInt();
-            Integer layer = this.entitiesControl.entitiesFromPosition(new Position(xAxis, yAxis)).size();
+            Integer layer = this.entitiesControl.getAllEntitiesFromPosition(new Position(xAxis, yAxis)).size();
             if (type.equals("player")) {
                 this.player = new CharacterEntity(xAxis, yAxis, layer);
             } else {

@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
-import java.util.function.BooleanSupplier;
 import java.util.stream.Collectors;
 
 import com.google.gson.JsonObject;
-
-import org.json.JSONObject;
 
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
@@ -75,7 +72,7 @@ public class EntitiesControl {
             .collect(Collectors.toList());
     }
 
-    public List<IEntity> entitiesFromPosition(Position position) {
+    public List<IEntity> getAllEntitiesFromPosition(Position position) {
         return this.entities.stream().filter(entity -> entity != null && entity.getPosition().equals(position)).collect(Collectors.toList());
     }
 
@@ -100,7 +97,7 @@ public class EntitiesControl {
     }
 
     public boolean positionContainsEntityType(Position position, Class<?> cls) {
-        List<IEntity> entityList =  this.entitiesFromPosition(position);
+        List<IEntity> entityList =  this.getAllEntitiesFromPosition(position);
         
         if (entitiesContainsType(entityList, cls) != null) {
             return true;
@@ -112,7 +109,7 @@ public class EntitiesControl {
         String type = entityObj.get("type").getAsString();
         Integer xAxis = entityObj.get("x").getAsInt();
         Integer yAxis = entityObj.get("y").getAsInt();
-        Integer layer = entitiesFromPosition(new Position(xAxis, yAxis)).size();
+        Integer layer = getAllEntitiesFromPosition(new Position(xAxis, yAxis)).size();
         switch (type) {
             case "wall":
                 this.entities.add(new WallEntity(xAxis, yAxis, layer));
@@ -227,7 +224,7 @@ public class EntitiesControl {
     }
 
     private Integer getNumberOfEntitiesInPosition(Position position) {
-        return this.entitiesFromPosition(this.getLargestCoordinate()).size();
+        return this.getAllEntitiesFromPosition(this.getLargestCoordinate()).size();
     }
 
     public List<IEntity> getAllEntitiesOfType(String type) {

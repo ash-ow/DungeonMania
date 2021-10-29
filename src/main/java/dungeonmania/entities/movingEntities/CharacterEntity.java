@@ -88,7 +88,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     @Override
     public void move(Direction direction, EntitiesControl entitiesControl) {
         Position target = position.translateBy(direction);
-        List<IEntity> targetEntities = entitiesControl.entitiesFromPosition(target);
+        List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
         List<IInteractingEntity> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);
         boolean interacted = false;
         for (IInteractingEntity entity : targetInteractable) {
@@ -108,7 +108,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     private boolean interact(IInteractingEntity entity, EntitiesControl entitiesControl, Position target, Direction direction) {
         if (entity.interactWithPlayer(entitiesControl, direction, this)) {
-            List<IEntity> newTargetEntities = entitiesControl.entitiesFromPosition(target);
+            List<IEntity> newTargetEntities = entitiesControl.getAllEntitiesFromPosition(target);
             if (!EntitiesControl.containsUnpassableEntities(newTargetEntities)) {
                 this.move(direction);
             }

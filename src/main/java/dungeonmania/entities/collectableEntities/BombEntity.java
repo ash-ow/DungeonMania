@@ -32,19 +32,16 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker {
     @Override
     public void tick(EntitiesControl entitiesControl) {
         List<IEntity> adjacentEntities = entitiesControl.getAllAdjacentEntities(this.getPosition());
+        adjacentEntities.addAll(entitiesControl.getAllEntitiesFromPosition(this.getPosition()));
         if (isAdjacentSwitchActive(entitiesControl, adjacentEntities)) {
             for (IEntity entity : adjacentEntities) {
-                explodeEntityIfPossible(entity, entitiesControl);
+                explodeNonCharacterEntity(entity, entitiesControl);
             }
-            entitiesControl.removeEntity(this);
         }
     }
 
-    private void explodeEntityIfPossible(IEntity entity, EntitiesControl entitiesControl) {
-        if ( 
-            !(entity instanceof CharacterEntity) && 
-            !(entity instanceof ICollectableEntity)
-        ) {
+    private void explodeNonCharacterEntity(IEntity entity, EntitiesControl entitiesControl) {
+        if (!(entity instanceof CharacterEntity)) {
             entitiesControl.removeEntity(entity);
         }
     }

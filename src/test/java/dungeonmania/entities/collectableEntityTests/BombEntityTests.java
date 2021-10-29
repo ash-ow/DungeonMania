@@ -70,7 +70,7 @@ public class BombEntityTests implements ICollectableEntityTest {
         entities.add(boulder);
         BombEntity bomb = new BombEntity(1,3,0); // O
         entities.add(bomb);
-        SwitchEntity switches_onbomb = new SwitchEntity(1, 3, 0); // S
+        SwitchEntity switches_onbomb = new SwitchEntity(1, 3, 1); // S
         entities.add(switches_onbomb);
         SpiderEntity spider_botleft = new SpiderEntity(0, 4, 0); // X
         entities.add(spider_botleft);
@@ -97,6 +97,8 @@ public class BombEntityTests implements ICollectableEntityTest {
 
         Assertions.assertAll(
                 () -> assertTrue(dungeon.entitiesControl.contains(player), "Entity controller should still contain wood"),
+                () -> assertTrue(dungeon.entitiesControl.contains(spider_upupleft), "Entity controller should contain spider_upupleft"),
+                () -> assertTrue(dungeon.entitiesControl.contains(wall_upup), "Entity controller should still contain wall_upup"),
 
                 () -> assertFalse(dungeon.entitiesControl.contains(boulder), "Entity controller should no longer contain boulder"),
                 () -> assertFalse(dungeon.entitiesControl.contains(bomb), "Entity controller should no longer contain bomb"),
@@ -107,9 +109,7 @@ public class BombEntityTests implements ICollectableEntityTest {
                 () -> assertFalse(dungeon.entitiesControl.contains(switches_onbomb), "Entity controller should no longer contain switches_onbomb"),
                 () -> assertFalse(dungeon.entitiesControl.contains(switches_onboulder), "Entity controller should no longer contain switches_onboulder"),
                 () -> assertFalse(dungeon.entitiesControl.contains(wood), "Entity controller should still contain wood"),
-                () -> assertFalse(dungeon.entitiesControl.contains(arrows), "Entity controller should still contain arrows"),
-                () -> assertFalse(dungeon.entitiesControl.contains(spider_upupleft), "Entity controller should contain spider_upupleft"),
-                () -> assertFalse(dungeon.entitiesControl.contains(wall_upup), "Entity controller should still contain wall_upup")
+                () -> assertFalse(dungeon.entitiesControl.contains(arrows), "Entity controller should still contain arrows")
             );
         }
 

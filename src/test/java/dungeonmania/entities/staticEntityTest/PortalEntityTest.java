@@ -53,8 +53,6 @@ public class PortalEntityTest implements IEntityTests, IInteractingEntityTest{
         entities.addEntities(portal2);
         entities.addEntities(wall);
         player.move(Direction.DOWN, entities);
-        assertEquals(new Position(0, 0), player.getPosition());
+        assertEquals(new Position(5, 1), player.getPosition());
     }
-
-    
 }

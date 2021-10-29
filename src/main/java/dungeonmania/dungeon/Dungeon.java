@@ -93,5 +93,9 @@ public class Dungeon {
     public List<IEntity> getEntities(String type) {
         return this.entitiesControl.entitiesOfSameType(type);
     }
+
+    public void removeEntity(IEntity entity) {
+        this.entitiesControl.removeEntity(entity);
+    }
 }
  

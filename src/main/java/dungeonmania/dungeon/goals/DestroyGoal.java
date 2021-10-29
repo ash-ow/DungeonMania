@@ -1,8 +1,11 @@
 package dungeonmania.dungeon.goals;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.entities.IEntity;
 
 public class DestroyGoal implements IGoal {
 
@@ -13,6 +16,7 @@ public class DestroyGoal implements IGoal {
     }
 
     public boolean checkGoal(Dungeon dungeon) {
+        
         return false;
     }
     

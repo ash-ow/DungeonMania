@@ -25,8 +25,12 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker {
         return !isArmed;
     }
     
+    public boolean isArmed() {
+        return this.isArmed;
+    }
+    
     @Override
-    public void used(CharacterEntity player){
+    public void used(CharacterEntity player) {
         this.position = player.getPosition();
         this.isArmed = true;
     }
@@ -56,5 +60,10 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker {
         .stream()
         .map(SwitchEntity.class::cast)
         .anyMatch(SwitchEntity::isActive);
+    }
+
+    @Override
+    public boolean isPlacedAfterUsing() {
+        return true;
     }
 }

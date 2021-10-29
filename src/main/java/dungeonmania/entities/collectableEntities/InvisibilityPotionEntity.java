@@ -13,8 +13,12 @@ public class InvisibilityPotionEntity extends Entity implements ICollectableEnti
     }
 
     @Override
-    public void used(CharacterEntity player){
-
+    public void used(CharacterEntity player) {
+        // TODO implement
     }
 
+    @Override
+    public boolean isPlacedAfterUsing() {
+        return false;
+    } 
 }

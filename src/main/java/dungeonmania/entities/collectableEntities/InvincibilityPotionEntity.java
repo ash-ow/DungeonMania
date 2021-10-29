@@ -15,7 +15,12 @@ public class InvincibilityPotionEntity extends Entity implements ICollectableEnt
     }
 
     @Override
-    public void used(CharacterEntity player){
-
+    public void used(CharacterEntity player) {
+        // TODO implement
     }
+
+    @Override
+    public boolean isPlacedAfterUsing() {
+        return false;
+    }  
 }

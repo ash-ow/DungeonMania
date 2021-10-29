@@ -14,8 +14,13 @@ public class KeyEntity extends Entity implements ICollectableEntity {
     }
 
     @Override
-    public void used(CharacterEntity player){
-
+    public void used(CharacterEntity player) {
+        // TODO implement
     }
 
+    @Override
+    public boolean isPlacedAfterUsing() {
+        // TODO implement
+        return false;
+    } 
 }

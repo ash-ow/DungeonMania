@@ -19,6 +19,12 @@ public interface ICollectableEntity extends IInteractingEntity {
     /**
      * Decrements the amount of times a collectable entity can still be used and removes it from inventory
      * if no more uses
+     * @param player
      */
     void used(CharacterEntity player);
+
+    /**
+     * @return True if the item is supposed to be placed on the player location after being used
+     */
+    boolean isPlacedAfterUsing();
 }

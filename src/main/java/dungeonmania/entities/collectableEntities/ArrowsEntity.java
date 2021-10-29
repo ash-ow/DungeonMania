@@ -13,7 +13,13 @@ public class ArrowsEntity extends Entity implements ICollectableEntity {
     }
 
     @Override
-    public void used(CharacterEntity player){
+    public void used(CharacterEntity player) {
+        // TODO Auto-generated method stub
+    }
 
+    @Override
+    public boolean isPlacedAfterUsing() {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

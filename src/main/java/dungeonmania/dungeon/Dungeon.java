@@ -82,6 +82,11 @@ public class Dungeon {
         entitiesControl.generateEnemyEntities();
     }
 
+    public void tick(String itemType) {
+        player.useItem(itemType, this.entitiesControl);
+        // TODO implement
+    }
+
     public String getGoals() {
         if (goals == null) {
             return "";

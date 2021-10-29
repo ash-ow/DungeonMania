@@ -29,19 +29,26 @@ public class BombEntityTests implements ICollectableEntityTest {
     @Override
     @Test
     public void TestUseCollectable() {
+        ArrayList<IEntity> entities = new ArrayList<>();
         CharacterEntity player = new CharacterEntity(0, 0, 0);
-        BombEntity bomb = new BombEntity(0,0,0);
+        BombEntity bomb = new BombEntity(0,1,0);
+        entities.add(bomb);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
         
-        assertEquals(new Position(0, 0, 0), bomb.getPosition());
+        assertEquals(new Position(0, 0, 0), player.getPosition());
+        assertEquals(new Position(0, 1, 0), bomb.getPosition());
 
-        player.addEntityToInventory(bomb);
-        player.move(Direction.DOWN);
-        player.useItem("bomb");
+        dungeon.tick(Direction.DOWN);
+        assertItemInInventory("bomb-0-1-0", player, dungeon.entitiesControl);
 
-        assertEquals(new Position(0, 1, 0), bomb.getPosition(), "Bomb should be placed in the players new position");
+        dungeon.tick("bomb");
+        assertEquals(new Position(0, 1, 0), player.getPosition());
+        assertEquals(new Position(0, 1, 0), dungeon.entitiesControl.getEntityById("bomb-0-1-0").getPosition(), "Bomb should be placed in the players new position");
+        assertTrue(bomb.isArmed(), "Bomb should be active");
         
-        player.move(Direction.DOWN);
-        player.move(Direction.UP);
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should be able to move off the bomb");
+        dungeon.tick(Direction.UP);
         assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should not be able to move back onto the bomb once it has been placed");
     }
 

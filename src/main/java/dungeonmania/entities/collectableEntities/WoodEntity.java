@@ -13,6 +13,12 @@ public class WoodEntity extends Entity implements ICollectableEntity {
     }
 
     @Override
-    public void used(CharacterEntity player){
+    public void used(CharacterEntity player) {
+    }
+
+    @Override
+    public boolean isPlacedAfterUsing() {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

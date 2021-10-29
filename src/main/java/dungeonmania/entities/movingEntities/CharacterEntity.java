@@ -90,7 +90,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         for (IInteractingEntity entity : targetInteractable) {
             // TODO fix bug where player interacts with many things stacked on top of each other and keeps moving
             if (entityIsNotAnArmedBomb(entity)) {
-                interacted = interact(entity, entitiesControl, target, direction);
+                interacted = interact(entity, entitiesControl, direction);
             }
         }
         if (
@@ -113,8 +113,9 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return targetEntities.size() == 0;
     }
 
-    private boolean interact(IInteractingEntity entity, EntitiesControl entitiesControl, Position target, Direction direction) {
+    private boolean interact(IInteractingEntity entity, EntitiesControl entitiesControl, Direction direction) {
         if (entity.interactWithPlayer(entitiesControl, direction, this)) {
+            Position target = this.position.translateBy(direction);
             List<IEntity> newTargetEntities = entitiesControl.getAllEntitiesFromPosition(target);
             if (!EntitiesControl.containsUnpassableEntities(newTargetEntities)) {
                 this.move(direction);

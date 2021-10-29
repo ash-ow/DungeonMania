@@ -1,22 +1,16 @@
 package dungeonmania.entities.staticEntities;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-
-import javax.sound.sampled.Port;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
-import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Direction;
-import dungeonmania.util.Position;
 
 public class PortalEntity extends Entity implements IInteractingEntity{
     String colour;
-    Boolean isPassable;
 
     public PortalEntity() {
         this(0, 0, 0, "BLUE");
@@ -25,7 +19,6 @@ public class PortalEntity extends Entity implements IInteractingEntity{
     public PortalEntity(int x, int y, int layer, String colour) {
         super(x, y, layer, "portal");
         this.colour = colour;
-        this.isPassable = false;
     }
 
     public String getColour() {
@@ -34,7 +27,7 @@ public class PortalEntity extends Entity implements IInteractingEntity{
     
     @Override
     public boolean isPassable() {
-        return isPassable;
+        return true;
     }
 
     @Override
@@ -46,13 +39,10 @@ public class PortalEntity extends Entity implements IInteractingEntity{
                 portalPair = portal;
             }
         }
-        Position target = portalPair.getPosition().translateBy(direction);
-        List<IEntity> targetEntities = entities.getAllEntitiesFromPosition(target);
-        if (EntitiesControl.containsUnpassableEntities(targetEntities)) {
-            return false;
+        if (portalPair == null) {
+            throw new IllegalArgumentException("Portal does not have pair");
         }
         player.setPosition(portalPair.getPosition());
-        this.isPassable = true;
         return true;
     }
 }

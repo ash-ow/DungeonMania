@@ -76,7 +76,7 @@ public class Dungeon {
     }
 
     public void tick(Direction direction) {
-        player.move(direction, entitiesControl);
+        player.moveCharacter(direction, entitiesControl);
         entitiesControl.moveAllMovingEntities(direction, player);
         entitiesControl.tick();
         entitiesControl.generateEnemyEntities();

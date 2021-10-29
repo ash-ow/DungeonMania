@@ -45,7 +45,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
             new Position(6, 6), new Position(5, 6), new Position(4, 6), new Position(4, 5), new Position(4, 4), new Position(5, 4));
         
         for (int i = 0; i < expectPositions.size(); i++) {
-            spider.move(Direction.DOWN, new EntitiesControl(), new CharacterEntity());
+            spider.move(new EntitiesControl(), new CharacterEntity());
             System.out.println(spider.getPosition());
             assertEquals(spider.getPosition(), expectPositions.get(i));
         }
@@ -122,7 +122,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         entities.moveAllMovingEntities(Direction.DOWN, player);
         assertEquals(spider.getPosition(), new Position(5, 5));
 
-        player.move(Direction.LEFT, entities);
+        player.moveCharacter(Direction.LEFT, entities);
         entities.moveAllMovingEntities(Direction.DOWN, player);
         assertEquals(spider.getPosition(), new Position(5, 4));
     }

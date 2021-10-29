@@ -47,6 +47,9 @@ public class PortalEntity extends Entity implements IInteractingEntity{
                 portalPair = portal;
             }
         }
+        if (portalPair == null) {
+            throw new IllegalArgumentException("Portal does not have pair");
+        }
         Position target = portalPair.getPosition().translateBy(direction);
         List<IEntity> targetEntities = entities.entitiesFromPosition(target);
         if (EntitiesControl.entitiesUnpassable(targetEntities)) {

@@ -87,10 +87,11 @@ public class MercenaryEntity extends Entity implements IInteractingEntity, IMovi
             usefulDirections.add(Direction.LEFT);
         } else if (diff.getX() > 0) {
             usefulDirections.add(Direction.RIGHT);
-        } else if (diff.getY() < 0) {
-            usefulDirections.add(Direction.DOWN);
-        } else if (diff.getY() > 0) {
+        } 
+        if (diff.getY() < 0) {
             usefulDirections.add(Direction.UP);
+        } else if (diff.getY() > 0) {
+            usefulDirections.add(Direction.DOWN);
         }
         return usefulDirections;    
     }

@@ -101,5 +101,9 @@ public class Dungeon {
     public List<IEntity> getEntities(String type) {
         return this.entitiesControl.getAllEntitiesOfType(type);
     }
+
+    public void build(String buildable) {
+        this.player.build(buildable);
+    }
 }
  

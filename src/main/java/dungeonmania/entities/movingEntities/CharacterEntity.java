@@ -148,14 +148,14 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
 // region Build
     public void build(String buildable) {
-        if (buildable == "bow") {
+        if (buildable.equals("bow")) {
             BowEntity bow = new BowEntity();
             if (bow.isBuildable(this.inventory)) {
                 this.addEntityToInventory(bow);
                 removeBuildMaterials("wood", 1);
                 removeBuildMaterials("arrow", 3);
             }
-        } else if (buildable == "shield") {
+        } else if (buildable.equals("shield")){
             ShieldEntity shield = new ShieldEntity();
             if (shield.isBuildable(this.inventory)) {
                 this.addEntityToInventory(shield);

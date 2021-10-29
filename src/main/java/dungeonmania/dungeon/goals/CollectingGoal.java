@@ -1,8 +1,11 @@
 package dungeonmania.dungeon.goals;
 
 import java.util.HashMap;
+import java.util.List;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.entities.IEntity;
 
 public class CollectingGoal  implements IGoal {
     private String type;
@@ -12,6 +15,10 @@ public class CollectingGoal  implements IGoal {
     }
 
     public boolean checkGoal(Dungeon dungeon) {
+        List<IEntity> collectablesOnFloor = dungeon.getEntities("treasure");
+        if (collectablesOnFloor.size() == 0) {
+            return true;
+        }
         return false;
     }
     

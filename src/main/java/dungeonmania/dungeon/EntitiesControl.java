@@ -161,6 +161,7 @@ public class EntitiesControl {
                 break;
             case "mercenary":
                 this.addEntities(new MercenaryEntity(xAxis, yAxis, layer));
+                break;
         }
     }
 
@@ -269,7 +270,7 @@ public class EntitiesControl {
             int largestY = largestCoordinate.getY();
             int randomX = rand.nextInt(largestX);
             int randomY = rand.nextInt(largestY);
-            if (getRandomBoolean((float) .05) 
+            if (getRandomBoolean((float) .02) 
                 && !this.positionContainsEntityType(new Position(randomX, randomY), BoulderEntity.class)) {
                 this.createEntity(randomX, randomY, "spider");
             }

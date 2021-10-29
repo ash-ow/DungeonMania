@@ -1,6 +1,7 @@
 package dungeonmania.entities.movingEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class MercenaryEntityTests implements IMovingEntityTest{
+public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityTest{
 
     @Override
     @Test
@@ -53,5 +54,31 @@ public class MercenaryEntityTests implements IMovingEntityTest{
         entitiesControl.addEntities(wall2);
         mercenary.move(entitiesControl, player);
         assertEquals(new Position(5, 5), mercenary.getPosition());
+    }
+
+    @Override
+    @Test
+    public void TestBattle() {
+        CharacterEntity character = new CharacterEntity();
+        MercenaryEntity mercenary = new MercenaryEntity();
+
+        assertEquals(100, character.getHealth());
+        assertEquals(100, mercenary.getHealth());
+
+        mercenary.doBattle(character);
+
+        assertEquals(70, character.getHealth());
+        assertEquals(40, mercenary.getHealth());
+    }
+
+    @Override
+    @Test
+    public void TestDeath() {
+        CharacterEntity character = new CharacterEntity();
+        MercenaryEntity mercenary = new MercenaryEntity();
+        EntitiesControl entitiesControl = new EntitiesControl();
+        entitiesControl.addEntities(mercenary);
+        mercenary.Battle(entitiesControl, character);
+        assertFalse(entitiesControl.contains(mercenary));        
     }
 }

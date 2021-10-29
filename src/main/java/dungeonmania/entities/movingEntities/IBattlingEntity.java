@@ -20,7 +20,6 @@ public interface IBattlingEntity extends IEntity {
 
     default boolean checkCharacterDeath(EntitiesControl entitiesControl, CharacterEntity player) {
         if (player.getHealth() <= 0) {
-            entitiesControl.removeEntity(player);
             return true;
         }
         return false;

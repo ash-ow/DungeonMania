@@ -14,9 +14,14 @@ public class MercenaryEntity extends Entity implements IInteractingEntity, IMovi
     private float health;
     private int damage;
 
+    public MercenaryEntity() {
+        this(0, 0, 0);
+    }
+
     public MercenaryEntity(int x, int y, int layer) {
         super(x, y, layer, "mercenary");
-        this.health = 20;
+        this.health = 100;
+        this.damage = 3;
     }
 
     @Override

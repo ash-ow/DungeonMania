@@ -40,7 +40,11 @@ public class BombEntityTests implements ICollectableEntityTest {
         player.move(Direction.DOWN);
         player.useItem("bomb");
 
-        assertEquals(new Position(0, 1, 0), bomb.getPosition());
+        assertEquals(new Position(0, 1, 0), bomb.getPosition(), "Bomb should be placed in the players new position");
+        
+        player.move(Direction.DOWN);
+        player.move(Direction.UP);
+        assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should not be able to move back onto the bomb once it has been placed");
     }
 
     @Test

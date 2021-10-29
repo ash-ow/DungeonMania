@@ -13,15 +13,14 @@ public class InvincibilityPotionEntity extends Entity implements ICollectableEnt
     public InvincibilityPotionEntity(int x, int y, int layer) {
         super(x, y, layer, "invincibility_potion");
     }
-    
-    @Override
-    public boolean isPassable() {
-        return true;
-    }
-
 
     @Override
-    public void used(CharacterEntity player){
-
+    public void used(CharacterEntity player) {
+        // TODO implement
     }
+
+    @Override
+    public boolean isPlacedAfterUsing() {
+        return false;
+    }  
 }

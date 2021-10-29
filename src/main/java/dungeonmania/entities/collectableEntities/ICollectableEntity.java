@@ -22,4 +22,9 @@ public interface ICollectableEntity extends IInteractingEntity {
     public default void used(CharacterEntity player) {
         player.removeEntityFromInventory(this);
     }
+
+    /**
+     * @return True if the item is supposed to be placed on the player location after being used
+     */
+    boolean isPlacedAfterUsing();
 }

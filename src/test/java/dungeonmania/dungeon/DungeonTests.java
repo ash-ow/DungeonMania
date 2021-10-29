@@ -25,6 +25,6 @@ public class DungeonTests {
         entities.add(switches);
         String jsonGoals = "{ \"goal\": \"exit\"}";
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
-        assertDoesNotThrow(() -> new Dungeon(20, 20, entities, "Standard", player, j));
+        assertDoesNotThrow(() -> new Dungeon(entities, "Standard", player, j));
     }
 }

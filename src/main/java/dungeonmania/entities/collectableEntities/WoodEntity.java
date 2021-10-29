@@ -13,7 +13,8 @@ public class WoodEntity extends Entity implements ICollectableEntity {
     }
 
     @Override
-    public boolean isPassable() {
-        return true;
+    public boolean isPlacedAfterUsing() {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

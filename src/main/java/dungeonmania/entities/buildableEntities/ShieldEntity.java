@@ -30,27 +30,25 @@ public class ShieldEntity extends BuildableEntity {
     
     @Override
     public boolean isBuildable(List<ICollectableEntity> inventory) {
-        boolean wood = false;
-        boolean treasure = false;
-        boolean key = false;
+        boolean requiredWood = false;
+        boolean requiredTreasure = false;
+        boolean requiredKey = false;
         for (Map.Entry<ICollectableEntity, Integer> entry : requiredComponents.entrySet()) {
             ICollectableEntity component = entry.getKey();
             int quantity = entry.getValue();
-            if (numberOfComponentItemsInInventory(inventory, new WoodEntity()) >= quantity) {
+            if (numberOfComponentItemsInInventory(inventory, component) >= quantity) {
                 // System.out.println("Needs more " + component.getId());
-                wood = true;
-            }
-            if (numberOfComponentItemsInInventory(inventory, new TreasureEntity()) >= quantity) {
-                // System.out.println("Needs more " + component.getId());
-                treasure = true;
-            } 
-            if (numberOfComponentItemsInInventory(inventory, new KeyEntity()) >= quantity) {
-                // System.out.println("Needs more " + component.getId());
-                key = true;
+                if (component.getType().equals("wood")) {
+                    requiredWood = true;
+                } else if (component.getType().equals("treasure")) {
+                    requiredTreasure = true;
+                } else if (component.getType().equals("key")) {
+                    requiredKey = true;
+                }
             }
         }
-        if (treasure || key) {
-            if (wood) {
+        if (requiredTreasure || requiredKey) {
+            if (requiredWood) {
                 return true;
             }
         }

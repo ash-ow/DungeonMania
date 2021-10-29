@@ -33,6 +33,7 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker {
     public void used(CharacterEntity player) {
         this.position = player.getPosition();
         this.isArmed = true;
+        player.removeEntityFromInventory(this);
     }
 
     @Override

@@ -10,9 +10,4 @@ public class ExitEntity extends Entity {
     public ExitEntity(int x, int y, int layer) {
         super(x, y, layer, "exit");
     }
-    
-    @Override
-    public boolean isPassable() {
-        return true;
-    }
 }

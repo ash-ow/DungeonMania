@@ -12,11 +12,6 @@ public class SwitchEntity extends Entity implements ITicker {
     public SwitchEntity(int x, int y, int layer) {
         super(x, y, layer, "switch");
     }
-    
-    @Override
-    public boolean isPassable() {
-        return true;
-    }
 
     @Override
     public void tick(EntitiesControl entitiesControl) {

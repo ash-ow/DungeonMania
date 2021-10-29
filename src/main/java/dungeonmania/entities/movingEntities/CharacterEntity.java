@@ -8,6 +8,7 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.collectableEntities.BombEntity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
@@ -27,11 +28,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     public EntityResponse getInfo() {
         return new EntityResponse(this.getId(), this.getType(), this.getPosition(), false);
-    }
-
-    @Override
-    public boolean isPassable() {
-        return false;
     }
 
     @Override
@@ -88,12 +84,14 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     @Override
     public void move(Direction direction, EntitiesControl entitiesControl) {
         Position target = position.translateBy(direction);
-        List<IEntity> targetEntities = entitiesControl.entitiesFromPosition(target);
+        List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
         List<IInteractingEntity> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);
         boolean interacted = false;
         for (IInteractingEntity entity : targetInteractable) {
             // TODO fix bug where player interacts with many things stacked on top of each other and keeps moving
-            interacted = interact(entity, entitiesControl, target, direction);
+            if (entityIsNotAnArmedBomb(entity)) {
+                interacted = interact(entity, entitiesControl, direction);
+            }
         }
         if (
             targetLocationIsEmpty(targetEntities) ||
@@ -102,13 +100,23 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         }
     }
 
+    private boolean entityIsNotAnArmedBomb(IInteractingEntity entity) {
+        // TODO stop interacting with entities before you determine if you can move into that space. Once you've worked that out, remove this method
+        if (entity instanceof BombEntity) {
+            BombEntity bomb = (BombEntity)entity;
+            return !bomb.isArmed();
+        }
+        return true;
+    }
+
     boolean targetLocationIsEmpty(List<IEntity> targetEntities) {
         return targetEntities.size() == 0;
     }
 
-    private boolean interact(IInteractingEntity entity, EntitiesControl entitiesControl, Position target, Direction direction) {
+    private boolean interact(IInteractingEntity entity, EntitiesControl entitiesControl, Direction direction) {
         if (entity.interactWithPlayer(entitiesControl, direction, this)) {
-            List<IEntity> newTargetEntities = entitiesControl.entitiesFromPosition(target);
+            Position target = this.position.translateBy(direction);
+            List<IEntity> newTargetEntities = entitiesControl.getAllEntitiesFromPosition(target);
             if (!EntitiesControl.containsUnpassableEntities(newTargetEntities)) {
                 this.move(direction);
             }
@@ -117,19 +125,28 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return false;
     }
     
-    public void useItem(String type) {
+    public void useItem(String type, EntitiesControl entitiesControl) {
         for (IEntity ent : this.inventory.getEntities()) {
             if (ent instanceof ICollectableEntity) {
                 ICollectableEntity item = (ICollectableEntity)ent;
                 if (item.getType().equals(type)) {
-                    // TODO create an ItemType class with constant strings
-                    // TODO decrement the amount of arrows in the inventory
-                    System.out.println("using " + type);
-                    item.used(this);
+                    this.useItemCore(item, entitiesControl);
+                    return;
                 }
             } else {
                 // TODO re-implement inventory so it just contains ICollectableEntities. You can base it off of the EntityControl
             }
+        }
+    }
+
+    private void useItemCore(ICollectableEntity item, EntitiesControl entitiesControl) {
+        // TODO create an ItemType class with constant strings
+        // TODO decrement the amount of this item in the inventory
+        System.out.println("using " + type);
+        item.used(this);
+        if (item.isPlacedAfterUsing()) {
+            item.setPosition(this.getPosition());
+            entitiesControl.addEntities(item);
         }
     }
 }

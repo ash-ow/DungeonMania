@@ -15,11 +15,6 @@ public class KeyEntity extends Entity implements ICollectableEntity {
         super(x, y, layer, "key");
         this.keyNumber = keyNumber;
     }
-    
-    @Override
-    public boolean isPassable() {
-        return true;
-    }
 
     public int getKeyNumber() {
         return keyNumber;
@@ -35,4 +30,10 @@ public class KeyEntity extends Entity implements ICollectableEntity {
     public boolean unlocks(DoorEntity door) {
         return this.keyNumber == door.getKeyNumber();
     }
+
+    @Override
+    public boolean isPlacedAfterUsing() {
+        // TODO implement
+        return false;
+    } 
 }

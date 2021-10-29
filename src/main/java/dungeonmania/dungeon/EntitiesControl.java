@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
-import java.util.function.BooleanSupplier;
 import java.util.stream.Collectors;
 
+import com.google.gson.JsonObject;
+
+import dungeonmania.entities.IEntity;
+import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.util.Position;
@@ -69,8 +72,12 @@ public class EntitiesControl {
             .collect(Collectors.toList());
     }
 
-    public List<IEntity> entitiesFromPosition(Position position) {
+    public List<IEntity> getAllEntitiesFromPosition(Position position) {
         return this.entities.stream().filter(entity -> entity != null && entity.getPosition().equals(position)).collect(Collectors.toList());
+    }
+
+    public List<IEntity> entitiesOfType(String type) {
+        return this.entities.stream().filter(entity -> entity.getType().equals(type)).collect(Collectors.toList());
     }
 
     public List<IInteractingEntity> entitiesInteractableInRange(List<IEntity> entityList) {
@@ -80,6 +87,7 @@ public class EntitiesControl {
     public static boolean containsUnpassableEntities(List<IEntity> entityList) {
         return entityList.stream().anyMatch(entity -> !entity.isPassable());
     }
+
     public static boolean interactingEntitiesUnpassable(List<IInteractingEntity> entityList) {
         return entityList.stream().anyMatch(entity -> !entity.isPassable());
     }
@@ -89,7 +97,7 @@ public class EntitiesControl {
     }
 
     public boolean positionContainsEntityType(Position position, Class<?> cls) {
-        List<IEntity> entityList =  this.entitiesFromPosition(position);
+        List<IEntity> entityList =  this.getAllEntitiesFromPosition(position);
         
         if (entitiesContainsType(entityList, cls) != null) {
             return true;
@@ -97,52 +105,109 @@ public class EntitiesControl {
         return false;
     }
 
+    public void createEntity(JsonObject entityObj) {
+        String type = entityObj.get("type").getAsString();
+        Integer xAxis = entityObj.get("x").getAsInt();
+        Integer yAxis = entityObj.get("y").getAsInt();
+        Integer layer = getAllEntitiesFromPosition(new Position(xAxis, yAxis)).size();
+        switch (type) {
+            case "wall":
+                this.addEntities(new WallEntity(xAxis, yAxis, layer));
+                break;
+            case "exit":
+                this.addEntities(new ExitEntity(xAxis, yAxis, layer));
+                break;
+            case "door":
+                this.addEntities(new DoorEntity(xAxis, yAxis, layer));
+                break;
+            case "portal":
+                this.addEntities(new PortalEntity(xAxis, yAxis, layer, entityObj.get("colour").getAsString()));
+                break;
+            case "switch":
+                this.addEntities(new SwitchEntity(xAxis, yAxis, layer));
+                break;
+            case "boulder":
+                this.addEntities(new BoulderEntity(xAxis, yAxis, layer));
+                break;
+            case "wood":
+                this.addEntities(new WoodEntity(xAxis, yAxis, layer));
+                break;
+            case "arrow":
+                this.addEntities(new ArrowsEntity(xAxis, yAxis, layer));
+                break;
+            case "bomb":
+                this.addEntities(new BombEntity(xAxis, yAxis, layer));
+                break;
+            case "sword":
+                this.addEntities(new SwordEntity(xAxis, yAxis, layer));
+                break;
+            case "armour":
+                this.addEntities(new ArmourEntity(xAxis, yAxis, layer));
+                break;
+            case "treasure":
+                this.addEntities(new TreasureEntity(xAxis, yAxis, layer));
+                break;
+            case "key":
+                this.addEntities(new KeyEntity(xAxis, yAxis, layer));
+                break;
+            case "health_potion":
+                this.addEntities(new HealthPotionEntity(xAxis, yAxis, layer));
+                break;
+            case "invisibility_potion":
+                this.addEntities(new InvisibilityPotionEntity(xAxis, yAxis, layer));
+                break;
+            case "invincibility_potion":
+                this.addEntities(new InvincibilityPotionEntity(xAxis, yAxis, layer));
+                break;
+        }
+    }
+
     public void createEntity(Integer xAxis, Integer yAxis, Integer layer, String type) {
         switch (type) {
             case "wall":
-                this.entities.add(new WallEntity(xAxis, yAxis, layer));
+                this.addEntities(new WallEntity(xAxis, yAxis, layer));
                 break;
             case "exit":
-                this.entities.add(new ExitEntity(xAxis, yAxis, layer));
+                this.addEntities(new ExitEntity(xAxis, yAxis, layer));
                 break;
             case "portal":
-                this.entities.add(new PortalEntity(xAxis, yAxis, layer));
+                this.addEntities(new PortalEntity(xAxis, yAxis, layer, "BLUE"));
                 break;
             case "switch":
-                this.entities.add(new SwitchEntity(xAxis, yAxis, layer));
+                this.addEntities(new SwitchEntity(xAxis, yAxis, layer));
                 break;
             case "boulder":
-                this.entities.add(new BoulderEntity(xAxis, yAxis, layer));
+                this.addEntities(new BoulderEntity(xAxis, yAxis, layer));
                 break;
             case "spider":
-                this.entities.add(new SpiderEntity(xAxis, yAxis, layer));
+                this.addEntities(new SpiderEntity(xAxis, yAxis, layer));
                 break;
             case "wood":
-                this.entities.add(new WoodEntity(xAxis, yAxis, layer));
+                this.addEntities(new WoodEntity(xAxis, yAxis, layer));
                 break;
             case "arrow":
-                this.entities.add(new ArrowsEntity(xAxis, yAxis, layer));
+                this.addEntities(new ArrowsEntity(xAxis, yAxis, layer));
                 break;
             case "bomb":
-                this.entities.add(new BombEntity(xAxis, yAxis, layer));
+                this.addEntities(new BombEntity(xAxis, yAxis, layer));
                 break;
             case "sword":
-                this.entities.add(new SwordEntity(xAxis, yAxis, layer));
+                this.addEntities(new SwordEntity(xAxis, yAxis, layer));
                 break;
             case "armour":
-                this.entities.add(new ArmourEntity(xAxis, yAxis, layer));
+                this.addEntities(new ArmourEntity(xAxis, yAxis, layer));
                 break;
             case "treasure":
-                this.entities.add(new TreasureEntity(xAxis, yAxis, layer));
+                this.addEntities(new TreasureEntity(xAxis, yAxis, layer));
                 break;
             case "health_potion":
-                this.entities.add(new HealthPotionEntity(xAxis, yAxis, layer));
+                this.addEntities(new HealthPotionEntity(xAxis, yAxis, layer));
                 break;
             case "invisibility_potion":
-                this.entities.add(new InvisibilityPotionEntity(xAxis, yAxis, layer));
+                this.addEntities(new InvisibilityPotionEntity(xAxis, yAxis, layer));
                 break;
             case "invincibility_potion":
-                this.entities.add(new InvincibilityPotionEntity(xAxis, yAxis, layer));
+                this.addEntities(new InvincibilityPotionEntity(xAxis, yAxis, layer));
                 break;
         }
     }
@@ -153,7 +218,7 @@ public class EntitiesControl {
     }
 
     private Integer getNumberOfEntitiesInPosition(Position position) {
-        return this.entitiesFromPosition(this.getLargestCoordinate()).size();
+        return this.getAllEntitiesFromPosition(this.getLargestCoordinate()).size();
     }
 
     public List<IEntity> getAllEntitiesOfType(String type) {
@@ -236,10 +301,10 @@ public class EntitiesControl {
 	public void createEntity(Integer xAxis, Integer yAxis, Integer layer, Integer keyNumber, String type) {
         switch (type) {
             case "door":
-                this.entities.add(new DoorEntity(xAxis, yAxis, layer, keyNumber));
+                this.addEntities(new DoorEntity(xAxis, yAxis, layer, keyNumber));
                 break;
             case "key":
-                this.entities.add(new KeyEntity(xAxis, yAxis, layer, keyNumber));
+                this.addEntities(new KeyEntity(xAxis, yAxis, layer, keyNumber));
                 break;
         }
 	}

@@ -18,5 +18,11 @@ public class RareCollectableEntity extends CollectableEntity {
     public boolean isPassable() {
         // TODO Auto-generated method stub
         return false;
+    } 
+
+    @Override
+    public boolean isPlacedAfterUsing() {
+        // TODO implement
+        return false;
     }    
 }

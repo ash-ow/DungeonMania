@@ -10,6 +10,8 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.staticEntities.SwitchEntity;
 
 public class BombEntity extends Entity implements ICollectableEntity, ITicker {
+    boolean isArmed = false;
+
     public BombEntity() {
         this(0, 0, 0);
     }
@@ -20,32 +22,35 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker {
     
     @Override
     public boolean isPassable() {
-        return false;
+        return !isArmed;
     }
     
-
+    public boolean isArmed() {
+        return this.isArmed;
+    }
+    
     @Override
     public void used(CharacterEntity player){
         // TODO decrement the bombs in the inventory by 1
         this.position = player.getPosition();
+        this.isArmed = true;
     }
 
     @Override
     public void tick(EntitiesControl entitiesControl) {
-        List<IEntity> adjacentEntities = entitiesControl.getAllAdjacentEntities(this.getPosition());
-        if (isAdjacentSwitchActive(entitiesControl, adjacentEntities)) {
-            for (IEntity entity : adjacentEntities) {
-                explodeEntityIfPossible(entity, entitiesControl);
+        if (this.isArmed) {
+            List<IEntity> adjacentEntities = entitiesControl.getAllAdjacentEntities(this.getPosition());
+            adjacentEntities.addAll(entitiesControl.getAllEntitiesFromPosition(this.getPosition()));
+            if (isAdjacentSwitchActive(entitiesControl, adjacentEntities)) {
+                for (IEntity entity : adjacentEntities) {
+                    explodeNonCharacterEntity(entity, entitiesControl);
+                }
             }
-            entitiesControl.removeEntity(this);
         }
     }
 
-    private void explodeEntityIfPossible(IEntity entity, EntitiesControl entitiesControl) {
-        if ( 
-            !(entity instanceof CharacterEntity) && 
-            !(entity instanceof ICollectableEntity)
-        ) {
+    private void explodeNonCharacterEntity(IEntity entity, EntitiesControl entitiesControl) {
+        if (!(entity instanceof CharacterEntity)) {
             entitiesControl.removeEntity(entity);
         }
     }
@@ -56,5 +61,10 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker {
         .stream()
         .map(SwitchEntity.class::cast)
         .anyMatch(SwitchEntity::isActive);
+    }
+
+    @Override
+    public boolean isPlacedAfterUsing() {
+        return true;
     }
 }

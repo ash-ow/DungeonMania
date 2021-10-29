@@ -27,4 +27,9 @@ public class BoulderGoal implements IGoal {
     public String getType() {
         return type;
     }
+
+    @Override
+    public String getFrontendString() {
+        return ":boulder";
+    }
 }

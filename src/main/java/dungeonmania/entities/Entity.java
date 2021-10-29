@@ -30,8 +30,16 @@ public abstract class Entity implements IEntity {
         return this.position;
     }
 
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
 	public boolean isInSamePositionAs(IEntity ent) {
         return this.getPosition().equals(ent.getPosition());
+    }
+
+    public boolean isPassable() {
+        return true;
     }
 
     @Override

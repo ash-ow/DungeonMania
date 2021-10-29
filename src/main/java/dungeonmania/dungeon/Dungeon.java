@@ -40,11 +40,18 @@ public class Dungeon {
             Integer xAxis = entityObj.get("x").getAsInt();
             Integer yAxis = entityObj.get("y").getAsInt();
             Integer layer = this.entitiesControl.getAllEntitiesFromPosition(new Position(xAxis, yAxis)).size();
+            
+            // TODO can probably improve this with factory pattern
+            // or at least by reading the JsonObject as a HashMap and passing that into a generic constructor
+            // Maybe Entity class should have one more constructor which accepts a HashMap!
             if (type.equals("player")) {
                 this.player = new CharacterEntity(xAxis, yAxis, layer);
             } else if (type.equals("key") || type.equals("door")) {
                 Integer key = entityObj.get("key").getAsInt();
                 this.entitiesControl.createEntity(xAxis, yAxis, layer, key, type);
+            } else if (type.equals("portal")) {
+                String colour = entityObj.get("colour").getAsString();
+                this.entitiesControl.createEntity(xAxis, yAxis, layer, colour, type);
             } else {
                 this.entitiesControl.createEntity(entityObj);
             }

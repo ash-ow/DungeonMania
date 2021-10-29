@@ -2,10 +2,10 @@ package dungeonmania.entities.movingEntities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.collectableEntities.BombEntity;
@@ -65,7 +65,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     public EntitiesControl getInventory() {
-        return inventory;
+        return this.inventory;
     }
 
     public void removeEntityFromInventory(IEntity entity) {
@@ -81,11 +81,24 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 //endregion
 
+//region Moving
+    private Direction lastMovedDirection;
+
+    @Override
+    public void setLastMovedDirection(Direction direction) {
+        this.lastMovedDirection = direction;
+    }
+
+    @Override
+    public Direction getLastMovedDirection() {
+        return this.lastMovedDirection;
+    }
+
     @Override
     public void move(Direction direction, EntitiesControl entitiesControl) {
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
-        List<IInteractingEntity> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);
+        List<IBlocker> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);
         boolean interacted = false;
         for (IInteractingEntity entity : targetInteractable) {
             // TODO fix bug where player interacts with many things stacked on top of each other and keeps moving
@@ -112,6 +125,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     boolean targetLocationIsEmpty(List<IEntity> targetEntities) {
         return targetEntities.size() == 0;
     }
+//endregion
 
     private boolean interact(IInteractingEntity entity, EntitiesControl entitiesControl, Direction direction) {
         if (entity.interactWithPlayer(entitiesControl, direction, this)) {

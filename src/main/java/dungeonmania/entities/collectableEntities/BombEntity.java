@@ -31,7 +31,7 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker {
     
     @Override
     public void used(CharacterEntity player){
-        // TODO decrement the bombs in the inventory by 1
+        player.getInventory().removeEntity(this);
         this.position = player.getPosition();
         this.isArmed = true;
     }

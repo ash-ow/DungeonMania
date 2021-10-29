@@ -1,6 +1,5 @@
 package dungeonmania.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,7 +16,17 @@ public enum Direction {
         return Arrays.asList(
             UP, DOWN, LEFT, RIGHT
         );
-    };
+    }
+    
+    public static Direction getOppositeDirection(Direction direction) {
+        switch (direction) {
+            case UP: return DOWN;
+            case DOWN: return UP;
+            case RIGHT: return LEFT;
+            case LEFT: return RIGHT;
+            default: return NONE;
+        }
+    }
 
     private Direction(Position offset) {
         this.offset = offset;

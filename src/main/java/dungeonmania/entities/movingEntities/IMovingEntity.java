@@ -7,6 +7,8 @@ import dungeonmania.util.Position;
 
 public interface IMovingEntity extends IEntity {
     void setPosition(Position position);
+    void setLastMovedDirection(Direction direction);
+    Direction getLastMovedDirection();
 
     /**
      * Moves the entity by the direction offset (e.g. Direction.UP)
@@ -16,12 +18,14 @@ public interface IMovingEntity extends IEntity {
         this.setPosition(
             this.getPosition().translateBy(direction)
         );
+        this.setLastMovedDirection(direction);
     }
 
     public default void move(Direction direction) {
         this.setPosition(
             this.getPosition().translateBy(direction)
         );
+        this.setLastMovedDirection(direction);
     }
 
 
@@ -29,11 +33,13 @@ public interface IMovingEntity extends IEntity {
         this.setPosition(
             this.getPosition().translateBy(direction)
         );
+        this.setLastMovedDirection(direction);
     }
 
     public default void move(Direction direction, int layer) {
         this.setPosition(
             this.getPosition().translateBy(direction).asLayer(layer)
         );
+        this.setLastMovedDirection(direction);
     }
 }

@@ -22,7 +22,7 @@ public class SpiderAntiClockwise implements SpiderState {
     public Boolean moveSpider(Integer movementIndex, SpiderEntity spider, EntitiesControl entities) {
         Direction direction = nextDirection;
         List<IEntity> targetEntities = entities.getAllEntitiesFromPosition(spider.getPosition().translateBy(direction));
-        if (EntitiesControl.entitiesContainsType(targetEntities, BoulderEntity.class) != null) {
+        if (EntitiesControl.getFirstEntityOfType(targetEntities, BoulderEntity.class) != null) {
             return false;
         }
         nextDirection = getDirection(movementIndex);

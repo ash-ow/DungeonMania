@@ -52,4 +52,18 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IMo
         this.move(Direction.DOWN, entities, player);
         return false;
     }
+
+// region Moving
+    private Direction lastMovedDirection;
+
+    @Override
+    public void setLastMovedDirection(Direction direction) {
+        this.lastMovedDirection = direction;
+    }
+
+    @Override
+    public Direction getLastMovedDirection() {
+        return this.lastMovedDirection;
+    }
+//endregion
 }

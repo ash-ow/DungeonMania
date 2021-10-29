@@ -29,6 +29,19 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
         firstPosition = this.position;
     }
 
+    // region Moving
+    private Direction lastMovedDirection;
+    
+    @Override
+    public void setLastMovedDirection(Direction direction) {
+        this.lastMovedDirection = direction;
+    }
+    
+    @Override
+    public Direction getLastMovedDirection() {
+        return this.lastMovedDirection;
+    }
+
     @Override
     public void move(Direction direction, EntitiesControl entities, CharacterEntity player) {
 
@@ -55,6 +68,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
         }
         return spiderMovement;
     }
+//endregion
 
 //region Battle
     private float health = 100;

@@ -37,15 +37,15 @@ public class ShieldEntity extends BuildableEntity {
             ICollectableEntity component = entry.getKey();
             int quantity = entry.getValue();
             if (numberOfComponentItemsInInventory(inventory, new WoodEntity()) >= quantity) {
-                System.out.println("Needs more " + component.getId());
+                // System.out.println("Needs more " + component.getId());
                 wood = true;
             }
             if (numberOfComponentItemsInInventory(inventory, new TreasureEntity()) >= quantity) {
-                System.out.println("Needs more " + component.getId());
+                // System.out.println("Needs more " + component.getId());
                 treasure = true;
             } 
             if (numberOfComponentItemsInInventory(inventory, new KeyEntity()) >= quantity) {
-                System.out.println("Needs more " + component.getId());
+                // System.out.println("Needs more " + component.getId());
                 key = true;
             }
         }

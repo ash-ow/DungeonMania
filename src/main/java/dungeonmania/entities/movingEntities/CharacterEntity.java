@@ -117,7 +117,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     public ICollectableEntity findCollectableById(String id) {
         for (ICollectableEntity entity: inventory) {
-            if(entity.getId() == id) {
+            if(entity.getId().equals(id)) {
                 return entity;
             }
         }

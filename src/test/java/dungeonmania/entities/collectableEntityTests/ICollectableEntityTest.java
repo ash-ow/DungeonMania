@@ -13,11 +13,6 @@ public interface ICollectableEntityTest extends IEntityTests {
 
     public void TestCollect();
     public void TestUseCollectable();
-    
-    // public default void assertItemInInventory(String id, CharacterEntity player, EntitiesControl entitiesControl) {
-    //     assertNotNull(player.getInventory().getEntityById(id), "Inventory should contain entity " + id);
-    //     assertNull(entitiesControl.getEntityById(id), "EntitiesControl should not contain entity " + id);
-    // }
 
     public default void assertItemInInventory(String id, CharacterEntity player, EntitiesControl entitiesControl) {
         assertNotNull(player.findCollectableById(id), "Inventory should contain entity " + id);
@@ -48,5 +43,4 @@ public interface ICollectableEntityTest extends IEntityTests {
         entity.used(player);
         assertNull(player.findCollectableById(entity.getId()), "Inventory should not contain entity " + entity.getId());
     }
-
 }

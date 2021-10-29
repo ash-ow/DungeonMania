@@ -35,7 +35,7 @@ public class PortalEntity extends Entity implements IInteractingEntity{
     
     @Override
     public boolean isPassable() {
-        return false;
+        return passable;
     }
 
     @Override
@@ -53,6 +53,7 @@ public class PortalEntity extends Entity implements IInteractingEntity{
             return false;
         }
         player.setPosition(portalPair.getPosition());
+        this.passable = true;
         return true;
     }
 }

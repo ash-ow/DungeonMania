@@ -15,6 +15,8 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class Dungeon {
+    private int height;
+    private int width;
     public EntitiesControl entitiesControl;
     private String gameMode;
     private String id;
@@ -37,7 +39,7 @@ public class Dungeon {
             String type = entityObj.get("type").getAsString();
             Integer xAxis = entityObj.get("x").getAsInt();
             Integer yAxis = entityObj.get("y").getAsInt();
-            Integer layer = this.entitiesControl.entitiesFromPosition(new Position(xAxis, yAxis)).size();
+            Integer layer = this.entitiesControl.getAllEntitiesFromPosition(new Position(xAxis, yAxis)).size();
             if (type.equals("player")) {
                 this.player = new CharacterEntity(xAxis, yAxis, layer);
             } else {
@@ -76,7 +78,13 @@ public class Dungeon {
     public void tick(Direction direction) {
         player.move(direction, entitiesControl);
         entitiesControl.moveAllMovingEntities(direction, player);
+        entitiesControl.tick();
         entitiesControl.generateEnemyEntities();
+    }
+
+    public void tick(String itemType) {
+        player.useItem(itemType, this.entitiesControl);
+        // TODO implement
     }
 
     public String getGoals() {
@@ -91,7 +99,7 @@ public class Dungeon {
     }
 
     public List<IEntity> getEntities(String type) {
-        return this.entitiesControl.entitiesOfSameType(type);
+        return this.entitiesControl.getAllEntitiesOfType(type);
     }
 }
  

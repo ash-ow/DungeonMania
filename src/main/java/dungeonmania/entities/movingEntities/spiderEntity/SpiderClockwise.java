@@ -26,7 +26,7 @@ public class SpiderClockwise implements SpiderState {
     @Override
     public Boolean moveSpider(Integer movementIndex, SpiderEntity spider, EntitiesControl entities) {
         Direction direction = nextDirection;
-        List<IEntity> targetEntities = entities.entitiesFromPosition(spider.getPosition().translateBy(direction));
+        List<IEntity> targetEntities = entities.getAllEntitiesFromPosition(spider.getPosition().translateBy(direction));
         if (EntitiesControl.entitiesContainsType(targetEntities, BoulderEntity.class) != null) {
             return false;
         }

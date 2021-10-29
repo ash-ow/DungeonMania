@@ -12,11 +12,12 @@ public class ArmourEntity extends Entity implements ICollectableEntity {
     }
 
     @Override
-    public boolean isPassable() {
-        return true;
+    public void used(CharacterEntity player) {
     }
 
     @Override
-    public void used(CharacterEntity player){
+    public boolean isPlacedAfterUsing() {
+        // TODO Auto-generated method stub
+        return false;
     } 
 }

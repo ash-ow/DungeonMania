@@ -12,15 +12,17 @@ public class TreasureEntity extends Entity implements ICollectableEntity {
     public TreasureEntity(int x, int y, int layer) {
         super(x, y, layer, "treasure");
     }
-    
+
     @Override
-    public boolean isPassable() {
-        return true;
+    public void used(CharacterEntity player) {
+
     }
 
-    @Override
-    public void used(CharacterEntity player){
 
+    @Override
+    public boolean isPlacedAfterUsing() {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }

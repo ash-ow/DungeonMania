@@ -43,11 +43,6 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
     }
 
     @Override
-    public boolean isPassable() {
-        return true;
-    }
-
-    @Override
     public void setPosition(Position position) {
         this.position = position;
     }

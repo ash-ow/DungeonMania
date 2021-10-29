@@ -41,7 +41,7 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoa
         ArrayList<IEntity> entities = new ArrayList<>();
     
         entities.add(boulder);
-        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
         dungeon.tick(Direction.DOWN);
 
         assertEquals(new Position(0, 1), player.getPosition());
@@ -62,7 +62,7 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoa
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(boulder);
         entities.add(wall);
-        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
         dungeon.tick(Direction.DOWN);
         assertEquals(player.getPosition(), new Position(0, 0));
         assertEquals(boulder.getPosition(), new Position(0, 1, 0));
@@ -76,7 +76,7 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoa
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(boulder);
         entities.add(switches);
-        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
         dungeon.tick(Direction.DOWN);
         assertEquals(player.getPosition(), new Position(0, 1));
         assertEquals(boulder.getPosition(), new Position(0, 2));
@@ -91,7 +91,7 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoa
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(boulder);
         entities.add(switches);
-        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
         dungeon.tick(Direction.DOWN);
         assertEquals(player.getPosition(), new Position(0, 1));
         assertEquals(boulder.getPosition(), new Position(0, 2));
@@ -107,7 +107,7 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoa
         entities.add(boulder);
         String jsonGoals = "{ \"goal\": \"exit\"}";
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
-        Dungeon dungeon = new Dungeon(20, 20, entities, "Standard", player, j);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player, j);
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 1, 0), player.getPosition());
         assertEquals(new Position(0, 2, 0), boulder.getPosition());

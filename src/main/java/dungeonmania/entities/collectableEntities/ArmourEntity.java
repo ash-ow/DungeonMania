@@ -14,11 +14,6 @@ public class ArmourEntity extends Entity implements ICollectableEntity {
         super(x, y, layer, "armour");
     }
 
-    @Override
-    public boolean isPassable() {
-        return true;
-    }
-
     public int getDurability(){
         return this.durability;
     }
@@ -42,4 +37,8 @@ public class ArmourEntity extends Entity implements ICollectableEntity {
         damage = damage/2;
         return damage;
     }
+    public boolean isPlacedAfterUsing() {
+        // TODO Auto-generated method stub
+        return false;
+    } 
 }

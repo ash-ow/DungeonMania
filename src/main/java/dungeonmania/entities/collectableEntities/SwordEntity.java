@@ -15,11 +15,6 @@ public class SwordEntity extends Entity implements ICollectableEntity {
         super(x, y, layer, "sword");
     }
 
-    @Override
-    public boolean isPassable() {
-        return true;
-    }
-
     public int getDurability(){
         return this.durability;
     }
@@ -38,5 +33,11 @@ public class SwordEntity extends Entity implements ICollectableEntity {
                 player.setDamage(0);
             }
         }
+    }
+
+    @Override
+    public boolean isPlacedAfterUsing() {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

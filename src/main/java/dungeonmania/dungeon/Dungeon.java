@@ -17,16 +17,19 @@ import dungeonmania.util.Position;
 public class Dungeon {
     private int height;
     private int width;
-    private EntitiesControl entitiesControl;
+    public EntitiesControl entitiesControl;
     private String gameMode;
     private String id;
     private String dungeonName;
     private CharacterEntity player;
     private Goals goals;
 
-    public Dungeon(int height, int width, JsonArray entities, JsonObject goalConditions, String gameMode, String id, String dungeonName) {
-        this.height = height;
-        this.width = width;
+    /**
+     * Main Dungeon Constructor if goalConditions exist
+     * @param type
+     * @return
+     */
+    public Dungeon(JsonArray entities, JsonObject goalConditions, String gameMode, String id, String dungeonName) {
         this.gameMode = gameMode;
         this.id = id;
         this.dungeonName = dungeonName;
@@ -36,28 +39,26 @@ public class Dungeon {
             String type = entityObj.get("type").getAsString();
             Integer xAxis = entityObj.get("x").getAsInt();
             Integer yAxis = entityObj.get("y").getAsInt();
-            Integer layer = this.entitiesControl.entitiesFromPosition(new Position(xAxis, yAxis)).size();
+            Integer layer = this.entitiesControl.getAllEntitiesFromPosition(new Position(xAxis, yAxis)).size();
             if (type.equals("player")) {
                 this.player = new CharacterEntity(xAxis, yAxis, layer);
             } else {
-                this.entitiesControl.createEntity(xAxis, yAxis, layer, type);
+                this.entitiesControl.createEntity(entityObj);
             }
         }
-        this.goals = new Goals(goalConditions);
+        if (goalConditions != null) {
+            this.goals = new Goals(goalConditions);
+        }
     }
 
-    public Dungeon(int height, int width, ArrayList<IEntity> entities, String gameMode, CharacterEntity player) {
-        this.height = height;
-        this.width = width;
+    public Dungeon(ArrayList<IEntity> entities, String gameMode, CharacterEntity player) {
         this.entitiesControl = new EntitiesControl();
         this.entitiesControl.setEntities(entities);
         this.gameMode = gameMode;
         this.player = player;
     }
 
-    public Dungeon(int height, int width, ArrayList<IEntity> entities, String gameMode, CharacterEntity player, JsonObject goalConditions) {
-        this.height = height;
-        this.width = width;
+    public Dungeon(ArrayList<IEntity> entities, String gameMode, CharacterEntity player, JsonObject goalConditions) {
         this.entitiesControl = new EntitiesControl();
         this.entitiesControl.setEntities(entities);
         this.gameMode = gameMode;
@@ -77,10 +78,19 @@ public class Dungeon {
     public void tick(Direction direction) {
         player.move(direction, entitiesControl);
         entitiesControl.moveAllMovingEntities(direction, player);
+        entitiesControl.tick();
         entitiesControl.generateEnemyEntities();
     }
 
+    public void tick(String itemType) {
+        player.useItem(itemType, this.entitiesControl);
+        // TODO implement
+    }
+
     public String getGoals() {
+        if (goals == null) {
+            return "";
+        }
         return goals.checkGoals(this);
     }
 
@@ -89,7 +99,7 @@ public class Dungeon {
     }
 
     public List<IEntity> getEntities(String type) {
-        return this.entitiesControl.entitiesOfSameType(type);
+        return this.entitiesControl.getAllEntitiesOfType(type);
     }
 }
  

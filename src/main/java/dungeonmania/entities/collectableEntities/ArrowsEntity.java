@@ -11,14 +11,15 @@ public class ArrowsEntity extends Entity implements ICollectableEntity {
     public ArrowsEntity(int x, int y, int layer) {
         super(x, y, layer, "arrow");
     }
-    
+
     @Override
-    public boolean isPassable() {
-        return true;
+    public void used(CharacterEntity player) {
+        // TODO Auto-generated method stub
     }
 
     @Override
-    public void used(CharacterEntity player){
-
+    public boolean isPlacedAfterUsing() {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

@@ -1,9 +1,17 @@
 package dungeonmania.entities.collectableEntities;
 
-import dungeonmania.entities.Entity;
-import dungeonmania.entities.movingEntities.CharacterEntity;
+import java.util.List;
 
-public class BombEntity extends Entity implements ICollectableEntity {
+import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.entities.Entity;
+import dungeonmania.entities.IEntity;
+import dungeonmania.entities.ITicker;
+import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.staticEntities.SwitchEntity;
+
+public class BombEntity extends Entity implements ICollectableEntity, ITicker {
+    boolean isArmed = false;
+
     public BombEntity() {
         this(0, 0, 0);
     }
@@ -14,12 +22,48 @@ public class BombEntity extends Entity implements ICollectableEntity {
     
     @Override
     public boolean isPassable() {
-        return false;
+        return !isArmed;
     }
     
+    public boolean isArmed() {
+        return this.isArmed;
+    }
+    
+    @Override
+    public void used(CharacterEntity player) {
+        this.position = player.getPosition();
+        this.isArmed = true;
+    }
 
     @Override
-    public void used(CharacterEntity player){
+    public void tick(EntitiesControl entitiesControl) {
+        if (this.isArmed) {
+            List<IEntity> adjacentEntities = entitiesControl.getAllAdjacentEntities(this.getPosition());
+            adjacentEntities.addAll(entitiesControl.getAllEntitiesFromPosition(this.getPosition()));
+            if (isAdjacentSwitchActive(entitiesControl, adjacentEntities)) {
+                for (IEntity entity : adjacentEntities) {
+                    explodeNonCharacterEntity(entity, entitiesControl);
+                }
+            }
+        }
+    }
 
+    private void explodeNonCharacterEntity(IEntity entity, EntitiesControl entitiesControl) {
+        if (!(entity instanceof CharacterEntity)) {
+            entitiesControl.removeEntity(entity);
+        }
+    }
+
+    private boolean isAdjacentSwitchActive(EntitiesControl entitiesControl, List<IEntity> adjacentEntities) {
+        return entitiesControl
+        .entitiesOfType(adjacentEntities, "switch")
+        .stream()
+        .map(SwitchEntity.class::cast)
+        .anyMatch(SwitchEntity::isActive);
+    }
+
+    @Override
+    public boolean isPlacedAfterUsing() {
+        return true;
     }
 }

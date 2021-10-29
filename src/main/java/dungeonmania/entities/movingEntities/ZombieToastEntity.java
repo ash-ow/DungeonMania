@@ -1,19 +1,50 @@
 package dungeonmania.entities.movingEntities;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
 public class ZombieToastEntity extends Entity implements IInteractingEntity, IMovingEntity, IBattlingEntity {
+    Random rand = new Random();
     public ZombieToastEntity() {
         this(0, 0, 0);
     }
     
     public ZombieToastEntity(int x, int y, int layer) {
         super(x, y, layer, "zombieToast");
+    }
+
+    public ZombieToastEntity(int x, int y, int layer, int seed) {
+        super(x, y, layer, "zombieToast");
+        rand = new Random(seed);
+    }
+
+    @Override
+    public void move(Direction direction, EntitiesControl entitiesControl) {
+        direction = getRandomDirection();
+        Position target = position.translateBy(direction);
+        List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
+        if (!EntitiesControl.containsUnpassableEntities(targetEntities)) {
+            this.move(direction);
+        }
+    }
+
+    private Direction getRandomDirection() {
+        List<Direction> directions = Arrays.asList(Direction.RIGHT, Direction.DOWN, Direction.UP, Direction.LEFT);
+        return directions.get(rand.nextInt(3));
+    }
+
+    @Override
+    public boolean isPassable() {
+        return true;
     }
 
     @Override

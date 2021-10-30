@@ -36,6 +36,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Override
     @Test
     public void TestMove() {
+        CharacterEntity player = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity(5, 5, 0, 10);
         EntitiesControl entities = new EntitiesControl();
         entities.addEntities(zombie);
@@ -44,7 +45,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         List<Position> expectPositions = Arrays.asList(new Position(6, 5), new Position(6, 5));
 
         for (Position expectPosition : expectPositions) {
-            zombie.move(Direction.DOWN, entities);
+            zombie.move(entities, player);
             assertEquals(zombie.getPosition(), expectPosition);
         }
     }
@@ -55,8 +56,8 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         ZombieToastEntity zombie = new ZombieToastEntity(0, 0, 0);
         assertEntityResponseInfoEquals(
             zombie,
-            "zombieToast-0-0-0",
-            "zombieToast",
+            "zombie_toast-0-0-0",
+            "zombie_toast",
             new Position(0,0),
             false
         );

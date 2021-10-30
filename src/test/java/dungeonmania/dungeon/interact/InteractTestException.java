@@ -11,10 +11,12 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.collectableEntities.SwordEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
+import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
 import dungeonmania.exceptions.InvalidActionException;
 
 public class InteractTestException {
@@ -71,5 +73,37 @@ public class InteractTestException {
         assertDoesNotThrow(() -> {dungeon.interact(mercenary.getId());});
         assertTrue(mercenary.isBribed());
         assertFalse(player.getInventory().contains(treasure));
+    }
+
+    @Test
+    public void testInvalidDestroyTooFar() {
+        CharacterEntity player = new CharacterEntity(0, 5, 0);
+        ZombieToastSpawnerEntity spawner = new ZombieToastSpawnerEntity(0, 0, 0);
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(spawner);        
+        player.addEntityToInventory(new SwordEntity());
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        assertThrows(InvalidActionException.class, () -> {dungeon.interact(spawner.getId());});
+    }
+
+    @Test
+    public void testInvalidDestroyNoWeapon() {
+        CharacterEntity player = new CharacterEntity(0, 5, 0);
+        ZombieToastSpawnerEntity spawner = new ZombieToastSpawnerEntity(0, 4, 0);
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(spawner);        
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        assertThrows(InvalidActionException.class, () -> {dungeon.interact(spawner.getId());});
+    }
+
+    @Test
+    public void testSuccessfulDestroy() {
+        CharacterEntity player = new CharacterEntity(0, 5, 0);
+        ZombieToastSpawnerEntity spawner = new ZombieToastSpawnerEntity(0, 4, 0);
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(spawner);    
+        player.addEntityToInventory(new SwordEntity());    
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        assertDoesNotThrow(() -> {dungeon.interact(spawner.getId());});
     }
 }

@@ -2,6 +2,7 @@ package dungeonmania.dungeon.interact;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
@@ -66,5 +67,6 @@ public class InteractTestException {
         player.addEntityToInventory(new TreasureEntity()); 
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         assertDoesNotThrow(() -> {dungeon.interact(mercenary.getId());});
+        assertTrue(mercenary.isBribed());
     }
 }

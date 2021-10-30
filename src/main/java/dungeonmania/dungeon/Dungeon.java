@@ -92,6 +92,9 @@ public class Dungeon {
 
     public void interact(String entityID) throws IllegalArgumentException, InvalidActionException{
         IEntity interacting = this.entitiesControl.getEntityById(entityID);
+        if (interacting == null) {
+            throw new IllegalArgumentException("Entity is Invalid");
+        }
     }
 
     public String getGoals() {

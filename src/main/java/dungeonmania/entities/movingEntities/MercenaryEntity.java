@@ -6,13 +6,16 @@ import java.util.List;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IContactingEntity;
+import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class MercenaryEntity extends Entity implements IContactingEntity, IBattlingEntity, IAutoMovingEntity{
+public class MercenaryEntity extends Entity implements IContactingEntity, IBattlingEntity, IAutoMovingEntity, IInteractingEntity{
 
     private float health;
     private int damage;
+    private boolean isBribed;
 
     public MercenaryEntity() {
         this(0, 0, 0);
@@ -22,11 +25,16 @@ public class MercenaryEntity extends Entity implements IContactingEntity, IBattl
         super(x, y, layer, "mercenary");
         this.health = 100;
         this.damage = 3;
+        this.isBribed = false;
     }
 
     @Override
     public boolean isPassable() {
         return true;
+    }
+
+    public boolean isBribed() {
+        return isBribed;
     }
 
     @Override
@@ -101,6 +109,11 @@ public class MercenaryEntity extends Entity implements IContactingEntity, IBattl
             usefulDirections.add(Direction.NONE);
         }
         return usefulDirections;    
+    }
+
+    @Override
+    public void interactWith(CharacterEntity player) throws InvalidActionException {
+        this.isBribed = true;       
     }
     
 }

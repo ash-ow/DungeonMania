@@ -157,6 +157,12 @@ public class EntitiesControl {
             case "mercenary":
                 this.addEntities(new MercenaryEntity(xAxis, yAxis, layer));
                 break;
+            case "zombie_toast":
+                this.addEntities(new ZombieToastEntity(xAxis, yAxis, layer));
+                break;
+            case "zombie_toast_spawner":
+                this.addEntities(new ZombieToastSpawnerEntity(xAxis, yAxis, layer));
+                break;
         }
     }
 
@@ -175,12 +181,6 @@ public class EntitiesControl {
         switch (type) {
             case "portal":
                 this.addEntities(new PortalEntity(xAxis, yAxis, layer, colour));
-                break;
-            case "zombie_toast":
-                this.addEntities(new ZombieToastEntity(xAxis, yAxis, layer));
-                break;
-            case "zombie_toast_spawner":
-                this.addEntities(new ZombieToastSpawnerEntity(xAxis, yAxis, layer));
                 break;
         }
 	}
@@ -245,13 +245,15 @@ public class EntitiesControl {
     }
 
     private void generateZombieToast() {
-        if (tickCounter % 10 == 0) {
+        if (tickCounter % 5 == 0) {
             List<IEntity> spawnerEntities = getAllEntitiesOfType("zombie_toast_spawner");
-            spawnerEntities.stream().forEach(spawner -> {
-                this.createEntity(spawner.getPosition().getX(), 
-                spawner.getPosition().getX(), 
-                "zombie_toast");
-            });
+            for (IEntity spawner : spawnerEntities) {
+                this.createEntity(
+                    spawner.getPosition().getX(), 
+                    spawner.getPosition().getY(), 
+                    "zombie_toast"
+                );
+            }
         }
     }
 

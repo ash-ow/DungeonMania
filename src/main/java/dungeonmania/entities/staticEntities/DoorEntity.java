@@ -1,8 +1,6 @@
 package dungeonmania.entities.staticEntities;
 
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
@@ -14,7 +12,7 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.util.Direction;
 
-public class DoorEntity extends Entity implements ITicker, IBlocker {
+public class DoorEntity extends Entity implements IBlocker {
     private int keyNumber;
     private boolean isLocked;
     private KeyEntity key;
@@ -31,16 +29,6 @@ public class DoorEntity extends Entity implements ITicker, IBlocker {
     
     public int getKeyNumber() {
         return keyNumber;
-    }
-
-    @Override
-    public void tick(EntitiesControl entitiesControl) {
-        List<IEntity> entities = entitiesControl.getAllEntitiesFromPosition(this.getPosition());
-        CharacterEntity player = (CharacterEntity) EntitiesControl.getFirstEntityOfType(entities, CharacterEntity.class);
-        if (player != null) {
-            this.key = getKeyFromInventory(player, this.keyNumber);
-            this.unlockWith(key, player);
-        }
     }
 
     private KeyEntity getKeyFromInventory(CharacterEntity player, int keyNumber) {
@@ -66,13 +54,12 @@ public class DoorEntity extends Entity implements ITicker, IBlocker {
     }
 
     @Override
-    public void setIsBlocking(boolean isBlocking) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
     public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
-        // TODO Auto-generated method stub
-        return false;
+        if (ent instanceof CharacterEntity) {
+            CharacterEntity player = (CharacterEntity) ent;
+            this.key = getKeyFromInventory(player, this.keyNumber);
+            this.unlockWith(key, player);
+        }
+        return !this.isLocked;
     }
 }

@@ -80,12 +80,6 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker, I
     }
 
     @Override
-    public void setIsBlocking(boolean isBlocking) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
     public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
         // TODO Auto-generated method stub
         return false;

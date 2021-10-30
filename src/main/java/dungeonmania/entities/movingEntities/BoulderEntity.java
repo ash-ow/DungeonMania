@@ -39,9 +39,4 @@ public class BoulderEntity extends Entity implements IBlocker {
     public boolean isBlocking() {
         return true;
     }
-
-    @Override
-    public void setIsBlocking(boolean isBlocking) {
-        // The boulder entity is always blocking
-    }
 }

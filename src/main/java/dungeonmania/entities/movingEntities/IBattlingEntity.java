@@ -2,7 +2,6 @@ package dungeonmania.entities.movingEntities;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IContactingEntity;
-import dungeonmania.entities.IInteractingEntity;
 
 public interface IBattlingEntity extends IContactingEntity {
     public float getHealth();

@@ -2,18 +2,21 @@ package dungeonmania.entities.movingEntities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity, IInteractingEntity {
+public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity {
 
     private float health;
     private int damage;
@@ -118,16 +121,15 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         return usefulDirections;    
     }
 
-    @Override
     public void interactWith(CharacterEntity player) throws InvalidActionException {
-        List<IEntity> treasureInventory = player.getInventory().getAllEntitiesOfType("treasure");
-        if (treasureInventory.isEmpty()) {
+        IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);
+        if (treasureFound == null) {
             throw new InvalidActionException("Player has no treasure");
         }
         if (!isInRange(player)) {
             throw new InvalidActionException("Player is too far away");
         }
-        player.removeEntityFromInventory(treasureInventory.get(0));
+        player.removeEntityFromInventory(treasureFound);
         player.addTeammates(this);
         this.isBribed = true;       
     }

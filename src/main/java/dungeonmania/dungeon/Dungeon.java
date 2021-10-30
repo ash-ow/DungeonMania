@@ -9,8 +9,10 @@ import com.google.gson.JsonObject;
 
 import dungeonmania.dungeon.goals.Goals;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.MercenaryEntity;
+import dungeonmania.entities.movingEntities.ZombieToastEntity;
+import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
@@ -96,8 +98,8 @@ public class Dungeon {
         entitiesControl.generateEnemyEntities();
     }
 
-    public void tick(String itemType) {
-        player.useItem(itemType, this.entitiesControl);
+    public void tick(String itemID) {
+        player.useItem(itemID, this.entitiesControl);
         // TODO implement
     }
 
@@ -106,11 +108,19 @@ public class Dungeon {
         if (interacting == null) {
             throw new IllegalArgumentException("Entity doesnt exist");
         }
-        if (!(interacting instanceof IInteractingEntity)) {
+        if (interacting.getType() != "mercenary" && interacting.getType() != "zombie_toast_spawner" ) {
             throw new IllegalArgumentException("Entity is not interactable");
         } else {
-            IInteractingEntity interactor = (IInteractingEntity) interacting;
-            interactor.interactWith(player);
+            switch (interacting.getType()) {
+                case ("mercenary"):
+                    MercenaryEntity mercenaryEntity = (MercenaryEntity) interacting;
+                    mercenaryEntity.interactWith(player);
+                    break;
+                case ("zombie_toast_spawner"):
+                    ZombieToastSpawnerEntity spawner = (ZombieToastSpawnerEntity) interacting;
+                    spawner.interactWith(entitiesControl, player);
+                    break;
+            }
         }
     }
 

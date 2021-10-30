@@ -5,7 +5,6 @@ import java.util.List;
 
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.collectableEntities.IWeaponEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.exceptions.InvalidActionException;
@@ -14,8 +13,9 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.util.Direction;
+import dungeonmania.util.Position;
 
-public class ZombieToastSpawnerEntity extends Entity implements IInteractingEntity, IBlocker{
+public class ZombieToastSpawnerEntity extends Entity implements IBlocker{
     // TODO make this IBlocker
 
     public ZombieToastSpawnerEntity() {
@@ -36,11 +36,21 @@ public class ZombieToastSpawnerEntity extends Entity implements IInteractingEnti
         return new EntityResponse(id, type, position, true);
     }
 
-    @Override
-    public void interactWith(CharacterEntity player) throws InvalidActionException {
-        List<IWeaponEntity> weapons;  
+    public void interactWith(EntitiesControl entitiesControl, CharacterEntity player) throws InvalidActionException {
+        IEntity weaponFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), IWeaponEntity.class);
+        if (weaponFound == null) {
+            throw new InvalidActionException("Has No Weapons");
+        }
+        if (!isPlayerAdjacent(player)) {
+            throw new InvalidActionException("Too far away");
+        }
+        entitiesControl.removeEntity(this);
     }
     
+    public boolean isPlayerAdjacent(CharacterEntity player) {
+        return this.position.getCardinallyAdjacentPositions().contains(player.getPosition());
+    }
+
     public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
         // cannot unblock zombie spawners
         return false;

@@ -87,10 +87,9 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         CharacterEntity character = new CharacterEntity();
         WoodEntity wood = new WoodEntity();
         character.addEntityToInventory(wood);
-        EntitiesControl inventory = character.getInventory();
-        assertEquals(1, inventory.getEntities().size());
+        assertEquals(1, character.getInventory().size());
         character.removeEntityFromInventory(wood);
-        assertEquals(0, inventory.getEntities().size());
+        assertEquals(0, character.getInventory().size());
     }
 
     @Override

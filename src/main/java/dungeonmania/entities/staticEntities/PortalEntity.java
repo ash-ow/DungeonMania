@@ -28,9 +28,8 @@ public class PortalEntity extends Entity implements IContactingEntity{
     @Override
     public void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
         PortalEntity portalPair = getPortalPair(entities);
-        Position positionShift = Position.calculatePositionBetween(this.getPosition(), portalPair.getPosition());
         player.setPosition(
-            player.getPosition().translateBy(positionShift)  
+            portalPair.getPosition()
         );
     }
 

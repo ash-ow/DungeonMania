@@ -34,6 +34,7 @@ public class EntitiesControl {
     }
 
     public void removeEntity(IEntity entity) {
+        System.out.println(entity.getType() + " " + entity.getId());
         entities.remove(entity);
     }
 
@@ -72,8 +73,8 @@ public class EntitiesControl {
         return EntitiesControl.getEntitiesOfType(this.entities, IAutoMovingEntity.class);
     }
 
-    public List<IInteractingEntity> getInteractableEntitiesFrom(List<IEntity> entityList) {
-        return EntitiesControl.getEntitiesOfType(entityList, IInteractingEntity.class);
+    public List<IContactingEntity> getInteractableEntitiesFrom(List<IEntity> entityList) {
+        return EntitiesControl.getEntitiesOfType(entityList, IContactingEntity.class);
     }
 
     public static <T> List<T> getEntitiesOfType(List<IEntity> entityList, Class<T> cls) {
@@ -88,7 +89,7 @@ public class EntitiesControl {
         return entityList.stream().filter(IBlocker.class::isInstance).map(IBlocker.class::cast).anyMatch(IBlocker::isBlocking);
     }
 
-    public static IEntity getFirstEntityOfType(List<IEntity> entityList, Class<?> cls) {
+    public static <T extends IEntity> IEntity getFirstEntityOfType(List<T> entityList, Class<?> cls) {
         return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findFirst().orElse(null);
     }
 

@@ -127,11 +127,12 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         dungeon.interact(mercenary.getId());
         assertTrue(mercenary.isBribed());
         dungeon.tick(Direction.UP);
+        assertTrue(dungeon.entitiesControl.contains(mercenary));
         assertEquals(new Position(0, 5), mercenary.getPosition());
         dungeon.tick(Direction.DOWN);
-        assertEquals(new Position(0, 6), mercenary.getPosition());
+        assertEquals(new Position(0, 4), mercenary.getPosition());
     }
 
-    
+
 
 }

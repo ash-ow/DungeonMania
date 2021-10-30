@@ -16,6 +16,7 @@ import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
@@ -103,5 +104,15 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         zombie.Battle(entitiesControl, character);
         assertEquals(58, character.getHealth());
         assertEquals(-2.0, zombie.getHealth());
+    }
+
+    @Test
+    public void TestBattleAgainstTeam() {
+        CharacterEntity character = new CharacterEntity();
+        MercenaryEntity mercenaryEntity = new MercenaryEntity();
+        character.addTeammates(mercenaryEntity);
+        ZombieToastEntity zombie = new ZombieToastEntity();
+        zombie.doBattle(character);
+        assertTrue(zombie.getHealth() < 40);
     }
 }

@@ -55,12 +55,12 @@ public class MercenaryEntity extends Entity implements IContactingEntity, IBattl
     }
 
     @Override
-    public int getDamage() {
+    public float getDamage() {
         return damage;
     }
 
     @Override
-    public void loseHealth(float enemyHealth, int enemyDamage) {
+    public void loseHealth(float enemyHealth, float enemyDamage) {
         this.health -= ((enemyHealth * enemyDamage) / 5);
     }
 
@@ -71,14 +71,16 @@ public class MercenaryEntity extends Entity implements IContactingEntity, IBattl
 
     @Override
     public boolean contactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
-        Battle(entities, player);
+        if (!this.isBribed) {
+            Battle(entities, player);
+        }       
         return true;
     }
 
     @Override
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {
         if (isBribed) {
-            // TODO follow player around
+            setPosition(player.getPreviousPosition());
         } else {
             List<Direction> usefulDirections = getUsefuDirections(player);
             // TODO check player is invisible here

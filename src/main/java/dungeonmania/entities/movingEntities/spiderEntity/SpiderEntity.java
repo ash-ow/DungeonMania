@@ -72,13 +72,13 @@ public class SpiderEntity extends Entity implements IContactingEntity, IBattling
         this.health = health;
     }
 
-    public int getDamage() {
+    public float getDamage() {
         // TODO determine correct Spider damage
         return 2;
     }
 
     @Override
-    public void loseHealth(float enemyHealth, int enemyDamage) {
+    public void loseHealth(float enemyHealth, float enemyDamage) {
         this.health -= ((enemyHealth * enemyDamage) / 5);
     }
 //endregion

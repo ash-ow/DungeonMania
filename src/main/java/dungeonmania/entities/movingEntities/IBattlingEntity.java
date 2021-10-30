@@ -8,8 +8,8 @@ import dungeonmania.entities.IEntity;
 public interface IBattlingEntity extends IEntity {
     public float getHealth();
     public void setHealth(float health);
-    public int getDamage();
-    public void loseHealth(float enemyHealth, int enemyDamage);
+    public float getDamage();
+    public void loseHealth(float enemyHealth, float enemyDamage);
 
     public default void Battle(EntitiesControl entitiesControl, CharacterEntity player) {
         while (player.isAlive() && !checkEnemyDeath(entitiesControl)) {
@@ -28,6 +28,9 @@ public interface IBattlingEntity extends IEntity {
     default void doBattle(CharacterEntity player) {
         float enemyInitialHealth = this.getHealth();
         this.loseHealth(player.getHealth(), player.getDamage());
+        for (IBattlingEntity teammate : player.teammates) {
+            this.loseHealth(teammate.getHealth(), teammate.getDamage());
+        }
         player.loseHealth(enemyInitialHealth, this.getDamage());
     }
 

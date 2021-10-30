@@ -17,6 +17,7 @@ import dungeonmania.util.Position;
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
     private EntitiesControl inventory = new EntitiesControl();
     private Position previousPosition;
+    public List<IBattlingEntity> teammates = new ArrayList<>();
 
     public CharacterEntity() {
         this(0, 0, 0);
@@ -24,6 +25,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     
     public CharacterEntity(int x, int y, int layer) {
         super(x, y, layer, "player");
+        this.previousPosition = new Position(x, y);
     }
 
     public EntityResponse getInfo() {
@@ -48,14 +50,18 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.health = health;
     }
 
-    public int getDamage() {
+    public float getDamage() {
         // TODO determine correct Character damage
         return 3;
     }
 
     @Override
-    public void loseHealth(float enemyHealth, int enemyDamage) {
+    public void loseHealth(float enemyHealth, float enemyDamage) {
         this.health -= ((enemyHealth * enemyDamage) / 10);
+    }
+
+    public void addTeammates(IBattlingEntity teamMember) {
+        teammates.add(teamMember);
     }
 //endregion
 
@@ -149,5 +155,9 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
             item.setPosition(this.getPosition());
             entitiesControl.addEntities(item);
         }
+    }
+
+    public Position getPreviousPosition() {
+        return this.previousPosition;
     }
 }

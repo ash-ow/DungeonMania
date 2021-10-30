@@ -7,7 +7,7 @@ import javax.swing.plaf.metal.MetalBorders.PaletteBorder;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
-import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IAutoMovingEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
@@ -15,7 +15,7 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
-public class SpiderEntity extends Entity implements IInteractingEntity, IBattlingEntity, IAutoMovingEntity {
+public class SpiderEntity extends Entity implements IContactingEntity, IBattlingEntity, IAutoMovingEntity {
     private SpiderState spiderMovement;
     private Position firstPosition;
     private Integer movementCount = 0;
@@ -41,7 +41,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IBattlin
             movementCount = (movementCount + 1) % 8;
         }
         if (this.isInSamePositionAs(player)) {
-            interactWithPlayer(entities, Direction.NONE, player);
+            contactWithPlayer(entities, Direction.NONE, player);
         }
     }
 
@@ -84,7 +84,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IBattlin
 //endregion
 
     @Override
-    public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
+    public boolean contactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
         Battle(entities, player);
         return true;
     }

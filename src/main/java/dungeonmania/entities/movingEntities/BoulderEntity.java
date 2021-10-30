@@ -5,12 +5,12 @@ import java.util.List;
 import dungeonmania.entities.Entity;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.IContactingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class BoulderEntity extends Entity implements IInteractingEntity {
+public class BoulderEntity extends Entity implements IContactingEntity {
     public BoulderEntity() {
         this(0, 0, 0);
     }
@@ -30,7 +30,7 @@ public class BoulderEntity extends Entity implements IInteractingEntity {
     }
 
     @Override
-    public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
+    public boolean contactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
         Position target = this.getPosition().translateBy(direction);
         List<IEntity> targetEntities = entities.getAllEntitiesFromPosition(target);
         if ((targetEntities.size() == 0) || !EntitiesControl.containsUnpassableEntities(targetEntities)) {

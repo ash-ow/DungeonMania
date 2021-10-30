@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.IContactingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.util.Position;
@@ -80,15 +80,15 @@ public class EntitiesControl {
         return this.entities.stream().filter(entity -> entity.getType().equals(type)).collect(Collectors.toList());
     }
 
-    public List<IInteractingEntity> entitiesInteractableInRange(List<IEntity> entityList) {
-        return entityList.stream().filter(entity -> entity instanceof IInteractingEntity).map(IInteractingEntity.class::cast).collect(Collectors.toList());
+    public List<IContactingEntity> entitiesInteractableInRange(List<IEntity> entityList) {
+        return entityList.stream().filter(entity -> entity instanceof IContactingEntity).map(IContactingEntity.class::cast).collect(Collectors.toList());
     }
 
     public static boolean containsUnpassableEntities(List<IEntity> entityList) {
         return entityList.stream().anyMatch(entity -> !entity.isPassable());
     }
 
-    public static boolean interactingEntitiesUnpassable(List<IInteractingEntity> entityList) {
+    public static boolean interactingEntitiesUnpassable(List<IContactingEntity> entityList) {
         return entityList.stream().anyMatch(entity -> !entity.isPassable());
     }
 

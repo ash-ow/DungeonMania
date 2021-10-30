@@ -30,12 +30,12 @@ public class InventoryTest{
         assertEquals(2, entities.getEntities().size());
 
         // Pick up first item
-        armour.interactWithPlayer(entities, Direction.RIGHT, player);
+        armour.contactWithPlayer(entities, Direction.RIGHT, player);
         assertEquals(1, player.getInventoryInfo().size());
         assertEquals(1, entities.getEntities().size());
 
         // Pick up second item
-        sword.interactWithPlayer(entities, Direction.RIGHT, player);
+        sword.contactWithPlayer(entities, Direction.RIGHT, player);
         assertEquals(2, player.getInventoryInfo().size());
 
         assertEquals(0, entities.getEntities().size());

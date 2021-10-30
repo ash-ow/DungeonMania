@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import dungeonmania.dungeon.goals.Goals;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -87,6 +88,10 @@ public class Dungeon {
     public void tick(String itemType) {
         player.useItem(itemType, this.entitiesControl);
         // TODO implement
+    }
+
+    public void interact(String entityID) throws IllegalArgumentException, InvalidActionException{
+        IEntity interacting = this.entitiesControl.getEntityById(entityID);
     }
 
     public String getGoals() {

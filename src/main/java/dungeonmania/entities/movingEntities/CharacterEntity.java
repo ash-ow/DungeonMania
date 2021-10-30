@@ -6,7 +6,7 @@ import java.util.List;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.collectableEntities.BombEntity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.response.models.EntityResponse;
@@ -83,9 +83,9 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public void move(Direction direction, EntitiesControl entitiesControl) {
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
-        List<IInteractingEntity> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);
+        List<IContactingEntity> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);
         boolean interacted = false;
-        for (IInteractingEntity entity : targetInteractable) {
+        for (IContactingEntity entity : targetInteractable) {
             // TODO fix bug where player interacts with many things stacked on top of each other and keeps moving
             if (entityIsNotAnArmedBomb(entity)) {
                 interacted = interact(entity, entitiesControl, direction);
@@ -98,7 +98,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         }
     }
 
-    private boolean entityIsNotAnArmedBomb(IInteractingEntity entity) {
+    private boolean entityIsNotAnArmedBomb(IContactingEntity entity) {
         // TODO stop interacting with entities before you determine if you can move into that space. Once you've worked that out, remove this method
         if (entity instanceof BombEntity) {
             BombEntity bomb = (BombEntity)entity;
@@ -111,8 +111,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return targetEntities.size() == 0;
     }
 
-    private boolean interact(IInteractingEntity entity, EntitiesControl entitiesControl, Direction direction) {
-        if (entity.interactWithPlayer(entitiesControl, direction, this)) {
+    private boolean interact(IContactingEntity entity, EntitiesControl entitiesControl, Direction direction) {
+        if (entity.contactWithPlayer(entitiesControl, direction, this)) {
             Position target = this.position.translateBy(direction);
             List<IEntity> newTargetEntities = entitiesControl.getAllEntitiesFromPosition(target);
             if (!EntitiesControl.containsUnpassableEntities(newTargetEntities)) {

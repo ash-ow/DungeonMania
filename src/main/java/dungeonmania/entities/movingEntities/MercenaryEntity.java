@@ -5,11 +5,11 @@ import java.util.List;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
-import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.IContactingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class MercenaryEntity extends Entity implements IInteractingEntity, IBattlingEntity, IAutoMovingEntity{
+public class MercenaryEntity extends Entity implements IContactingEntity, IBattlingEntity, IAutoMovingEntity{
 
     private float health;
     private int damage;
@@ -55,7 +55,7 @@ public class MercenaryEntity extends Entity implements IInteractingEntity, IBatt
     }
 
     @Override
-    public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
+    public boolean contactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
         Battle(entities, player);
         return true;
     }
@@ -66,7 +66,7 @@ public class MercenaryEntity extends Entity implements IInteractingEntity, IBatt
         // TODO check player is invisible here
         moveToUsefulUnblocked(usefulDirections, entitiesControl);
         if (this.isInSamePositionAs(player)) {
-            interactWithPlayer(entitiesControl, Direction.NONE, player);
+            contactWithPlayer(entitiesControl, Direction.NONE, player);
         }
     }
 

@@ -5,11 +5,11 @@ import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
-import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Direction;
 
-public class PortalEntity extends Entity implements IInteractingEntity{
+public class PortalEntity extends Entity implements IContactingEntity{
     String colour;
 
     public PortalEntity() {
@@ -31,7 +31,7 @@ public class PortalEntity extends Entity implements IInteractingEntity{
     }
 
     @Override
-    public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
+    public boolean contactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
         List<PortalEntity> portalsOnMap = entities.entitiesOfType("portal").stream().map(PortalEntity.class::cast).collect(Collectors.toList());
         PortalEntity portalPair = null;
         for (PortalEntity portal : portalsOnMap) {

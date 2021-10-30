@@ -32,9 +32,6 @@ public interface IBattlingEntity extends IEntity {
     }
 
     default boolean isAlive() {
-        if (this.getHealth() > 0) {
-            return true;
-        }
-        return false;
+        return this.getHealth() > 0;
     }
 }

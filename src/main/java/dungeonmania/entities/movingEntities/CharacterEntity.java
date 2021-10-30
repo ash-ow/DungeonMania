@@ -8,8 +8,8 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
-import dungeonmania.entities.collectableEntities.BombEntity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.movingEntities.PlayerState;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
@@ -18,8 +18,8 @@ import dungeonmania.util.Position;
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
     private EntitiesControl inventory = new EntitiesControl();
     private PlayerState playerState;
-    //private int duration;
     private int countBattle;
+    private int countMove;
 
     public CharacterEntity() {
         this(0, 0, 0);
@@ -29,6 +29,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         super(x, y, layer, "player");
         this.playerState = PlayerState.NONE;
         this.countBattle = 0;
+        this.countMove = 10;
     }
 
     public EntityResponse getInfo() {
@@ -53,15 +54,11 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.health = health;
     }
 
-    public int damage = 0;
-
     public int getDamage() {
-        return this.damage;
-        }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
+        // TODO determine correct Character damage
+        return 3;
     }
+
 
     @Override
     public void loseHealth(float enemyHealth, int enemyDamage) {
@@ -103,21 +100,21 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 		this.playerState = newState;
 	}
 
-    /*
-    //TO Do: Implement Dunegon Tick counter 
-    //public void getDuration(EntitiesControl ) {
-       this.duration= 10;
+    
+    public int getDuration() {
+       return this.getCountMove();
     }
 
+    //TO DO: FIX Duration, defaults to 10??? 
     public void updateDuration() {
-       System.out.println(this.duration+"steps left");
-       if((duration>0) && (!(playerState==PlayerState.NONE))){ 
-           this.duration--;
-       } else if(duration == 0 && !(playerState==PlayerState.NONE)) {
-          playerState = PlayerState.NONE;
-       }
-   }
-   */
+        System.out.println(this.getCountMove() +"steps left");
+        if((getCountMove()>0) && (!(playerState==PlayerState.NONE))){ 
+            this.setCountMove(true);
+        } else if (getCountMove() == 0 && !(playerState==PlayerState.NONE)){
+            playerState = PlayerState.NONE;
+        }       
+    }
+
     public boolean isInvincible() {
         return isInvincible;
     }
@@ -151,7 +148,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public int getBattleCount() {
         return countBattle;
     }
-
+    //TO DO: recheck how this is implemented 
     public void setBattleCount(boolean reset) {
         if(reset)
         {
@@ -159,9 +156,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         }else 
         {
             countBattle++;
-        }
-
-           
+        }      
     }
 
 //End Region
@@ -172,7 +167,21 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
         if ( !EntitiesControl.containsBlockingEntities(targetEntities) || canUnblock(targetEntities, direction, entitiesControl) ) {
             this.move(direction);
+            setCountMove(false);
             interactWithAll(targetEntities, entitiesControl);
+        }
+    }
+
+    public int getCountMove(){
+        return countMove;
+    }
+
+    public void setCountMove(boolean decrement) {
+        if (decrement){
+            countMove--;
+        }
+        else {
+            countMove++;
         }
     }
 

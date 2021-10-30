@@ -42,6 +42,11 @@ public abstract class Entity implements IEntity {
         return true;
     }
 
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this) {return true;}

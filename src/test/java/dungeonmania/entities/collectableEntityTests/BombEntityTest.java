@@ -40,11 +40,11 @@ public class BombEntityTest implements ICollectableEntityTest {
         assertEquals(new Position(0, 1, 0), bomb.getPosition());
 
         dungeon.tick(Direction.DOWN);
-        assertItemInInventory("bomb-0-1-0", player, dungeon.entitiesControl);
+        assertItemInInventory("0", player, dungeon.entitiesControl);
 
         dungeon.tick("bomb");
         assertEquals(new Position(0, 1, 0), player.getPosition());
-        assertEquals(new Position(0, 1, 0), dungeon.entitiesControl.getEntityById("bomb-0-1-0").getPosition(), "Bomb should be placed in the players new position");
+        assertEquals(new Position(0, 1, 0), dungeon.entitiesControl.getEntityById("0").getPosition(), "Bomb should be placed in the players new position");
         assertTrue(bomb.isArmed(), "Bomb should be active");
         
         dungeon.tick(Direction.DOWN);

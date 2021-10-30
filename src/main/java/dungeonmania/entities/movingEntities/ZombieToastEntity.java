@@ -7,7 +7,7 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
-public class ZombieToastEntity extends Entity implements IInteractingEntity, IMovingEntity, IBattlingEntity, IAutoMovingEntity {
+public class ZombieToastEntity extends Entity implements IInteractingEntity, IBattlingEntity, IAutoMovingEntity {
     public ZombieToastEntity() {
         this(0, 0, 0);
     }
@@ -47,8 +47,6 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IMo
 
     @Override
     public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
-        // To do!!!!
-        System.out.println("zombie toast?? For real?");
         Battle(entities, player);
         return false;
     }
@@ -69,7 +67,9 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IMo
     @Override
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {
         // TODO Auto-generated method stub
-        
+        if (this.isInSamePositionAs(player)) {
+            interactWithPlayer(entitiesControl, Direction.NONE, player);
+        }
     }
 //endregion
 }

@@ -9,24 +9,16 @@ public interface IBattlingEntity extends IEntity {
     public float getHealth();
     public void setHealth(float health);
     public int getDamage();
-    
     public void loseHealth(float enemyHealth, int enemyDamage);
 
     public default void Battle(EntitiesControl entitiesControl, CharacterEntity player) {
-        while (!checkCharacterDeath(entitiesControl, player) && !checkEnemyDeath(entitiesControl)) {
+        while (player.isAlive() && !checkEnemyDeath(entitiesControl)) {
             doBattle(player);
         }
     }
 
-    default boolean checkCharacterDeath(EntitiesControl entitiesControl, CharacterEntity player) {
-        if (player.getHealth() <= 0) {
-            return true;
-        }
-        return false;
-    }
-
     default boolean checkEnemyDeath(EntitiesControl entitiesControl) {
-        if (this.getHealth() <= 0) {
+        if (!this.isAlive()) {
             entitiesControl.removeEntity(this);
             return true;
         }
@@ -34,9 +26,12 @@ public interface IBattlingEntity extends IEntity {
     }
     
     default void doBattle(CharacterEntity player) {
-        System.out.println("The character is battling " + this.getId());
         float enemyInitialHealth = this.getHealth();
         this.loseHealth(player.getHealth(), player.getDamage());
         player.loseHealth(enemyInitialHealth, this.getDamage());
+    }
+
+    default boolean isAlive() {
+        return this.getHealth() > 0;
     }
 }

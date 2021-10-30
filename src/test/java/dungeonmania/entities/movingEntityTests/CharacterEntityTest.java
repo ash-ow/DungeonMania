@@ -76,7 +76,7 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         entitiesControl.addEntities(zombie);
         character.setHealth(2);
         zombie.Battle(entitiesControl, character);
-        assertTrue(character.getHealth() <= 0);
+        assertFalse(character.isAlive());
         // TODO add assertions for character death
     }
 

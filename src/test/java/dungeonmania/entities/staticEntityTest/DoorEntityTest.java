@@ -44,13 +44,13 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         dungeon.tick(Direction.DOWN);
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should move into key's position");
-        assertNotNull(player.getInventory().getEntityById("key-0-1-0"), "Inventory should contain key 1");
-        assertNotNull(player.getInventory().getEntityById("key-0-2-0"), "Inventory should contain key 2");
+        assertNotNull(player.getInventory().getEntityById("0"), "Inventory should contain key 1");
+        assertNotNull(player.getInventory().getEntityById("1"), "Inventory should contain key 2");
 
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to move into the first door as they have key #1");
-        assertNotNull(player.getInventory().getEntityById("key-0-1-0"), "Unlocking door should not consume key 3");
-        assertNull(player.getInventory().getEntityById("key-0-2-0"), "Unlocking door should consume key 1");
+        assertNotNull(player.getInventory().getEntityById("0"), "Unlocking door should not consume key 3");
+        assertNull(player.getInventory().getEntityById("1"), "Unlocking door should consume key 1");
         
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should NOT be able to move into the second door as they lack key #1");
@@ -64,9 +64,9 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
     public void TestCreateDoor() {
         Dungeon dungeon = getDungeonWithDoorTestData();
 
-        DoorEntity door = (DoorEntity) dungeon.entitiesControl.getEntityById("door-0-3-0");
-        KeyEntity key_correct = (KeyEntity) dungeon.entitiesControl.getEntityById("key-0-2-0");
-        KeyEntity key_dummy = (KeyEntity) dungeon.entitiesControl.getEntityById("key-0-1-0");
+        KeyEntity key_dummy = (KeyEntity) dungeon.entitiesControl.getEntityById("0");
+        KeyEntity key_correct = (KeyEntity) dungeon.entitiesControl.getEntityById("1");
+        DoorEntity door = (DoorEntity) dungeon.entitiesControl.getEntityById("2");
 
         Assertions.assertAll(
                 () -> assertNotNull(door, "Door should exist"),

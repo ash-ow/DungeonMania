@@ -98,6 +98,44 @@ We heavily utilised the strategy pattern here, such as:
 - To assist the player in battle, the mercenary is added to the player's `teamMates` list
 - When the player does battle, the mercenary will attack the enemy from a range before the enemy can attack the player, as the spec details
 
+### Collectable Entities
+
+**health_potion:**
+
+- xxx
+
+**invincibility_potion:**
+
+- xxx
+
+**invisibility_potion:**
+
+- xxx
+
+**wood:**
+
+- xxx
+
+**arrow:**
+
+- xxx
+
+**bomb:**
+
+- At first it is not armed where it is a normal collectable
+- The player can pass through it and add it to its inventory by walking through
+- Once it is used, it is placed in the players current position, setting isArmed = true
+- The bomb is an ITicker, checking all the adjacent switches if they are active for its time to explode when it is armed
+- It is also an IBlocker, blocking entities when it is armed
+
+**sword:**
+
+- xxx
+
+**armour:**
+
+- xxx
+
 ### Generator entities
 write up about how we generate mercenearies spiders and zombies
 

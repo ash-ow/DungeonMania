@@ -1,7 +1,7 @@
 package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.Entity;
-import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.EntityTypes;
 
 public class KeyEntity extends Entity implements ICollectableEntity {
     private int keyNumber;
@@ -11,17 +11,12 @@ public class KeyEntity extends Entity implements ICollectableEntity {
     }
 
     public KeyEntity(int x, int y, int layer, int keyNumber) {
-        super(x, y, layer, "key");
+        super(x, y, layer, EntityTypes.KEY);
         this.keyNumber = keyNumber;
     }
 
     public int getKeyNumber() {
         return keyNumber;
-    }
-
-    @Override
-    public void used(CharacterEntity player){
-        player.getInventory().removeEntity(this);
     }
 
     @Override

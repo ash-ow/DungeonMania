@@ -15,6 +15,7 @@ import dungeonmania.util.Position;
 import dungeonmania.entities.collectableEntities.InvincibilityPotionEntity;
 import dungeonmania.entities.movingEntities.spiderEntity.*;
 
+
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.util.Direction;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -44,11 +45,19 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
     public void TestUseCollectable() {
         InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0,0,0);
         CharacterEntity player = new CharacterEntity(0,0,0);
-        SpiderEntity spider = new SpiderEntity();
+        SpiderEntity spider = new SpiderEntity(0,1,0);
+        EntitiesControl entitiesControl = new EntitiesControl();
+        entitiesControl.addEntities(player);
+        entitiesControl.addEntities(spider);
+        entitiesControl.addEntities(invincibility_potion);
         
         invincibility_potion.used(player);
+        player.move(Direction.DOWN);
         spider.doBattle(player);
         assertEquals(0, spider.getHealth());
+        //assertEquals(0, player.getHealth());
+
+        //spider.isAlive; 
     }
 
     /*

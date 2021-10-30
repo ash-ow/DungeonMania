@@ -2,9 +2,9 @@ package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.PlayerState;
 
 public class InvisibilityPotionEntity extends Entity implements ICollectableEntity {
-    int duration = 10;
     public InvisibilityPotionEntity() {
         this(0, 0, 0);
     }
@@ -13,17 +13,10 @@ public class InvisibilityPotionEntity extends Entity implements ICollectableEnti
         super(x, y, layer, "invisibility_potion");
     }
 
-    public void reduceDuration() {
-		duration--;
-	}
-    
-	public int getDuration() {
-		return duration;
-	}
-
     @Override
     public void used(CharacterEntity player) {
-        // TODO implement
+        player.isInvisible();
+        player.getDuration();
     }
 
     @Override

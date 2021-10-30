@@ -18,6 +18,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     private EntitiesControl inventory = new EntitiesControl();
     private PlayerState playerState;
     private int duration;
+    private int countBattle;
 
     public CharacterEntity() {
         this(0, 0, 0);
@@ -27,6 +28,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         super(x, y, layer, "player");
         this.playerState = PlayerState.NONE;
         this.duration = 0;
+        this.countBattle = 0;
     }
 
     public EntityResponse getInfo() {
@@ -51,9 +53,14 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.health = health;
     }
 
+    public int damage = 0;
+
     public int getDamage() {
-        // TODO determine correct Character damage
-        return 3;
+        return this.damage;
+        }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     @Override
@@ -85,6 +92,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 //endregion
 
 //Player State region 
+    boolean isInvincible = false;
+    boolean isInvisible = false;
 
 	public PlayerState getPlayerState() {
 		return playerState;
@@ -94,17 +103,67 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 		this.playerState = newState;
 	}
 
-   public void getDuration() {
+    //TO Do: Implement Dunegon Tick counter 
+    public void getDuration() {
        this.duration= 10;
-   }
-   public void updateDuration() {
-       System.out.println(this.duration+" here");
-       if((duration>0) && playerState==PlayerState.INVINCIBLE) {
+    }
+
+    public void updateDuration() {
+       System.out.println(this.duration+"steps left");
+       if((duration>0) && (!(playerState==PlayerState.NONE))){ 
            this.duration--;
-       } else if(duration == 0 && playerState==PlayerState.INVINCIBLE) {
+       } else if(duration == 0 && !(playerState==PlayerState.NONE)) {
           playerState = PlayerState.NONE;
        }
    }
+
+    public boolean isInvincible() {
+        return isInvincible;
+    }
+
+    public void setInvincible(boolean isInvincible) {
+        if(isInvincible){
+            playerState = PlayerState.INVINCIBLE;
+            //When the value true is passed, reset the battle count
+            this.setBattleCount(true);
+        }
+        else {
+            playerState = PlayerState.NONE;
+        }
+        this.isInvincible = isInvincible;
+    }
+    
+    public boolean isInvisible() {
+    return isInvisible;
+    }
+
+    public void setInvisible(boolean isInvisible) {
+        if(isInvisible){
+            playerState = PlayerState.INVISIBLE;
+
+        }else {
+            playerState = PlayerState.NONE;
+        }
+    this.isInvisible = isInvisible;
+    }
+
+    public int getBattleCount() {
+        return countBattle;
+    }
+
+    public void setBattleCount(boolean reset) {
+        if(reset)
+        {
+            countBattle=0;
+        }else 
+        {
+            countBattle++;
+        }
+
+           
+    }
+
+
 
 
 //

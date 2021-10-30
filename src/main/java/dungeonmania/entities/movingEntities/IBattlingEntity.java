@@ -13,8 +13,10 @@ public interface IBattlingEntity extends IEntity {
 
     public default void Battle(EntitiesControl entitiesControl, CharacterEntity player) {
 
-        while (player.isAlive() && !checkEnemyDeath(entitiesControl)) {
+        if (!(player.isInvisible()) && player.isAlive() && !checkEnemyDeath(entitiesControl)) {
             doBattle(player);
+            player.setBattleCount(false);
+
         }
     }
 
@@ -28,16 +30,13 @@ public interface IBattlingEntity extends IEntity {
     
     default void doBattle(CharacterEntity player) {
         float enemyInitialHealth = this.getHealth();
-        if (player.getPlayerState().equals(PlayerState.INVINCIBLE)) {
-            enemyInitialHealth = 0;
-        }
-        else {
-            this.loseHealth(player.getHealth(), player.getDamage());
-            player.loseHealth(enemyInitialHealth, this.getDamage());}
-        
+        this.loseHealth(player.getHealth(), player.getDamage());
+        player.loseHealth(enemyInitialHealth, this.getDamage());
     }
 
     default boolean isAlive() {
         return this.getHealth() > 0;
     }
+
 }
+

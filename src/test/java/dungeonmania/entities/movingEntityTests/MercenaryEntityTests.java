@@ -4,12 +4,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
+import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
@@ -109,8 +112,26 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         mercenary.move(entitiesControl, character);   
         assertEquals(new Position(1, 0), character.getPosition());
         assertEquals(new Position(1, 0), mercenary.getPosition());
-        assertFalse(entitiesControl.contains(mercenary));     
-        
+        assertFalse(entitiesControl.contains(mercenary));            
     }
+    
+    @Test
+    public void mercenaryMovesOutofWay() {
+        CharacterEntity player = new CharacterEntity(0, 5, 0);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 4, 0);
+        TreasureEntity treasure = new TreasureEntity();
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(mercenary);        
+        player.addEntityToInventory(treasure); 
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        dungeon.interact(mercenary.getId());
+        assertTrue(mercenary.isBribed());
+        dungeon.tick(Direction.UP);
+        assertEquals(new Position(0, 5), mercenary.getPosition());
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 6), mercenary.getPosition());
+    }
+
+    
 
 }

@@ -9,6 +9,7 @@ import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.exceptions.InvalidActionException;
+import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -27,6 +28,11 @@ public class MercenaryEntity extends Entity implements IContactingEntity, IBattl
         this.health = 100;
         this.damage = 3;
         this.isBribed = false;
+    }
+
+    @Override
+    public EntityResponse getInfo() {
+        return new EntityResponse(id, type, position, !isBribed);
     }
 
     @Override
@@ -71,12 +77,16 @@ public class MercenaryEntity extends Entity implements IContactingEntity, IBattl
 
     @Override
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {
-        List<Direction> usefulDirections = getUsefuDirections(player);
-        // TODO check player is invisible here
-        moveToUsefulUnblocked(usefulDirections, entitiesControl);
-        if (this.isInSamePositionAs(player)) {
-            contactWithPlayer(entitiesControl, Direction.NONE, player);
-        }
+        if (isBribed) {
+            // TODO follow player around
+        } else {
+            List<Direction> usefulDirections = getUsefuDirections(player);
+            // TODO check player is invisible here
+            moveToUsefulUnblocked(usefulDirections, entitiesControl);
+            if (this.isInSamePositionAs(player)) {
+                contactWithPlayer(entitiesControl, Direction.NONE, player);
+            }
+        }       
     }
 
     public void moveToUsefulUnblocked(List<Direction> usefulDirections, EntitiesControl entitiesControl) {

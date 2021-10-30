@@ -16,6 +16,7 @@ import dungeonmania.util.Position;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
     private EntitiesControl inventory = new EntitiesControl();
+    private Position previousPosition;
 
     public CharacterEntity() {
         this(0, 0, 0);
@@ -94,6 +95,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         if (
             targetLocationIsEmpty(targetEntities) ||
             (!EntitiesControl.containsUnpassableEntities(targetEntities) && !interacted)) {
+            previousPosition = this.position;
             this.move(direction);
         }
     }
@@ -116,6 +118,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
             Position target = this.position.translateBy(direction);
             List<IEntity> newTargetEntities = entitiesControl.getAllEntitiesFromPosition(target);
             if (!EntitiesControl.containsUnpassableEntities(newTargetEntities)) {
+                previousPosition = this.position;
                 this.move(direction);
             }
             return true;

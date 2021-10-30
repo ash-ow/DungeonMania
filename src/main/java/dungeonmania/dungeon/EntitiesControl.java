@@ -162,6 +162,9 @@ public class EntitiesControl {
             case "mercenary":
                 this.addEntities(new MercenaryEntity(xAxis, yAxis, layer));
                 break;
+            case "one_ring":
+                this.addEntities(new TheOneRingEntity(xAxis, yAxis, layer));
+                break;
         }
     }
 
@@ -217,6 +220,9 @@ public class EntitiesControl {
                 break;
             case "invincibility_potion":
                 this.addEntities(new InvincibilityPotionEntity(xAxis, yAxis, layer));
+                break;
+            case "one_ring":
+                this.addEntities(new TheOneRingEntity(xAxis, yAxis, layer));
                 break;
         }
     }

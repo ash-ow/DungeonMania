@@ -41,8 +41,33 @@ public class  InvisibilityPotionEntityTest implements ICollectableEntityTest {
     }
 
     @Override
-    public void TestUseCollectable() {
-        // TODO Auto-generated method stub
+   
+    public void TestUseCollectable() { }
+         /*
+        InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity();
+        CharacterEntity player = new CharacterEntity();
+        SpiderEntity spider = new SpiderEntity();
+        ArrayList<IEntity> entities = new ArrayList<>();  
+
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
         
-    }
+            
+        invisibility_potion.used(player);
+
+        //TO DO: test battle/interaction
+        assertEquals(100, player.getDamage());
+        //TO DO: test enemy moving away
+
+        //test duration
+        for (int i = 0; i < 9; i++) {
+			assertEquals(invisibility_potion.getDuration(), 10 - i);
+			dungeon.tick(Direction.DOWN);
+            assertNotNull(player.findCollectableById(invisibility_potion.getId()), "Inventory should contain entity " + invisibility_potion.getId());
+        }
+		dungeon.tick(Direction.DOWN);
+		assertNULL(player.findCollectableById(invisibility_potion.getId()), "Inventory should not contain entity " + invisibility_potion.getId());
+	}
+    */
+    
+
 }

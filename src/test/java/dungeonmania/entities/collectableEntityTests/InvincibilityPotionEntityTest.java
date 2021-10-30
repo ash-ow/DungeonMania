@@ -39,5 +39,36 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
     @Override
     public void TestUseCollectable() {
         // TODO Auto-generated method stub
-    }    
+
+    }
+    /*
+    @Test
+    public void TestDuration() {
+        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0,0,0);
+        CharacterEntity player = new CharacterEntity(0,0,0);
+        SpiderEntity spider = new SpiderEntity();
+        ArrayList<IEntity> entities = new ArrayList<>();  
+
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+            
+        invincibility_potion.used(player);
+        //test player damage
+        assertEquals(100, player.setDamage());
+        //TO DO :test enemy moving away
+
+            //TO DO: test battle/interaction
+            //TO DO: test enemy moving away
+    
+            //test duration
+            for (int i = 0; i < 9; i++) {
+                assertEquals(invincibility_potion.getDuration(), 10 - i);
+                dungeon.tick(Direction.DOWN);
+                assertNotNull(player.findCollectableById(invincibility_potion.getId()), "Inventory should contain entity " + invincibility_potion.getId());
+            }
+            dungeon.tick(Direction.DOWN);
+            assertNULL(player.findCollectableById(invincibility_potion.getId()), "Inventory should not contain entity " + invincibility_potion.getId());
+        }//test duration
+    }
+    */
+    
 }

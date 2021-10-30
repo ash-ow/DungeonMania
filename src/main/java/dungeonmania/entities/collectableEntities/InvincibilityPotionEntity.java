@@ -4,6 +4,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public class InvincibilityPotionEntity extends Entity implements ICollectableEntity {
+    int duration = 10;
 
     public InvincibilityPotionEntity() {
         this(0, 0, 0);
@@ -13,6 +14,16 @@ public class InvincibilityPotionEntity extends Entity implements ICollectableEnt
     public InvincibilityPotionEntity(int x, int y, int layer) {
         super(x, y, layer, "invincibility_potion");
     }
+
+    
+	public void reduceDuration() {
+		duration--;
+	}
+
+	
+	public int getDuration() {
+		return duration;
+	}
 
     @Override
     public void used(CharacterEntity player) {

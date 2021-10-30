@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import dungeonmania.entities.collectableEntities.ArrowsEntity;
 import dungeonmania.util.Position;
 
-public class ArrowsEntityTests implements ICollectableEntityTest {
+public class ArrowsEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestEntityResponseInfo() {
@@ -17,9 +17,11 @@ public class ArrowsEntityTests implements ICollectableEntityTest {
         assertEntityResponseInfoEquals(arrows, "arrow-0-0-0", "arrow", new Position(0,0), false);
     }
 
+    @Test
     @Override
     public void TestUseCollectable() {
-        // TODO Auto-generated method stub
+        ArrowsEntity arrow = new ArrowsEntity(0, 0, 0);
+        assertEntityIsUsed(arrow);
     }
 
     @Test

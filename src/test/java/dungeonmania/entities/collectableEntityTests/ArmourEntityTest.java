@@ -13,7 +13,7 @@ import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class ArmourEntityTests implements ICollectableEntityTest {
+public class ArmourEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestEntityResponseInfo() {

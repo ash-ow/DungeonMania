@@ -7,29 +7,31 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
-import dungeonmania.entities.collectableEntities.SwordEntity;
+import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class SwordEntityTests implements ICollectableEntityTest {
+public class WoodEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestEntityResponseInfo() {
-        SwordEntity sword = new SwordEntity(0, 0, 0);
-        assertEntityResponseInfoEquals(sword, "sword-0-0-0", "sword", new Position(0,0), false);
+        WoodEntity wood = new WoodEntity(0, 0, 0);
+        assertEntityResponseInfoEquals(wood, "wood-0-0-0", "wood", new Position(0,0), false);
     }
 
+    @Test
     @Override
     public void TestUseCollectable() {
-        // TODO Auto-generated method stub
+        WoodEntity wood = new WoodEntity(0, 0, 0);
+        assertEntityIsUsed(wood);
     }
 
     @Test
     @Override
     public void TestCollect() {
-        SwordEntity sword = new SwordEntity(0,0,0);
-        assertEntityIsCollected(sword);
+        WoodEntity wood = new WoodEntity(0,0,0);
+        assertEntityIsCollected(wood);
     }
 }

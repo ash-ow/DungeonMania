@@ -1,7 +1,6 @@
 package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.Entity;
-import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public class ArrowsEntity extends Entity implements ICollectableEntity {
     public ArrowsEntity() {
@@ -10,11 +9,6 @@ public class ArrowsEntity extends Entity implements ICollectableEntity {
     
     public ArrowsEntity(int x, int y, int layer) {
         super(x, y, layer, "arrow");
-    }
-
-    @Override
-    public void used(CharacterEntity player) {
-        // TODO Auto-generated method stub
     }
 
     @Override

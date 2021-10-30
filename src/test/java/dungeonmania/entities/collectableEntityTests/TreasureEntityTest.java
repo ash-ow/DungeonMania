@@ -36,8 +36,10 @@ public class TreasureEntityTest implements ICollectableEntityTest {
         assertEntityIsCollected(treasure);
     }
 
+    @Test
     @Override
     public void TestUseCollectable() {
-        // TODO Auto-generated method stub
+        TreasureEntity treasure = new TreasureEntity(0, 0, 0);
+        assertEntityIsUsed(treasure);
     }
 }

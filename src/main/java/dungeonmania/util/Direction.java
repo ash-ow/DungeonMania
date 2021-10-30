@@ -1,7 +1,9 @@
 package dungeonmania.util;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public enum Direction {
     UP(0, -1),
@@ -28,5 +30,11 @@ public enum Direction {
 
     public Position getOffset() {
         return this.offset;
+    }
+
+    public static Direction getRandomDirection(Random rand) {
+        List<Direction> directionList = Direction.getAllDirections();
+        Collections.shuffle(directionList, rand);
+        return directionList.get(0);
     }
 }

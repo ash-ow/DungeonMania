@@ -20,6 +20,8 @@ import dungeonmania.entities.staticEntities.*;
 public class EntitiesControl {
     private List<IEntity> entities;
     private Random rand = new Random();
+    private Integer tickCounter = 0;
+    private Integer entityCounter = 0;
 
     public EntitiesControl() {
         entities = new ArrayList<IEntity>();
@@ -27,6 +29,8 @@ public class EntitiesControl {
 
     public void addEntities(IEntity entity) {
         entities.add(entity);
+        entity.setId(Integer.toString(entityCounter));
+        entityCounter++;
     }
 
     public void removeEntity(IEntity entity) {
@@ -172,6 +176,12 @@ public class EntitiesControl {
             case "portal":
                 this.addEntities(new PortalEntity(xAxis, yAxis, layer, colour));
                 break;
+            case "zombie_toast":
+                this.addEntities(new ZombieToastEntity(xAxis, yAxis, layer));
+                break;
+            case "zombie_toast_spawner":
+                this.addEntities(new ZombieToastSpawnerEntity(xAxis, yAxis, layer));
+                break;
         }
 	}
 
@@ -214,6 +224,8 @@ public class EntitiesControl {
 
     public void generateEnemyEntities() {
         generateSpider();
+        generateZombieToast();
+        tickCounter++;
     }
 
     private void generateSpider() {
@@ -229,6 +241,17 @@ public class EntitiesControl {
                 && !this.positionContainsEntityType(new Position(randomX, randomY), BoulderEntity.class)) {
                 this.createEntity(randomX, randomY, "spider");
             }
+        }
+    }
+
+    private void generateZombieToast() {
+        if (tickCounter % 10 == 0) {
+            List<IEntity> spawnerEntities = getAllEntitiesOfType("zombie_toast_spawner");
+            spawnerEntities.stream().forEach(spawner -> {
+                this.createEntity(spawner.getPosition().getX(), 
+                spawner.getPosition().getX(), 
+                "zombie_toast");
+            });
         }
     }
 

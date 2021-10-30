@@ -10,4 +10,5 @@ public interface IEntity {
     public Position getPosition();
     public void setPosition(Position position);
 	public boolean isInSamePositionAs(IEntity ent);
+    public void setId(String string);
 }

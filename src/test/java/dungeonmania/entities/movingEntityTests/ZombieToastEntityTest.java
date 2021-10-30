@@ -5,11 +5,16 @@ import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
+import dungeonmania.entities.staticEntities.WallEntity;
+import dungeonmania.entities.staticEntityTest.WallEntityTest;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -34,12 +39,34 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Override
     @Test
     public void TestMove() {
-        // TODO The zombie toast is supposed to move randomly - this test does not reflect that
-        ZombieToastEntity zombie = new ZombieToastEntity();
-        assertPositionEquals(zombie.getPosition(), 0, 0);
-        
-        zombie.move(Direction.DOWN);
-        assertPositionEquals(zombie.getPosition(), 0, 1);
+        CharacterEntity player = new CharacterEntity();
+        ZombieToastEntity zombie = new ZombieToastEntity(5, 5, 0, 10);
+        EntitiesControl entities = new EntitiesControl();
+        entities.addEntities(zombie);
+
+        List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(4, 4), new Position(5, 4), new Position(6, 4), 
+            new Position(6, 5), new Position(6, 4));
+
+        for (Position expectPosition : expectPositions) {
+            zombie.move(entities, player);
+            assertEquals(zombie.getPosition(), expectPosition);
+        }
+    }
+
+    @Test
+    public void TestBlockMove() {
+        CharacterEntity player = new CharacterEntity();
+        ZombieToastEntity zombie = new ZombieToastEntity(5, 5, 0, 10);
+        EntitiesControl entities = new EntitiesControl();
+        entities.addEntities(zombie);
+        entities.createEntity(6, 4, 0, "wall");
+
+        List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(4, 4), new Position(5, 4), new Position(5, 4));
+
+        for (Position expectPosition : expectPositions) {
+            zombie.move(entities, player);
+            assertEquals(zombie.getPosition(), expectPosition);
+        }
     }
 
     @Override
@@ -48,8 +75,8 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         ZombieToastEntity zombie = new ZombieToastEntity(0, 0, 0);
         assertEntityResponseInfoEquals(
             zombie,
-            "zombieToast-0-0-0",
-            "zombieToast",
+            "zombie_toast-0-0-0",
+            "zombie_toast",
             new Position(0,0),
             false
         );

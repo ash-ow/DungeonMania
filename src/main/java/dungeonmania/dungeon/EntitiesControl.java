@@ -58,19 +58,22 @@ public class EntitiesControl {
     }
 
     public void moveAllMovingEntities(Direction direction, CharacterEntity player) {
-        List<IMovingEntity> movingEntities = getAllMovingEntities();
-
-        for (IMovingEntity entity : movingEntities) {
-            // TODO I think we can implement move so you just pass in this EntityController
-            // you should be able to get the player and direction from here
-            // EntityController can be in charge of getting all elements for interaction
-            entity.move(direction, this, player);
+        List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
+        for (IAutoMovingEntity entity : movingEntities) {
+            entity.move(this, player);
         }
     }
 
-// region Filter
+    // region Filter
     public List<IMovingEntity> getAllMovingEntities() {
         return EntitiesControl.getEntitiesOfType(this.entities, IMovingEntity.class).stream().map(IMovingEntity.class::cast).collect(Collectors.toList());
+    }
+
+    public List<IAutoMovingEntity> getAllAutoMovingEntities() {
+        return entities.stream()
+            .filter(IAutoMovingEntity.class::isInstance)
+            .map(IAutoMovingEntity.class::cast)
+            .collect(Collectors.toList());
     }
 
     public List<IEntity> getAllEntitiesFromPosition(Position position) {
@@ -154,6 +157,9 @@ public class EntitiesControl {
                 break;
             case "invincibility_potion":
                 this.addEntities(new InvincibilityPotionEntity(xAxis, yAxis, layer));
+                break;
+            case "mercenary":
+                this.addEntities(new MercenaryEntity(xAxis, yAxis, layer));
                 break;
         }
     }

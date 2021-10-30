@@ -1,5 +1,8 @@
 package dungeonmania.entities.movingEntities;
 
+import javax.swing.text.PlainDocument;
+
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 
 public interface IBattlingEntity extends IEntity {
@@ -9,35 +12,31 @@ public interface IBattlingEntity extends IEntity {
     
     public void loseHealth(float enemyHealth, int enemyDamage);
 
-    public default void Battle(CharacterEntity character) {
-        if (this instanceof CharacterEntity) {
-            System.out.println("The inner turmoil is too much");
-        }
-        else {
-            doBattle(character);
-            checkCharacterDeath(character);
-            checkEnemyDeath();
+    public default void Battle(EntitiesControl entitiesControl, CharacterEntity player) {
+        while (!checkCharacterDeath(entitiesControl, player) && !checkEnemyDeath(entitiesControl)) {
+            doBattle(player);
         }
     }
 
-    default void checkCharacterDeath(CharacterEntity character) {
-        if (character.getHealth() <= 0) {
-            // TODO make game over functionality
-            System.out.println("you died");
+    default boolean checkCharacterDeath(EntitiesControl entitiesControl, CharacterEntity player) {
+        if (player.getHealth() <= 0) {
+            return true;
         }
+        return false;
     }
 
-    default void checkEnemyDeath() {
+    default boolean checkEnemyDeath(EntitiesControl entitiesControl) {
         if (this.getHealth() <= 0) {
-            // TODO remove enemy from the game
-            System.out.println("gg ez" + this.getId());
+            entitiesControl.removeEntity(this);
+            return true;
         }
+        return false;
     }
     
-    default void doBattle(CharacterEntity character) {
+    default void doBattle(CharacterEntity player) {
         System.out.println("The character is battling " + this.getId());
         float enemyInitialHealth = this.getHealth();
-        this.loseHealth(character.getHealth(), character.getDamage());
-        character.loseHealth(enemyInitialHealth, this.getDamage());
+        this.loseHealth(player.getHealth(), player.getDamage());
+        player.loseHealth(enemyInitialHealth, this.getDamage());
     }
 }

@@ -26,10 +26,7 @@ public class SpiderAntiClockwise implements SpiderState {
             return false;
         }
         nextDirection = getDirection(movementIndex);
-        spider.setPosition(
-            spider.getPosition().translateBy(direction)
-        );
-
+        spider.move(direction);
         return true;
     }
 

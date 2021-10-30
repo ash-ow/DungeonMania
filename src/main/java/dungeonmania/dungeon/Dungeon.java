@@ -21,7 +21,7 @@ public class Dungeon {
     private String gameMode;
     private String id;
     private String dungeonName;
-    private CharacterEntity player;
+    public CharacterEntity player;
     private Goals goals;
 
     /**
@@ -54,7 +54,7 @@ public class Dungeon {
                 this.entitiesControl.createEntity(xAxis, yAxis, layer, colour, type);
             } else {
                 this.entitiesControl.createEntity(entityObj);
-            }
+            }            
         }
         if (goalConditions != null) {
             this.goals = new Goals(goalConditions);
@@ -81,12 +81,14 @@ public class Dungeon {
         for (IEntity entity : entitiesControl.getEntities()) {
             entitiesInfo.add(entity.getInfo());          
         }
-        entitiesInfo.add(player.getInfo());
+        if (player.getHealth() > 0) {
+            entitiesInfo.add(player.getInfo());
+        }        
         return new DungeonResponse(id, dungeonName, entitiesInfo, player.getInventoryInfo(), new ArrayList<>(), getGoals());
     }
 
     public void tick(Direction direction) {
-        player.move(direction, entitiesControl);
+        player.moveCharacter(direction, entitiesControl);
         entitiesControl.moveAllMovingEntities(direction, player);
         entitiesControl.tick();
         entitiesControl.generateEnemyEntities();

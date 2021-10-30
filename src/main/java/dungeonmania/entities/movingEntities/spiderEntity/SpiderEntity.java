@@ -3,18 +3,21 @@ package dungeonmania.entities.movingEntities.spiderEntity;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.plaf.metal.MetalBorders.PaletteBorder;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.IAutoMovingEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
-public class SpiderEntity extends Entity implements IInteractingEntity, IMovingEntity, IBattlingEntity {
+public class SpiderEntity extends Entity implements IInteractingEntity, IMovingEntity, IBattlingEntity, IAutoMovingEntity {
     private SpiderState spiderMovement;
     private Position firstPosition;
     private Integer movementCount = 0;
@@ -43,8 +46,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
     }
 
     @Override
-    public void move(Direction direction, EntitiesControl entities, CharacterEntity player) {
-
+    public void move(EntitiesControl entities, CharacterEntity player) {
         if (!spiderMovement.moveSpider(movementCount, this, entities)) {
             if (!this.position.equals(firstPosition) && movementCount > 0) {
                 movementCount = (movementCount - 2) % 8;
@@ -52,6 +54,9 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
             }
         } else {
             movementCount = (movementCount + 1) % 8;
+        }
+        if (this.position.equals(player.getPosition())) {
+            interactWithPlayer(entities, Direction.NONE, player);
         }
     }
 
@@ -98,8 +103,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
     public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
         // To do!!!!
         System.out.println("Oh shit that's a spider!");
-        this.move(Direction.DOWN, entities, player);
-        //player.move(direction);
+        Battle(entities, player);
         return true;
     }
 }

@@ -46,9 +46,8 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IBa
 //endregion
 
     @Override
-    public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
-        Battle(entities, player);
-        return false;
+    public void interactWithPlayer(EntitiesControl entities, CharacterEntity player) {
+        battle(entities, player);
     }
 
 // region Moving
@@ -56,7 +55,7 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IBa
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {
         // TODO Auto-generated method stub
         if (this.isInSamePositionAs(player)) {
-            interactWithPlayer(entitiesControl, Direction.NONE, player);
+            interactWithPlayer(entitiesControl, player);
         }
     }
 //endregion

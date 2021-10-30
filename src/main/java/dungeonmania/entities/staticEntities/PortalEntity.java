@@ -26,7 +26,7 @@ public class PortalEntity extends Entity implements IInteractingEntity{
     }
 
     @Override
-    public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
+    public void interactWithPlayer(EntitiesControl entities, CharacterEntity player) {
         List<PortalEntity> portalsOnMap = entities.getAllEntitiesOfType("portal").stream().map(PortalEntity.class::cast).collect(Collectors.toList());
         PortalEntity portalPair = null;
         for (PortalEntity portal : portalsOnMap) {
@@ -38,6 +38,5 @@ public class PortalEntity extends Entity implements IInteractingEntity{
             throw new IllegalArgumentException("Portal does not have pair");
         }
         player.setPosition(portalPair.getPosition());
-        return true;
     }
 }

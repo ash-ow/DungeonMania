@@ -43,7 +43,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IBattlin
             movementCount = (movementCount + 1) % 8;
         }
         if (this.isInSamePositionAs(player)) {
-            interactWithPlayer(entities, Direction.NONE, player);
+            interactWithPlayer(entities, player);
         }
     }
 
@@ -87,8 +87,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IBattlin
 //endregion
 
     @Override
-    public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
-        Battle(entities, player);
-        return true;
+    public void interactWithPlayer(EntitiesControl entities, CharacterEntity player) {
+        battle(entities, player);
     }
 }

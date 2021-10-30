@@ -29,10 +29,16 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker, I
     
     @Override
     public void used(CharacterEntity player){
-        player.getInventory().removeEntity(this);
-        this.position = player.getPosition();
         this.isArmed = true;
         player.removeEntityFromInventory(this);
+    }
+
+    @Override    
+    public void interactWithPlayer(EntitiesControl entities, CharacterEntity player) {
+        if (!this.isArmed) {
+            player.addEntityToInventory(this);
+            entities.removeEntity(this);
+        }
     }
 
     @Override
@@ -70,7 +76,7 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker, I
 // region Blocking
     @Override
     public boolean isBlocking() {
-        return !isArmed;
+        return isArmed;
     }
 
     @Override

@@ -92,6 +92,14 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         } else {
             tryUnblockAndMove(targetEntities, direction, entitiesControl);
         }
+        interactWithAll(targetEntities, entitiesControl);
+    }
+
+    private void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
+        List<IInteractingEntity> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);
+        for (IInteractingEntity entity : targetInteractable) {
+            entity.interactWithPlayer(entitiesControl, this);
+        }
     }
 
     private void tryUnblockAndMove(List<IEntity> targetEntities, Direction direction, EntitiesControl entitiesControl) {
@@ -110,18 +118,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return targetEntities.isEmpty();
     }
 //endregion
-
-    private boolean interact(IInteractingEntity entity, EntitiesControl entitiesControl, Direction direction) {
-        if (entity.interactWithPlayer(entitiesControl, direction, this)) {
-            Position target = this.position.translateBy(direction);
-            List<IEntity> newTargetEntities = entitiesControl.getAllEntitiesFromPosition(target);
-            if (!EntitiesControl.containsBlockingEntities(newTargetEntities)) {
-                this.move(direction);
-            }
-            return true;
-        }
-        return false;
-    }
     
     public void useItem(String type, EntitiesControl entitiesControl) {
         for (IEntity ent : this.inventory.getEntities()) {

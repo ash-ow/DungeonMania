@@ -2,7 +2,6 @@ package dungeonmania.entities;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.Direction;
 
 public interface IInteractingEntity extends IEntity {
     /**
@@ -10,5 +9,5 @@ public interface IInteractingEntity extends IEntity {
      * Defines what kind of interaction the IInteractingEntity with have with a player
      * @param character
      */
-	public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player);
+	public void interactWithPlayer(EntitiesControl entities, CharacterEntity player);
 }

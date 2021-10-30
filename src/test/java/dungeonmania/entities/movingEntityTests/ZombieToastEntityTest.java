@@ -46,7 +46,6 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
 
         for (Position expectPosition : expectPositions) {
             zombie.move(entities, player);
-            System.out.println(zombie.getPosition());
             assertEquals(zombie.getPosition(), expectPosition);
         }
     }

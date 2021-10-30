@@ -47,7 +47,6 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         
         for (int i = 0; i < expectPositions.size(); i++) {
             spider.move(new EntitiesControl(), new CharacterEntity());
-            System.out.println(spider.getPosition());
             assertEquals(spider.getPosition(), expectPositions.get(i));
         }
     }
@@ -69,7 +68,6 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         
         for (int i = 0; i < expectPositions.size(); i++) {
             entities.moveAllMovingEntities(Direction.DOWN, player);
-            System.out.println(spider.getPosition());
             assertEquals(spider.getPosition(), expectPositions.get(i));
         }
     }
@@ -105,7 +103,6 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         
         for (int i = 0; i < expectPositions.size(); i++) {
             entities.moveAllMovingEntities(Direction.DOWN, player);
-            System.out.println(spider.getPosition());
             assertEquals(spider.getPosition(), expectPositions.get(i));
         }
     }
@@ -146,7 +143,6 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         
         for (Position expectPosition : expectPositions) {
             entities.moveAllMovingEntities(Direction.DOWN, player);
-            System.out.println(spider.getPosition());
             assertEquals(spider.getPosition(), expectPosition);
         }
     }

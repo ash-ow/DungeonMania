@@ -19,11 +19,6 @@ public class BoulderEntity extends Entity implements IInteractingEntity, IBlocke
     public BoulderEntity(int x, int y, int layer) {
         super(x, y, layer, "boulder");
     }
-    
-    @Override
-    public boolean isPassable() {
-        return false;
-    }
 
     @Override
     public EntityResponse getInfo() {
@@ -43,8 +38,7 @@ public class BoulderEntity extends Entity implements IInteractingEntity, IBlocke
 
     @Override
     public boolean isBlocking() {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override

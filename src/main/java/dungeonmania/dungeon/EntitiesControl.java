@@ -64,7 +64,7 @@ public class EntitiesControl {
         }
     }
 
-    // region Filter
+// region Filter
     public List<IMovingEntity> getAllMovingEntities() {
         return EntitiesControl.getEntitiesOfType(this.entities, IMovingEntity.class).stream().map(IMovingEntity.class::cast).collect(Collectors.toList());
     }
@@ -193,10 +193,10 @@ public class EntitiesControl {
     }
 
     public List<IEntity> getAllEntitiesOfType(String type) {
-        return this.getEntitiesOfType(this.entities, type);
+        return EntitiesControl.getEntitiesOfType(this.entities, type);
     }
 
-    public List<IEntity> getEntitiesOfType(List<IEntity> entitiyList, String type) {
+    public static List<IEntity> getEntitiesOfType(List<IEntity> entitiyList, String type) {
         // TODO refactor to accept Class<?> instead of string type
         List<IEntity> sameType = new ArrayList<>();
         for (IEntity entity : entitiyList) {

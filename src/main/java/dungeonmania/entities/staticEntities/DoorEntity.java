@@ -6,12 +6,14 @@ import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.ITicker;
 import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.IMovingEntity;
 
-public class DoorEntity extends Entity implements ITicker {
+public class DoorEntity extends Entity implements ITicker, IBlocker {
     private int keyNumber;
     private boolean isLocked;
     private KeyEntity key;
@@ -24,15 +26,6 @@ public class DoorEntity extends Entity implements ITicker {
         super(x, y, layer, "door");
         this.keyNumber = keyNumber;
         this.isLocked = true;
-    }
-    
-    @Override
-    public boolean isPassable() {
-        return !isLocked();
-    }
-
-    public boolean isLocked() {
-        return this.isLocked;
     }
     
     public int getKeyNumber() {
@@ -64,5 +57,22 @@ public class DoorEntity extends Entity implements ITicker {
     private void unlockWith(KeyEntity key, CharacterEntity player) {
         key.used(player);
         this.isLocked = false;
+    }
+
+    @Override
+    public boolean isBlocking() {
+        return this.isLocked;
+    }
+
+    @Override
+    public void setIsBlocking(boolean isBlocking) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public boolean unblockCore(IMovingEntity ent, EntitiesControl entitiesControl) {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

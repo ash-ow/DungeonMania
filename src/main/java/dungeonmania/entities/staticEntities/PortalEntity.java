@@ -24,11 +24,6 @@ public class PortalEntity extends Entity implements IInteractingEntity{
     public String getColour() {
         return colour;
     }
-    
-    @Override
-    public boolean isPassable() {
-        return true;
-    }
 
     @Override
     public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {

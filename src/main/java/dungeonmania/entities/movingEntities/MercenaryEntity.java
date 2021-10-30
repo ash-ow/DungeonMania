@@ -9,7 +9,7 @@ import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class MercenaryEntity extends Entity implements IInteractingEntity, IBattlingEntity, IAutoMovingEntity{
+public class MercenaryEntity extends Entity implements IInteractingEntity, IBattlingEntity, IAutoMovingEntity {
 
     private float health;
     private int damage;
@@ -22,11 +22,6 @@ public class MercenaryEntity extends Entity implements IInteractingEntity, IBatt
         super(x, y, layer, "mercenary");
         this.health = 100;
         this.damage = 3;
-    }
-
-    @Override
-    public boolean isPassable() {
-        return true;
     }
 
     @Override
@@ -60,6 +55,21 @@ public class MercenaryEntity extends Entity implements IInteractingEntity, IBatt
         return true;
     }
 
+    
+
+// region Moving
+    private Direction lastMovedDirection;
+
+    @Override
+    public void setLastMovedDirection(Direction direction) {
+        this.lastMovedDirection = direction;
+    }
+
+    @Override
+    public Direction getLastMovedDirection() {
+        return this.lastMovedDirection;
+    }
+
     @Override
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {
         List<Direction> usefulDirections = getUsefuDirections(player);
@@ -72,16 +82,16 @@ public class MercenaryEntity extends Entity implements IInteractingEntity, IBatt
 
     public void moveToUsefulUnblocked(List<Direction> usefulDirections, EntitiesControl entitiesControl) {
         for (Direction d : usefulDirections) {
-            Position target = this.position.translateBy(d);
-            if (!isThereUnpassable(target, entitiesControl)) {
+            if (!targetPositionIsBlocked(d, entitiesControl)) {
                 this.move(d);
                 break;
             }
         }
     }
 
-    private boolean isThereUnpassable(Position position, EntitiesControl entitiesControl) {
-        return EntitiesControl.containsUnpassableEntities(entitiesControl.getAllEntitiesFromPosition(position));
+    private boolean targetPositionIsBlocked(Direction d, EntitiesControl entitiesControl) {
+            Position target = this.position.translateBy(d);
+            return EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(target));
     }
 
     private List<Direction> getUsefuDirections(CharacterEntity player) {
@@ -102,5 +112,6 @@ public class MercenaryEntity extends Entity implements IInteractingEntity, IBatt
         }
         return usefulDirections;    
     }
+    // endregion
     
 }

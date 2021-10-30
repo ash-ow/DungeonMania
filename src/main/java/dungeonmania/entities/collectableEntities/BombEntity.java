@@ -4,12 +4,14 @@ import java.util.List;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.ITicker;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.staticEntities.SwitchEntity;
 
-public class BombEntity extends Entity implements ICollectableEntity, ITicker {
+public class BombEntity extends Entity implements ICollectableEntity, ITicker, IBlocker {
     boolean isArmed = false;
 
     public BombEntity() {
@@ -18,11 +20,6 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker {
     
     public BombEntity(int x, int y, int layer) {
         super(x, y, layer, "bomb");
-    }
-    
-    @Override
-    public boolean isPassable() {
-        return !isArmed;
     }
     
     public boolean isArmed() {
@@ -68,4 +65,23 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker {
     public boolean isPlacedAfterUsing() {
         return true;
     }
+
+// region Blocking
+    @Override
+    public boolean isBlocking() {
+        return !isArmed;
+    }
+
+    @Override
+    public void setIsBlocking(boolean isBlocking) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public boolean unblockCore(IMovingEntity ent, EntitiesControl entitiesControl) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+// endregion
 }

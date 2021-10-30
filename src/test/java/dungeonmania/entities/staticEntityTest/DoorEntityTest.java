@@ -26,7 +26,7 @@ import dungeonmania.entities.staticEntities.DoorEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class DoorEntityTest implements IEntityTests {
+public class DoorEntityTest implements IEntityTests, IBlockerTest {
     @Override
     @Test
     public void TestEntityResponseInfo() {

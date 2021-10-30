@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.entities.IBlockerTest;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.movingEntities.*;
@@ -19,7 +20,7 @@ import dungeonmania.entities.staticEntities.*;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class BombEntityTest implements ICollectableEntityTest {
+public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
     @Test
     @Override
     public void TestEntityResponseInfo() {
@@ -35,22 +36,14 @@ public class BombEntityTest implements ICollectableEntityTest {
         BombEntity bomb = new BombEntity(0,1,0);
         entities.add(bomb);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
-        
-        assertEquals(new Position(0, 0, 0), player.getPosition());
-        assertEquals(new Position(0, 1, 0), bomb.getPosition());
 
         dungeon.tick(Direction.DOWN);
         assertItemInInventory("0", player, dungeon.entitiesControl);
+        assertEquals(new Position(0, 1, 0), player.getPosition());
 
         dungeon.tick("bomb");
-        assertEquals(new Position(0, 1, 0), player.getPosition());
         assertEquals(new Position(0, 1, 0), dungeon.entitiesControl.getEntityById("0").getPosition(), "Bomb should be placed in the players new position");
         assertTrue(bomb.isArmed(), "Bomb should be active");
-        
-        dungeon.tick(Direction.DOWN);
-        assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should be able to move off the bomb");
-        dungeon.tick(Direction.UP);
-        assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should not be able to move back onto the bomb once it has been placed");
         assertNull(player.getInventory().getEntityById(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
     }
 
@@ -110,21 +103,21 @@ public class BombEntityTest implements ICollectableEntityTest {
         dungeon.tick(Direction.LEFT);
 
         Assertions.assertAll( "Before the bomb is armed, nothing will explode",
-                () -> assertTrue(dungeon.entitiesControl.contains(player), "Entity controller should still contain wood"),
-                () -> assertTrue(dungeon.entitiesControl.contains(spider_upupleft), "Entity controller should contain spider_upupleft"),
-                () -> assertTrue(dungeon.entitiesControl.contains(wall_upup), "Entity controller should still contain wall_upup"),
+            () -> assertTrue(dungeon.entitiesControl.contains(player), "Entity controller should still contain wood"),
+            () -> assertTrue(dungeon.entitiesControl.contains(spider_upupleft), "Entity controller should contain spider_upupleft"),
+            () -> assertTrue(dungeon.entitiesControl.contains(wall_upup), "Entity controller should still contain wall_upup"),
 
-                () -> assertTrue(dungeon.entitiesControl.contains(boulder), "Entity controller should no longer contain boulder"),
-                () -> assertTrue(dungeon.entitiesControl.contains(bomb), "Entity controller should no longer contain bomb"),
-                () -> assertTrue(dungeon.entitiesControl.contains(spider_botleft), "Entity controller should no longer contain spider_botleft"),
-                () -> assertTrue(dungeon.entitiesControl.contains(spider_downdown), "Entity controller should no longer contain spider_downdown"),
-                () -> assertTrue(dungeon.entitiesControl.contains(wall_topleft), "Entity controller should no longer contain wall_topleft"),
-                () -> assertTrue(dungeon.entitiesControl.contains(wall_right), "Entity controller should no longer contain wall_right"),
-                () -> assertTrue(dungeon.entitiesControl.contains(switches_onbomb), "Entity controller should no longer contain switches_onbomb"),
-                () -> assertTrue(dungeon.entitiesControl.contains(switches_onboulder), "Entity controller should no longer contain switches_onboulder"),
-                () -> assertTrue(dungeon.entitiesControl.contains(wood), "Entity controller should still contain wood"),
-                () -> assertTrue(dungeon.entitiesControl.contains(arrows), "Entity controller should still contain arrows")
-            );
+            () -> assertTrue(dungeon.entitiesControl.contains(boulder), "Entity controller should no longer contain boulder"),
+            () -> assertTrue(dungeon.entitiesControl.contains(bomb), "Entity controller should no longer contain bomb"),
+            () -> assertTrue(dungeon.entitiesControl.contains(spider_botleft), "Entity controller should no longer contain spider_botleft"),
+            () -> assertTrue(dungeon.entitiesControl.contains(spider_downdown), "Entity controller should no longer contain spider_downdown"),
+            () -> assertTrue(dungeon.entitiesControl.contains(wall_topleft), "Entity controller should no longer contain wall_topleft"),
+            () -> assertTrue(dungeon.entitiesControl.contains(wall_right), "Entity controller should no longer contain wall_right"),
+            () -> assertTrue(dungeon.entitiesControl.contains(switches_onbomb), "Entity controller should no longer contain switches_onbomb"),
+            () -> assertTrue(dungeon.entitiesControl.contains(switches_onboulder), "Entity controller should no longer contain switches_onboulder"),
+            () -> assertTrue(dungeon.entitiesControl.contains(wood), "Entity controller should still contain wood"),
+            () -> assertTrue(dungeon.entitiesControl.contains(arrows), "Entity controller should still contain arrows")
+        );
 
         // Teleport the player to the bomb to arm it, then force a tick
         player.setPosition(bomb.getPosition());
@@ -132,21 +125,51 @@ public class BombEntityTest implements ICollectableEntityTest {
         dungeon.tick(Direction.LEFT);
 
         Assertions.assertAll( "Once the bomb is armed, it will explode",
-                () -> assertTrue(dungeon.entitiesControl.contains(player), "Entity controller should still contain wood"),
-                () -> assertTrue(dungeon.entitiesControl.contains(spider_upupleft), "Entity controller should contain spider_upupleft"),
-                () -> assertTrue(dungeon.entitiesControl.contains(wall_upup), "Entity controller should still contain wall_upup"),
+            () -> assertTrue(dungeon.entitiesControl.contains(player), "Entity controller should still contain wood"),
+            () -> assertTrue(dungeon.entitiesControl.contains(spider_upupleft), "Entity controller should contain spider_upupleft"),
+            () -> assertTrue(dungeon.entitiesControl.contains(wall_upup), "Entity controller should still contain wall_upup"),
 
-                () -> assertFalse(dungeon.entitiesControl.contains(boulder), "Entity controller should no longer contain boulder"),
-                () -> assertFalse(dungeon.entitiesControl.contains(bomb), "Entity controller should no longer contain bomb"),
-                () -> assertFalse(dungeon.entitiesControl.contains(spider_botleft), "Entity controller should no longer contain spider_botleft"),
-                () -> assertTrue(dungeon.entitiesControl.contains(spider_downdown), "Entity controller should no longer contain spider_downdown"),
-                () -> assertTrue(dungeon.entitiesControl.contains(wall_topleft), "Entity controller should no longer contain wall_topleft"),
-                () -> assertTrue(dungeon.entitiesControl.contains(wall_right), "Entity controller should no longer contain wall_right"),
-                () -> assertFalse(dungeon.entitiesControl.contains(switches_onbomb), "Entity controller should no longer contain switches_onbomb"),
-                () -> assertFalse(dungeon.entitiesControl.contains(switches_onboulder), "Entity controller should no longer contain switches_onboulder"),
-                () -> assertFalse(dungeon.entitiesControl.contains(wood), "Entity controller should still contain wood"),
-                () -> assertTrue(dungeon.entitiesControl.contains(arrows), "Entity controller should still contain arrows")
-            );
-        }
+            () -> assertFalse(dungeon.entitiesControl.contains(boulder), "Entity controller should no longer contain boulder"),
+            () -> assertFalse(dungeon.entitiesControl.contains(bomb), "Entity controller should no longer contain bomb"),
+            () -> assertFalse(dungeon.entitiesControl.contains(spider_botleft), "Entity controller should no longer contain spider_botleft"),
+            () -> assertFalse(dungeon.entitiesControl.contains(spider_downdown), "Entity controller should no longer contain spider_downdown"),
+            () -> assertFalse(dungeon.entitiesControl.contains(wall_topleft), "Entity controller should no longer contain wall_topleft"),
+            () -> assertFalse(dungeon.entitiesControl.contains(wall_right), "Entity controller should no longer contain wall_right"),
+            () -> assertFalse(dungeon.entitiesControl.contains(switches_onbomb), "Entity controller should no longer contain switches_onbomb"),
+            () -> assertFalse(dungeon.entitiesControl.contains(switches_onboulder), "Entity controller should no longer contain switches_onboulder"),
+            () -> assertFalse(dungeon.entitiesControl.contains(wood), "Entity controller should still contain wood"),
+            () -> assertFalse(dungeon.entitiesControl.contains(arrows), "Entity controller should still contain arrows")
+        );
+    }
 
+    @Test
+    @Override
+    public void TestBlock() {
+        ArrayList<IEntity> entities = new ArrayList<>();
+        CharacterEntity player = new CharacterEntity(0, 0, 0);
+        BombEntity bomb = new BombEntity(0,1,0);
+        entities.add(bomb);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+
+        dungeon.tick(Direction.DOWN);
+        assertItemInInventory("0", player, dungeon.entitiesControl);
+        assertEquals(new Position(0, 1, 0), player.getPosition());
+
+        dungeon.tick("bomb");
+        assertEquals(new Position(0, 1, 0), dungeon.entitiesControl.getEntityById("0").getPosition(), "Bomb should be placed in the players new position");
+        assertTrue(bomb.isArmed(), "Bomb should be active");
+        assertNull(player.getInventory().getEntityById(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
+        
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should be able to move off the bomb");
+        dungeon.tick(Direction.UP);
+        assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should not be able to move back onto the bomb once it has been placed");
+        assertNull(player.getInventory().getEntityById(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
+    }
+
+    @Test
+    @Override
+    public void TestUnblock() {
+        // Bombs cannot be unblocked
+    }
 }

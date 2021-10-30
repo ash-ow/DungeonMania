@@ -3,17 +3,15 @@ package dungeonmania.entities.collectableEntities;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.dungeon.EntitiesControl;
-import dungeonmania.util.Direction;
 
 public interface ICollectableEntity extends IContactingEntity {
     /**
      * Adds the collectable entity into the character's inventory and removes the entity from the dungeon
      */
     @Override    
-    public default boolean contactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
+    public default void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
         player.addEntityToInventory(this);
         entities.removeEntity(this);
-        return true;
     }
 
     /**

@@ -5,9 +5,9 @@ import java.util.List;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IContactingEntity;
-import dungeonmania.entities.collectableEntities.BombEntity;
+import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
@@ -28,6 +28,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.previousPosition = new Position(x, y);
     }
 
+    @Override
     public EntityResponse getInfo() {
         return new EntityResponse(this.getId(), this.getType(), this.getPosition(), false);
     }
@@ -71,7 +72,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     public EntitiesControl getInventory() {
-        return inventory;
+        return this.inventory;
     }
 
     public void removeEntityFromInventory(IEntity entity) {
@@ -87,50 +88,33 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 //endregion
 
+//region Moving
     public void move(Direction direction, EntitiesControl entitiesControl) {
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
-        List<IContactingEntity> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);
-        boolean interacted = false;
-        for (IContactingEntity entity : targetInteractable) {
-            // TODO fix bug where player interacts with many things stacked on top of each other and keeps moving
-            if (entityIsNotAnArmedBomb(entity)) {
-                interacted = interact(entity, entitiesControl, direction);
-            }
-        }
-        if (
-            targetLocationIsEmpty(targetEntities) ||
-            (!EntitiesControl.containsUnpassableEntities(targetEntities) && !interacted)) {
-            previousPosition = this.position;
+        if ( !EntitiesControl.containsBlockingEntities(targetEntities) || canUnblock(targetEntities, direction, entitiesControl) ) {
             this.move(direction);
+            interactWithAll(targetEntities, entitiesControl);
         }
     }
 
-    private boolean entityIsNotAnArmedBomb(IContactingEntity entity) {
-        // TODO stop interacting with entities before you determine if you can move into that space. Once you've worked that out, remove this method
-        if (entity instanceof BombEntity) {
-            BombEntity bomb = (BombEntity)entity;
-            return !bomb.isArmed();
+    private void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
+        List<IInteractingEntity> targetInteractable = entitiesControl.getInteractableEntitiesFrom(targetEntities);
+        for (IInteractingEntity entity : targetInteractable) {
+            entity.interactWithPlayer(entitiesControl, this);
         }
-        return true;
     }
 
-    boolean targetLocationIsEmpty(List<IEntity> targetEntities) {
-        return targetEntities.size() == 0;
-    }
-
-    private boolean interact(IContactingEntity entity, EntitiesControl entitiesControl, Direction direction) {
-        if (entity.contactWithPlayer(entitiesControl, direction, this)) {
-            Position target = this.position.translateBy(direction);
-            List<IEntity> newTargetEntities = entitiesControl.getAllEntitiesFromPosition(target);
-            if (!EntitiesControl.containsUnpassableEntities(newTargetEntities)) {
-                previousPosition = this.position;
-                this.move(direction);
-            }
-            return true;
+    private boolean canUnblock(List<IEntity> targetEntities, Direction direction, EntitiesControl entitiesControl) {
+        List<IBlocker> targetBlockers = EntitiesControl.getEntitiesOfType(targetEntities, IBlocker.class);
+        boolean targetIsUnblocked = true;
+        for (IBlocker blocker : targetBlockers) {
+            // TODO fix bug where player interacts with many things stacked on top of each other and keeps moving
+            targetIsUnblocked = blocker.tryUnblock(this, direction, entitiesControl);
         }
-        return false;
+        return targetIsUnblocked;
     }
+//endregion
     
     public void useItem(String type, EntitiesControl entitiesControl) {
         for (IEntity ent : this.inventory.getEntities()) {

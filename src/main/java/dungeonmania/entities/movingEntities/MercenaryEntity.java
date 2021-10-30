@@ -13,7 +13,7 @@ import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class MercenaryEntity extends Entity implements IContactingEntity, IBattlingEntity, IAutoMovingEntity, IInteractingEntity{
+public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity, IInteractingEntity {
 
     private float health;
     private int damage;
@@ -33,11 +33,6 @@ public class MercenaryEntity extends Entity implements IContactingEntity, IBattl
     @Override
     public EntityResponse getInfo() {
         return new EntityResponse(id, type, position, !isBribed);
-    }
-
-    @Override
-    public boolean isPassable() {
-        return true;
     }
 
     public boolean isBribed() {
@@ -70,11 +65,10 @@ public class MercenaryEntity extends Entity implements IContactingEntity, IBattl
     }
 
     @Override
-    public boolean contactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
+    public void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
         if (!this.isBribed) {
-            Battle(entities, player);
+            battle(entities, player);
         }       
-        return true;
     }
 
     @Override
@@ -86,23 +80,23 @@ public class MercenaryEntity extends Entity implements IContactingEntity, IBattl
             // TODO check player is invisible here
             moveToUsefulUnblocked(usefulDirections, entitiesControl);
             if (this.isInSamePositionAs(player)) {
-                contactWithPlayer(entitiesControl, Direction.NONE, player);
+                contactWithPlayer(entitiesControl, player);
             }
         }       
     }
 
     public void moveToUsefulUnblocked(List<Direction> usefulDirections, EntitiesControl entitiesControl) {
         for (Direction d : usefulDirections) {
-            Position target = this.position.translateBy(d);
-            if (!isThereUnpassable(target, entitiesControl)) {
+            if (!targetPositionIsBlocked(d, entitiesControl)) {
                 this.move(d);
                 break;
             }
         }
     }
 
-    private boolean isThereUnpassable(Position position, EntitiesControl entitiesControl) {
-        return EntitiesControl.containsUnpassableEntities(entitiesControl.getAllEntitiesFromPosition(position));
+    private boolean targetPositionIsBlocked(Direction d, EntitiesControl entitiesControl) {
+            Position target = this.position.translateBy(d);
+            return EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(target));
     }
 
     private List<Direction> getUsefuDirections(CharacterEntity player) {
@@ -126,7 +120,7 @@ public class MercenaryEntity extends Entity implements IContactingEntity, IBattl
 
     @Override
     public void interactWith(CharacterEntity player) throws InvalidActionException {
-        List<IEntity> treasureInventory = player.getInventory().entitiesOfType("treasure");
+        List<IEntity> treasureInventory = player.getInventory().getAllEntitiesOfType("treasure");
         if (treasureInventory.isEmpty()) {
             throw new InvalidActionException("Player has no treasure");
         }

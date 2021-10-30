@@ -10,5 +10,5 @@ public interface IContactingEntity extends IEntity {
      * Defines what kind of interaction the IInteractingEntity with have with a player
      * @param character
      */
-	public boolean contactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player);
+	public void contactWithPlayer(EntitiesControl entities, CharacterEntity player);
 }

@@ -1,19 +1,44 @@
 package dungeonmania.entities.movingEntities;
 
+import java.util.List;
+import java.util.Random;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
-import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.IEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
-public class ZombieToastEntity extends Entity implements IInteractingEntity, IBattlingEntity, IAutoMovingEntity {
+public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoMovingEntity {
+    Random rand = new Random();
+    Integer seed;
+
     public ZombieToastEntity() {
         this(0, 0, 0);
     }
     
     public ZombieToastEntity(int x, int y, int layer) {
-        super(x, y, layer, "zombieToast");
+        super(x, y, layer, "zombie_toast");
+    }
+
+    public ZombieToastEntity(int x, int y, int layer, int seed) {
+        this(x, y, layer);
+        this.seed = seed;
+        rand = new Random(seed);
+    }
+
+    @Override
+    public void move(EntitiesControl entitiesControl, CharacterEntity player) {
+        Direction direction = Direction.getRandomDirection(new Random(rand.nextInt()));
+        Position target = position.translateBy(direction);
+        List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
+        if ( !EntitiesControl.containsBlockingEntities(targetEntities) ) {
+            this.move(direction);
+        }
+        if (this.isInSamePositionAs(player)) {
+            interactWithPlayer(entitiesControl, player);
+        }
     }
 
     @Override
@@ -44,18 +69,4 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IBa
         this.health -= ((enemyHealth * enemyDamage) / 5);
     }
 //endregion
-
-    @Override
-    public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
-        Battle(entities, player);
-        return false;
-    }
-
-    @Override
-    public void move(EntitiesControl entitiesControl, CharacterEntity player) {
-        // TODO Auto-generated method stub
-        if (this.isInSamePositionAs(player)) {
-            interactWithPlayer(entitiesControl, Direction.NONE, player);
-        }
-    }
 }

@@ -4,16 +4,17 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.movingEntities.IMovingEntity;
-import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
 import dungeonmania.util.Direction;
 
-public class WallEntity extends Entity implements IBlocker {
-    public WallEntity() {
+public class ZombieToastSpawnerEntity extends Entity implements IBlocker {
+    // TODO make this IBlocker
+
+    public ZombieToastSpawnerEntity() {
         this(0, 0, 0);
     }
     
-    public WallEntity(int x, int y, int layer) {
-        super(x, y, layer, "wall");
+    public ZombieToastSpawnerEntity(int x, int y, int layer) {
+        super(x, y, layer, "zombie_toast_spawner");
     }
 
     @Override
@@ -23,6 +24,7 @@ public class WallEntity extends Entity implements IBlocker {
 
     @Override
     public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
+        // cannot unblock zombie spawners
         return false;
     }
 }

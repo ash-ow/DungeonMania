@@ -32,7 +32,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         assertEquals(spider.getPosition(), character.getPosition());
         
         // TODO This is only testing the stub in the SpiderEntity class - not the actual interaction between the two
-        spider.interactWithPlayer(new EntitiesControl(), Direction.UP, character); // TODO I think this should be run automatically when positions are equal
+        spider.interactWithPlayer(new EntitiesControl(), character);
         assertEquals(new Position(0,0), character.getPosition());
     }
 
@@ -47,11 +47,9 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         
         for (int i = 0; i < expectPositions.size(); i++) {
             spider.move(new EntitiesControl(), new CharacterEntity());
-            System.out.println(spider.getPosition());
             assertEquals(spider.getPosition(), expectPositions.get(i));
         }
     }
-    
 
     @Test
     public void TestMoveHitBoulder() {
@@ -69,7 +67,6 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         
         for (int i = 0; i < expectPositions.size(); i++) {
             entities.moveAllMovingEntities(Direction.DOWN, player);
-            System.out.println(spider.getPosition());
             assertEquals(spider.getPosition(), expectPositions.get(i));
         }
     }
@@ -78,15 +75,22 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
     public void TestMoveWall() {
         CharacterEntity player = new CharacterEntity(0, 5, 0);
         SpiderEntity spider = new SpiderEntity(0, 4, 0);
-        WallEntity wall = new WallEntity(0, 4, 0);
+        WallEntity wall = new WallEntity(0, 4, 1);
+        WallEntity wall2 = new WallEntity(0, 3, 0);
+        WallEntity wall3 = new WallEntity(1, 3, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spider);
         entities.add(wall);
+        entities.add(wall2);
+        entities.add(wall3);
 
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         dungeon.tick(Direction.UP);
+        assertEquals(new Position(0, 3), spider.getPosition());
+        dungeon.tick(Direction.UP);
+        assertEquals(new Position(1, 3), spider.getPosition());
+        dungeon.tick(Direction.UP);
 
-        assertEquals(player.getPosition(), new Position(0, 5));
     }
 
     @Test
@@ -99,13 +103,10 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         entities.addEntities(boulder);
         entities.addEntities(spider);
 
-
-
         List<Position> expectPositions = Arrays.asList(new Position(5, 5), new Position(5, 5), new Position(5, 5), new Position(5, 5));
         
         for (int i = 0; i < expectPositions.size(); i++) {
             entities.moveAllMovingEntities(Direction.DOWN, player);
-            System.out.println(spider.getPosition());
             assertEquals(spider.getPosition(), expectPositions.get(i));
         }
     }
@@ -146,7 +147,6 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         
         for (Position expectPosition : expectPositions) {
             entities.moveAllMovingEntities(Direction.DOWN, player);
-            System.out.println(spider.getPosition());
             assertEquals(spider.getPosition(), expectPosition);
         }
     }
@@ -185,7 +185,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         SpiderEntity spider = new SpiderEntity();
         EntitiesControl entitiesControl = new EntitiesControl();
         entitiesControl.addEntities(spider);
-        spider.Battle(entitiesControl, character);
+        spider.battle(entitiesControl, character);
         assertFalse(entitiesControl.contains(spider));
         // TODO add assertions for spider death
     }

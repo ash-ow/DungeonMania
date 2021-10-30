@@ -18,11 +18,6 @@ public class TheOneRingEntity extends CollectableEntity {
         super(x, y, layer, "one_ring");
     }
     
-    @Override
-    public boolean isPassable() {
-        return true;
-    }
-
     public void used(CharacterEntity player){
         if (player.getHealth() <= 0) {
             player.setHealth(100);

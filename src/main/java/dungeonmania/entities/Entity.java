@@ -38,8 +38,8 @@ public abstract class Entity implements IEntity {
         return this.getPosition().equals(ent.getPosition());
     }
 
-    public boolean isPassable() {
-        return true;
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

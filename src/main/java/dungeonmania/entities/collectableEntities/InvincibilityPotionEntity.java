@@ -15,12 +15,11 @@ public class InvincibilityPotionEntity extends Entity implements ICollectableEnt
         super(x, y, layer, "invincibility_potion");
     }
 
-    
 
     @Override
     public void used(CharacterEntity player) {
        player.isInvincible();
-       player.getDuration();
+       //player.getDuration();
     }
 
     @Override

@@ -9,7 +9,7 @@ import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class MercenaryEntity extends Entity implements IInteractingEntity, IMovingEntity, IBattlingEntity, IAutoMovingEntity{
+public class MercenaryEntity extends Entity implements IInteractingEntity, IBattlingEntity, IAutoMovingEntity{
 
     private float health;
     private int damage;
@@ -26,7 +26,7 @@ public class MercenaryEntity extends Entity implements IInteractingEntity, IMovi
 
     @Override
     public boolean isPassable() {
-        return false;
+        return true;
     }
 
     @Override
@@ -51,13 +51,11 @@ public class MercenaryEntity extends Entity implements IInteractingEntity, IMovi
 
     @Override
     public void setPosition(Position position) {
-        this.position = position;
-        
+        this.position = position;        
     }
 
     @Override
     public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
-        System.out.println("Oh shit that's a mercenary!");
         Battle(entities, player);
         return true;
     }
@@ -66,18 +64,19 @@ public class MercenaryEntity extends Entity implements IInteractingEntity, IMovi
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {
         List<Direction> usefulDirections = getUsefuDirections(player);
         // TODO check player is invisible here
-        if (usefulDirections.size() == 0) {
-            return;
+        moveToUsefulUnblocked(usefulDirections, entitiesControl);
+        if (this.isInSamePositionAs(player)) {
+            interactWithPlayer(entitiesControl, Direction.NONE, player);
         }
+    }
+
+    public void moveToUsefulUnblocked(List<Direction> usefulDirections, EntitiesControl entitiesControl) {
         for (Direction d : usefulDirections) {
             Position target = this.position.translateBy(d);
             if (!isThereUnpassable(target, entitiesControl)) {
                 this.move(d);
                 break;
             }
-        }
-        if (this.position.equals(player.getPosition())) {
-            interactWithPlayer(entitiesControl, Direction.NONE, player);
         }
     }
 
@@ -97,6 +96,9 @@ public class MercenaryEntity extends Entity implements IInteractingEntity, IMovi
             usefulDirections.add(Direction.UP);
         } else if (diff.getY() > 0) {
             usefulDirections.add(Direction.DOWN);
+        }
+        if (usefulDirections.isEmpty()) {
+            usefulDirections.add(Direction.NONE);
         }
         return usefulDirections;    
     }

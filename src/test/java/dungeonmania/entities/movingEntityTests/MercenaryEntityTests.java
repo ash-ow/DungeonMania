@@ -91,7 +91,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         entitiesControl.addEntities(mercenary);
         assertEquals(100, character.getHealth());
         assertEquals(100, mercenary.getHealth());
-        character.moveCharacter(Direction.RIGHT, entitiesControl);
+        character.move(Direction.RIGHT, entitiesControl);
         assertFalse(entitiesControl.contains(mercenary));         
     }
 
@@ -103,7 +103,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         entitiesControl.addEntities(mercenary);
         assertEquals(100, character.getHealth());
         assertEquals(100, mercenary.getHealth());
-        character.moveCharacter(Direction.RIGHT, entitiesControl);
+        character.move(Direction.RIGHT, entitiesControl);
         assertTrue(entitiesControl.contains(mercenary));     
         assertEquals(new Position(1, 0), character.getPosition());
         mercenary.move(entitiesControl, character);   

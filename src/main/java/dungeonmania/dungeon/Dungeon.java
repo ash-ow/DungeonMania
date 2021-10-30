@@ -71,14 +71,14 @@ public class Dungeon {
         for (IEntity entity : entitiesControl.getEntities()) {
             entitiesInfo.add(entity.getInfo());          
         }
-        if (player.getHealth() > 0) {
+        if (player.isAlive()) {
             entitiesInfo.add(player.getInfo());
         }        
         return new DungeonResponse(id, dungeonName, entitiesInfo, player.getInventoryInfo(), new ArrayList<>(), getGoals());
     }
 
     public void tick(Direction direction) {
-        player.moveCharacter(direction, entitiesControl);
+        player.move(direction, entitiesControl);
         entitiesControl.moveAllMovingEntities(direction, player);
         entitiesControl.tick();
         entitiesControl.generateEnemyEntities();

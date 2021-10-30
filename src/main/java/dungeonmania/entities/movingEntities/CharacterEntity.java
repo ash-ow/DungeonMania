@@ -80,7 +80,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 //endregion
 
-    public void moveCharacter(Direction direction, EntitiesControl entitiesControl) {
+    public void move(Direction direction, EntitiesControl entitiesControl) {
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
         List<IInteractingEntity> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);

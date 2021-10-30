@@ -123,7 +123,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         entities.moveAllMovingEntities(Direction.DOWN, player);
         assertEquals(spider.getPosition(), new Position(5, 5));
 
-        player.moveCharacter(Direction.LEFT, entities);
+        player.move(Direction.LEFT, entities);
         entities.moveAllMovingEntities(Direction.DOWN, player);
         assertEquals(spider.getPosition(), new Position(5, 4));
     }

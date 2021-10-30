@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.gson.JsonObject;
 
@@ -67,31 +68,25 @@ public class EntitiesControl {
         }
     }
 
+// region Filter
     public List<IMovingEntity> getAllMovingEntities() {
-        return entities.stream()
-            .filter(IMovingEntity.class::isInstance)
-            .map(IMovingEntity.class::cast)
-            .collect(Collectors.toList());
+        return EntitiesControl.getEntitiesOfType(this.entities, IMovingEntity.class).stream().map(IMovingEntity.class::cast).collect(Collectors.toList());
     }
 
     public List<IEntity> getAllEntitiesFromPosition(Position position) {
         return this.entities.stream().filter(entity -> entity != null && entity.getPosition().equals(position)).collect(Collectors.toList());
     }
 
-    public List<IEntity> entitiesOfType(String type) {
-        return this.entities.stream().filter(entity -> entity.getType().equals(type)).collect(Collectors.toList());
-    }
-
     public List<IInteractingEntity> entitiesInteractableInRange(List<IEntity> entityList) {
-        return entityList.stream().filter(entity -> entity instanceof IInteractingEntity).map(IInteractingEntity.class::cast).collect(Collectors.toList());
+        return entityList.stream().filter(IInteractingEntity.class::isInstance).map(IInteractingEntity.class::cast).collect(Collectors.toList());
     }
 
-    public static boolean containsUnpassableEntities(List<IEntity> entityList) {
-        return entityList.stream().anyMatch(entity -> !entity.isPassable());
+    public static List<?> getEntitiesOfType(List<IEntity> entityList, Class<?> cls) {
+        return entityList.stream().filter(cls::isInstance).collect(Collectors.toList());
     }
 
-    public static boolean interactingEntitiesUnpassable(List<IInteractingEntity> entityList) {
-        return entityList.stream().anyMatch(entity -> !entity.isPassable());
+    public static boolean containsBlockingEntities(List<IEntity> entityList) {
+        return entityList.stream().filter(IBlocker.class::isInstance).map(IBlocker.class::cast).anyMatch(IBlocker::isBlocking);
     }
 
     public static IEntity getFirstEntityOfType(List<IEntity> entityList, Class<?> cls) {
@@ -106,6 +101,7 @@ public class EntitiesControl {
         }
         return false;
     }
+// endregion
 
     public void createEntity(JsonObject entityObj) {
         String type = entityObj.get("type").getAsString();
@@ -191,10 +187,10 @@ public class EntitiesControl {
     }
 
     public List<IEntity> getAllEntitiesOfType(String type) {
-        return this.entitiesOfType(this.entities, type);
+        return this.getEntitiesOfType(this.entities, type);
     }
 
-    public List<IEntity> entitiesOfType(List<IEntity> entitiyList, String type) {
+    public List<IEntity> getEntitiesOfType(List<IEntity> entitiyList, String type) {
         // TODO refactor to accept Class<?> instead of string type
         List<IEntity> sameType = new ArrayList<>();
         for (IEntity entity : entitiyList) {

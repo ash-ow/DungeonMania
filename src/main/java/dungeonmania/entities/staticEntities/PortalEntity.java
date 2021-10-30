@@ -32,7 +32,7 @@ public class PortalEntity extends Entity implements IInteractingEntity{
 
     @Override
     public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
-        List<PortalEntity> portalsOnMap = entities.entitiesOfType("portal").stream().map(PortalEntity.class::cast).collect(Collectors.toList());
+        List<PortalEntity> portalsOnMap = entities.getAllEntitiesOfType("portal").stream().map(PortalEntity.class::cast).collect(Collectors.toList());
         PortalEntity portalPair = null;
         for (PortalEntity portal : portalsOnMap) {
             if (!portal.equals(this) && portal.getColour().equals(this.colour)) {

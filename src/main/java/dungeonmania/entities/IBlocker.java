@@ -1,5 +1,6 @@
 package dungeonmania.entities;
 
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.util.Direction;
 
@@ -15,24 +16,26 @@ public interface IBlocker {
      * @param ent
      * @param direction
      */
-    default void tryMove(IMovingEntity ent, Direction direction) {
-        if (this.tryUnblockIfNeeded(ent)) {
+    default void tryMove(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
+        if (this.tryUnblockIfNeeded(ent, entitiesControl)) {
             ent.move(direction);
         }
     }
-    
+
     /**
      * Sets isBlocking = false if successfully unblocks
      * @param ent 
      * @return true if IBlocker is already unblocked or if successfully unblocked
      */
-    default boolean tryUnblockIfNeeded(IMovingEntity ent) {
+    default boolean tryUnblockIfNeeded(IMovingEntity ent, EntitiesControl entitiesControl) {
+        boolean successfullyUnblocked = false;
         if (this.isBlocking()) {
-            if (this.unblockCore(ent)) {
+            if (this.unblockCore(ent, entitiesControl)) {
                 this.setIsBlocking(false);
+                successfullyUnblocked = true;
             }
         }
-        return this.isBlocking();
+        return successfullyUnblocked;
     }
 
     /**
@@ -40,5 +43,5 @@ public interface IBlocker {
      * @param ent
      * @return true if successfully unblocked
      */
-    public boolean unblockCore(IMovingEntity ent);
+    public boolean unblockCore(IMovingEntity ent, EntitiesControl entitiesControl);
 }

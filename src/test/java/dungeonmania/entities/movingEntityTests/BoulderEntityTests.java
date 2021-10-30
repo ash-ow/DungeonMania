@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.goals.IGoalTests;
+import dungeonmania.entities.IBlockerTest;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.movingEntities.BoulderEntity;
@@ -19,7 +20,7 @@ import dungeonmania.util.Position;
 import dungeonmania.entities.staticEntities.SwitchEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 
-public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoalTests {
+public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoalTests, IBlockerTest {
     @Override
     @Test
     public void TestEntityResponseInfo() {
@@ -101,6 +102,7 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoa
     @Override
     @Test
     public void SimpleGoalTest() {
+        // TODO there is no goal test here
         CharacterEntity player = new CharacterEntity(0, 0, 0);
         BoulderEntity boulder = new BoulderEntity(0, 1, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
@@ -111,5 +113,44 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoa
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 1, 0), player.getPosition());
         assertEquals(new Position(0, 2, 0), boulder.getPosition());
+    }
+
+    @Test
+    @Override
+    public void TestBlock() {
+        Dungeon dungeon = getDungeonWithTestData();
+        CharacterEntity player = dungeon.getPlayer();
+        BoulderEntity boulder = (BoulderEntity) dungeon.entitiesControl.getEntityById("boulder-0-1-0");
+        assertEquals(new Position(0, 0, 0), player.getPosition());
+        assertEquals(new Position(0, 1, 0), boulder.getPosition());
+
+        player.move(Direction.DOWN);
+        assertEquals(new Position(0, 0, 0), player.getPosition(), "Player should still be blocked");
+        assertEquals(new Position(0, 1, 0), boulder.getPosition(), "Boulder should not have moved");
+    }
+
+    @Override
+    @Test
+    public void TestUnblock() {
+        CharacterEntity player = new CharacterEntity(0, 0, 0);
+        BoulderEntity boulder = new BoulderEntity(0, 1, 0);
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(boulder);
+        String jsonGoals = "{ \"goal\": \"exit\"}";
+        JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player, j);
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 1, 0), player.getPosition());
+        assertEquals(new Position(0, 2, 0), boulder.getPosition());
+    }
+
+    private Dungeon getDungeonWithTestData() {
+        CharacterEntity player = new CharacterEntity(0, 0, 0);
+        BoulderEntity boulder = new BoulderEntity(0, 1, 0);
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(boulder);
+        String jsonGoals = "{ \"goal\": \"exit\"}";
+        JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
+        return new Dungeon(entities, "Standard", player, j);
     }
 }

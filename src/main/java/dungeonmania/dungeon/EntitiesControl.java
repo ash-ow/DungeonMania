@@ -21,7 +21,6 @@ import dungeonmania.entities.staticEntities.*;
 public class EntitiesControl {
     private List<IEntity> entities;
     private Random rand = new Random();
-    private Integer entityCounter = 0;
     private Integer tickCounter = 0;
 
     public EntitiesControl() {
@@ -30,7 +29,6 @@ public class EntitiesControl {
 
     public void addEntities(IEntity entity) {
         entities.add(entity);
-        entity.setId(entity.getId() + "-" + Integer.toString(entityCounter));
     }
 
     public void removeEntity(IEntity entity) {

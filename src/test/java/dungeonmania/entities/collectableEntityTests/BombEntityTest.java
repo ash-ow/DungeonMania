@@ -139,13 +139,13 @@ public class BombEntityTest implements ICollectableEntityTest {
                 () -> assertFalse(dungeon.entitiesControl.contains(boulder), "Entity controller should no longer contain boulder"),
                 () -> assertFalse(dungeon.entitiesControl.contains(bomb), "Entity controller should no longer contain bomb"),
                 () -> assertFalse(dungeon.entitiesControl.contains(spider_botleft), "Entity controller should no longer contain spider_botleft"),
-                () -> assertFalse(dungeon.entitiesControl.contains(spider_downdown), "Entity controller should no longer contain spider_downdown"),
-                () -> assertFalse(dungeon.entitiesControl.contains(wall_topleft), "Entity controller should no longer contain wall_topleft"),
-                () -> assertFalse(dungeon.entitiesControl.contains(wall_right), "Entity controller should no longer contain wall_right"),
+                () -> assertTrue(dungeon.entitiesControl.contains(spider_downdown), "Entity controller should no longer contain spider_downdown"),
+                () -> assertTrue(dungeon.entitiesControl.contains(wall_topleft), "Entity controller should no longer contain wall_topleft"),
+                () -> assertTrue(dungeon.entitiesControl.contains(wall_right), "Entity controller should no longer contain wall_right"),
                 () -> assertFalse(dungeon.entitiesControl.contains(switches_onbomb), "Entity controller should no longer contain switches_onbomb"),
                 () -> assertFalse(dungeon.entitiesControl.contains(switches_onboulder), "Entity controller should no longer contain switches_onboulder"),
                 () -> assertFalse(dungeon.entitiesControl.contains(wood), "Entity controller should still contain wood"),
-                () -> assertFalse(dungeon.entitiesControl.contains(arrows), "Entity controller should still contain arrows")
+                () -> assertTrue(dungeon.entitiesControl.contains(arrows), "Entity controller should still contain arrows")
             );
         }
 

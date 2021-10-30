@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 
 import dungeonmania.dungeon.goals.Goals;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.*;
@@ -93,7 +94,13 @@ public class Dungeon {
     public void interact(String entityID) throws IllegalArgumentException, InvalidActionException{
         IEntity interacting = this.entitiesControl.getEntityById(entityID);
         if (interacting == null) {
-            throw new IllegalArgumentException("Entity is Invalid");
+            throw new IllegalArgumentException("Entity doesnt exist");
+        }
+        if (!(interacting instanceof IInteractingEntity)) {
+            throw new IllegalArgumentException("Entity is not interactable");
+        } else {
+            IInteractingEntity interactor = (IInteractingEntity) interacting;
+            interactor.interactWith(player);
         }
     }
 

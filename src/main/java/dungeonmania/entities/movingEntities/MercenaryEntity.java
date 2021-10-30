@@ -6,6 +6,7 @@ import java.util.List;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IContactingEntity;
+import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.util.Direction;
@@ -113,7 +114,20 @@ public class MercenaryEntity extends Entity implements IContactingEntity, IBattl
 
     @Override
     public void interactWith(CharacterEntity player) throws InvalidActionException {
+        List<IEntity> treasureInventory = player.getInventory().entitiesOfType("treasure");
+        if (treasureInventory.isEmpty()) {
+            throw new InvalidActionException("Player has no treasure");
+        }
+        if (!isInRange(player)) {
+            throw new InvalidActionException("Player is too far away");
+        }
+        player.removeEntityFromInventory(treasureInventory.get(0));
         this.isBribed = true;       
     }
-    
+
+    public boolean isInRange(CharacterEntity player) {
+        Position diff = Position.calculatePositionBetween(this.getPosition(), player.getPosition());
+        int sum = Math.abs(diff.getX()) + Math.abs(diff.getY());
+        return sum <= 2;
+    }
 }

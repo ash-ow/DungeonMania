@@ -1,6 +1,7 @@
 package dungeonmania.dungeon.interact;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -34,7 +35,7 @@ public class InteractTestException {
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spider);        
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
-        assertThrows(InvalidActionException.class, () -> {dungeon.interact(spider.getId());});
+        assertThrows(IllegalArgumentException.class, () -> {dungeon.interact(spider.getId());});
     }
 
     @Test
@@ -62,11 +63,13 @@ public class InteractTestException {
     public void successfulBribe() {
         CharacterEntity player = new CharacterEntity(0, 5, 0);
         MercenaryEntity mercenary = new MercenaryEntity(0, 4, 0);
+        TreasureEntity treasure = new TreasureEntity();
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(mercenary);        
-        player.addEntityToInventory(new TreasureEntity()); 
+        player.addEntityToInventory(treasure); 
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         assertDoesNotThrow(() -> {dungeon.interact(mercenary.getId());});
         assertTrue(mercenary.isBribed());
+        assertFalse(player.getInventory().contains(treasure));
     }
 }

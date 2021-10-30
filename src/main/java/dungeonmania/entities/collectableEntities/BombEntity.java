@@ -44,12 +44,16 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker, I
     @Override
     public void tick(EntitiesControl entitiesControl) {
         if (this.isArmed) {
-            List<IEntity> adjacentEntities = entitiesControl.getAllAdjacentEntities(this.getPosition());
-            adjacentEntities.addAll(entitiesControl.getAllEntitiesFromPosition(this.getPosition()));
-            if (isAdjacentSwitchActive(entitiesControl, adjacentEntities)) {
-                for (IEntity entity : adjacentEntities) {
-                    explodeNonCharacterEntity(entity, entitiesControl);
-                }
+            explode(entitiesControl);
+        }
+    }
+
+    private void explode(EntitiesControl entitiesControl) {
+        List<IEntity> adjacentEntities = entitiesControl.getAllAdjacentEntities(this.getPosition());
+        adjacentEntities.addAll(entitiesControl.getAllEntitiesFromPosition(this.getPosition()));
+        if (isAdjacentSwitchActive(entitiesControl, adjacentEntities)) {
+            for (IEntity entity : adjacentEntities) {
+                explodeNonCharacterEntity(entity, entitiesControl);
             }
         }
     }
@@ -81,7 +85,7 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker, I
 
     @Override
     public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
-        // TODO Auto-generated method stub
+        // Bombs cannot be unblocked once placed
         return false;
     }
 // endregion

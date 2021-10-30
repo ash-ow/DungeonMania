@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.google.gson.JsonObject;
 
@@ -65,27 +64,20 @@ public class EntitiesControl {
     }
 
 // region Filter
-    public List<IMovingEntity> getAllMovingEntities() {
-        return EntitiesControl.getEntitiesOfType(this.entities, IMovingEntity.class).stream().map(IMovingEntity.class::cast).collect(Collectors.toList());
-    }
-
     public List<IAutoMovingEntity> getAllAutoMovingEntities() {
-        return entities.stream()
-            .filter(IAutoMovingEntity.class::isInstance)
-            .map(IAutoMovingEntity.class::cast)
-            .collect(Collectors.toList());
+        return EntitiesControl.getEntitiesOfType(this.entities, IAutoMovingEntity.class);
     }
 
-    public List<IEntity> getAllEntitiesFromPosition(Position position) {
-        return this.entities.stream().filter(entity -> entity != null && entity.getPosition().equals(position)).collect(Collectors.toList());
-    }
-
-    public List<IInteractingEntity> entitiesInteractableInRange(List<IEntity> entityList) {
-        return entityList.stream().filter(IInteractingEntity.class::isInstance).map(IInteractingEntity.class::cast).collect(Collectors.toList());
+    public List<IInteractingEntity> getInteractableEntitiesFrom(List<IEntity> entityList) {
+        return EntitiesControl.getEntitiesOfType(entityList, IInteractingEntity.class);
     }
 
     public static <T> List<T> getEntitiesOfType(List<IEntity> entityList, Class<T> cls) {
         return entityList.stream().filter(cls::isInstance).map(cls::cast).collect(Collectors.toList());
+    }
+
+    public List<IEntity> getAllEntitiesFromPosition(Position position) {
+        return this.entities.stream().filter(entity -> entity != null && entity.getPosition().equals(position)).collect(Collectors.toList());
     }
 
     public static boolean containsBlockingEntities(List<IEntity> entityList) {

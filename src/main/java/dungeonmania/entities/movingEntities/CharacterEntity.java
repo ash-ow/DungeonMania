@@ -87,31 +87,27 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public void move(Direction direction, EntitiesControl entitiesControl) {
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
-        if ( !EntitiesControl.containsBlockingEntities(targetEntities) ) {
+        if ( !EntitiesControl.containsBlockingEntities(targetEntities) || canUnblock(targetEntities, direction, entitiesControl) ) {
             this.move(direction);
-        } else {
-            tryUnblockAndMove(targetEntities, direction, entitiesControl);
+            interactWithAll(targetEntities, entitiesControl);
         }
-        interactWithAll(targetEntities, entitiesControl);
     }
 
     private void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
-        List<IInteractingEntity> targetInteractable = entitiesControl.entitiesInteractableInRange(targetEntities);
+        List<IInteractingEntity> targetInteractable = entitiesControl.getInteractableEntitiesFrom(targetEntities);
         for (IInteractingEntity entity : targetInteractable) {
             entity.interactWithPlayer(entitiesControl, this);
         }
     }
 
-    private void tryUnblockAndMove(List<IEntity> targetEntities, Direction direction, EntitiesControl entitiesControl) {
+    private boolean canUnblock(List<IEntity> targetEntities, Direction direction, EntitiesControl entitiesControl) {
         List<IBlocker> targetBlockers = EntitiesControl.getEntitiesOfType(targetEntities, IBlocker.class);
         boolean targetIsUnblocked = true;
         for (IBlocker blocker : targetBlockers) {
             // TODO fix bug where player interacts with many things stacked on top of each other and keeps moving
             targetIsUnblocked = blocker.tryUnblock(this, direction, entitiesControl);
         }
-        if ( targetIsUnblocked ) {
-            this.move(direction);
-        }
+        return targetIsUnblocked;
     }
 
     boolean targetLocationIsEmpty(List<IEntity> targetEntities) {

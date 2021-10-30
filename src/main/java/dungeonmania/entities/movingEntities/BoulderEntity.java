@@ -29,7 +29,7 @@ public class BoulderEntity extends Entity implements IBlocker {
         Position target = this.getPosition().translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
         if ( !EntitiesControl.containsBlockingEntities(targetEntities) ) {
-            position = position.translateBy(direction).asLayer(targetEntities.size());
+            this.position = position.translateBy(direction).asLayer(targetEntities.size());
             return true;
         }
         return false;

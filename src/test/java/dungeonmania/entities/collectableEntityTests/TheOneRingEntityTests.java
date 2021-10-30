@@ -55,6 +55,7 @@ public class TheOneRingEntityTests implements ICollectableEntityTest {
         assertEquals(100, player.getHealth());
     }
 
+    /*
     @Test
     public void TestRandomDrop() {
         TheOneRingEntity one_ring = new TheOneRingEntity();
@@ -74,6 +75,7 @@ public class TheOneRingEntityTests implements ICollectableEntityTest {
         //assertEquals(spider.getDropRing(),true);
         assertEntityIsCollected(one_ring);
     }
+    */
     
     @Test
     public void TestUseOnlyDead() {

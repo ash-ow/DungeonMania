@@ -17,7 +17,7 @@ public class PortalEntityTest implements IEntityTests, IInteractingEntityTest{
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        PortalEntity portal = new PortalEntity();
+        PortalEntity portal = new PortalEntity("BLUE");
         assertEntityResponseInfoEquals(
             portal,
             "portal-0-0-0",

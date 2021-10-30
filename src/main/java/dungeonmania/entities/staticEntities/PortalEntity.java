@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Position;
@@ -12,12 +13,12 @@ import dungeonmania.util.Position;
 public class PortalEntity extends Entity implements IInteractingEntity{
     String colour;
     PortalEntity portalPair;
-    public PortalEntity() {
-        this(0, 0, 0, "BLUE");
+    public PortalEntity(String colour) {
+        this(0, 0, 0, colour);
     }
     
     public PortalEntity(int x, int y, int layer, String colour) {
-        super(x, y, layer, "portal");
+        super(x, y, layer, EntityTypes.PORTAL);
         this.colour = colour;
     }
 

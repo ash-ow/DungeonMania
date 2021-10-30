@@ -84,8 +84,8 @@ public class EntitiesControl {
         return entityList.stream().filter(IInteractingEntity.class::isInstance).map(IInteractingEntity.class::cast).collect(Collectors.toList());
     }
 
-    public static List<?> getEntitiesOfType(List<IEntity> entityList, Class<?> cls) {
-        return entityList.stream().filter(cls::isInstance).collect(Collectors.toList());
+    public static <T> List<T> getEntitiesOfType(List<IEntity> entityList, Class<T> cls) {
+        return entityList.stream().filter(cls::isInstance).map(cls::cast).collect(Collectors.toList());
     }
 
     public static boolean containsBlockingEntities(List<IEntity> entityList) {

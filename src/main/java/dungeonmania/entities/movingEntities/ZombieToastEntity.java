@@ -52,18 +52,6 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IBa
     }
 
 // region Moving
-    private Direction lastMovedDirection;
-
-    @Override
-    public void setLastMovedDirection(Direction direction) {
-        this.lastMovedDirection = direction;
-    }
-
-    @Override
-    public Direction getLastMovedDirection() {
-        return this.lastMovedDirection;
-    }
-    
     @Override
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {
         // TODO Auto-generated method stub

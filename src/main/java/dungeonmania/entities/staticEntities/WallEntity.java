@@ -4,6 +4,7 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.movingEntities.IMovingEntity;
+import dungeonmania.util.Direction;
 
 public class WallEntity extends Entity implements IBlocker {
     public WallEntity() {
@@ -25,7 +26,8 @@ public class WallEntity extends Entity implements IBlocker {
     }
 
     @Override
-    public boolean unblockCore(IMovingEntity ent, EntitiesControl entitiesControl) {
+    public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
+        // Walls are always blocking
         return false;
     }
 }

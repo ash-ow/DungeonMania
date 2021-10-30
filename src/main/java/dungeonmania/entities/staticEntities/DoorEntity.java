@@ -12,6 +12,7 @@ import dungeonmania.entities.ITicker;
 import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
+import dungeonmania.util.Direction;
 
 public class DoorEntity extends Entity implements ITicker, IBlocker {
     private int keyNumber;
@@ -67,11 +68,10 @@ public class DoorEntity extends Entity implements ITicker, IBlocker {
     @Override
     public void setIsBlocking(boolean isBlocking) {
         // TODO Auto-generated method stub
-        
     }
 
     @Override
-    public boolean unblockCore(IMovingEntity ent, EntitiesControl entitiesControl) {
+    public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
         // TODO Auto-generated method stub
         return false;
     }

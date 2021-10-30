@@ -10,6 +10,7 @@ import dungeonmania.entities.ITicker;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.staticEntities.SwitchEntity;
+import dungeonmania.util.Direction;
 
 public class BombEntity extends Entity implements ICollectableEntity, ITicker, IBlocker {
     boolean isArmed = false;
@@ -79,7 +80,7 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker, I
     }
 
     @Override
-    public boolean unblockCore(IMovingEntity ent, EntitiesControl entitiesControl) {
+    public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
         // TODO Auto-generated method stub
         return false;
     }

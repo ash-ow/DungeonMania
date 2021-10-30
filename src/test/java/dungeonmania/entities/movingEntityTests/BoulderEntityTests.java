@@ -1,6 +1,7 @@
 package dungeonmania.entities.movingEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
@@ -79,9 +80,9 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoa
         entities.add(switches);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         dungeon.tick(Direction.DOWN);
-        assertEquals(player.getPosition(), new Position(0, 1));
-        assertEquals(boulder.getPosition(), new Position(0, 2));
-        assertEquals(boulder.getPosition().getLayer(), 0);
+        assertEquals(new Position(0, 1), player.getPosition(), "Player should move boulder");
+        assertEquals(new Position(0, 2), boulder.getPosition(), "Player should move boulder");
+        assertEquals(0, boulder.getPosition().getLayer());
     }
 
     @Test
@@ -96,7 +97,8 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoa
         dungeon.tick(Direction.DOWN);
         assertEquals(player.getPosition(), new Position(0, 1));
         assertEquals(boulder.getPosition(), new Position(0, 2));
-        assertEquals(boulder.getPosition().getLayer(), 1);
+        assertEquals(1, boulder.getPosition().getLayer());
+        assertTrue(switches.isActive());
     }
 
     @Override

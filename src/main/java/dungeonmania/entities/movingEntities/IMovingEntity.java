@@ -1,14 +1,11 @@
 package dungeonmania.entities.movingEntities;
 
-import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public interface IMovingEntity extends IEntity {
     void setPosition(Position position);
-    void setLastMovedDirection(Direction direction);
-    Direction getLastMovedDirection();
 
     /**
      * Moves the entity by the direction offset (e.g. Direction.UP)
@@ -19,6 +16,5 @@ public interface IMovingEntity extends IEntity {
         this.setPosition(
             this.getPosition().translateBy(direction)
         );
-        this.setLastMovedDirection(direction);
     }
 }

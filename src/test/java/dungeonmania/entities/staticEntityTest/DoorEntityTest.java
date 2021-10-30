@@ -1,13 +1,9 @@
 package dungeonmania.entities.staticEntityTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -17,8 +13,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
-import dungeonmania.dungeon.EntitiesControl;
-import dungeonmania.entities.IEntity;
+import dungeonmania.entities.IBlockerTest;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -111,5 +106,17 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         JsonArray entitiesJson = new Gson().fromJson(entities, JsonObject.class).get("entities").getAsJsonArray();
         JsonObject goalsJson = new Gson().fromJson(goals, JsonObject.class).get("goal-condition").getAsJsonObject();
         return new Dungeon(entitiesJson, goalsJson, "", "", "");
+    }
+
+    @Override
+    public void TestBlock() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void TestUnblock() {
+        // TODO Auto-generated method stub
+        
     }
 }

@@ -11,7 +11,7 @@ import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class BoulderEntity extends Entity implements IInteractingEntity, IBlocker {
+public class BoulderEntity extends Entity implements IBlocker {
     public BoulderEntity() {
         this(0, 0, 0);
     }
@@ -26,10 +26,10 @@ public class BoulderEntity extends Entity implements IInteractingEntity, IBlocke
     }
 
     @Override
-    public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
+    public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
         Position target = this.getPosition().translateBy(direction);
-        List<IEntity> targetEntities = entities.getAllEntitiesFromPosition(target);
-        if ((targetEntities.isEmpty()) || !EntitiesControl.containsBlockingEntities(targetEntities)) {
+        List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
+        if ( !EntitiesControl.containsBlockingEntities(targetEntities) ) {
             position = position.translateBy(direction).asLayer(targetEntities.size());
             return true;
         }
@@ -43,13 +43,6 @@ public class BoulderEntity extends Entity implements IInteractingEntity, IBlocke
 
     @Override
     public void setIsBlocking(boolean isBlocking) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public boolean unblockCore(IMovingEntity ent, EntitiesControl entitiesControl) {
-        // TODO Auto-generated method stub
-        return false;
+        // The boulder entity is always blocking
     }
 }

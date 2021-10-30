@@ -31,17 +31,6 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IBattlin
     }
 
     // region Moving
-    private Direction lastMovedDirection;
-    
-    @Override
-    public void setLastMovedDirection(Direction direction) {
-        this.lastMovedDirection = direction;
-    }
-    
-    @Override
-    public Direction getLastMovedDirection() {
-        return this.lastMovedDirection;
-    }
 
     @Override
     public void move(EntitiesControl entities, CharacterEntity player) {

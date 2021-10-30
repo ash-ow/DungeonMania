@@ -1,5 +1,7 @@
 package dungeonmania.entities;
 
+import java.util.UUID;
+
 import dungeonmania.response.models.*;
 import dungeonmania.util.Position;
 
@@ -11,7 +13,7 @@ public abstract class Entity implements IEntity {
     protected Entity(int x, int y, int layer, String type) {
         this.type = type;
         this.position = new Position(x, y, layer);
-        this.id = type + "-" + x + "-" + y + "-" + layer;
+        this.id = UUID.randomUUID().toString();
     }
 
     public EntityResponse getInfo() {
@@ -40,6 +42,11 @@ public abstract class Entity implements IEntity {
 
     public boolean isPassable() {
         return true;
+    }
+
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

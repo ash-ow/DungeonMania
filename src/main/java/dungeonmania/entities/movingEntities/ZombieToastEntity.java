@@ -19,16 +19,16 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IMo
     }
     
     public ZombieToastEntity(int x, int y, int layer) {
-        super(x, y, layer, "zombieToast");
+        super(x, y, layer, "zombie_toast");
     }
 
     public ZombieToastEntity(int x, int y, int layer, int seed) {
-        super(x, y, layer, "zombieToast");
+        this(x, y, layer);
         rand = new Random(seed);
     }
 
     @Override
-    public void move(Direction direction, EntitiesControl entitiesControl) {
+    public void move(Direction direction, EntitiesControl entitiesControl, CharacterEntity player) {
         direction = getRandomDirection();
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);

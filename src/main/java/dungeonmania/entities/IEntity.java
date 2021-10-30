@@ -11,4 +11,5 @@ public interface IEntity {
     public void setPosition(Position position);
     public boolean isPassable();
 	public boolean isInSamePositionAs(IEntity ent);
+    public void setId(String string);
 }

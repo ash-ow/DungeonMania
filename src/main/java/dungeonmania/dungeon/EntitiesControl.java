@@ -21,6 +21,8 @@ import dungeonmania.entities.staticEntities.*;
 public class EntitiesControl {
     private List<IEntity> entities;
     private Random rand = new Random();
+    private Integer entityCounter = 0;
+    private Integer tickCounter = 0;
 
     public EntitiesControl() {
         entities = new ArrayList<IEntity>();
@@ -28,6 +30,7 @@ public class EntitiesControl {
 
     public void addEntities(IEntity entity) {
         entities.add(entity);
+        entity.setId(entity.getId() + "-" + Integer.toString(entityCounter));
     }
 
     public void removeEntity(IEntity entity) {
@@ -215,6 +218,7 @@ public class EntitiesControl {
     public void generateEnemyEntities() {
         generateSpider();
         generateZombieToast();
+        tickCounter++;
     }
 
     private void generateSpider() {
@@ -233,13 +237,15 @@ public class EntitiesControl {
     }
 
     private void generateZombieToast() {
-        List<IEntity> spawnerEntities = getAllEntitiesOfType("spawner_toast_spawner");
-        spawnerEntities.stream().forEach(spawner -> {
-            this.createEntity(spawner.getPosition().getX(), 
-            spawner.getPosition().getX(), 
-            "spawner_toast_spawner");
-            System.out.println(spawner.getId());
-        });
+        if (tickCounter % 10 == 0) {
+            List<IEntity> spawnerEntities = entitiesOfType("zombie_toast_spawner");
+            spawnerEntities.stream().forEach(spawner -> {
+                this.createEntity(spawner.getPosition().getX(), 
+                spawner.getPosition().getX(), 
+                "zombie_toast");
+                System.out.println(spawner.getId());
+            });
+        }
     }
 
     public boolean getRandomBoolean(float p){

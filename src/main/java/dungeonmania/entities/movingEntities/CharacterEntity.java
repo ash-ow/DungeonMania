@@ -16,13 +16,17 @@ import dungeonmania.util.Position;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
     private EntitiesControl inventory = new EntitiesControl();
-    
+    private PlayerState playerState;
+    private int duration;
+
     public CharacterEntity() {
         this(0, 0, 0);
     }
     
     public CharacterEntity(int x, int y, int layer) {
         super(x, y, layer, "player");
+        this.playerState = PlayerState.NONE;
+        this.duration = 0;
     }
 
     public EntityResponse getInfo() {
@@ -81,8 +85,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 //endregion
 
 //Player State region 
-    private PlayerState playerState;
-    this.playerState = PlayerState.NONE;
 
 	public PlayerState getPlayerState() {
 		return playerState;
@@ -133,6 +135,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         }
         return true;
     }
+
 
     boolean targetLocationIsEmpty(List<IEntity> targetEntities) {
         return targetEntities.size() == 0;

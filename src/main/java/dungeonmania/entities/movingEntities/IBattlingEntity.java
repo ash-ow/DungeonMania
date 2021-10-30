@@ -12,6 +12,7 @@ public interface IBattlingEntity extends IEntity {
     public void loseHealth(float enemyHealth, int enemyDamage);
 
     public default void Battle(EntitiesControl entitiesControl, CharacterEntity player) {
+
         while (player.isAlive() && !checkEnemyDeath(entitiesControl)) {
             doBattle(player);
         }

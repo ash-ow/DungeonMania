@@ -22,6 +22,7 @@ public class EntitiesControl {
     private List<IEntity> entities;
     private Random rand = new Random();
     private Integer tickCounter = 0;
+    private Integer entityCounter = 0;
 
     public EntitiesControl() {
         entities = new ArrayList<IEntity>();
@@ -29,6 +30,8 @@ public class EntitiesControl {
 
     public void addEntities(IEntity entity) {
         entities.add(entity);
+        entity.setId(Integer.toString(entityCounter));
+        entityCounter++;
     }
 
     public void removeEntity(IEntity entity) {
@@ -241,7 +244,6 @@ public class EntitiesControl {
                 this.createEntity(spawner.getPosition().getX(), 
                 spawner.getPosition().getX(), 
                 "zombie_toast");
-                System.out.println(spawner.getId());
             });
         }
     }

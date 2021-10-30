@@ -54,6 +54,11 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should NOT be able to move into the second door as they lack key #1");
+
+        
+        dungeon.tick(Direction.UP);
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to move in and out of locked door");
     }
 
     @Test

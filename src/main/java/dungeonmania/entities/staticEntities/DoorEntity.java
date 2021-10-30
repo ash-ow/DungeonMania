@@ -44,8 +44,10 @@ public class DoorEntity extends Entity implements IBlocker {
     }
 
     private void unlockWith(KeyEntity key, CharacterEntity player) {
-        key.used(player);
-        this.isLocked = false;
+        if (key != null) {
+            key.used(player);
+            this.isLocked = false;
+        }
     }
 
     @Override

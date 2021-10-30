@@ -57,7 +57,8 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoa
     }
 
     @Test
-    public void TestBoulderBlockedByWall() {
+    @Override
+    public void TestBlock() {
         CharacterEntity player = new CharacterEntity(0, 0, 0);
         BoulderEntity boulder = new BoulderEntity(0, 1, 0);
         WallEntity wall = new WallEntity(0, 2, 0);
@@ -115,20 +116,6 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoa
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 1, 0), player.getPosition());
         assertEquals(new Position(0, 2, 0), boulder.getPosition());
-    }
-
-    @Test
-    @Override
-    public void TestBlock() {
-        Dungeon dungeon = getDungeonWithTestData();
-        CharacterEntity player = dungeon.getPlayer();
-        BoulderEntity boulder = (BoulderEntity) dungeon.entitiesControl.getEntityById("boulder-0-1-0");
-        assertEquals(new Position(0, 0, 0), player.getPosition());
-        assertEquals(new Position(0, 1, 0), boulder.getPosition());
-
-        player.move(Direction.DOWN);
-        assertEquals(new Position(0, 0, 0), player.getPosition(), "Player should still be blocked");
-        assertEquals(new Position(0, 1, 0), boulder.getPosition(), "Boulder should not have moved");
     }
 
     @Override

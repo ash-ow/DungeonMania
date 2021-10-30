@@ -16,12 +16,11 @@ public interface IBlocker {
      * @param ent
      * @param direction
      */
-    default boolean tryMove(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
-        if (this.tryUnblockIfNeeded(ent, direction, entitiesControl)) {
-            ent.move(direction);
-            return true;
+    default boolean tryUnblock(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
+        if (this.isBlocking()) {
+            return this.tryUnblockIfNeeded(ent, direction, entitiesControl);
         }
-        return false;
+        return true;
     }
 
     /**
@@ -30,14 +29,11 @@ public interface IBlocker {
      * @return true if IBlocker is already unblocked or if successfully unblocked
      */
     default boolean tryUnblockIfNeeded(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
-        boolean successfullyUnblocked = false;
-        if (this.isBlocking()) {
-            if (this.unblockCore(ent, direction, entitiesControl)) {
-                this.setIsBlocking(false);
-                successfullyUnblocked = true;
-            }
+        if (this.unblockCore(ent, direction, entitiesControl)) {
+            this.setIsBlocking(false);
+            return true;
         }
-        return successfullyUnblocked;
+        return false;
     }
 
     /**

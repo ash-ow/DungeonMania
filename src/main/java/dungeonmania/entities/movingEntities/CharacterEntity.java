@@ -99,7 +99,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         boolean targetIsUnblocked = true;
         for (IBlocker blocker : targetBlockers) {
             // TODO fix bug where player interacts with many things stacked on top of each other and keeps moving
-            targetIsUnblocked = blocker.tryMove(this, direction, entitiesControl);
+            targetIsUnblocked = blocker.tryUnblock(this, direction, entitiesControl);
         }
         if ( targetIsUnblocked ) {
             this.move(direction);

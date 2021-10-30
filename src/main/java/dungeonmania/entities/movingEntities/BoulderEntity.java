@@ -6,7 +6,6 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;

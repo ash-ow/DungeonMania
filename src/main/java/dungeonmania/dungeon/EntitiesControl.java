@@ -21,6 +21,7 @@ import dungeonmania.entities.staticEntities.*;
 public class EntitiesControl {
     private List<IEntity> entities;
     private Random rand = new Random();
+    private Integer tickCounter = 0;
 
     public EntitiesControl() {
         entities = new ArrayList<IEntity>();
@@ -110,61 +111,9 @@ public class EntitiesControl {
         Integer xAxis = entityObj.get("x").getAsInt();
         Integer yAxis = entityObj.get("y").getAsInt();
         Integer layer = getAllEntitiesFromPosition(new Position(xAxis, yAxis)).size();
-        switch (type) {
-            case "wall":
-                this.addEntities(new WallEntity(xAxis, yAxis, layer));
-                break;
-            case "exit":
-                this.addEntities(new ExitEntity(xAxis, yAxis, layer));
-                break;
-            case "door":
-                this.addEntities(new DoorEntity(xAxis, yAxis, layer));
-                break;
-            case "portal":
-                this.addEntities(new PortalEntity(xAxis, yAxis, layer, entityObj.get("colour").getAsString()));
-                break;
-            case "switch":
-                this.addEntities(new SwitchEntity(xAxis, yAxis, layer));
-                break;
-            case "boulder":
-                this.addEntities(new BoulderEntity(xAxis, yAxis, layer));
-                break;
-            case "wood":
-                this.addEntities(new WoodEntity(xAxis, yAxis, layer));
-                break;
-            case "arrow":
-                this.addEntities(new ArrowsEntity(xAxis, yAxis, layer));
-                break;
-            case "bomb":
-                this.addEntities(new BombEntity(xAxis, yAxis, layer));
-                break;
-            case "sword":
-                this.addEntities(new SwordEntity(xAxis, yAxis, layer));
-                break;
-            case "armour":
-                this.addEntities(new ArmourEntity(xAxis, yAxis, layer));
-                break;
-            case "treasure":
-                this.addEntities(new TreasureEntity(xAxis, yAxis, layer));
-                break;
-            case "key":
-                this.addEntities(new KeyEntity(xAxis, yAxis, layer));
-                break;
-            case "health_potion":
-                this.addEntities(new HealthPotionEntity(xAxis, yAxis, layer));
-                break;
-            case "invisibility_potion":
-                this.addEntities(new InvisibilityPotionEntity(xAxis, yAxis, layer));
-                break;
-            case "invincibility_potion":
-                this.addEntities(new InvincibilityPotionEntity(xAxis, yAxis, layer));
-                break;
-            case "mercenary":
-                this.addEntities(new MercenaryEntity(xAxis, yAxis, layer));
-                break;
-        }
+        createEntity(xAxis, yAxis, layer, type);
     }
-
+   
     public void createEntity(Integer xAxis, Integer yAxis, Integer layer, String type) {
         switch (type) {
             case "wall":
@@ -218,6 +167,12 @@ public class EntitiesControl {
             case "invincibility_potion":
                 this.addEntities(new InvincibilityPotionEntity(xAxis, yAxis, layer));
                 break;
+            case "zombie_toast":
+                this.addEntities(new ZombieToastEntity(xAxis, yAxis, layer));
+                break;
+            case "zombie_toast_spawner":
+                this.addEntities(new ZombieToastSpawnerEntity(xAxis, yAxis, layer));
+                break;
         }
     }
 
@@ -260,6 +215,8 @@ public class EntitiesControl {
 
     public void generateEnemyEntities() {
         generateSpider();
+        generateZombieToast();
+        tickCounter++;
     }
 
     private void generateSpider() {
@@ -274,6 +231,18 @@ public class EntitiesControl {
                 && !this.positionContainsEntityType(new Position(randomX, randomY), BoulderEntity.class)) {
                 this.createEntity(randomX, randomY, "spider");
             }
+        }
+    }
+
+    private void generateZombieToast() {
+        if (tickCounter % 10 == 0) {
+            List<IEntity> spawnerEntities = entitiesOfType("zombie_toast_spawner");
+            spawnerEntities.stream().forEach(spawner -> {
+                this.createEntity(spawner.getPosition().getX(), 
+                spawner.getPosition().getX(), 
+                "zombie_toast");
+                System.out.println(spawner.getId());
+            });
         }
     }
 

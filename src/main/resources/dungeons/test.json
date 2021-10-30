@@ -1,7 +1,7 @@
 
 {
-    "width": 8,
-    "height": 9,
+    "width": 20,
+    "height": 20,
     "entities": [
       {
         "x": 1,
@@ -32,6 +32,11 @@
         "x": 1,
         "y": 3,
         "type": "portal"
+      },
+      {
+        "x": 7,
+        "y": 7,
+        "type": "zombie_toast_spawner"
       }
     ],
     "goal-condition": {

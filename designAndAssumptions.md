@@ -8,6 +8,7 @@ We relied heavily on interfaces with strategy patterns to define the functionali
 | IBlocker  | Blocks movement across it, and defines an unblock function for unblocking it |
 | ITicker  | Have some default behaviour we want them to do every tick without the player interacting with them   |
 | IMovingEntity  | Can change the position using the move(direction) method |
+| IAutoMovingEntity | Depend not on the tick direction, but on their environment. Extends IMovingEntity |
 | IInteractingEntity  | For all the entities which must interact with the player when they share a space. |
 | IBattlingEntity | Gives an entity a health, damage, and battling functions. Extends IInteractingEntity |
   
@@ -69,11 +70,36 @@ We heavily utilised the strategy pattern here, such as:
 
 **zombie toast spawner:**
 
+- Is an IBlocker
+- Cannot be passed or unblocked by the player, like a wall
+- The player is able to click on it
+- ????
   
 
-## Moving Entities
-
+### Moving Entities
   
+**spider:**
+
+- implements IBattlingEntity, IAutoMovingEntity
+- The spider also has a State pattern which determines whether its movement behaviour should be clockwise or anticlockwise
+- AutoMoving changes the state if it is blocked between SpiderClockwise and SpiderAnticlockwise
+
+**zombie toast:**
+
+- We needed some way to get a random direction which was still seedable for unit tests
+- so we created a getRandomDirection method in the Direction class that accepts a Random object
+- This uses the seeded random number to generate a random direction
+- It then moves in much the same way as the player
+
+**mercenary:**
+
+- Each tick, a hostile mercenary moves horizontally or vertically one step in the direction of the character
+- A bribed mercenary will teleport to the players' most recent position, which emulates following them
+- To assist the player in battle, the mercenary is added to the player's `teamMates` list
+- When the player does battle, the mercenary will attack the enemy from a range before the enemy can attack the player, as the spec details
+
+### Generator entities
+write up about how we generate mercenearies spiders and zombies
 
 ## Collectable Entities
 

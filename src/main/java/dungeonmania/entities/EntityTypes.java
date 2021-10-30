@@ -1,14 +1,44 @@
 package dungeonmania.entities;
 
-public class EntityTypes {
+public enum EntityTypes {
 
     // Static Entities
-    public static final String WALL = "wall";
-    public static final String EXIT = "exit";
-    public static final String BOULDER = "boulder";
-    public static final String SWITCH = "switch";
-    public static final String DOOR = "door";
-    public static final String PORTAL = "portal";
-    public static final String ZOMBIE_TOAST_SPAWNER = "zombie_toast_spawner";
+    WALL("wall"),
+    EXIT("exit"),
+    BOULDER("boulder"),
+    SWITCH("switch"),
+    DOOR("door"),
+    PORTAL("portal"),
+    ZOMBIE_TOAST_SPAWNER("zombie_toast_spawner"),
+
+    // Moving Entities
+    SPIDER("spider"),    
+    ZOMBIE_TOAST("zombie_toast"),    
+    MERCENARY("mercenary"),
     
+    // Moving Entities
+    TREASURE("treasure"),    
+    KEY("key"),    
+    HEALTH_POTION("health_potion"),    
+    INVINCIBILITY_POTION("invincibility_potion"),    
+    INVISIBILITY_POTION("invisibility_potion"),    
+    WOOD("wood"),    
+    ARROW("arrow"),    
+    BOMB("bomb"),    
+    SWORD("sword"),    
+    ARMOUR("armour"),    
+
+    // Player
+    PLAYER("player"),    
+    
+    ;
+
+    private final String type;
+    private EntityTypes(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return this.type;
+    }
 }

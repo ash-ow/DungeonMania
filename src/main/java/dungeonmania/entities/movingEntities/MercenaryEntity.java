@@ -5,6 +5,7 @@ import java.util.List;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -18,7 +19,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     }
 
     public MercenaryEntity(int x, int y, int layer) {
-        super(x, y, layer, "mercenary");
+        super(x, y, layer, EntityTypes.MERCENARY);
         this.health = 100;
         this.damage = 3;
     }

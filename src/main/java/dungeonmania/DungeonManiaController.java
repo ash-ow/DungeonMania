@@ -83,7 +83,9 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse interact(String entityId) throws IllegalArgumentException, InvalidActionException {
-        return null;
+        System.out.println("interacting with the bitch");
+        dungeon.interact(entityId);
+        return dungeon.getInfo();
     }
 
     public DungeonResponse build(String buildable) throws IllegalArgumentException, InvalidActionException {

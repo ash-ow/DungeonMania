@@ -1,43 +1,37 @@
 package dungeonmania.entities.movingEntities;
 
+import javax.swing.text.PlainDocument;
+
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 
 public interface IBattlingEntity extends IEntity {
     public float getHealth();
     public void setHealth(float health);
     public int getDamage();
-    
     public void loseHealth(float enemyHealth, int enemyDamage);
 
-    public default void Battle(CharacterEntity character) {
-        if (this instanceof CharacterEntity) {
-            System.out.println("The inner turmoil is too much");
-        }
-        else {
-            doBattle(character);
-            checkCharacterDeath(character);
-            checkEnemyDeath();
+    public default void Battle(EntitiesControl entitiesControl, CharacterEntity player) {
+        while (player.isAlive() && !checkEnemyDeath(entitiesControl)) {
+            doBattle(player);
         }
     }
 
-    default void checkCharacterDeath(CharacterEntity character) {
-        if (character.getHealth() <= 0) {
-            // TODO make game over functionality
-            System.out.println("you died");
+    default boolean checkEnemyDeath(EntitiesControl entitiesControl) {
+        if (!this.isAlive()) {
+            entitiesControl.removeEntity(this);
+            return true;
         }
-    }
-
-    default void checkEnemyDeath() {
-        if (this.getHealth() <= 0) {
-            // TODO remove enemy from the game
-            System.out.println("gg ez" + this.getId());
-        }
+        return false;
     }
     
-    default void doBattle(CharacterEntity character) {
-        System.out.println("The character is battling " + this.getId());
+    default void doBattle(CharacterEntity player) {
         float enemyInitialHealth = this.getHealth();
-        this.loseHealth(character.getHealth(), character.getDamage());
-        character.loseHealth(enemyInitialHealth, this.getDamage());
+        this.loseHealth(player.getHealth(), player.getDamage());
+        player.loseHealth(enemyInitialHealth, this.getDamage());
+    }
+
+    default boolean isAlive() {
+        return this.getHealth() > 0;
     }
 }

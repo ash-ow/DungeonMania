@@ -12,8 +12,9 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
-public class ZombieToastEntity extends Entity implements IInteractingEntity, IMovingEntity, IBattlingEntity {
+public class ZombieToastEntity extends Entity implements IInteractingEntity, IBattlingEntity, IAutoMovingEntity {
     Random rand = new Random();
+
     public ZombieToastEntity() {
         this(0, 0, 0);
     }
@@ -28,12 +29,15 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IMo
     }
 
     @Override
-    public void move(Direction direction, EntitiesControl entitiesControl, CharacterEntity player) {
-        direction = getRandomDirection();
+    public void move(EntitiesControl entitiesControl, CharacterEntity player) {
+        Direction direction = getRandomDirection();
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
         if (!EntitiesControl.containsUnpassableEntities(targetEntities)) {
             this.move(direction);
+        }
+        if (this.isInSamePositionAs(player)) {
+            interactWithPlayer(entitiesControl, Direction.NONE, player);
         }
     }
 
@@ -78,9 +82,8 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IMo
 
     @Override
     public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
-        // To do!!!!
-        System.out.println("zombie toast?? For real?");
-        this.move(Direction.DOWN, entities, player);
+        Battle(entities, player);
         return false;
     }
+
 }

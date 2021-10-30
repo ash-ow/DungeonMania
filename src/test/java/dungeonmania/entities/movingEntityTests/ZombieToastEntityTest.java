@@ -11,6 +11,7 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +30,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         
         // TODO This is only testing the stub in the ZombieToastEntity class - not the actual interaction between the two
         zombie.interactWithPlayer(new EntitiesControl(), Direction.DOWN, character); // TODO I think this should be run automatically when positions are equal
-        assertEquals(new Position(0,1), zombie.getPosition());
+        assertEquals(new Position(0,0), zombie.getPosition());
     }
 
     @Override
@@ -69,7 +70,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         assertEquals(100, character.getHealth());
         assertEquals(100, zombie.getHealth());
 
-        zombie.Battle(character);
+        zombie.doBattle(character);
 
         assertEquals(70, character.getHealth());
         assertEquals(40, zombie.getHealth());
@@ -79,13 +80,9 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     public void TestDeath() {
         CharacterEntity character = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity();
-        
-        zombie.setHealth(2);
-        zombie.Battle(character);
-
-        assertEquals(99.4, character.getHealth(), 0.1);
-        assertEquals(-58, zombie.getHealth());
-
-        // TODO add assertions for zombie death
+        EntitiesControl entitiesControl = new EntitiesControl();
+        entitiesControl.addEntities(zombie);
+        zombie.Battle(entitiesControl, character);
+        assertFalse(entitiesControl.contains(zombie));
     }
 }

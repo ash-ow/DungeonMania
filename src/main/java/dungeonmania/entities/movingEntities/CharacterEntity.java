@@ -2,7 +2,6 @@ package dungeonmania.entities.movingEntities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
@@ -81,7 +80,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 //endregion
 
-    @Override
     public void move(Direction direction, EntitiesControl entitiesControl) {
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);

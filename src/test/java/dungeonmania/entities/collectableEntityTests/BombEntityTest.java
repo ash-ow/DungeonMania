@@ -2,6 +2,7 @@ package dungeonmania.entities.collectableEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import dungeonmania.entities.staticEntities.*;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class BombEntityTests implements ICollectableEntityTest {
+public class BombEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestEntityResponseInfo() {
@@ -26,8 +27,8 @@ public class BombEntityTests implements ICollectableEntityTest {
         assertEntityResponseInfoEquals(bomb, "bomb-0-0-0", "bomb", new Position(0,0), false);
     }
 
-    @Override
     @Test
+    @Override
     public void TestUseCollectable() {
         ArrayList<IEntity> entities = new ArrayList<>();
         CharacterEntity player = new CharacterEntity(0, 0, 0);
@@ -50,6 +51,7 @@ public class BombEntityTests implements ICollectableEntityTest {
         assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should be able to move off the bomb");
         dungeon.tick(Direction.UP);
         assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should not be able to move back onto the bomb once it has been placed");
+        assertNull(player.getInventory().getEntityById(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
     }
 
     @Test

@@ -58,17 +58,17 @@ public class EntitiesControl {
     }
 
     public void moveAllMovingEntities(Direction direction, CharacterEntity player) {
-        List<IMovingEntity> movingEntities = getAllMovingEntities();
+        List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
 
-        for (IMovingEntity entity : movingEntities) {
-            entity.move(direction, this, player);
+        for (IAutoMovingEntity entity : movingEntities) {
+            entity.move(this, player);
         }
     }
 
-    public List<IMovingEntity> getAllMovingEntities() {
+    public List<IAutoMovingEntity> getAllAutoMovingEntities() {
         return entities.stream()
-            .filter(IMovingEntity.class::isInstance)
-            .map(IMovingEntity.class::cast)
+            .filter(IAutoMovingEntity.class::isInstance)
+            .map(IAutoMovingEntity.class::cast)
             .collect(Collectors.toList());
     }
 
@@ -158,6 +158,9 @@ public class EntitiesControl {
                 break;
             case "invincibility_potion":
                 this.addEntities(new InvincibilityPotionEntity(xAxis, yAxis, layer));
+                break;
+            case "mercenary":
+                this.addEntities(new MercenaryEntity(xAxis, yAxis, layer));
                 break;
         }
     }

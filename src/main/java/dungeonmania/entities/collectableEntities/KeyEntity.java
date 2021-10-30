@@ -4,23 +4,28 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public class KeyEntity extends Entity implements ICollectableEntity {
-    public KeyEntity() {
-        this(0, 0, 0);
+    private int keyNumber;
+
+    public KeyEntity(int keyNumber) {
+        this(0, 0, 0, keyNumber);
     }
-    
-    
-    public KeyEntity(int x, int y, int layer) {
+
+    public KeyEntity(int x, int y, int layer, int keyNumber) {
         super(x, y, layer, "key");
+        this.keyNumber = keyNumber;
+    }
+
+    public int getKeyNumber() {
+        return keyNumber;
     }
 
     @Override
-    public void used(CharacterEntity player) {
-        // TODO implement
+    public void used(CharacterEntity player){
+        player.getInventory().removeEntity(this);
     }
 
     @Override
     public boolean isPlacedAfterUsing() {
-        // TODO implement
         return false;
     } 
 }

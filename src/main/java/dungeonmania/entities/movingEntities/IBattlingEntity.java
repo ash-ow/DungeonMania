@@ -1,17 +1,15 @@
 package dungeonmania.entities.movingEntities;
 
-import javax.swing.text.PlainDocument;
-
 import dungeonmania.dungeon.EntitiesControl;
-import dungeonmania.entities.IEntity;
+import dungeonmania.entities.IInteractingEntity;
 
-public interface IBattlingEntity extends IEntity {
+public interface IBattlingEntity extends IInteractingEntity {
     public float getHealth();
     public void setHealth(float health);
     public int getDamage();
     public void loseHealth(float enemyHealth, int enemyDamage);
 
-    public default void Battle(EntitiesControl entitiesControl, CharacterEntity player) {
+    public default void battle(EntitiesControl entitiesControl, CharacterEntity player) {
         while (player.isAlive() && !checkEnemyDeath(entitiesControl)) {
             doBattle(player);
         }
@@ -33,5 +31,10 @@ public interface IBattlingEntity extends IEntity {
 
     default boolean isAlive() {
         return this.getHealth() > 0;
+    }
+
+    @Override
+    public default void interactWithPlayer(EntitiesControl entities, CharacterEntity player) {
+        battle(entities, player);
     }
 }

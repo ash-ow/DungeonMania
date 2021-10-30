@@ -31,7 +31,7 @@ public interface ICollectableEntityTest extends IEntityTests {
         entities.addEntities(entity);
         assertItemNotInInventory(entity.getId(), player, entities);
         
-        entity.interactWithPlayer(entities, Direction.UP, player);
+        entity.interactWithPlayer(entities, player);
         assertItemInInventory(entity.getId(), player, entities);
     }
 
@@ -39,7 +39,7 @@ public interface ICollectableEntityTest extends IEntityTests {
         CharacterEntity player = new CharacterEntity(0, 1, 0);
         EntitiesControl entities = new EntitiesControl();
         entities.addEntities(entity);
-        entity.interactWithPlayer(entities, Direction.UP, player);
+        entity.interactWithPlayer(entities, player);
         entity.used(player);
         assertNull(player.getInventory().getEntityById(entity.getId()), "Inventory should not contain entity " + entity.getId());
     }

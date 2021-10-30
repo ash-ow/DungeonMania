@@ -2,7 +2,6 @@ package dungeonmania.dungeon;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
@@ -12,7 +11,6 @@ import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
 import dungeonmania.util.Direction;
-import dungeonmania.util.Position;
 
 public class EntitiesControlTests {
     @Test
@@ -23,13 +21,13 @@ public class EntitiesControlTests {
         entities.add(spawner);
 
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
-        dungeon.tick(Direction.UP);
+        dungeon.tick(Direction.DOWN);
 
         assertNotNull(dungeon.getEntities("zombie_toast"));
 
         for (int i = 0; i < 10; i++) {
             dungeon.tick(Direction.DOWN);
         }
-        assertEquals(2, dungeon.getEntities("zombie_toast").size());
+        assertEquals(3, dungeon.getEntities("zombie_toast").size());
     }
 }

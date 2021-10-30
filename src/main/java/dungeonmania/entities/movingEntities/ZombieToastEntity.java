@@ -1,19 +1,16 @@
 package dungeonmania.entities.movingEntities;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
-public class ZombieToastEntity extends Entity implements IInteractingEntity, IBattlingEntity, IAutoMovingEntity {
+public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoMovingEntity {
     Random rand = new Random();
     Integer seed;
 
@@ -36,17 +33,12 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IBa
         Direction direction = Direction.getRandomDirection(new Random(rand.nextInt()));
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
-        if (!EntitiesControl.containsUnpassableEntities(targetEntities)) {
+        if ( !EntitiesControl.containsBlockingEntities(targetEntities) ) {
             this.move(direction);
         }
         if (this.isInSamePositionAs(player)) {
-            interactWithPlayer(entitiesControl, Direction.NONE, player);
+            interactWithPlayer(entitiesControl, player);
         }
-    }
-
-    @Override
-    public boolean isPassable() {
-        return true;
     }
 
     @Override
@@ -77,11 +69,4 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IBa
         this.health -= ((enemyHealth * enemyDamage) / 5);
     }
 //endregion
-
-    @Override
-    public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
-        Battle(entities, player);
-        return false;
-    }
-
 }

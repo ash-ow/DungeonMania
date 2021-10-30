@@ -16,7 +16,7 @@ import dungeonmania.util.Position;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
     private EntitiesControl inventory = new EntitiesControl();
-
+    
     public CharacterEntity() {
         this(0, 0, 0);
     }
@@ -79,6 +79,33 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return info;
     }
 //endregion
+
+//Player State region 
+    private PlayerState playerState;
+    this.playerState = PlayerState.NONE;
+
+	public PlayerState getPlayerState() {
+		return playerState;
+	}
+
+	public void setPlayerState(PlayerState newState){
+		this.playerState = newState;
+	}
+
+   public void getDuration() {
+       this.duration= 10;
+   }
+   public void updateDuration() {
+       System.out.println(this.duration+" here");
+       if((duration>0) && playerState==PlayerState.INVINCIBLE) {
+           this.duration--;
+       } else if(duration == 0 && playerState==PlayerState.INVINCIBLE) {
+          playerState = PlayerState.NONE;
+       }
+   }
+
+
+//
 
     public void move(Direction direction, EntitiesControl entitiesControl) {
         Position target = position.translateBy(direction);

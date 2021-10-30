@@ -2,9 +2,9 @@ package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.PlayerState;
 
 public class InvincibilityPotionEntity extends Entity implements ICollectableEntity {
-    int duration = 10;
 
     public InvincibilityPotionEntity() {
         this(0, 0, 0);
@@ -16,18 +16,11 @@ public class InvincibilityPotionEntity extends Entity implements ICollectableEnt
     }
 
     
-	public void reduceDuration() {
-		duration--;
-	}
-
-	
-	public int getDuration() {
-		return duration;
-	}
 
     @Override
     public void used(CharacterEntity player) {
-        // TODO implement
+       player.setPlayerState(PlayerState.INVINCIBLE);
+       player.getDuration();
     }
 
     @Override

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.util.Position;
 import dungeonmania.entities.collectableEntities.InvincibilityPotionEntity;
+import dungeonmania.entities.movingEntities.spiderEntity.*;
 
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.util.Direction;
@@ -38,8 +39,13 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
     }
     @Override
     public void TestUseCollectable() {
-        // TODO Auto-generated method stub
-
+        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0,0,0);
+        CharacterEntity player = new CharacterEntity(0,0,0);
+        SpiderEntity spider = new SpiderEntity();
+        
+        invincibility_potion.used(player);
+        spider.doBattle(player);
+        assertEquals(0, spider.getHealth());
     }
     /*
     @Test

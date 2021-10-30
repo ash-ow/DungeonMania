@@ -27,8 +27,13 @@ public interface IBattlingEntity extends IEntity {
     
     default void doBattle(CharacterEntity player) {
         float enemyInitialHealth = this.getHealth();
-        this.loseHealth(player.getHealth(), player.getDamage());
-        player.loseHealth(enemyInitialHealth, this.getDamage());
+        if (player.getPlayerState().equals(PlayerState.INVINCIBLE)) {
+            enemyInitialHealth = 0;
+        }
+        else {
+            this.loseHealth(player.getHealth(), player.getDamage());
+            player.loseHealth(enemyInitialHealth, this.getDamage());}
+        
     }
 
     default boolean isAlive() {

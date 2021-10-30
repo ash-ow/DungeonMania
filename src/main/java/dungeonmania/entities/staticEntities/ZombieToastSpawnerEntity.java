@@ -3,6 +3,8 @@ package dungeonmania.entities.staticEntities;
 import dungeonmania.entities.Entity;
 
 public class ZombieToastSpawnerEntity extends Entity {
+    // TODO make this IBlocker
+
     public ZombieToastSpawnerEntity() {
         this(0, 0, 0);
     }

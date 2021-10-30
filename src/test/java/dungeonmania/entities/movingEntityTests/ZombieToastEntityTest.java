@@ -40,9 +40,26 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         ZombieToastEntity zombie = new ZombieToastEntity(5, 5, 0, 10);
         EntitiesControl entities = new EntitiesControl();
         entities.addEntities(zombie);
-        entities.createEntity(7, 5, 0, "wall");
 
-        List<Position> expectPositions = Arrays.asList(new Position(6, 5), new Position(6, 5));
+        List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(4, 4), new Position(5, 4), new Position(6, 4), 
+            new Position(6, 5), new Position(6, 4));
+
+        for (Position expectPosition : expectPositions) {
+            zombie.move(entities, player);
+            System.out.println(zombie.getPosition());
+            assertEquals(zombie.getPosition(), expectPosition);
+        }
+    }
+
+    @Test
+    public void TestBlockMove() {
+        CharacterEntity player = new CharacterEntity();
+        ZombieToastEntity zombie = new ZombieToastEntity(5, 5, 0, 10);
+        EntitiesControl entities = new EntitiesControl();
+        entities.addEntities(zombie);
+        entities.createEntity(6, 4, 0, "wall");
+
+        List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(4, 4), new Position(5, 4), new Position(5, 4));
 
         for (Position expectPosition : expectPositions) {
             zombie.move(entities, player);

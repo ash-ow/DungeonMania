@@ -1,6 +1,7 @@
 package dungeonmania.entities.movingEntities;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -14,6 +15,7 @@ import dungeonmania.util.Position;
 
 public class ZombieToastEntity extends Entity implements IInteractingEntity, IBattlingEntity, IAutoMovingEntity {
     Random rand = new Random();
+    Integer seed;
 
     public ZombieToastEntity() {
         this(0, 0, 0);
@@ -25,12 +27,13 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IBa
 
     public ZombieToastEntity(int x, int y, int layer, int seed) {
         this(x, y, layer);
+        this.seed = seed;
         rand = new Random(seed);
     }
 
     @Override
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {
-        Direction direction = getRandomDirection();
+        Direction direction = Direction.getRandomDirection(new Random(rand.nextInt()));
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
         if (!EntitiesControl.containsUnpassableEntities(targetEntities)) {
@@ -39,11 +42,6 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IBa
         if (this.isInSamePositionAs(player)) {
             interactWithPlayer(entitiesControl, Direction.NONE, player);
         }
-    }
-
-    private Direction getRandomDirection() {
-        List<Direction> directions = Arrays.asList(Direction.RIGHT, Direction.DOWN, Direction.UP, Direction.LEFT);
-        return directions.get(rand.nextInt(3));
     }
 
     @Override

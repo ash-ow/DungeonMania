@@ -14,6 +14,7 @@ import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
+import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
@@ -113,6 +114,19 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         character.addTeammates(mercenaryEntity);
         ZombieToastEntity zombie = new ZombieToastEntity();
         zombie.doBattle(character);
+        assertTrue(zombie.getHealth() < 40);
+    }
+
+    @Test
+    public void TestMercenaryJoinsTeam() {
+        CharacterEntity player = new CharacterEntity(0, 5, 0);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 4, 0);
+        TreasureEntity treasure = new TreasureEntity();       
+        player.addEntityToInventory(treasure); 
+        mercenary.interactWith(player);
+        assertTrue(player.teammates.contains(mercenary));
+        ZombieToastEntity zombie = new ZombieToastEntity();
+        zombie.doBattle(player);
         assertTrue(zombie.getHealth() < 40);
     }
 }

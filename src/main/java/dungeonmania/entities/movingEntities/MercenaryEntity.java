@@ -134,6 +134,7 @@ public class MercenaryEntity extends Entity implements IContactingEntity, IBattl
             throw new InvalidActionException("Player is too far away");
         }
         player.removeEntityFromInventory(treasureInventory.get(0));
+        player.addTeammates(this);
         this.isBribed = true;       
     }
 

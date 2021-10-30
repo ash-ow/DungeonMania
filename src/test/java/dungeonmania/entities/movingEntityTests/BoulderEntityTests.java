@@ -21,7 +21,7 @@ import dungeonmania.util.Position;
 import dungeonmania.entities.staticEntities.SwitchEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 
-public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoalTests, IBlockerTest {
+public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IBlockerTest {
     @Override
     @Test
     public void TestEntityResponseInfo() {
@@ -104,22 +104,6 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoa
 
     @Override
     @Test
-    public void SimpleGoalTest() {
-        // TODO there is no goal test here
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        BoulderEntity boulder = new BoulderEntity(0, 1, 0);
-        ArrayList<IEntity> entities = new ArrayList<>();
-        entities.add(boulder);
-        String jsonGoals = "{ \"goal\": \"exit\"}";
-        JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
-        Dungeon dungeon = new Dungeon(entities, "Standard", player, j);
-        dungeon.tick(Direction.DOWN);
-        assertEquals(new Position(0, 1, 0), player.getPosition());
-        assertEquals(new Position(0, 2, 0), boulder.getPosition());
-    }
-
-    @Override
-    @Test
     public void TestUnblock() {
         CharacterEntity player = new CharacterEntity(0, 0, 0);
         BoulderEntity boulder = new BoulderEntity(0, 1, 0);
@@ -131,15 +115,5 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IGoa
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 1, 0), player.getPosition());
         assertEquals(new Position(0, 2, 0), boulder.getPosition());
-    }
-
-    private Dungeon getDungeonWithTestData() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        BoulderEntity boulder = new BoulderEntity(0, 1, 0);
-        ArrayList<IEntity> entities = new ArrayList<>();
-        entities.add(boulder);
-        String jsonGoals = "{ \"goal\": \"exit\"}";
-        JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
-        return new Dungeon(entities, "Standard", player, j);
     }
 }

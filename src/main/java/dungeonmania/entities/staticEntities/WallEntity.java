@@ -23,7 +23,6 @@ public class WallEntity extends Entity implements IBlocker {
 
     @Override
     public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
-        // Walls are always blocking non-spider entities
-        return ent instanceof SpiderEntity;
+        return false;
     }
 }

@@ -1,17 +1,11 @@
 package dungeonmania.entities.movingEntities.spiderEntity;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.plaf.metal.MetalBorders.PaletteBorder;
-
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IAutoMovingEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
-import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
@@ -85,9 +79,4 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IBattlin
         this.health -= ((enemyHealth * enemyDamage) / 5);
     }
 //endregion
-
-    @Override
-    public void interactWithPlayer(EntitiesControl entities, CharacterEntity player) {
-        battle(entities, player);
-    }
 }

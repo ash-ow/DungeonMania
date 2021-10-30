@@ -45,11 +45,6 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IBa
     }
 //endregion
 
-    @Override
-    public void interactWithPlayer(EntitiesControl entities, CharacterEntity player) {
-        battle(entities, player);
-    }
-
 // region Moving
     @Override
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {

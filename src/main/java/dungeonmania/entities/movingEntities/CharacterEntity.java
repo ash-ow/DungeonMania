@@ -2,14 +2,12 @@ package dungeonmania.entities.movingEntities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
-import dungeonmania.entities.collectableEntities.BombEntity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
@@ -108,10 +106,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
             targetIsUnblocked = blocker.tryUnblock(this, direction, entitiesControl);
         }
         return targetIsUnblocked;
-    }
-
-    boolean targetLocationIsEmpty(List<IEntity> targetEntities) {
-        return targetEntities.isEmpty();
     }
 //endregion
     

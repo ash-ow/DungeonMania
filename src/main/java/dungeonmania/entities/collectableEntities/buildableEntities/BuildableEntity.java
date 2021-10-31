@@ -1,25 +1,23 @@
-package dungeonmania.entities.buildableEntities;
+package dungeonmania.entities.collectableEntities.buildableEntities;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.HashMap;
 
-import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.collectableEntities.ICollectableEntity;
-import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.collectableEntities.CollectableEntity;
 
-public abstract class BuildableEntity extends Entity implements ICollectableEntity {
+public abstract class BuildableEntity extends CollectableEntity {
     protected BuildableEntity(int x, int y, int layer, EntityTypes type) {
         super(x, y, layer, type);
         initialiseRequiredComponents();
     }
     
-    protected Map<ICollectableEntity, Integer> requiredComponents = new HashMap<ICollectableEntity, Integer>();
-    public boolean isBuildable(List<ICollectableEntity> inventory) {
-        for (Map.Entry<ICollectableEntity, Integer> entry : requiredComponents.entrySet()) {
-            ICollectableEntity component = entry.getKey();
+    protected Map<CollectableEntity, Integer> requiredComponents = new HashMap<CollectableEntity, Integer>();
+    public boolean isBuildable(List<CollectableEntity> inventory) {
+        for (Map.Entry<CollectableEntity, Integer> entry : requiredComponents.entrySet()) {
+            CollectableEntity component = entry.getKey();
             int quantity = entry.getValue();
             if (numberOfComponentItemsInInventory(inventory, component) < quantity) {
                 System.out.println("Needs more " + component.getType());
@@ -29,7 +27,7 @@ public abstract class BuildableEntity extends Entity implements ICollectableEnti
         return true;
     }
 
-    protected int numberOfComponentItemsInInventory(List<ICollectableEntity> inventory, ICollectableEntity component) {
+    protected int numberOfComponentItemsInInventory(List<CollectableEntity> inventory, CollectableEntity component) {
         return inventory
             .stream()
             .filter(ent -> ent.getClass().equals(component.getClass()))

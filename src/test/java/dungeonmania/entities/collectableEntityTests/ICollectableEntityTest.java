@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntityTests;
-import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Direction;
 
@@ -24,7 +24,7 @@ public interface ICollectableEntityTest extends IEntityTests {
         assertNotNull(entitiesControl.getEntityById(id), "EntitiesControl should contain entity " + id);
     }
 
-    public default void assertEntityIsCollected(ICollectableEntity entity) {
+    public default void assertEntityIsCollected(CollectableEntity entity) {
         CharacterEntity player = new CharacterEntity(0, 1, 0);
         EntitiesControl entities = new EntitiesControl();
         
@@ -35,7 +35,7 @@ public interface ICollectableEntityTest extends IEntityTests {
         assertItemInInventory(entity.getId(), player, entities);
     }
 
-    public default void assertEntityIsUsed(ICollectableEntity entity) {
+    public default void assertEntityIsUsed(CollectableEntity entity) {
         CharacterEntity player = new CharacterEntity(0, 1, 0);
         EntitiesControl entities = new EntitiesControl();
         entities.addEntity(entity);

@@ -1,4 +1,4 @@
-package dungeonmania.entities.buildableEntities;
+package dungeonmania.entities.collectableEntities.buildableEntities;
 
 import java.util.List;
 import java.util.Map;
@@ -6,17 +6,15 @@ import java.util.Map;
 import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.collectableEntities.ArrowsEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.CollectableEntity;
 
 public class ShieldEntity extends BuildableEntity {
-    //TODO: set default durability
-    int durability;
+    int durability = 10;
     
     public ShieldEntity() {
-        this(0, 0, 0);
+        this(0, 0, 0); 
     }
     
     public ShieldEntity(int x, int y, int layer) {
@@ -31,15 +29,15 @@ public class ShieldEntity extends BuildableEntity {
     }
     
     @Override
-    public boolean isBuildable(List<ICollectableEntity> inventory) {
+    public boolean isBuildable(List<CollectableEntity> inventory) {
         boolean requiredWood = false;
         boolean requiredTreasure = false;
         boolean requiredKey = false;
-        for (Map.Entry<ICollectableEntity, Integer> entry : requiredComponents.entrySet()) {
-            ICollectableEntity component = entry.getKey();
+        for (Map.Entry<CollectableEntity, Integer> entry : requiredComponents.entrySet()) {
+            CollectableEntity component = entry.getKey();
             int quantity = entry.getValue();
             if (numberOfComponentItemsInInventory(inventory, component) >= quantity) {
-                // System.out.println("Needs more " + component.getId());
+                System.out.println("Needs more " + component.getType());
                 if (component.getType().equals(EntityTypes.WOOD)) {
                     requiredWood = true;
                 } else if (component.getType().equals(EntityTypes.TREASURE)) {
@@ -56,28 +54,6 @@ public class ShieldEntity extends BuildableEntity {
         }
         return false;
     }
-
-    public boolean isPassable() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    public int getDurability(){
-        return this.durability;
-    }
-
-    public void setDurability(int durability){
-        this.durability = durability;
-    }
-
-    public void used(CharacterEntity player){
-        if (this.durability > 0) {
-            setDurability(this.durability - 1);
-            if(this.durability == 0) {
-                player.removeEntityFromInventory(this);
-            }
-        }
-    }
     
     public float reduceDamage(float damage, CharacterEntity player) {
         this.used(player);
@@ -89,5 +65,4 @@ public class ShieldEntity extends BuildableEntity {
     public boolean isPlacedAfterUsing() {
         return false;
     }
-
 }

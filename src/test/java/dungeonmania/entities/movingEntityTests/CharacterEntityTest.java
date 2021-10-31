@@ -17,17 +17,15 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
-import dungeonmania.entities.buildableEntities.ShieldEntity;
 import dungeonmania.entities.collectableEntities.ArrowsEntity;
-import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.KeyEntity;
-import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
+import dungeonmania.entities.collectableEntities.buildableEntities.ShieldEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
-import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
@@ -112,73 +110,12 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         player.addEntityToInventory(arrow1);
         player.addEntityToInventory(arrow2);
         player.addEntityToInventory(arrow3);
-        player.build("bow");
-        List<ICollectableEntity> inventory = player.getInventory();
-        for (ICollectableEntity item : inventory) {
-            assertEquals(item.getType(), "bow");
+        player.build(EntityTypes.BOW);
+        List<CollectableEntity> inventory = player.getInventory();
+        for (CollectableEntity item : inventory) {
+            assertEquals(item.getType(), EntityTypes.BOW);
         }
-        assertTrue(player.getInventory().size() == 1);
-    }
-
-    @Test
-    public void TestBuildShieldWithTreasure() {
-        CharacterEntity player = new CharacterEntity();
-        WoodEntity wood = new WoodEntity();
-        WoodEntity wood2 = new WoodEntity();
-        TreasureEntity treasure = new TreasureEntity();
-        player.addEntityToInventory(wood);
-        player.addEntityToInventory(wood2);
-        player.addEntityToInventory(treasure);
-        player.build("shield");
-        List<ItemResponse> inventory = player.getInventoryInfo();
-        for (ItemResponse item : inventory) {
-            assertEquals(item.getType(), "shield");
-        }
-        assertTrue(player.getInventory().size() == 1);
-    }
-
-    @Test
-    public void TestBuildShieldWithKey() {
-        CharacterEntity player = new CharacterEntity();
-        WoodEntity wood = new WoodEntity();
-        WoodEntity wood2 = new WoodEntity();
-        KeyEntity key = new KeyEntity(0,0,0,1);
-        player.addEntityToInventory(wood);
-        player.addEntityToInventory(wood2);
-        player.addEntityToInventory(key);
-        player.build("shield");
-        List<ItemResponse> inventory = player.getInventoryInfo();
-        for (ItemResponse item : inventory) {
-            assertEquals(item.getType(), "shield");
-        }
-        assertTrue(player.getInventory().size() == 1);
-    }
-
-    @Test
-    public void TestBuildShieldHasBoth() {
-        CharacterEntity player = new CharacterEntity();
-        WoodEntity wood = new WoodEntity();
-        WoodEntity wood2 = new WoodEntity();
-        TreasureEntity treasure = new TreasureEntity();
-        KeyEntity key = new KeyEntity(0,0,0,1);
-        player.addEntityToInventory(wood);
-        player.addEntityToInventory(wood2);
-        player.addEntityToInventory(treasure);
-        player.addEntityToInventory(key);
-        player.build("shield");
-
-        ShieldEntity shield = new ShieldEntity();
-        List<IEntity> expected = new ArrayList<>();
-        expected.add(key);
-        expected.add(shield);
-
-        int i = 0;
-        List<ItemResponse> inventory = player.getInventoryInfo();
-        for (ItemResponse item : inventory) {
-            assertEquals(item.getType(), expected.get(i).getType());
-            i++;
-        }
-        assertTrue(player.getInventory().size() == 2);
+        assertEquals(1, player.getInventory().size());
     }
 
     @Override

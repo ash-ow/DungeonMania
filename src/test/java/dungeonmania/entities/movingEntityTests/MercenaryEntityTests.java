@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -154,7 +154,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         CharacterEntity player = new CharacterEntity();
         MercenaryEntity mercenary = new MercenaryEntity(0, 0, 0);
         mercenary.dropEntities(player, 1f);
-        List<ICollectableEntity> inventory = player.getInventory();
+        List<CollectableEntity> inventory = player.getInventory();
         assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
     }
 }

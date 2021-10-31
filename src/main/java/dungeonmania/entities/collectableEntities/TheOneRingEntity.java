@@ -8,7 +8,7 @@ import dungeonmania.response.models.ItemResponse;
 import java.util.List;
 import java.util.Random;
 
-public class TheOneRingEntity extends CollectableEntity {
+public class TheOneRingEntity extends ICollectableEntity {
 
     public TheOneRingEntity() {
         this(0, 0, 0);

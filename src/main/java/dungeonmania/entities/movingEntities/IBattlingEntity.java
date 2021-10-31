@@ -1,16 +1,13 @@
 package dungeonmania.entities.movingEntities;
 
 import dungeonmania.dungeon.EntitiesControl;
-import dungeonmania.entities.IInteractingEntity;
-import dungeonmania.entities.collectableEntities.TheOneRingEntity;
-import java.util.Random;
+import dungeonmania.entities.IContactingEntity;
 
-
-public interface IBattlingEntity extends IInteractingEntity {
+public interface IBattlingEntity extends IContactingEntity {
     public float getHealth();
     public void setHealth(float health);
-    public int getDamage();
-    public void loseHealth(float enemyHealth, int enemyDamage);
+    public float getDamage();
+    public void loseHealth(float enemyHealth, float enemyDamage);
 
     public default void battle(EntitiesControl entitiesControl, CharacterEntity player) {
         while (!(player.isInvisible()) && player.isAlive() && !checkEnemyDeath(entitiesControl)) {
@@ -34,6 +31,9 @@ public interface IBattlingEntity extends IInteractingEntity {
         else {
             float enemyInitialHealth = this.getHealth();
             this.loseHealth(player.getHealth(), player.getDamage());
+            for (IBattlingEntity teammate : player.teammates) {
+                this.loseHealth(teammate.getHealth(), teammate.getDamage());
+            }
             player.loseHealth(enemyInitialHealth, this.getDamage());
         }
     }
@@ -43,7 +43,7 @@ public interface IBattlingEntity extends IInteractingEntity {
     }
 
     @Override
-    public default void interactWithPlayer(EntitiesControl entities, CharacterEntity player) {
+    public default void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
         battle(entities, player);
     }
 

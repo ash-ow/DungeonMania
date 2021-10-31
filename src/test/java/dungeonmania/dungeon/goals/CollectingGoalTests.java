@@ -35,7 +35,7 @@ public class CollectingGoalTests implements IGoalTests {
         entities.add(treasure);
         Dungeon dungeon = new Dungeon(entities, "Standard", player, j);
         dungeon.tick(Direction.DOWN);
-        assertEquals(player.getInventory().getEntities().size(), 1);
+        assertEquals(player.getInventory().size(), 1);
         assertEquals("", dungeon.getGoals());
     }
 }

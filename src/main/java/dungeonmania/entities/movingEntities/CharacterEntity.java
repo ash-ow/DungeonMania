@@ -6,8 +6,8 @@ import java.util.List;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IBlocker;
+import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
@@ -15,7 +15,9 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
-    private EntitiesControl inventory = new EntitiesControl();
+    private List<ICollectableEntity> inventory = new ArrayList<>();
+    private Position previousPosition;
+    public List<IBattlingEntity> teammates = new ArrayList<>();
     private int countBattle;
     private int countMove;
     boolean isInvincible = false;
@@ -31,6 +33,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.countMove = 10;
         this.isInvincible = false;
         this.isInvisible = false; 
+        this.previousPosition = new Position(x, y);
     }
 
     public EntityResponse getInfo() {
@@ -55,34 +58,46 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.health = health;
     }
 
-    public int getDamage() {
+    public float getDamage() {
         // TODO determine correct Character damage
         return 3;
     }
 
 
     @Override
-    public void loseHealth(float enemyHealth, int enemyDamage) {
+    public void loseHealth(float enemyHealth, float enemyDamage) {
         this.health -= ((enemyHealth * enemyDamage) / 10);
+    }
+
+    public void addTeammates(IBattlingEntity teamMember) {
+        teammates.add(teamMember);
+    }
+
+    public IEntity getInventoryItem(String itemID) {
+        return inventory.stream().filter(item -> item.getId().equals(itemID)).findFirst().orElse(null);
+    }
+
+    public boolean getInvincible() {
+        return this.isInvincible;
     }
 //endregion
 
 //region Inventory
-    public void addEntityToInventory(IEntity entity) {
-        inventory.addEntities(entity);
+    public void addEntityToInventory(ICollectableEntity entity) {
+        inventory.add(entity);
     }
 
-    public EntitiesControl getInventory() {
-        return inventory;
+    public List<ICollectableEntity> getInventory() {
+        return this.inventory;
     }
 
     public void removeEntityFromInventory(IEntity entity) {
-        inventory.removeEntity(entity);
+        inventory.remove(entity);
     }
 
     public List<ItemResponse> getInventoryInfo() {
         List<ItemResponse> info = new ArrayList<ItemResponse>();
-        for (IEntity entity : inventory.getEntities()) {
+        for (ICollectableEntity entity : inventory) {
             info.add(new ItemResponse(entity.getId(), entity.getType()));
         }
         return info;
@@ -123,21 +138,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
             }
         }
     
-
-    //TO DO: FIX Duration, defaults to 10??? 
-    /*
-    public void updateDuration() {
-        System.out.println(this.getCountMove() +"steps left");
-        if((getCountMove()>0) && ((isInvisible) || (isInvincible))){
-            this.setCountMove(true);
-        } else if (getCountMove() == 0 && !((isInvisible) || (isInvincible)))
-        {
-        ;
-        }       
-    }
-    */
-    
-
     public int getBattleCount() {
         return countBattle;
     }
@@ -159,8 +159,9 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
         if ( !EntitiesControl.containsBlockingEntities(targetEntities) || canUnblock(targetEntities, direction, entitiesControl) ) {
-            this.move(direction);
-            setCountMove(false);
+            this.previousPosition = this.position;
+            this.move(direction); 
+            setCountMove(false);           
             interactWithAll(targetEntities, entitiesControl);
         }
     }
@@ -179,9 +180,9 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     private void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
-        List<IInteractingEntity> targetInteractable = entitiesControl.getInteractableEntitiesFrom(targetEntities);
-        for (IInteractingEntity entity : targetInteractable) {
-            entity.interactWithPlayer(entitiesControl, this);
+        List<IContactingEntity> targetInteractable = entitiesControl.getInteractableEntitiesFrom(targetEntities);
+        for (IContactingEntity entity : targetInteractable) {
+            entity.contactWithPlayer(entitiesControl, this);
         }
     }
 
@@ -194,18 +195,13 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         }
         return targetIsUnblocked;
     }
-    //endregion
-
-    public void useItem(String type, EntitiesControl entitiesControl) {
-        for (IEntity ent : this.inventory.getEntities()) {
-            if (ent instanceof ICollectableEntity) {
-                ICollectableEntity item = (ICollectableEntity)ent;
-                if (item.getType().equals(type)) {
-                    this.useItemCore(item, entitiesControl);
-                    return;
-                }
-            } else {
-                // TODO re-implement inventory so it just contains ICollectableEntities. You can base it off of the EntityControl
+//endregion
+    
+    public void useItem(String itemID, EntitiesControl entitiesControl) {
+        for (ICollectableEntity item : this.inventory) {
+            if (item.getId().equals(itemID)) {
+                this.useItemCore(item, entitiesControl);
+                return;
             }
         }
     }
@@ -213,11 +209,14 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     private void useItemCore(ICollectableEntity item, EntitiesControl entitiesControl) {
         // TODO create an ItemType class with constant strings
         // TODO decrement the amount of this item in the inventory
-        System.out.println("using " + type);
         item.used(this);
         if (item.isPlacedAfterUsing()) {
             item.setPosition(this.getPosition());
             entitiesControl.addEntities(item);
         }
+    }
+
+    public Position getPreviousPosition() {
+        return this.previousPosition;
     }
 }

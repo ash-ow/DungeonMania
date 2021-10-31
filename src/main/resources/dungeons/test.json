@@ -26,17 +26,24 @@
       {
         "x": 3,
         "y": 6,
-        "type": "door"
+        "type": "door",
+        "key": 1
       },
       {
         "x": 1,
         "y": 3,
-        "type": "portal"
+        "type": "portal",
+        "colour": "BLUE"
       },
       {
         "x": 7,
         "y": 7,
         "type": "zombie_toast_spawner"
+      },
+      {
+        "x": 4,
+        "y": 6,
+        "type": "sword"
       }
     ],
     "goal-condition": {

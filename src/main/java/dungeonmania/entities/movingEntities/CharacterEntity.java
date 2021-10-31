@@ -13,6 +13,7 @@ import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.IUseableEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.buildableEntities.*;
+import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
@@ -198,6 +199,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
                 this.addEntityToInventory(bow);
                 removeBuildMaterials(EntityTypes.WOOD, 1);
                 removeBuildMaterials(EntityTypes.ARROW, 3);
+            } else {
+                throw new InvalidActionException(itemToBuild.toString());
             }
         } else if (itemToBuild.equals(EntityTypes.SHIELD)) {
             ShieldEntity shield = new ShieldEntity();
@@ -208,7 +211,9 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
                     removeBuildMaterials(EntityTypes.TREASURE, 1);
                 } else if (this.containedInInventory(EntityTypes.KEY)) {
                     removeBuildMaterials(EntityTypes.KEY, 1);
-                }
+                } 
+            } else {
+                throw new InvalidActionException(itemToBuild.toString());
             }
         }
     }
@@ -262,7 +267,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 //endregion
     
     public void useItem(String itemID, EntitiesControl entitiesControl) {
-        if (!(entitiesControl.getEntityById(itemID) instanceof IUseableEntity)) {
+        IEntity entity = EntitiesControl.getEntityById(this.inventory, itemID);
+        if (entity == null) {
+            throw new InvalidActionException(itemID + "not in inventory");
+        } else if (!(entity instanceof IUseableEntity)) {
             throw new IllegalArgumentException();
         }
         for (CollectableEntity item : this.inventory) {

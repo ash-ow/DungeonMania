@@ -39,12 +39,20 @@ public class DungeonManiaControllerTests {
         assertThrows(IllegalArgumentException.class, 
         () -> dungeonManiaController.loadGame("Some Random ID"), "id is not a valid game id");
         assertThrows(IllegalArgumentException.class, 
-        () -> dungeonManiaController.tick("my precious", Direction.LEFT),
-        "itemUsed is not a bomb, health_potion, invincibility_potion, or an invisibility_potion, or null (if no item is being used)");
-        assertThrows(IllegalArgumentException.class, 
         () -> dungeonManiaController.build("Death Star"), "buildable is not one of bow, shield");
         assertThrows(IllegalArgumentException.class, 
         () -> dungeonManiaController.interact("Execute Order 66"), "entityId is not a valid entity ID");
+    }
+
+    @Test
+    public void testIllegalArgumentExceptionFail2() {
+        DungeonManiaController dungeonManiaController = new DungeonManiaController();
+
+        dungeonManiaController.newGame("testExeptions", "Hard");
+        dungeonManiaController.tick(null, Direction.DOWN);
+
+        assertThrows(IllegalArgumentException.class, 
+        () -> dungeonManiaController.tick("1", Direction.LEFT));
     }
 
     @Test
@@ -61,7 +69,7 @@ public class DungeonManiaControllerTests {
         assertThrows(InvalidActionException.class,
         () -> dungeonManiaController.tick("health_potion", Direction.DOWN));
         assertThrows(InvalidActionException.class,
-        () -> dungeonManiaController.build("bow"));
+        () -> dungeonManiaController.build("shield"));
     }
 
     @Test
@@ -69,7 +77,7 @@ public class DungeonManiaControllerTests {
         DungeonManiaController dungeonManiaController = new DungeonManiaController();
         dungeonManiaController.newGame("testExeptions", "Standard");
         dungeonManiaController.tick(null, Direction.DOWN);
-        assertDoesNotThrow(() -> dungeonManiaController.tick("bomb", Direction.DOWN));
+        assertDoesNotThrow(() -> dungeonManiaController.tick("0", Direction.DOWN));
         assertDoesNotThrow(() -> dungeonManiaController.build("bow"));
     }
 }

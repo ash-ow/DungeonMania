@@ -99,11 +99,6 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse tick(String itemUsed, Direction movementDirection) throws IllegalArgumentException, InvalidActionException {
-        // List<BuildableEntity> buildableEntities = dungeon.entitiesControl.getAllEntitiesOfType(BuildableEntity.class);
-        // List<String> buildableEntityID = buildableEntities.stream().map(BuildableEntity::getId).collect(Collectors.toList());
-        // if (!buildableEntityID.contains(itemUsed)) {
-        //     throw new IllegalArgumentException();
-        // }
         if (itemUsed != null) {
             dungeon.tick(itemUsed);
         }
@@ -117,6 +112,9 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse build(String buildable) throws IllegalArgumentException, InvalidActionException {
+        if (!buildable.equals("bow") && !buildable.equals("shield")) {
+            throw new IllegalArgumentException();
+        }
         dungeon.build(buildable);
         return dungeon.getInfo();
     }

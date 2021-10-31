@@ -5,11 +5,11 @@ import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
-import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Position;
 
-public class PortalEntity extends Entity implements IInteractingEntity{
+public class PortalEntity extends Entity implements IContactingEntity{
     String colour;
     PortalEntity portalPair;
     public PortalEntity() {
@@ -26,11 +26,10 @@ public class PortalEntity extends Entity implements IInteractingEntity{
     }
 
     @Override
-    public void interactWithPlayer(EntitiesControl entities, CharacterEntity player) {
+    public void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
         PortalEntity portalPair = getPortalPair(entities);
-        Position positionShift = Position.calculatePositionBetween(this.getPosition(), portalPair.getPosition());
         player.setPosition(
-            player.getPosition().translateBy(positionShift)  
+            portalPair.getPosition()
         );
     }
 

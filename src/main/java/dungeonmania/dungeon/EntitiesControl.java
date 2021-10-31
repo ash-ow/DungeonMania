@@ -89,11 +89,11 @@ public class EntitiesControl {
         return EntitiesControl.getEntitiesOfType(entityList, IContactingEntity.class);
     }
 
-    public static <T> List<T> getEntitiesOfType(List<IEntity> entityList, Class<T> cls) {
+    public static <T> List<T> getEntitiesOfType(List<?> entityList, Class<T> cls) {
         return entityList.stream().filter(cls::isInstance).map(cls::cast).collect(Collectors.toList());
     }
 
-    public <T> List<T> getEntitiesOfType(Class<T> cls) {
+    public <T extends IEntity> List<T> getEntitiesOfType(Class<T> cls) {
         return getEntitiesOfType(this.entities, cls);
     }
 
@@ -209,20 +209,20 @@ public class EntitiesControl {
         createEntity(x, y, layer, type);
     }
 
-    public List<IEntity> getAllEntitiesOfType(String type) {
-        return EntitiesControl.getEntitiesOfType(this.entities, type);
-    }
+    // public List<IEntity> getAllEntitiesOfType(String type) {
+    //     return EntitiesControl.getEntitiesOfType(this.entities, type);
+    // }
 
-    public static List<IEntity> getEntitiesOfType(List<IEntity> entitiyList, String type) {
-        // TODO refactor to accept Class<?> instead of string type
-        List<IEntity> sameType = new ArrayList<>();
-        for (IEntity entity : entitiyList) {
-            if (entity.getInfo().getType().equals(type)) {
-                sameType.add(entity);
-            }
-        }
-        return sameType;
-    }
+    // public static List<IEntity> getEntitiesOfType(List<IEntity> entitiyList, String type) {
+    //     // TODO refactor to accept Class<?> instead of string type
+    //     List<IEntity> sameType = new ArrayList<>();
+    //     for (IEntity entity : entitiyList) {
+    //         if (entity.getInfo().getType().equals(type)) {
+    //             sameType.add(entity);
+    //         }
+    //     }
+    //     return sameType;
+    // }
 
     public Position getLargestCoordinate() {
         int x = 1, y = 1;
@@ -245,7 +245,7 @@ public class EntitiesControl {
 
     private void generateSpider() {
         // TODO replace this with an enemy generator
-        List<IEntity> spiders = this.getAllEntitiesOfType("spider");
+        List<SpiderEntity> spiders = this.getEntitiesOfType(SpiderEntity.class);
         if (spiders.size() < 4) {
             Position largestCoordinate = this.getLargestCoordinate();
             int largestX = largestCoordinate.getX();
@@ -261,8 +261,8 @@ public class EntitiesControl {
 
     private void generateZombieToast() {
         if (tickCounter % 5 == 0) {
-            List<IEntity> spawnerEntities = getAllEntitiesOfType("zombie_toast_spawner");
-            for (IEntity spawner : spawnerEntities) {
+            List<ZombieToastSpawnerEntity> spawnerEntities = getEntitiesOfType(ZombieToastSpawnerEntity.class);
+            for (ZombieToastSpawnerEntity spawner : spawnerEntities) {
                 this.createEntity(
                     spawner.getPosition().getX(), 
                     spawner.getPosition().getY(), 

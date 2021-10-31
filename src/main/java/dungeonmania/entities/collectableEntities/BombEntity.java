@@ -65,8 +65,8 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker, I
     }
 
     private boolean isAdjacentSwitchActive(EntitiesControl entitiesControl, List<IEntity> adjacentEntities) {
-        return entitiesControl
-        .getEntitiesOfType(adjacentEntities, "switch")
+        return EntitiesControl
+        .getEntitiesOfType(adjacentEntities, SwitchEntity.class)
         .stream()
         .map(SwitchEntity.class::cast)
         .anyMatch(SwitchEntity::isActive);

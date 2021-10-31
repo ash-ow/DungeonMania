@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
 import dungeonmania.util.Direction;
 
@@ -23,11 +24,11 @@ public class EntitiesControlTests {
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         dungeon.tick(Direction.DOWN);
 
-        assertNotNull(dungeon.getEntities("zombie_toast"));
+        assertNotNull(dungeon.getEntities(ZombieToastEntity.class));
 
         for (int i = 0; i < 10; i++) {
             dungeon.tick(Direction.DOWN);
         }
-        assertEquals(3, dungeon.getEntities("zombie_toast").size());
+        assertEquals(3, dungeon.getEntities(ZombieToastEntity.class).size());
     }
 }

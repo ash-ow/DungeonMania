@@ -9,6 +9,7 @@ import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
@@ -72,6 +73,18 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     public boolean getInvincible() {
         return this.isInvincible;
+    }
+
+    @Override
+    public boolean isAlive() {
+        if (this.getHealth() <= 0) {
+            OneRingEntity ring = (OneRingEntity) EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class);
+            if (ring != null) {
+                ring.used(this);
+            }
+            return false;
+        }
+        return true;
     }
 //endregion
 

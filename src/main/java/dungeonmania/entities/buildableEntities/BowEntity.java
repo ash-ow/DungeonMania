@@ -17,7 +17,7 @@ public class BowEntity extends BuildableEntity implements IWeaponEntity{
     
     @Override
     public void initialiseRequiredComponents() {
-        this.requiredComponents.put(new WoodEntity(), 1);
-        this.requiredComponents.put(new ArrowsEntity(), 3);
+        this.requiredComponents.put(EntityTypes.WOOD, 1);
+        this.requiredComponents.put(EntityTypes.ARROW, 3);
     }
 }

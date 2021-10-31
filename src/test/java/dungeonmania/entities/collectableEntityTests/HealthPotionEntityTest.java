@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.util.Position;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.HealthPotionEntity;
 
 import dungeonmania.util.Direction;
@@ -23,7 +24,7 @@ public class HealthPotionEntityTest implements ICollectableEntityTest {
         assertEntityResponseInfoEquals(
             health_potion,
             "health_potion-0-0-0",
-            "health_potion",
+            EntityTypes.HEALTH_POTION,
             new Position(0,0),
             false
         );

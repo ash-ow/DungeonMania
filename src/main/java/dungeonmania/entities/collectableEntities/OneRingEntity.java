@@ -1,6 +1,7 @@
 package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public class OneRingEntity extends Entity implements ICollectableEntity {
@@ -11,7 +12,7 @@ public class OneRingEntity extends Entity implements ICollectableEntity {
     }
 
     public OneRingEntity(int x, int y, int layer) {
-        super(x, y, layer, "one_ring");
+        super(x, y, layer, EntityTypes.ONE_RING);
     }
 
     public float getDropChance() {

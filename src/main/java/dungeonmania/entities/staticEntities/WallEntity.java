@@ -2,9 +2,9 @@ package dungeonmania.entities.staticEntities;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.movingEntities.IMovingEntity;
-import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
 import dungeonmania.util.Direction;
 
 public class WallEntity extends Entity implements IBlocker {
@@ -13,7 +13,7 @@ public class WallEntity extends Entity implements IBlocker {
     }
     
     public WallEntity(int x, int y, int layer) {
-        super(x, y, layer, "wall");
+        super(x, y, layer, EntityTypes.WALL);
     }
 
     @Override

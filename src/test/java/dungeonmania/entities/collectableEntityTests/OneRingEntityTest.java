@@ -8,6 +8,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -21,7 +23,7 @@ public class OneRingEntityTest implements ICollectableEntityTest {
         assertEntityResponseInfoEquals(
             ring,
             "one_ring-0-0-0",
-            "one_ring",
+            EntityTypes.ONE_RING,
             new Position(0,0),
             false
         );

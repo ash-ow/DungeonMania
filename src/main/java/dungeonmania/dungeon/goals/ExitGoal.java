@@ -1,6 +1,7 @@
 package dungeonmania.dungeon.goals;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.staticEntities.ExitEntity;
 
@@ -11,7 +12,7 @@ public class ExitGoal implements IGoal {
     }
 
     public boolean checkGoal(Dungeon dungeon) {
-        for (IEntity e : dungeon.getEntities(ExitEntity.class)) {
+        for (IEntity e : dungeon.getAllEntitiesOfType(ExitEntity.class)) {
             if (exitPlayerCheck(dungeon, e)) {
                 return true;
             }

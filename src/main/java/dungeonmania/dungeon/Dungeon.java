@@ -8,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import dungeonmania.dungeon.goals.Goals;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
@@ -40,7 +41,7 @@ public class Dungeon {
         this.entitiesControl = new EntitiesControl();
         for (JsonElement entityInfo : entities) {
             JsonObject entityObj = entityInfo.getAsJsonObject();
-            String type = entityObj.get("type").getAsString();
+            EntityTypes type = EntityTypes.getEntityType(entityObj.get("type").getAsString());
             Integer xAxis = entityObj.get("x").getAsInt();
             Integer yAxis = entityObj.get("y").getAsInt();
             Integer layer = this.entitiesControl.getAllEntitiesFromPosition(new Position(xAxis, yAxis)).size();
@@ -48,12 +49,12 @@ public class Dungeon {
             // TODO can probably improve this with factory pattern
             // or at least by reading the JsonObject as a HashMap and passing that into a generic constructor
             // Maybe Entity class should have one more constructor which accepts a HashMap!
-            if (type.equals("player")) {
+            if (type.equals(EntityTypes.PLAYER)) {
                 this.player = new CharacterEntity(xAxis, yAxis, layer);
-            } else if (type.equals("key") || type.equals("door")) {
+            } else if (type.equals(EntityTypes.KEY) || type.equals(EntityTypes.DOOR)) {
                 Integer key = entityObj.get("key").getAsInt();
                 this.entitiesControl.createEntity(xAxis, yAxis, layer, key, type);
-            } else if (type.equals("portal")) {
+            } else if (type.equals(EntityTypes.PORTAL)) {
                 String colour = entityObj.get("colour").getAsString();
                 this.entitiesControl.createEntity(xAxis, yAxis, layer, colour, type);
             } else {
@@ -119,11 +120,11 @@ public class Dungeon {
             throw new IllegalArgumentException("Entity doesnt exist");
         } else {
             switch (interacting.getType()) {
-                case ("mercenary"):
+                case MERCENARY:
                     MercenaryEntity mercenaryEntity = (MercenaryEntity) interacting;
                     mercenaryEntity.interactWith(player);
                     break;
-                case ("zombie_toast_spawner"):
+                case ZOMBIE_TOAST_SPAWNER:
                     ZombieToastSpawnerEntity spawner = (ZombieToastSpawnerEntity) interacting;
                     spawner.interactWith(entitiesControl, player);
                     break;
@@ -144,8 +145,8 @@ public class Dungeon {
         return this.player;
     }
 
-    public <T extends IEntity> List<T> getEntities(Class<T> cls) {
-        return this.entitiesControl.getEntitiesOfType(cls);
+    public <T extends IEntity> List<T> getAllEntitiesOfType(Class<T> type) {
+        return this.entitiesControl.getAllEntitiesOfType(type);
     }
 }
  

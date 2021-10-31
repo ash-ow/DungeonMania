@@ -4,6 +4,7 @@ import java.util.List;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.ITicker;
@@ -20,7 +21,7 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker, I
     }
     
     public BombEntity(int x, int y, int layer) {
-        super(x, y, layer, "bomb");
+        super(x, y, layer, EntityTypes.BOMB);
     }
     
     public boolean isArmed() {
@@ -51,7 +52,7 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker, I
     private void explode(EntitiesControl entitiesControl) {
         List<IEntity> adjacentEntities = entitiesControl.getAllAdjacentEntities(this.getPosition());
         adjacentEntities.addAll(entitiesControl.getAllEntitiesFromPosition(this.getPosition()));
-        if (isAdjacentSwitchActive(entitiesControl, adjacentEntities)) {
+        if (isAdjacentSwitchActive(adjacentEntities)) {
             for (IEntity entity : adjacentEntities) {
                 explodeNonCharacterEntity(entity, entitiesControl);
             }
@@ -64,11 +65,10 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker, I
         }
     }
 
-    private boolean isAdjacentSwitchActive(EntitiesControl entitiesControl, List<IEntity> adjacentEntities) {
+    private boolean isAdjacentSwitchActive(List<IEntity> adjacentEntities) {
         return EntitiesControl
         .getEntitiesOfType(adjacentEntities, SwitchEntity.class)
         .stream()
-        .map(SwitchEntity.class::cast)
         .anyMatch(SwitchEntity::isActive);
     }
 

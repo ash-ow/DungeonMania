@@ -13,8 +13,8 @@ public class CollectingGoal  implements IGoal {
     }
 
     public boolean checkGoal(Dungeon dungeon) {
-        List<TreasureEntity> collectablesOnFloor = dungeon.getEntities(TreasureEntity.class);
-        if (collectablesOnFloor.size() == 0) {
+        List<TreasureEntity> collectablesOnFloor = dungeon.getAllEntitiesOfType(TreasureEntity.class);
+        if (collectablesOnFloor.isEmpty()) {
             return true;
         }
         return false;

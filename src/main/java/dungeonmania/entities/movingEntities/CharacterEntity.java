@@ -39,6 +39,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         super(x, y, layer, EntityTypes.PLAYER);
         this.previousPosition = new Position(x, y);
         this.gameMode = gameMode;
+        this.health = (int) Math.ceil(100 / EntitiesControl.difficulty.get(gameMode));
     }
 
     public EntityResponse getInfo() {

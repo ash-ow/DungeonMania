@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Position;
@@ -43,7 +42,7 @@ public class OneRingEntityTest implements ICollectableEntityTest {
         player.setHealth(0);
         player.isAlive();
         assertEquals(100, player.getHealth());
-        List<ICollectableEntity> inventory = player.getInventory();
+        List<CollectableEntity> inventory = player.getInventory();
         assertNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
     }
 }

@@ -1,8 +1,7 @@
 package dungeonmania.entities.collectableEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,8 +9,7 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.ArmourEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.response.models.ItemResponse;
-import dungeonmania.util.Direction;
+import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.util.Position;
 
 public class ArmourEntityTest implements ICollectableEntityTest {
@@ -22,9 +20,21 @@ public class ArmourEntityTest implements ICollectableEntityTest {
         assertEntityResponseInfoEquals(armour, "armour-0-0-0", EntityTypes.ARMOUR, new Position(0,0), false);
     }
 
+    @Test
     @Override
     public void TestUseCollectable() {
-        // TODO Auto-generated method stub
+        ZombieToastEntity zombie = new ZombieToastEntity();
+        CharacterEntity player = new CharacterEntity();
+        ArmourEntity armour = new ArmourEntity();
+        armour.contactWithPlayer(new EntitiesControl(), player);
+
+        assertEquals(4,  armour.getDurability());
+        assertEquals(100, player.getHealth());
+        assertEquals(100, zombie.getHealth());
+
+        zombie.contactWithPlayer(new EntitiesControl(), player);
+        assertEquals(2,  armour.getDurability(), "Armour should do two rounds of battle");
+        assertFalse(zombie.isAlive());
     }
 
     @Test

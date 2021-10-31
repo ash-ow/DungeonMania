@@ -1,10 +1,9 @@
 package dungeonmania.entities.collectableEntities;
 
-import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public class HealthPotionEntity extends Entity implements ICollectableEntity {
+public class HealthPotionEntity extends CollectableEntity {
     public HealthPotionEntity() {
         this(0, 0, 0);
     }

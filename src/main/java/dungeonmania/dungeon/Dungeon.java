@@ -100,7 +100,7 @@ public class Dungeon {
         if (player.isAlive()) {
             entitiesInfo.add(player.getInfo());
         }        
-        return new DungeonResponse(id, dungeonName, entitiesInfo, player.getInventoryInfo(), new ArrayList<>(), getGoals());
+        return new DungeonResponse(id, dungeonName, entitiesInfo, player.getInventoryInfo(), player.getBuildableList(), getGoals());
     }
 
     public void tick(Direction direction) {
@@ -160,6 +160,11 @@ public class Dungeon {
         return this.entitiesControl.getAllEntitiesOfType(type);
     }
 
+    public void build(String buildable) {
+        EntityTypes itemToBuild = EntityTypes.getEntityType(buildable);
+        this.player.build(itemToBuild);
+    }
+    
     public void saveGame(String saveGameName) {
         Gson gson = new Gson();
         File file = new File("src/main/resources/savedGames/", saveGameName + ".json");

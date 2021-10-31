@@ -10,7 +10,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.EntityResponse;
@@ -20,7 +20,7 @@ import dungeonmania.util.Position;
 public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity {
 
     private float health;
-    private int damage;
+    private float damage;
     private boolean isBribed;
 
     public MercenaryEntity() {
@@ -109,4 +109,6 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         int sum = Math.abs(diff.getX()) + Math.abs(diff.getY());
         return sum <= 2;
     }
+    // endregion
+    
 }

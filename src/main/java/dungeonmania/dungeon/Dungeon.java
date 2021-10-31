@@ -3,12 +3,13 @@ package dungeonmania.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
 import dungeonmania.dungeon.goals.Goals;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
@@ -18,9 +19,11 @@ import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Dungeon {
-    private int height;
-    private int width;
     public EntitiesControl entitiesControl;
     private String gameMode;
     private String id;
@@ -146,6 +149,45 @@ public class Dungeon {
 
     public List<IEntity> getEntities(String type) {
         return this.entitiesControl.getAllEntitiesOfType(type);
+    }
+
+    public void saveGame(String saveGameName, JsonObject goals) {
+        Gson gson = new Gson();
+        File file = new File("src/main/java/dungeonmania/savedGames/", saveGameName + ".json");
+        JsonObject finalObject = new JsonObject();
+        JsonArray entities = new JsonArray();
+        for (IEntity entity: entitiesControl.getEntities()) {
+            JsonObject entityInfo = new JsonObject();
+            //entityInfo.addProperty("", value);
+        }
+        finalObject.add("entities", new JsonArray());
+        if (file.exists()) {
+            try (FileWriter writer = new FileWriter(file, true)) {
+                gson.toJson(goals, writer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try (FileWriter writer = new FileWriter(file)) {
+                gson.toJson(goals, writer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        
+    }
+
+
+
+    public static void main(String[] args) {
+        CharacterEntity player = new CharacterEntity(0, 1, 0);
+        BoulderEntity boulder = new BoulderEntity(0, 2, 0);
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(boulder);
+        String jsonGoals = "{ \"goal\": \"boulders\"}";
+        JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player, j);
+        dungeon.saveGame("player1", j);
     }
 }
  

@@ -5,6 +5,7 @@ import java.util.List;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
@@ -25,7 +26,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
     
     public CharacterEntity(int x, int y, int layer) {
-        super(x, y, layer, "player");
+        super(x, y, layer, EntityTypes.PLAYER);
         this.previousPosition = new Position(x, y);
     }
 

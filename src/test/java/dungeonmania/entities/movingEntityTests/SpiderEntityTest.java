@@ -2,9 +2,12 @@ package dungeonmania.entities.movingEntityTests;
 
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
+import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
@@ -14,6 +17,7 @@ import dungeonmania.util.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,7 +61,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         SpiderEntity spider = new SpiderEntity(5, 5, 0);
         EntitiesControl entities = new EntitiesControl();
 
-        entities.createEntity(6, 5, 0, "boulder");
+        entities.createEntity(6, 5, 0, EntityTypes.BOULDER);
         entities.addEntity(spider);
 
         List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(6, 4), new Position(6, 4),
@@ -159,7 +163,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         assertEntityResponseInfoEquals(
             spider,
             "spider-0-0-0",
-            "spider",
+            EntityTypes.SPIDER,
             new Position(0,0),
             false
         );
@@ -188,5 +192,15 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         spider.battle(entitiesControl, character);
         assertFalse(entitiesControl.contains(spider));
         // TODO add assertions for spider death
+    }
+
+    @Test
+    @Override
+    public void testDropOneRing() {
+        CharacterEntity player = new CharacterEntity();
+        SpiderEntity spider = new SpiderEntity(0, 0, 0);
+        spider.dropEntities(player, 1f);
+        List<ICollectableEntity> inventory = player.getInventory();
+        assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
     }
 }

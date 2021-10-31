@@ -1,6 +1,7 @@
 package dungeonmania.entities.staticEntities;
 
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 
 public class ExitEntity extends Entity {
     public ExitEntity() {
@@ -8,6 +9,6 @@ public class ExitEntity extends Entity {
     }
     
     public ExitEntity(int x, int y, int layer) {
-        super(x, y, layer, "exit");
+        super(x, y, layer, EntityTypes.EXIT);
     }
 }

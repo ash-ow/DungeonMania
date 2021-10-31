@@ -1,6 +1,9 @@
 package dungeonmania.entities.movingEntities;
 
 import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.entities.IEntity;
+import dungeonmania.entities.collectableEntities.OneRingEntity;
+import dungeonmania.util.RandomChance;
 import dungeonmania.entities.IContactingEntity;
 
 public interface IBattlingEntity extends IContactingEntity {
@@ -10,13 +13,14 @@ public interface IBattlingEntity extends IContactingEntity {
     public void loseHealth(float enemyHealth, float enemyDamage);
 
     public default void battle(EntitiesControl entitiesControl, CharacterEntity player) {
-        while (player.isAlive() && !checkEnemyDeath(entitiesControl)) {
+        while (player.isAlive() && !checkEnemyDeath(entitiesControl, player)) {
             doBattle(player);
         }
     }
 
-    default boolean checkEnemyDeath(EntitiesControl entitiesControl) {
+    default boolean checkEnemyDeath(EntitiesControl entitiesControl, CharacterEntity player) {
         if (!this.isAlive()) {
+            dropEntities(player);
             entitiesControl.removeEntity(this);
             return true;
         }
@@ -36,6 +40,20 @@ public interface IBattlingEntity extends IContactingEntity {
         return this.getHealth() > 0;
     }
 
+    default void dropEntities(CharacterEntity player) {
+        OneRingEntity ring = new OneRingEntity();
+        if (RandomChance.getRandomBoolean(ring.getDropChance())) {
+            player.addEntityToInventory(ring);
+        }
+    }
+
+    default void dropEntities(CharacterEntity player, float probability) {
+        OneRingEntity ring = new OneRingEntity();
+        if (RandomChance.getRandomBoolean(probability)) {
+            player.addEntityToInventory(ring);
+        }
+    }
+    
     @Override
     public default void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
         battle(entities, player);

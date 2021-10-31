@@ -1,6 +1,7 @@
 package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public class HealthPotionEntity extends Entity implements ICollectableEntity {
@@ -9,7 +10,7 @@ public class HealthPotionEntity extends Entity implements ICollectableEntity {
     }
     
     public HealthPotionEntity(int x, int y, int layer) {
-        super(x, y, layer, "health_potion");
+        super(x, y, layer, EntityTypes.HEALTH_POTION);
     }
 
     @Override

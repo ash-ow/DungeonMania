@@ -89,7 +89,7 @@ public class EntitiesControl {
         return EntitiesControl.getEntitiesOfType(entityList, IContactingEntity.class);
     }
 
-    public static <T> List<T> getEntitiesOfType(List<?> entityList, Class<T> cls) {
+    public static <T> List<T> getEntitiesOfType(List<IEntity> entityList, Class<T> cls) {
         return entityList.stream().filter(cls::isInstance).map(cls::cast).collect(Collectors.toList());
     }
 

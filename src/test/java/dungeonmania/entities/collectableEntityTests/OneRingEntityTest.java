@@ -36,8 +36,8 @@ public class OneRingEntityTest implements ICollectableEntityTest {
         assertEntityIsCollected(ring);
     }
 
-    @Test
-    public void TestRespawn() {
+    @Override
+    public void TestUseCollectable() {
         CharacterEntity player = new CharacterEntity();
         player.addEntityToInventory(new OneRingEntity());
         player.setHealth(0);
@@ -46,10 +46,4 @@ public class OneRingEntityTest implements ICollectableEntityTest {
         List<ICollectableEntity> inventory = player.getInventory();
         assertNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
     }
-
-    @Override
-    public void TestUseCollectable() {
-        // TODO Auto-generated method stub
-    }
-    
 }

@@ -3,6 +3,7 @@ package dungeonmania.entities.movingEntityTests;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
+import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
@@ -32,7 +33,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         character.move(Direction.UP);
         assertEquals(zombie.getPosition(), character.getPosition());
 
-        zombie.interactWithPlayer(new EntitiesControl(), character);
+        zombie.contactWithPlayer(new EntitiesControl(), character);
         assertEquals(58, character.getHealth());
         assertFalse(zombie.isAlive());
     }
@@ -75,8 +76,8 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         CharacterEntity player = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity(0, 0, 0, 1f, 10);
         zombie.dropEntities(player, 1f);
-        EntitiesControl inventory = player.getInventory();
-        assertTrue(inventory.getAllEntitiesOfType("armour").size() == 1);
+        List<ICollectableEntity> inventory = player.getInventory();
+        assertTrue(inventory.size() == 1);
     }
 
     @Override

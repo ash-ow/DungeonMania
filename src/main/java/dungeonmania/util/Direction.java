@@ -37,4 +37,15 @@ public enum Direction {
         Collections.shuffle(directionList, rand);
         return directionList.get(0);
     }
+
+    public static Direction getOppositeDirection(Direction dir) {
+        switch (dir) {
+            case UP: return DOWN;
+            case DOWN: return UP;
+            case RIGHT: return LEFT;
+            case LEFT: return RIGHT;
+            default: return NONE;
+        }
+    }
+    
 }

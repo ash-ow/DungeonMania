@@ -5,8 +5,8 @@ import java.util.Random;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.collectableEntities.ArmourEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.util.Direction;
@@ -50,7 +50,7 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
             this.move(direction);
         }
         if (this.isInSamePositionAs(player)) {
-            interactWithPlayer(entitiesControl, player);
+            contactWithPlayer(entitiesControl, player);
         }
     }
 
@@ -72,21 +72,15 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         this.health = health;
     }
 
-    public int getDamage() {
+    public float getDamage() {
         // TODO determine correct ZombieToast damage
         return 1;
     }
 
-    @Override
-    public void loseHealth(float enemyHealth, int enemyDamage) {
-        if (equipped != null) {
-            this.health -= ((enemyHealth * enemyDamage) / 10);
-        } else {
-            this.health -= ((enemyHealth * enemyDamage) / 5);
-        }
+    public void loseHealth(float enemyHealth, float enemyDamage) {
+        this.health -= ((enemyHealth * enemyDamage) / 5);
     }
-//endregion
-
+    //endregion
     @Override
     public void dropEntities(CharacterEntity player) {
         OneRingEntity ring = new OneRingEntity();
@@ -111,9 +105,4 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         }
     }
 
-    @Override
-    public void interactWithPlayer(EntitiesControl entities, CharacterEntity player) {
-        // TODO Auto-generated method stub
-        
-    }
 }

@@ -13,7 +13,7 @@ public class TheOneRingEntity extends ICollectableEntity {
     public TheOneRingEntity() {
         this(0, 0, 0);
     }
-    
+
     public TheOneRingEntity(int x, int y, int layer) {
         super(x, y, layer, "one_ring");
     }

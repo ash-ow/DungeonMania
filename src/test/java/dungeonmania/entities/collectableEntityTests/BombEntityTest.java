@@ -1,11 +1,15 @@
 package dungeonmania.entities.collectableEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,8 +19,6 @@ import dungeonmania.entities.IBlockerTest;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.movingEntities.*;
-import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
-import dungeonmania.entities.staticEntities.*;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -42,7 +44,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
         assertEquals(new Position(0, 1, 0), player.getPosition());
 
         dungeon.tick("bomb-0-1-0");
-        assertEquals(new Position(0, 1, 0), dungeon.entitiesControl.getEntityById("0").getPosition(), "Bomb should be placed in the players new position");
+        assertEquals(new Position(0, 1, 0), dungeon.entitiesControl.getEntityById("bomb-0-1-0").getPosition(), "Bomb should be placed in the players new position");
         assertTrue(bomb.isArmed(), "Bomb should be active");
         assertNull(player.getInventoryItem(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
     }
@@ -54,93 +56,107 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
         assertEntityIsCollected(bomb);
     }
     
-    @Test
-    public void TestExplode() {
-        ArrayList<IEntity> entities = new ArrayList<>();
+// region TestExplode
+    
+@Test
+public void TestExplode() {
+    // Move the player left to push the boulder into the bomb
+    Dungeon dungeon = getDungeonWithBombTestData();
+    dungeon.tick(Direction.LEFT);
 
-        /*
-                0 1 2 3
-            0   . . . .
-            1   X W . .
-            2   W S B P
-            3   I O W .
-            4   X A . .
-            5   . X . .
-        */
+    Assertions.assertAll( "Before the bomb is armed, nothing will explode",
+        () -> assertEntityStillOnMap( dungeon, "0",  "spider"),
+        () -> assertEntityStillOnMap( dungeon, "1",  "wall"),
+        () -> assertEntityStillOnMap( dungeon, "2",  "wall"),
+        () -> assertEntityStillOnMap( dungeon, "3",  "switch"),
+        () -> assertEntityStillOnMap( dungeon, "4",  "boulder"),
+        () -> assertEntityStillOnMap( dungeon, "5",  "wall"),
+        () -> assertEntityStillOnMap( dungeon, "6",  "bomb"),
+        () -> assertEntityStillOnMap( dungeon, "7",  "switch"),
+        () -> assertEntityStillOnMap( dungeon, "8",  "wood"),
+        () -> assertEntityStillOnMap( dungeon, "9", "spider"),
+        () -> assertEntityStillOnMap( dungeon, "11", "spider"),
+        () -> assertEntityStillOnMap( dungeon, "10", "arrow"),
+        () -> assertEntityStillOnMap( dungeon, "12", "exit"),
 
-        // non-exploding entities
-        CharacterEntity player = new CharacterEntity(3, 2, 0); // P
-        entities.add(player);
-        WallEntity wall_upup = new WallEntity(1, 1, 0); // W
-        entities.add(wall_upup);
-        SpiderEntity spider_upupleft = new SpiderEntity(0,1, 0); // X
-        entities.add(spider_upupleft);
+        () -> assertNotNull( dungeon.getPlayer())
+    );
 
-        // exploding entities
-        BoulderEntity boulder = new BoulderEntity(2, 2, 0); // B
-        entities.add(boulder);
-        BombEntity bomb = new BombEntity(1,3,0); // O
-        entities.add(bomb);
-        SwitchEntity switches_onbomb = new SwitchEntity(1, 3, 1); // S
-        entities.add(switches_onbomb);
-        SpiderEntity spider_botleft = new SpiderEntity(0, 4, 0); // X
-        entities.add(spider_botleft);
-        SpiderEntity spider_downdown = new SpiderEntity(1, 5, 0); // X
-        entities.add(spider_downdown);
-        WallEntity wall_topleft = new WallEntity(0, 2, 0); // W
-        entities.add(wall_topleft);
-        WallEntity wall_right = new WallEntity(2, 3, 0); // W
-        entities.add(wall_right);
-        SwitchEntity switches_onboulder = new SwitchEntity(1, 2, 0); // S
-        entities.add(switches_onboulder);
-        WoodEntity wood = new WoodEntity(0, 3, 0); // I
-        entities.add(wood);
-        ArrowsEntity arrows = new ArrowsEntity(1, 4, 0); // A
-        entities.add(arrows);
+    // Teleport the player to the bomb to arm it, then force a tick
+    dungeon.tick(Direction.DOWN);
+    dungeon.tick(Direction.LEFT);
+    dungeon.tick("6");
+
+    Assertions.assertAll( "Once the bomb is armed, it will explode",
+        () -> assertEntityStillOnMap( dungeon, "0",  "spider"),
+        () -> assertEntityStillOnMap( dungeon, "1",  "wall"),
+        () -> assertEntityStillOnMap( dungeon, "2",  "wall"),
+        () -> assertEntityNotOnMap(   dungeon, "3",  "switch"),
+        () -> assertEntityNotOnMap(   dungeon, "4",  "boulder"),
+        () -> assertEntityNotOnMap(   dungeon, "5",  "wall"),
+        () -> assertEntityNotOnMap(   dungeon, "6",  "bomb"),
+        () -> assertEntityNotOnMap(   dungeon, "7",  "switch"),
+        () -> assertItemInInventory("8", dungeon.getPlayer(), dungeon.entitiesControl),
+        () -> assertEntityNotOnMap( dungeon, "9", "spider"),
+        () -> assertEntityNotOnMap( dungeon, "10", "arrow"),
+        () -> assertEntityStillOnMap( dungeon, "11", "spider"), // ?
+        () -> assertEntityStillOnMap( dungeon, "12", "exit"),
+
+        () -> assertNotNull( dungeon.getPlayer())
+    );
+}
+
+public void assertEntityStillOnMap(Dungeon dungeon, String id, String expectedType) {
+    IEntity ent = dungeon.entitiesControl.getEntityById(id);
+    assertEquals(expectedType, ent.getType(), "Entity type should be " + expectedType + " but was " + ent.getType());
+    assertNotNull(ent, "Entity should still be on the map " + expectedType + " " + id);
+}
+
+public void assertEntityNotOnMap(Dungeon dungeon, String id, String expectedType) {
+    IEntity ent = dungeon.entitiesControl.getEntityById(id);
+    assertNull(ent, "Entity should no longer be on the map " + expectedType + " " + id);
+}
+
+private Dungeon getDungeonWithBombTestData() {
+    /*
+            0 1 2 3
+        0   . . . .
+        1   X W . .
+        2   W S B P
+        3   W O I .
+        4   X A . .
+        5   X . . T
+    */
+    
+    String entities = "{\"entities\": [" +
+        "{\"x\": 0,\"y\": 1,\"type\": \"spider\"}," + // X 0
+        "{\"x\": 1,\"y\": 1,\"type\": \"wall\"}," + // W 1
+
+        "{\"x\": 0,\"y\": 2,\"type\": \"wall\"}," + // W 2
+        "{\"x\": 1,\"y\": 2,\"type\": \"switch\"}," + // S 3
+        "{\"x\": 2,\"y\": 2,\"type\": \"boulder\"}," + // B 4
+        "{\"x\": 3,\"y\": 2,\"type\": \"player\"}," + // P
         
-        // Move the player left to push the boulder into the bomb
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
-        dungeon.tick(Direction.LEFT);
+        "{\"x\": 0,\"y\": 3,\"type\": \"wall\"}," + // W 5
+        "{\"x\": 1,\"y\": 3,\"type\": \"bomb\"}," + // O 6
+        "{\"x\": 1,\"y\": 3,\"type\": \"switch\"}," + // S 7
+        "{\"x\": 2,\"y\": 3,\"type\": \"wood\"}," + // I 8
+        
+        "{\"x\": 0,\"y\": 4,\"type\": \"spider\"}," + // X 9
+        "{\"x\": 1,\"y\": 4,\"type\": \"arrow\"}," + // A 10
+        
+        "{\"x\": 0,\"y\": 5,\"type\": \"spider\"}," + // X 11
+        "{\"x\": 3,\"y\": 5,\"type\": \"exit\"}" + // T 12
 
-        Assertions.assertAll( "Before the bomb is armed, nothing will explode",
-            () -> assertTrue(dungeon.entitiesControl.contains(player), "Entity controller should still contain wood"),
-            () -> assertTrue(dungeon.entitiesControl.contains(spider_upupleft), "Entity controller should contain spider_upupleft"),
-            () -> assertTrue(dungeon.entitiesControl.contains(wall_upup), "Entity controller should still contain wall_upup"),
+        "]}";
 
-            () -> assertTrue(dungeon.entitiesControl.contains(boulder), "Entity controller should no longer contain boulder"),
-            () -> assertTrue(dungeon.entitiesControl.contains(bomb), "Entity controller should no longer contain bomb"),
-            () -> assertTrue(dungeon.entitiesControl.contains(spider_botleft), "Entity controller should no longer contain spider_botleft"),
-            () -> assertTrue(dungeon.entitiesControl.contains(spider_downdown), "Entity controller should no longer contain spider_downdown"),
-            () -> assertTrue(dungeon.entitiesControl.contains(wall_topleft), "Entity controller should no longer contain wall_topleft"),
-            () -> assertTrue(dungeon.entitiesControl.contains(wall_right), "Entity controller should no longer contain wall_right"),
-            () -> assertTrue(dungeon.entitiesControl.contains(switches_onbomb), "Entity controller should no longer contain switches_onbomb"),
-            () -> assertTrue(dungeon.entitiesControl.contains(switches_onboulder), "Entity controller should no longer contain switches_onboulder"),
-            () -> assertTrue(dungeon.entitiesControl.contains(wood), "Entity controller should still contain wood"),
-            () -> assertTrue(dungeon.entitiesControl.contains(arrows), "Entity controller should still contain arrows")
-        );
+    String goals = "{\"goal-condition\": {\"goal\": \"exit\"}}";
+    JsonArray entitiesJson = new Gson().fromJson(entities, JsonObject.class).get("entities").getAsJsonArray();
+    JsonObject goalsJson = new Gson().fromJson(goals, JsonObject.class).get("goal-condition").getAsJsonObject();
+    return new Dungeon(entitiesJson, goalsJson, "", "", "");
+}
 
-        // Teleport the player to the bomb to arm it, then force a tick
-        player.setPosition(bomb.getPosition());
-        bomb.used(player);
-        dungeon.tick(Direction.LEFT);
-
-        Assertions.assertAll( "Once the bomb is armed, it will explode",
-            () -> assertTrue(dungeon.entitiesControl.contains(player), "Entity controller should still contain wood"),
-            () -> assertTrue(dungeon.entitiesControl.contains(spider_upupleft), "Entity controller should contain spider_upupleft"),
-            () -> assertTrue(dungeon.entitiesControl.contains(wall_upup), "Entity controller should still contain wall_upup"),
-            () -> assertTrue(dungeon.entitiesControl.contains(spider_downdown), "Entity controller should no longer contain spider_downdown"),
-            () -> assertTrue(dungeon.entitiesControl.contains(wall_topleft), "Entity controller should no longer contain wall_topleft"),
-            () -> assertTrue(dungeon.entitiesControl.contains(wall_right), "Entity controller should no longer contain wall_right"),
-            () -> assertTrue(dungeon.entitiesControl.contains(arrows), "Entity controller should still contain arrows"),
-
-            () -> assertFalse(dungeon.entitiesControl.contains(boulder), "Entity controller should no longer contain boulder"),
-            () -> assertFalse(dungeon.entitiesControl.contains(bomb), "Entity controller should no longer contain bomb"),
-            () -> assertFalse(dungeon.entitiesControl.contains(spider_botleft), "Entity controller should no longer contain spider_botleft"),           
-            () -> assertFalse(dungeon.entitiesControl.contains(switches_onbomb), "Entity controller should no longer contain switches_onbomb"),
-            () -> assertFalse(dungeon.entitiesControl.contains(switches_onboulder), "Entity controller should no longer contain switches_onboulder"),
-            () -> assertFalse(dungeon.entitiesControl.contains(wood), "Entity controller should still contain wood")        
-        );
-    }
+// endregion
 
     @Test
     @Override
@@ -156,7 +172,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
         assertEquals(new Position(0, 1, 0), player.getPosition());
 
         dungeon.tick("bomb-0-1-0");
-        assertEquals(new Position(0, 1, 0), dungeon.entitiesControl.getEntityById("0").getPosition(), "Bomb should be placed in the players new position");
+        assertEquals(new Position(0, 1, 0), dungeon.entitiesControl.getEntityById("bomb-0-1-0").getPosition(), "Bomb should be placed in the players new position");
         assertTrue(bomb.isArmed(), "Bomb should be active");
         assertNull(player.getInventoryItem(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
         

@@ -27,9 +27,14 @@ public class EntitiesControl {
         entities = new ArrayList<IEntity>();
     }
 
-    public void addEntities(IEntity entity) {
+    public void addEntity(IEntity entity) {
         entities.add(entity);
+        entityCounter++;
+    }
+
+    private void createNewEntityOnMap(IEntity entity) {
         entity.setId(Integer.toString(entityCounter));
+        entities.add(entity);
         entityCounter++;
     }
 
@@ -124,57 +129,57 @@ public class EntitiesControl {
     public void createEntity(Integer xAxis, Integer yAxis, Integer layer, String type) {
         switch (type) {
             case "wall":
-                this.addEntities(new WallEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new WallEntity(xAxis, yAxis, layer));
                 break;
             case "exit":
-                this.addEntities(new ExitEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new ExitEntity(xAxis, yAxis, layer));
                 break;
             case "switch":
-                this.addEntities(new SwitchEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new SwitchEntity(xAxis, yAxis, layer));
                 break;
             case "boulder":
-                this.addEntities(new BoulderEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new BoulderEntity(xAxis, yAxis, layer));
                 break;
             case "spider":
-                this.addEntities(new SpiderEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new SpiderEntity(xAxis, yAxis, layer));
                 break;
             case "wood":
-                this.addEntities(new WoodEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new WoodEntity(xAxis, yAxis, layer));
                 break;
             case "arrow":
-                this.addEntities(new ArrowsEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new ArrowsEntity(xAxis, yAxis, layer));
                 break;
             case "bomb":
-                this.addEntities(new BombEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new BombEntity(xAxis, yAxis, layer));
                 break;
             case "sword":
-                this.addEntities(new SwordEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new SwordEntity(xAxis, yAxis, layer));
                 break;
             case "armour":
-                this.addEntities(new ArmourEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new ArmourEntity(xAxis, yAxis, layer));
                 break;
             case "treasure":
-                this.addEntities(new TreasureEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new TreasureEntity(xAxis, yAxis, layer));
                 break;
             case "health_potion":
-                this.addEntities(new HealthPotionEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new HealthPotionEntity(xAxis, yAxis, layer));
                 break;
             case "invisibility_potion":
-                this.addEntities(new InvisibilityPotionEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new InvisibilityPotionEntity(xAxis, yAxis, layer));
                 break;
             case "invincibility_potion":
-                this.addEntities(new InvincibilityPotionEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new InvincibilityPotionEntity(xAxis, yAxis, layer));
                 break;
             case "mercenary":
-                this.addEntities(new MercenaryEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new MercenaryEntity(xAxis, yAxis, layer));
                 break;
             case "one_ring":
-                this.addEntities(new TheOneRingEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new TheOneRingEntity(xAxis, yAxis, layer));
             case "zombie_toast":
-                this.addEntities(new ZombieToastEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new ZombieToastEntity(xAxis, yAxis, layer));
                 break;
             case "zombie_toast_spawner":
-                this.addEntities(new ZombieToastSpawnerEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new ZombieToastSpawnerEntity(xAxis, yAxis, layer));
                 break;
         }
     }
@@ -182,10 +187,10 @@ public class EntitiesControl {
 	public void createEntity(Integer xAxis, Integer yAxis, Integer layer, Integer keyNumber, String type) {
         switch (type) {
             case "door":
-                this.addEntities(new DoorEntity(xAxis, yAxis, layer, keyNumber));
+                this.createNewEntityOnMap(new DoorEntity(xAxis, yAxis, layer, keyNumber));
                 break;
             case "key":
-                this.addEntities(new KeyEntity(xAxis, yAxis, layer, keyNumber));
+                this.createNewEntityOnMap(new KeyEntity(xAxis, yAxis, layer, keyNumber));
                 break;
         }
 	}
@@ -193,18 +198,14 @@ public class EntitiesControl {
 	public void createEntity(Integer xAxis, Integer yAxis, Integer layer, String colour, String type) {
         switch (type) {
             case "portal":
-                this.addEntities(new PortalEntity(xAxis, yAxis, layer, colour));
+                this.createNewEntityOnMap(new PortalEntity(xAxis, yAxis, layer, colour));
                 break;
         }
 	}
 
     public void createEntity(Integer x, Integer y, String type) {
-        Integer layer = getNumberOfEntitiesInPosition(new Position(x, y));
+        Integer layer = this.getAllEntitiesFromPosition(new Position(x,y)).size();
         createEntity(x, y, layer, type);
-    }
-
-    private Integer getNumberOfEntitiesInPosition(Position position) {
-        return this.getAllEntitiesFromPosition(this.getLargestCoordinate()).size();
     }
 
     public List<IEntity> getAllEntitiesOfType(String type) {
@@ -278,7 +279,7 @@ public class EntitiesControl {
         List<IEntity> adjacentEntities = new ArrayList<IEntity>();
         for (IEntity ent : this.entities) {
             Position entPosition = ent.getPosition();
-            if (Position.isAdjacent(position, entPosition)) {
+            if (Position.isAdjacent(position, entPosition) || Position.isAdjacent(entPosition, position)) { // why tho @braedon
                 adjacentEntities.add(ent);
             }
         }

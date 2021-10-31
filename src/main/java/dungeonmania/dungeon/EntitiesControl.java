@@ -292,4 +292,10 @@ public class EntitiesControl {
             .orElse(null);
     }
 
+    public static <T extends IEntity> IEntity getEntityById(List<T> entityList, String id) {
+        return entityList.stream()
+            .filter(entity -> entity.getId().equals(id))
+            .findFirst()
+            .orElse(null);
+    }
 }

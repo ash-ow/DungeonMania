@@ -1,13 +1,11 @@
 package dungeonmania.dungeon;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;

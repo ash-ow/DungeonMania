@@ -34,7 +34,6 @@ public class ShieldEntity extends BuildableEntity {
             EntityTypes component = entry.getKey();
             int quantity = entry.getValue();
             if (numberOfComponentItemsInInventory(inventory, component) >= quantity) {
-                System.out.println("Needs more " + component.toString());
                 if (component.equals(EntityTypes.WOOD)) {
                     requiredWood = true;
                 } else if (component.equals(EntityTypes.TREASURE)) {

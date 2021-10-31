@@ -9,15 +9,12 @@ import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
-import dungeonmania.entities.staticEntities.WallEntity;
-import dungeonmania.entities.staticEntityTest.WallEntityTest;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;

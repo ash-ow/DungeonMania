@@ -1,19 +1,10 @@
 package dungeonmania.entities.collectableEntityTests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 
-import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.util.Position;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.KeyEntity;
-
-import dungeonmania.util.Direction;
-import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.response.models.ItemResponse;
 
 
 public class KeyEntityTest implements ICollectableEntityTest {

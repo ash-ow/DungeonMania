@@ -17,8 +17,7 @@ public class WoodEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestUseCollectable() {
-        WoodEntity wood = new WoodEntity(0, 0, 0);
-        assertEntityIsUsedAndPlacedIfApplicable(wood);
+        // Wood never used
     }
 
     @Test

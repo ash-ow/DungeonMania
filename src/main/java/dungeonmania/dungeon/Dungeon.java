@@ -93,7 +93,7 @@ public class Dungeon {
 
     public void tick(Direction direction) {
         player.move(direction, entitiesControl);
-        if (player.getInvincible()) {
+        if (player.isInvincible()) {
             entitiesControl.runAwayAllMovingEntities(player);
         } else {
             entitiesControl.moveAllMovingEntities(player);
@@ -104,7 +104,7 @@ public class Dungeon {
 
     public void tick(String itemID) {
         player.useItem(itemID, this.entitiesControl);
-        if (player.getInvincible()) {
+        if (player.isInvincible()) {
             entitiesControl.runAwayAllMovingEntities(player);
         } else {
             entitiesControl.moveAllMovingEntities(player);

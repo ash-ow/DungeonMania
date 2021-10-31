@@ -76,4 +76,14 @@ public class BowTest implements IBuildableEntityTests {
         bow.used(player);
         assertNull(player.getInventoryItem(bow.getId()), "Inventory should not contain entity " + bow.getId());
     }
+
+    @Override
+    public void TestCollect() {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void TestUseCollectable() {
+        // TODO Auto-generated method stub
+    }
 }

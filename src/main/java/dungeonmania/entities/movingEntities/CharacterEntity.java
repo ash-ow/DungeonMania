@@ -2,6 +2,8 @@ package dungeonmania.entities.movingEntities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
@@ -63,12 +65,12 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     @Override
     public void loseHealth(float enemyHealth, float enemyDamage) {
         float damage = ((enemyHealth * enemyDamage) / 10);
-        if(this.containedInInventory("armour")) {
-            ArmourEntity armour = (ArmourEntity) findFirstInInventory("armour");
+        if(this.containedInInventory(EntityTypes.ARMOUR)) {
+            ArmourEntity armour = (ArmourEntity) findFirstInInventory(EntityTypes.ARMOUR);
             damage = armour.reduceDamage(damage, this);
         }
-        if(this.containedInInventory("shield")) {
-            ShieldEntity shield = (ShieldEntity) findFirstInInventory("shield");
+        if(this.containedInInventory(EntityTypes.SHIELD)) {
+            ShieldEntity shield = (ShieldEntity) findFirstInInventory(EntityTypes.SHIELD);
             damage = shield.reduceDamage(damage, this);
         }
         this.health -= damage;
@@ -155,29 +157,29 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
 // region Build
-    public void build(String buildable) {
-        if (buildable.equals("bow")) {
+    public void build(EntityTypes itemToBuild) {
+        if (itemToBuild.equals(EntityTypes.BOW)) {
             BowEntity bow = new BowEntity();
             if (bow.isBuildable(this.inventory)) {
                 this.addEntityToInventory(bow);
-                removeBuildMaterials("wood", 1);
-                removeBuildMaterials("arrow", 3);
+                removeBuildMaterials(EntityTypes.WOOD, 1);
+                removeBuildMaterials(EntityTypes.ARROW, 3);
             }
-        } else if (buildable.equals("shield")){
+        } else if (itemToBuild.equals(EntityTypes.SHIELD)){
             ShieldEntity shield = new ShieldEntity();
             if (shield.isBuildable(this.inventory)) {
                 this.addEntityToInventory(shield);
-                removeBuildMaterials("wood", 2);
-                if(this.containedInInventory("treasure")) {
-                    removeBuildMaterials("treasure", 1);
-                } else if (this.containedInInventory("key")) {
-                    removeBuildMaterials("key", 1);
+                removeBuildMaterials(EntityTypes.WOOD, 2);
+                if(this.containedInInventory(EntityTypes.TREASURE)) {
+                    removeBuildMaterials(EntityTypes.TREASURE, 1);
+                } else if (this.containedInInventory(EntityTypes.KEY)) {
+                    removeBuildMaterials(EntityTypes.KEY, 1);
                 }
             }
         }
     }
 
-    public void removeBuildMaterials(String type, int amount) {
+    public void removeBuildMaterials(EntityTypes type, int amount) {
         int removed = 0;
         List<CollectableEntity> toRemove = new ArrayList<>();
         while(removed < amount) {
@@ -195,7 +197,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     public List<String> getBuildableList() {
-        List<String> buildable = new ArrayList<>();
+        List<EntityTypes> buildable = new ArrayList<>();
         BowEntity bow = new BowEntity();
         if (bow.isBuildable(this.inventory)) {
             buildable.add(bow.getType());
@@ -204,8 +206,9 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         if (shield.isBuildable(this.inventory)) {
             buildable.add(shield.getType());
         }
-        return buildable;
+        return buildable.stream().map(b -> b.toString()).collect(Collectors.toList());
     }
+
 //endregion    
     private void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
         List<IContactingEntity> targetInteractable = entitiesControl.getInteractableEntitiesFrom(targetEntities);

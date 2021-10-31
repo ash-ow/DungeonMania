@@ -3,7 +3,7 @@ package dungeonmania.entities.collectableEntities;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 
-public class KeyEntity extends Entity implements CollectableEntity {
+public class KeyEntity extends CollectableEntity {
     private int keyNumber;
 
     public KeyEntity(int keyNumber) {

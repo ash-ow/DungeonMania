@@ -4,7 +4,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public class InvisibilityPotionEntity extends Entity implements CollectableEntity {
+public class InvisibilityPotionEntity extends CollectableEntity {
     public InvisibilityPotionEntity() {
         this(0, 0, 0);
     }

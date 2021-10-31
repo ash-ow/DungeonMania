@@ -7,14 +7,13 @@ import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public class BowEntity extends BuildableEntity implements IWeaponEntity {
-    int durability = 10;
-
     public BowEntity() {
         this(0, 0, 0);
     }
     
     public BowEntity(int x, int y, int layer) {
         super(x, y, layer, EntityTypes.BOW);
+        this.durability = 10;
     }
     
     @Override

@@ -3,7 +3,6 @@ package dungeonmania.entities.collectableEntities;
 import java.util.List;
 
 import dungeonmania.dungeon.EntitiesControl;
-import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IEntity;
@@ -13,7 +12,7 @@ import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.staticEntities.SwitchEntity;
 import dungeonmania.util.Direction;
 
-public class BombEntity extends Entity implements CollectableEntity, ITicker, IBlocker {
+public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
     boolean isArmed = false;
 
     public BombEntity() {

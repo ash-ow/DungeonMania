@@ -150,7 +150,8 @@ public class Dungeon {
     }
 
     public void build(String buildable) {
-        this.player.build(buildable);
+        EntityTypes itemToBuild = EntityTypes.getEntityType(buildable);
+        this.player.build(itemToBuild);
     }
 }
  

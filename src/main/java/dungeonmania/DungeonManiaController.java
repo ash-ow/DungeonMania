@@ -61,6 +61,7 @@ public class DungeonManiaController {
             this.dungeon = new Dungeon(jsonObject.get("entities").getAsJsonArray(), goalCondition , gameMode, id, dungeonName);           
             
         } catch (IOException e) {
+            throw new IllegalArgumentException();
         }
         return dungeon.getInfo();
     }

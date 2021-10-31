@@ -15,12 +15,12 @@ public interface ICollectableEntityTest extends IEntityTests {
     public void TestUseCollectable();
     
     public default void assertItemInInventory(String id, CharacterEntity player, EntitiesControl entitiesControl) {
-        assertNotNull(player.getInventory().getEntityById(id), "Inventory should contain entity " + id);
+        assertNotNull(player.getInventoryItem(id), "Inventory should contain entity " + id);
         assertNull(entitiesControl.getEntityById(id), "EntitiesControl should not contain entity " + id);
     }
     
     public default void assertItemNotInInventory(String id, CharacterEntity player, EntitiesControl entitiesControl) {
-        assertNull(player.getInventory().getEntityById(id), "Inventory should not contain entity " + id);
+        assertNull(player.getInventoryItem(id), "Inventory should not contain entity " + id);
         assertNotNull(entitiesControl.getEntityById(id), "EntitiesControl should contain entity " + id);
     }
 
@@ -31,7 +31,7 @@ public interface ICollectableEntityTest extends IEntityTests {
         entities.addEntity(entity);
         assertItemNotInInventory(entity.getId(), player, entities);
         
-        entity.interactWithPlayer(entities, player);
+        entity.contactWithPlayer(entities, player);
         assertItemInInventory(entity.getId(), player, entities);
     }
 
@@ -39,9 +39,9 @@ public interface ICollectableEntityTest extends IEntityTests {
         CharacterEntity player = new CharacterEntity(0, 1, 0);
         EntitiesControl entities = new EntitiesControl();
         entities.addEntity(entity);
-        entity.interactWithPlayer(entities, player);
+        entity.contactWithPlayer(entities, player);
         entity.used(player);
-        assertNull(player.getInventory().getEntityById(entity.getId()), "Inventory should not contain entity " + entity.getId());
+        assertNull(player.getInventoryItem(entity.getId()), "Inventory should not contain entity " + entity.getId());
     }
 
 }

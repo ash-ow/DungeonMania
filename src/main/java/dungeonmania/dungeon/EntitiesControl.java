@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.IContactingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.util.Position;
@@ -65,10 +65,17 @@ public class EntitiesControl {
             .collect(Collectors.toList());
     }
 
-    public void moveAllMovingEntities(Direction direction, CharacterEntity player) {
+    public void moveAllMovingEntities(CharacterEntity player) {
         List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
         for (IAutoMovingEntity entity : movingEntities) {
             entity.move(this, player);
+        }
+    }
+
+    public void runAwayAllMovingEntities(CharacterEntity player) {
+        List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
+        for (IAutoMovingEntity entity : movingEntities) {
+            entity.runAway(this, player);
         }
     }
 
@@ -77,12 +84,16 @@ public class EntitiesControl {
         return EntitiesControl.getEntitiesOfType(this.entities, IAutoMovingEntity.class);
     }
 
-    public List<IInteractingEntity> getInteractableEntitiesFrom(List<IEntity> entityList) {
-        return EntitiesControl.getEntitiesOfType(entityList, IInteractingEntity.class);
+    public List<IContactingEntity> getInteractableEntitiesFrom(List<IEntity> entityList) {
+        return EntitiesControl.getEntitiesOfType(entityList, IContactingEntity.class);
     }
 
     public static <T> List<T> getEntitiesOfType(List<IEntity> entityList, Class<T> cls) {
         return entityList.stream().filter(cls::isInstance).map(cls::cast).collect(Collectors.toList());
+    }
+
+    public <T> List<T> getEntitiesOfType(Class<T> cls) {
+        return getEntitiesOfType(this.entities, cls);
     }
 
     public List<IEntity> getAllEntitiesFromPosition(Position position) {
@@ -93,7 +104,7 @@ public class EntitiesControl {
         return entityList.stream().filter(IBlocker.class::isInstance).map(IBlocker.class::cast).anyMatch(IBlocker::isBlocking);
     }
 
-    public static IEntity getFirstEntityOfType(List<IEntity> entityList, Class<?> cls) {
+    public static <T extends IEntity> IEntity getFirstEntityOfType(List<T> entityList, Class<?> cls) {
         return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findFirst().orElse(null);
     }
 

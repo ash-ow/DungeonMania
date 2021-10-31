@@ -1,7 +1,6 @@
 package dungeonmania.entities.collectableEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -47,7 +46,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
         dungeon.tick("bomb");
         assertEquals(new Position(0, 1, 0), dungeon.entitiesControl.getEntityById("bomb-0-1-0").getPosition(), "Bomb should be placed in the players new position");
         assertTrue(bomb.isArmed(), "Bomb should be active");
-        assertNull(player.getInventory().getEntityById(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
+        assertNull(player.getInventoryItem(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
     }
 
     @Test
@@ -176,13 +175,13 @@ private Dungeon getDungeonWithBombTestData() {
         dungeon.tick("bomb");
         assertEquals(new Position(0, 1, 0), dungeon.entitiesControl.getEntityById("bomb-0-1-0").getPosition(), "Bomb should be placed in the players new position");
         assertTrue(bomb.isArmed(), "Bomb should be active");
-        assertNull(player.getInventory().getEntityById(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
+        assertNull(player.getInventoryItem(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
         
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should be able to move off the bomb");
         dungeon.tick(Direction.UP);
         assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should not be able to move back onto the bomb once it has been placed");
-        assertNull(player.getInventory().getEntityById(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
+        assertNull(player.getInventoryItem(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
     }
 
     @Test

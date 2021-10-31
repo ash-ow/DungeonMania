@@ -31,7 +31,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         character.move(Direction.UP);
         assertEquals(zombie.getPosition(), character.getPosition());
 
-        zombie.interactWithPlayer(new EntitiesControl(), character);
+        zombie.contactWithPlayer(new EntitiesControl(), character);
         assertEquals(58, character.getHealth());
         assertFalse(zombie.isAlive());
     }

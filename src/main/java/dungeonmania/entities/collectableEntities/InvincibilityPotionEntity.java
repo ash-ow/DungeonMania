@@ -16,6 +16,7 @@ public class InvincibilityPotionEntity extends Entity implements ICollectableEnt
 
 
     @Override
+    //TO DO: Implement Potion Duration
     public void used(CharacterEntity player) {
        player.setInvincible(true);
        //player.getDuration();

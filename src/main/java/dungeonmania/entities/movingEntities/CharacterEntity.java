@@ -141,7 +141,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public int getBattleCount() {
         return countBattle;
     }
-    //TO DO: recheck how this is implemented 
+    //TO DO: recheck how this is implemented for invincibility potion 
     public void setBattleCount(boolean reset) {
         if(reset)
         {
@@ -165,7 +165,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
             interactWithAll(targetEntities, entitiesControl);
         }
     }
-
+    
+    //TO DO: Implement with Potion Duration
     public int getCountMove(){
         return countMove;
     }

@@ -17,6 +17,7 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.util.Position;
 import dungeonmania.entities.collectableEntities.InvisibilityPotionEntity;
 import dungeonmania.entities.movingEntities.spiderEntity.*;
+import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.dungeon.*;
 
 import dungeonmania.entities.IEntity;
@@ -65,26 +66,32 @@ public class  InvisibilityPotionEntityTest implements ICollectableEntityTest {
         InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0,0,0);
         CharacterEntity player = new CharacterEntity(0,0,0);
         SpiderEntity spider = new SpiderEntity(0,1,0);
+        WoodEntity wood = new WoodEntity(0,2,0);
         ArrayList<IEntity> entities = new ArrayList<>();
         
         entities.add(spider);
         entities.add(invisibility_potion);
-
-        assertEquals(new Position(0, 0, 0), player.getPosition());
-        assertEquals(new Position(0, 1, 0), spider.getPosition());
+        entities.add(wood);
 
         invisibility_potion.used(player);
        
+        //player avoids battle with spider and both have full health
         player.move(Direction.DOWN);
         assertEquals(new Position(0, 1, 0), player.getPosition());
         assertEquals(new Position(0, 1, 0), spider.getPosition());
         assertTrue(player.isInvisible());
-
-        player.move(Direction.DOWN);
-        assertEquals(new Position(0, 2, 0), player.getPosition());
-        assertEquals(new Position(0, 1, 0), spider.getPosition());
         assertEquals(100, player.getHealth());
         assertEquals(100, spider.getHealth());
+
+        //Player can pick up wood while invisible 
+        player.move(Direction.DOWN);
+        assertTrue(player.isInvisible());
+        assertEquals(new Position(0, 2, 0), player.getPosition());
+        assertEquals(new Position(0, 2, 0), wood.getPosition());
+        assertEntityIsCollected(wood);
+        
+
+
     }
     /* TO DO: Fix Duration && redo test 
     @Test

@@ -88,15 +88,16 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
         assertEquals(new Position(0, 1, 0), player.getPosition());
 
         invincibility_potion.used(player);
+        assertItemNotInInventory("invincibility_potion-0-1-0", player, dungeon.entitiesControl, false);
         assertTrue(player.isInvincible());
             
         // Player moves down 10 times
-        for (int i = 0; i < 9;i++) {
+        for (int i = 0; i < 10;i++) {
             dungeon.tick(Direction.DOWN);
         }
-        //to do check 
+        
         assertFalse(player.isInvincible());
-        assertItemInInventory("invincibility_potion-0-1-0", player, dungeon.entitiesControl);
+        assertItemNotInInventory("invincibility_potion-0-1-0", player, dungeon.entitiesControl, false);
     }
 
 }

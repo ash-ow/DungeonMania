@@ -1,17 +1,9 @@
 package dungeonmania.entities.collectableEntityTests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 
-import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.ArmourEntity;
-import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.response.models.ItemResponse;
-import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class ArmourEntityTest implements ICollectableEntityTest {

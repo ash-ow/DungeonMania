@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;

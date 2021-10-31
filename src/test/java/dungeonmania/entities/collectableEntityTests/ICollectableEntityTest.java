@@ -7,7 +7,6 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.Direction;
 
 public interface ICollectableEntityTest extends IEntityTests {
 

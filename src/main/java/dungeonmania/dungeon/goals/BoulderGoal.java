@@ -5,10 +5,7 @@ import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.movingEntities.BoulderEntity;
-import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.movingEntities.BoulderEntity;
-import dungeonmania.entities.staticEntities.ExitEntity;
 import dungeonmania.entities.staticEntities.SwitchEntity;
 import dungeonmania.util.Position;
 

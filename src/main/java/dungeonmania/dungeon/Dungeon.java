@@ -12,7 +12,6 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
-import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.*;
@@ -20,8 +19,6 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class Dungeon {
-    private int height;
-    private int width;
     public EntitiesControl entitiesControl;
     private String gameMode;
     private String id;

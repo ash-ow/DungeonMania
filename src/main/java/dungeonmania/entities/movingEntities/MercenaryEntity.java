@@ -1,16 +1,11 @@
 package dungeonmania.entities.movingEntities;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.EntityResponse;

@@ -25,11 +25,16 @@ public class EntitiesControl {
     private Integer tickCounter = 0;
     private Integer entityCounter = 0;
     public final static HashMap<String, Double> difficulty;
+    private Position playerStartPosition = new Position(0, 0);
     static {
         difficulty = new HashMap<>();
         difficulty.put("Hard", 20.0/15.0);
         difficulty.put("Peaceful", 15.0/20.0);
         difficulty.put("Standard", 1.0);
+    }
+
+    public void setPlayerStartPosition(Position playerStartPosition) {
+        this.playerStartPosition = playerStartPosition;
     }
 
     public EntitiesControl() {
@@ -237,7 +242,17 @@ public class EntitiesControl {
     public void generateEnemyEntities(String gameMode) {
         generateSpider(gameMode);
         generateZombieToast(gameMode);
+        generateMercenary(gameMode);
         tickCounter++;
+    }
+
+    private void generateMercenary(String gameMode) {
+        if (tickCounter % (int) Math.ceil(30 / difficulty.get(gameMode)) == 0) {
+            List<IMovingEntity> enemy = getEntitiesOfType(IMovingEntity.class);
+            if (enemy.size() > 0) {
+                this.createEntity(playerStartPosition.getX(), playerStartPosition.getY(), EntityTypes.MERCENARY);
+            }
+        }
     }
 
     private void generateSpider(String gameMode) {

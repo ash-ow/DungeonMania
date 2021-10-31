@@ -66,11 +66,23 @@ public class DungeonManiaController {
     }
     
     public DungeonResponse saveGame(String name) throws IllegalArgumentException {
-        return null;
+        dungeon.saveGame(name);
+        return dungeon.getInfo();
     }
 
     public DungeonResponse loadGame(String name) throws IllegalArgumentException {
-        return null;
+        try {
+            String dungeonJson = FileLoader.loadResourceFile("savedGames/" + name + ".json");
+            JsonObject jsonObject = new Gson().fromJson(dungeonJson, JsonObject.class);
+            String id = UUID.randomUUID().toString(); 
+            JsonObject goalCondition = jsonObject.getAsJsonObject("goal-condition");
+            String gameMode = jsonObject.getAsJsonObject("gameMode").getAsString();
+            String dungeonName = jsonObject.getAsJsonObject("dungeonName").getAsString();
+            this.dungeon = new Dungeon(jsonObject.get("entities").getAsJsonArray(), goalCondition , gameMode, id, dungeonName);                  
+        } catch (IOException e) {
+        }
+        dungeon.tick(Direction.NONE);
+        return dungeon.getInfo();
     }
 
     public List<String> allGames() {

@@ -31,6 +31,7 @@ public class Dungeon {
     private String dungeonName;
     public CharacterEntity player;
     private Goals goals;
+    private JsonObject initalGoals;
 
     /**
      * Main Dungeon Constructor if goalConditions exist
@@ -42,6 +43,7 @@ public class Dungeon {
         this.id = id;
         this.dungeonName = dungeonName;
         this.entitiesControl = new EntitiesControl();
+        this.initalGoals = goalConditions;
         for (JsonElement entityInfo : entities) {
             JsonObject entityObj = entityInfo.getAsJsonObject();
             EntityTypes type = EntityTypes.getEntityType(entityObj.get("type").getAsString());
@@ -68,6 +70,7 @@ public class Dungeon {
             this.goals = new Goals(goalConditions);
         }
     }
+
 
     public Dungeon(ArrayList<IEntity> entities, String gameMode, CharacterEntity player) {
         this.entitiesControl = new EntitiesControl();
@@ -152,26 +155,19 @@ public class Dungeon {
         return this.entitiesControl.getAllEntitiesOfType(type);
     }
 
-    public void saveGame(String saveGameName, JsonObject goals) {
+    public void saveGame(String saveGameName) {
         Gson gson = new Gson();
-        File file = new File("src/main/java/dungeonmania/savedGames/", saveGameName + ".json");
-        JsonObject finalObject = new JsonObject();
-        JsonArray entities = new JsonArray();
-        for (IEntity entity: entitiesControl.getEntities()) {
-            JsonObject entityInfo = new JsonObject();
-            entityInfo.addProperty("x", entity.getPosition().getX());
-            entityInfo.addProperty("y", entity.getPosition().getY());
-        }
-        finalObject.add("entities", new JsonArray());
+        File file = new File("src/main/resources/savedGames/", saveGameName + ".json");
+        JsonObject finalObject = saveCurentStateToJson();
         if (file.exists()) {
             try (FileWriter writer = new FileWriter(file, true)) {
-                gson.toJson(goals, writer);
+                gson.toJson(finalObject, writer);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
             try (FileWriter writer = new FileWriter(file)) {
-                gson.toJson(goals, writer);
+                gson.toJson(finalObject, writer);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -179,6 +175,33 @@ public class Dungeon {
         
     }
 
+    public JsonObject saveCurentStateToJson() {
+        JsonObject finalObject = new JsonObject();       
+        
+        JsonArray entities = new JsonArray();
+        for (IEntity entity: entitiesControl.getEntities()) {
+            JsonObject entityInfo = new JsonObject();
+            entityInfo.addProperty("x", entity.getPosition().getX());
+            entityInfo.addProperty("y", entity.getPosition().getY());
+            entityInfo.addProperty("type", entity.getType().toString());
+            entities.add(entityInfo);
+        }
+
+        for (IEntity entity: player.getInventory()) {
+            JsonObject entityInfo = new JsonObject();
+            entityInfo.addProperty("x", player.getPosition().getX());
+            entityInfo.addProperty("y", player.getPosition().getY());
+            entityInfo.addProperty("type", entity.getType().toString());
+            entities.add(entityInfo);
+        }
+
+        finalObject.add("entities", entities);
+        finalObject.add("goal-condition", initalGoals);
+        finalObject.addProperty("dungeonName", dungeonName);
+        finalObject.addProperty("gameMode", gameMode);
+
+        return finalObject;
+    }
 
 
     public static void main(String[] args) {
@@ -189,7 +212,7 @@ public class Dungeon {
         String jsonGoals = "{ \"goal\": \"boulders\"}";
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
         Dungeon dungeon = new Dungeon(entities, "Standard", player, j);
-        dungeon.saveGame("player1", j);
+        dungeon.saveGame("player1");
     }
 }
  

@@ -11,8 +11,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.buildableEntities.ShieldEntity;
 import dungeonmania.entities.collectableEntities.*;
+import dungeonmania.entities.collectableEntities.buildableEntities.ShieldEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Position;
 
@@ -20,7 +20,7 @@ public class ShieldTest implements IBuildableEntityTests {
     @Test
     public void TestIsBuildable() {
         ShieldEntity shield = new ShieldEntity();
-        List<ICollectableEntity> inventory = new ArrayList<ICollectableEntity>();
+        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
         inventory.add(new WoodEntity());
         inventory.add(new WoodEntity());
         inventory.add(new TreasureEntity());
@@ -31,7 +31,7 @@ public class ShieldTest implements IBuildableEntityTests {
     @Override
     public void TestIsNotBuildable_EmptyInventory() {
         ShieldEntity shield = new ShieldEntity();
-        List<ICollectableEntity> inventory = new ArrayList<ICollectableEntity>();
+        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
         assertFalse(shield.isBuildable(inventory));
     }
 
@@ -39,7 +39,7 @@ public class ShieldTest implements IBuildableEntityTests {
     @Override
     public void TestIsNotBuildable_InventoryFullOfWrongItems() {
         ShieldEntity shield = new ShieldEntity();
-        List<ICollectableEntity> inventory = new ArrayList<ICollectableEntity>();
+        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
         inventory.add(new ArrowsEntity());
         inventory.add(new BombEntity());
         assertFalse(shield.isBuildable(inventory));
@@ -50,7 +50,7 @@ public class ShieldTest implements IBuildableEntityTests {
     @Override
     public void TestIsNotBuildable_InsufficientCorrectItems() {
         ShieldEntity shield = new ShieldEntity();
-        List<ICollectableEntity> inventory = new ArrayList<ICollectableEntity>();
+        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
         inventory.add(new WoodEntity());
         inventory.add(new KeyEntity(0,0,0,1));
         inventory.add(new TreasureEntity());

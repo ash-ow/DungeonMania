@@ -3,7 +3,7 @@ package dungeonmania.entities.buildableEntityTest;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import dungeonmania.entities.IEntityTests;
-import dungeonmania.entities.buildableEntities.BuildableEntity;
+import dungeonmania.entities.collectableEntities.buildableEntities.BuildableEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public interface IBuildableEntityTests extends IEntityTests {

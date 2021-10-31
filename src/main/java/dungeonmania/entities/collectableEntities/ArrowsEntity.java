@@ -3,7 +3,7 @@ package dungeonmania.entities.collectableEntities;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 
-public class ArrowsEntity extends Entity implements ICollectableEntity {
+public class ArrowsEntity extends Entity implements CollectableEntity {
     public ArrowsEntity() {
         this(0, 0, 0);
     }

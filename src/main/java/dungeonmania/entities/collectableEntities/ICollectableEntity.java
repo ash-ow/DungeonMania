@@ -4,7 +4,7 @@ import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.dungeon.EntitiesControl;
 
-public interface ICollectableEntity extends IContactingEntity {
+public interface CollectableEntity extends Entity  IContactingEntity {
     /**
      * Adds the collectable entity into the character's inventory and removes the entity from the dungeon
      */
@@ -18,8 +18,14 @@ public interface ICollectableEntity extends IContactingEntity {
      * Deletes an item from the players inventory after it has been used.
      */
     public default void used(CharacterEntity player) {
-        player.removeEntityFromInventory(this);
+        if (this.getDurability() <= 0) {
+            player.removeEntityFromInventory(this);
+        }
+        this.decrementDurability();
     }
+
+    public void decrementDurability();
+    public int getDurability();
 
     /**
      * @return True if the item is supposed to be placed on the player location after being used

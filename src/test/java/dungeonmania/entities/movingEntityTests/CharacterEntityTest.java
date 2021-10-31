@@ -17,13 +17,13 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
-import dungeonmania.entities.buildableEntities.ShieldEntity;
 import dungeonmania.entities.collectableEntities.ArrowsEntity;
-import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
+import dungeonmania.entities.collectableEntities.buildableEntities.ShieldEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
@@ -113,8 +113,8 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         player.addEntityToInventory(arrow2);
         player.addEntityToInventory(arrow3);
         player.build("bow");
-        List<ICollectableEntity> inventory = player.getInventory();
-        for (ICollectableEntity item : inventory) {
+        List<CollectableEntity> inventory = player.getInventory();
+        for (CollectableEntity item : inventory) {
             assertEquals(item.getType(), "bow");
         }
         assertTrue(player.getInventory().size() == 1);

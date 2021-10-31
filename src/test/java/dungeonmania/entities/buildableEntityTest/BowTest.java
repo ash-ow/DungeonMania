@@ -11,8 +11,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.buildableEntities.BowEntity;
 import dungeonmania.entities.collectableEntities.*;
+import dungeonmania.entities.collectableEntities.buildableEntities.BowEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Position;
 
@@ -20,7 +20,7 @@ public class BowTest implements IBuildableEntityTests {
     @Test
     public void TestIsBuildable() {
         BowEntity bow = new BowEntity();
-        List<ICollectableEntity> inventory = new ArrayList<ICollectableEntity>();
+        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
         inventory.add(new WoodEntity());
         inventory.add(new ArrowsEntity());
         inventory.add(new ArrowsEntity());
@@ -32,7 +32,7 @@ public class BowTest implements IBuildableEntityTests {
     @Override
     public void TestIsNotBuildable_EmptyInventory() {
         BowEntity bow = new BowEntity();
-        List<ICollectableEntity> inventory = new ArrayList<ICollectableEntity>();
+        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
         assertFalse(bow.isBuildable(inventory));
     }
 
@@ -40,7 +40,7 @@ public class BowTest implements IBuildableEntityTests {
     @Override
     public void TestIsNotBuildable_InventoryFullOfWrongItems() {
         BowEntity bow = new BowEntity();
-        List<ICollectableEntity> inventory = new ArrayList<ICollectableEntity>();
+        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
         inventory.add(new ArrowsEntity());
         inventory.add(new BombEntity());
         assertFalse(bow.isBuildable(inventory));
@@ -51,7 +51,7 @@ public class BowTest implements IBuildableEntityTests {
     @Override
     public void TestIsNotBuildable_InsufficientCorrectItems() {
         BowEntity bow = new BowEntity();
-        List<ICollectableEntity> inventory = new ArrayList<ICollectableEntity>();
+        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
         inventory.add(new WoodEntity());
         inventory.add(new ArrowsEntity());
         inventory.add(new ArrowsEntity());

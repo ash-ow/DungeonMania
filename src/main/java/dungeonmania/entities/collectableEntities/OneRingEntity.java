@@ -4,7 +4,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public class OneRingEntity extends Entity implements ICollectableEntity {
+public class OneRingEntity extends Entity implements CollectableEntity {
     private final float dropChance = 0.5f;
 
     public OneRingEntity() {

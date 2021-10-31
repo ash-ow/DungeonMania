@@ -1,4 +1,4 @@
-package dungeonmania.entities.buildableEntities;
+package dungeonmania.entities.collectableEntities.buildableEntities;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.ArrowsEntity;
@@ -6,8 +6,8 @@ import dungeonmania.entities.collectableEntities.IWeaponEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public class BowEntity extends BuildableEntity implements IWeaponEntity{
-    int durability;
+public class BowEntity extends BuildableEntity implements IWeaponEntity {
+    int durability = 10;
 
     public BowEntity() {
         this(0, 0, 0);
@@ -21,10 +21,6 @@ public class BowEntity extends BuildableEntity implements IWeaponEntity{
     public void initialiseRequiredComponents() {
         this.requiredComponents.put(new WoodEntity(), 1);
         this.requiredComponents.put(new ArrowsEntity(), 3);
-    }
-
-    public boolean isPassable() {
-        return true;
     }
 
     public int getDurability(){

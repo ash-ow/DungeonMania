@@ -13,7 +13,7 @@ import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.staticEntities.SwitchEntity;
 import dungeonmania.util.Direction;
 
-public class BombEntity extends Entity implements ICollectableEntity, ITicker, IBlocker {
+public class BombEntity extends Entity implements CollectableEntity, ITicker, IBlocker {
     boolean isArmed = false;
 
     public BombEntity() {

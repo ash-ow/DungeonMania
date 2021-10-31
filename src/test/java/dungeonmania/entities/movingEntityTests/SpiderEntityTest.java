@@ -6,7 +6,7 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
-import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -202,7 +202,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         CharacterEntity player = new CharacterEntity();
         SpiderEntity spider = new SpiderEntity(0, 0, 0);
         spider.dropEntities(player, 1f);
-        List<ICollectableEntity> inventory = player.getInventory();
+        List<CollectableEntity> inventory = player.getInventory();
         assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
     }
 }

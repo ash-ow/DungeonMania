@@ -3,7 +3,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public class ArmourEntity extends Entity implements ICollectableEntity {
+public class ArmourEntity extends Entity implements CollectableEntity {
     //TODO: set default durability
     public int durability;
 

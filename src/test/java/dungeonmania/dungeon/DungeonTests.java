@@ -41,10 +41,12 @@ public class DungeonTests {
         controller.tick(null, Direction.DOWN);
         controller.tick(null, Direction.DOWN);
         DungeonResponse saved = controller.saveGame("test");
-
         DungeonResponse load = controller.loadGame("test");
-        
+        DungeonManiaController controller2 = new DungeonManiaController();
+        DungeonResponse load2 = controller2.loadGame("test");
+
         assertEquals(saved, load);
+        assertEquals(saved, load2);
 
         File file = new File("src/main/java/dungeonmania/savedGames/", "test.json"); //filepath is being passes through //ioc         //and filename through a method 
         if (file.exists()) {

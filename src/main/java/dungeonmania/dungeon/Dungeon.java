@@ -158,7 +158,8 @@ public class Dungeon {
         JsonArray entities = new JsonArray();
         for (IEntity entity: entitiesControl.getEntities()) {
             JsonObject entityInfo = new JsonObject();
-            //entityInfo.addProperty("", value);
+            entityInfo.addProperty("x", entity.getPosition().getX());
+            entityInfo.addProperty("y", entity.getPosition().getY());
         }
         finalObject.add("entities", new JsonArray());
         if (file.exists()) {

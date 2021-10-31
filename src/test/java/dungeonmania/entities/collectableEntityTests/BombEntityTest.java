@@ -99,8 +99,8 @@ public void TestExplode() {
         () -> assertEntityNotOnMap(   dungeon, "7",  EntityTypes.SWITCH),
         () -> assertItemInInventory("8", dungeon.getPlayer(), dungeon.entitiesControl),
         () -> assertEntityNotOnMap( dungeon, "9",    EntityTypes.SPIDER),
-        () -> assertEntityNotOnMap( dungeon, "10",   EntityTypes.SPIDER),
-        () -> assertEntityStillOnMap( dungeon, "11", EntityTypes.ARROW),
+        () -> assertEntityNotOnMap( dungeon, "10",   EntityTypes.ARROW),
+        () -> assertEntityStillOnMap( dungeon, "11", EntityTypes.SPIDER),
         () -> assertEntityStillOnMap( dungeon, "12", EntityTypes.EXIT),
 
         () -> assertNotNull( dungeon.getPlayer())

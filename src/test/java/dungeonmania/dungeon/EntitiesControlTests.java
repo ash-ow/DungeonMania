@@ -25,7 +25,7 @@ public class EntitiesControlTests {
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         dungeon.tick(Direction.DOWN);
 
-        assertTrue(dungeon.getAllEntitiesOfType(ZombieToastEntity.class).size() == 0);
+        assertEquals(1, dungeon.getAllEntitiesOfType(ZombieToastEntity.class).size());
 
         for (int i = 0; i < 10; i++) {
             dungeon.tick(Direction.DOWN);

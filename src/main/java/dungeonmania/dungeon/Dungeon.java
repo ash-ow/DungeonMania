@@ -61,6 +61,8 @@ public class Dungeon {
                 this.entitiesControl.createEntity(entityObj);
             }            
         }
+        
+
         if (goalConditions != null) {
             this.goals = new Goals(goalConditions);
         }
@@ -94,7 +96,7 @@ public class Dungeon {
 
     public void tick(Direction direction) {
         player.move(direction, entitiesControl);
-        if (player.getInvincible()) {
+        if (player.getInvincible(gameMode)) {
             entitiesControl.runAwayAllMovingEntities(player);
         } else {
             entitiesControl.moveAllMovingEntities(player);
@@ -105,13 +107,6 @@ public class Dungeon {
 
     public void tick(String itemID) {
         player.useItem(itemID, this.entitiesControl);
-        if (player.getInvincible()) {
-            entitiesControl.runAwayAllMovingEntities(player);
-        } else {
-            entitiesControl.moveAllMovingEntities(player);
-        }
-        entitiesControl.tick();
-        entitiesControl.generateEnemyEntities();
     }
 
     public void interact(String entityID) throws IllegalArgumentException, InvalidActionException{

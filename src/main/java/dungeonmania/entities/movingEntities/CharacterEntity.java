@@ -72,7 +72,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return inventory.stream().filter(item -> item.getId().equals(itemID)).findFirst().orElse(null);
     }
 
-    public boolean getInvincible() {
+    public boolean getInvincible(String gameMode) {
+        if (gameMode.equals("Hard")) {
+            this.isInvincible = false;
+        }
         return this.isInvincible;
     }
 

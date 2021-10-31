@@ -1,6 +1,7 @@
 package dungeonmania.dungeon;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -9,7 +10,6 @@ import com.google.gson.JsonObject;
 
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IContactingEntity;
-import dungeonmania.util.Direction;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
@@ -23,6 +23,13 @@ public class EntitiesControl {
     private Random rand = new Random();
     private Integer tickCounter = 0;
     private Integer entityCounter = 0;
+    private final static HashMap<String, Double> difficulty;
+    static {
+        difficulty = new HashMap<>();
+        difficulty.put("Hard", 20.0/15.0);
+        difficulty.put("Peaceful", 15.0/20.0);
+        difficulty.put("Standard", 1.0);
+    }
 
     public EntitiesControl() {
         entities = new ArrayList<IEntity>();

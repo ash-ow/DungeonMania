@@ -1,6 +1,8 @@
 package dungeonmania;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.entities.buildableEntities.BuildableEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.util.Direction;
@@ -61,7 +63,6 @@ public class DungeonManiaController {
             this.dungeon = new Dungeon(jsonObject.get("entities").getAsJsonArray(), goalCondition , gameMode, id, dungeonName);           
             
         } catch (IOException e) {
-            throw new IllegalArgumentException();
         }
         return dungeon.getInfo();
     }

@@ -10,6 +10,7 @@ import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.IUseableEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
@@ -141,6 +142,9 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 //endregion
     
     public void useItem(String itemID, EntitiesControl entitiesControl) {
+        if (!(entitiesControl.getEntityById(itemID) instanceof IUseableEntity)) {
+            throw new IllegalArgumentException();
+        }
         for (ICollectableEntity item : this.inventory) {
             if (item.getId().equals(itemID)) {
                 this.useItemCore(item, entitiesControl);

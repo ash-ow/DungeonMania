@@ -14,12 +14,9 @@ import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
-<<<<<<< HEAD
-=======
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.DoorEntity;
 import dungeonmania.entities.staticEntities.PortalEntity;
->>>>>>> master
 import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.*;

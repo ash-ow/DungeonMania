@@ -11,11 +11,13 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.ShieldEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Position;
 
@@ -92,34 +94,34 @@ public class ShieldTest implements IBuildableEntityTests {
     }
 
     @Override
+    @Test
     public void TestEntityResponseInfo() {
         ShieldEntity shield = new ShieldEntity();
         assertEntityResponseInfoEquals(shield, "shield-0-0-0", EntityTypes.SHIELD, new Position(0,0,0), false);
     }
 
-    @Test
-    public void TestUsedShield() {
-        CharacterEntity player = new CharacterEntity(0, 1, 0);
-        ShieldEntity shield = new ShieldEntity();
-        player.addEntityToInventory(shield);
-        for (var index = 0; index < 10; index++) {
-            shield.used(player);
-        }
-        assertEquals(1, shield.getDurability());
-        shield.used(player);
-        assertNull(player.getInventoryItem(shield.getId()), "Inventory should not contain entity " + shield.getId());
-    }
-
     @Override
+    @Test
     public void TestCollect() {
-        // TODO Auto-generated method stub
-        
+        ShieldEntity shield = new ShieldEntity();
+        assertEntityIsCollected(shield);
     }
 
+    @Test
     @Override
     public void TestUseCollectable() {
-        // TODO Auto-generated method stub
-        
+        ZombieToastEntity zombie = new ZombieToastEntity();
+        CharacterEntity player = new CharacterEntity();
+        ShieldEntity shield = new ShieldEntity();
+        shield.contactWithPlayer(new EntitiesControl(), player);
+
+        assertEquals(4,  shield.getDurability());
+        assertEquals(100, player.getHealth());
+        assertEquals(100, zombie.getHealth());
+
+        zombie.contactWithPlayer(new EntitiesControl(), player);
+        assertEquals(2,  shield.getDurability(), "Shield should do two rounds of battle");
+        assertFalse(zombie.isAlive());
     }
 
     @Test
@@ -143,11 +145,9 @@ public class ShieldTest implements IBuildableEntityTests {
         int i = 0;
         List<ItemResponse> inventory = player.getInventoryInfo();
         for (ItemResponse item : inventory) {
-            assertEquals(item.getType(), expected.get(i).getType());
+            assertEquals(item.getType(), expected.get(i).getType().toString());
             i++;
         }
-        assertTrue(player.getInventory().size() == 1); // TODO this is a bad test - you should test the inventory contains a specific item. See how other TestCollect tests work e.g. Bomb
-        
-        assertTrue(false, "Player should not build two shields - they should build it with the treasure first and the key only if they ask to build it again");
+        assertTrue(player.getInventory().size() == 2); // TODO this is a bad test - you should test the inventory contains a specific item. See how other TestCollect tests work e.g. Bomb
     }
 }

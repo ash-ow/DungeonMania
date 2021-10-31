@@ -27,10 +27,10 @@ public abstract class CollectableEntity extends Entity implements IContactingEnt
      * Deletes an item from the players inventory after it has been used a max number of times
      */
     public void used(CharacterEntity player) {
+        this.durability--;
         if (this.getDurability() <= 0) {
             player.removeEntityFromInventory(this);
         }
-        this.durability--;
     }
 
     public int getDurability() {

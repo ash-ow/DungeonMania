@@ -10,7 +10,7 @@ public class ArmourEntity extends CollectableEntity {
 
     public ArmourEntity(int x, int y, int layer) {
         super(x, y, layer, EntityTypes.ARMOUR);
-        this.durability = 10;
+        this.durability = 4;
     }
     
     public float reduceDamage(float damage, CharacterEntity player) {

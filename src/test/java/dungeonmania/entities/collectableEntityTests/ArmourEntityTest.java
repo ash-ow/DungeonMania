@@ -1,9 +1,7 @@
 package dungeonmania.entities.collectableEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,8 +9,7 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.ArmourEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.response.models.ItemResponse;
-import dungeonmania.util.Direction;
+import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.util.Position;
 
 public class ArmourEntityTest implements ICollectableEntityTest {
@@ -26,18 +23,18 @@ public class ArmourEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestUseCollectable() {
-        ArmourEntity armour = new ArmourEntity(0, 0, 0);
-        armour.setDurability(2);
-        CharacterEntity player = new CharacterEntity(0, 1, 0);
-        EntitiesControl entities = new EntitiesControl();
+        ZombieToastEntity zombie = new ZombieToastEntity();
+        CharacterEntity player = new CharacterEntity();
+        ArmourEntity armour = new ArmourEntity();
+        armour.contactWithPlayer(new EntitiesControl(), player);
 
-        entities.addEntity(armour);
-        armour.contactWithPlayer(entities, player);
-        armour.used(player);
-        
-        assertNotNull(player.getInventoryItem(armour.getId()), "Inventory should contain entity " + armour.getId());
-        assertEquals(1, armour.getDurability());
-        assertEntityIsUsed(armour);    
+        assertEquals(4,  armour.getDurability());
+        assertEquals(100, player.getHealth());
+        assertEquals(100, zombie.getHealth());
+
+        zombie.contactWithPlayer(new EntitiesControl(), player);
+        assertEquals(2,  armour.getDurability(), "Armour should do two rounds of battle");
+        assertFalse(zombie.isAlive());
     }
 
     @Test

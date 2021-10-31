@@ -4,12 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
-import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.util.Position;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.EntityTypes;
@@ -19,7 +17,6 @@ import dungeonmania.entities.movingEntities.spiderEntity.*;
 
 import dungeonmania.util.Direction;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.response.models.ItemResponse;
 
 
 public class HealthPotionEntityTest implements ICollectableEntityTest {

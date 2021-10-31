@@ -38,12 +38,12 @@ public interface ICollectableEntityTest extends IEntityTests {
         assertItemInInventory(entity.getId(), player, entities);
     }
 
-    public default void assertEntityIsUsed(CollectableEntity entity) {
+    public default void assertEntityIsUsedAndPlacedIfApplicable(CollectableEntity entity) {
         CharacterEntity player = new CharacterEntity(0, 1, 0);
         EntitiesControl entities = new EntitiesControl();
         entities.addEntity(entity);
         entity.contactWithPlayer(entities, player);
-        entity.used(player);
-        assertNull(player.getInventoryItem(entity.getId()), "Inventory should not contain entity " + entity.getId());
+        player.useItem(entity.getId(), entities);
+        assertItemNotInInventory(entity.getId(), player, entities, entity.isPlacedAfterUsing());
     }
 }

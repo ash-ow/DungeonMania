@@ -2,6 +2,7 @@ package dungeonmania.entities.buildableEntityTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -16,7 +17,7 @@ import dungeonmania.entities.collectableEntities.buildableEntities.BowEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Position;
 
-public class BowTest implements IBuildableEntityTests {
+public class BowEntityTest implements IBuildableEntityTests {
     @Test
     public void TestIsBuildable() {
         BowEntity bow = new BowEntity();
@@ -59,31 +60,36 @@ public class BowTest implements IBuildableEntityTests {
         
     }
 
+    @Test
     @Override
     public void TestEntityResponseInfo() {
         BowEntity bow = new BowEntity();
-        assertEntityResponseInfoEquals(bow, "bow-0-0-0", EntityTypes.BOW, new Position(0,0,0), true);
+        assertEntityResponseInfoEquals(bow, "bow-0-0-0", EntityTypes.BOW, new Position(0,0,0), false);
     }
 
     @Test
     public void usedBow() {
+    }
+
+    @Test
+    @Override
+    public void TestCollect() {
+        ArmourEntity armour = new ArmourEntity(0,0,0);
+        assertEntityIsCollected(armour);
+    }
+
+    @Test
+    @Override
+    public void TestUseCollectable() {
+        // TODO see armour tests, the below is bad
         CharacterEntity player = new CharacterEntity(0, 1, 0);
         BowEntity bow = new BowEntity();
-        bow.setDurability(2);
         player.addEntityToInventory(bow);
         bow.used(player);
         assertEquals(1, bow.getDurability());
         bow.used(player);
+        assertEquals(0, bow.getDurability());
         assertNull(player.getInventoryItem(bow.getId()), "Inventory should not contain entity " + bow.getId());
-    }
 
-    @Override
-    public void TestCollect() {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public void TestUseCollectable() {
-        // TODO Auto-generated method stub
     }
 }

@@ -13,29 +13,11 @@ public class SwordEntity extends CollectableEntity implements IWeaponEntity{
 
     public SwordEntity(int x, int y, int layer) {
         super(x, y, layer, EntityTypes.SWORD);
-    }
-
-    public int getDurability(){
-        return this.durability;
-    }
-
-    public void setDurability(int durability){
-        this.durability = durability;
-    }
-
-    @Override
-    public void used(CharacterEntity player){
-        if (this.durability > 0) {
-            setDurability(this.durability - 1);
-            if(this.durability == 0) {
-                player.removeEntityFromInventory(this);
-            }
-        }
+        this.durability = 5;
     }
 
     @Override
     public boolean isPlacedAfterUsing() {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 }

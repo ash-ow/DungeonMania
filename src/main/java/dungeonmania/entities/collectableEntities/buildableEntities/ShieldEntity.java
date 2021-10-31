@@ -3,10 +3,7 @@ package dungeonmania.entities.collectableEntities.buildableEntities;
 import java.util.List;
 import java.util.Map;
 
-import dungeonmania.entities.collectableEntities.KeyEntity;
-import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
 
@@ -18,14 +15,14 @@ public class ShieldEntity extends BuildableEntity {
     
     public ShieldEntity(int x, int y, int layer) {
         super(x, y, layer, EntityTypes.SHIELD);
-        this.durability = 10;
+        this.durability = 4;
     }
     
     @Override
     public void initialiseRequiredComponents() {
-        this.requiredComponents.put(new WoodEntity(), 2);
-        this.requiredComponents.put(new TreasureEntity(), 1);
-        this.requiredComponents.put(new KeyEntity(0,0,0,1), 1);
+        this.requiredComponents.put(EntityTypes.WOOD, 2);
+        this.requiredComponents.put(EntityTypes.TREASURE, 1);
+        this.requiredComponents.put(EntityTypes.KEY, 1);
     }
     
     @Override
@@ -33,16 +30,16 @@ public class ShieldEntity extends BuildableEntity {
         boolean requiredWood = false;
         boolean requiredTreasure = false;
         boolean requiredKey = false;
-        for (Map.Entry<CollectableEntity, Integer> entry : requiredComponents.entrySet()) {
-            CollectableEntity component = entry.getKey();
+        for (Map.Entry<EntityTypes, Integer> entry : requiredComponents.entrySet()) {
+            EntityTypes component = entry.getKey();
             int quantity = entry.getValue();
             if (numberOfComponentItemsInInventory(inventory, component) >= quantity) {
-                System.out.println("Needs more " + component.getType());
-                if (component.getType().equals(EntityTypes.WOOD)) {
+                System.out.println("Needs more " + component.toString());
+                if (component.equals(EntityTypes.WOOD)) {
                     requiredWood = true;
-                } else if (component.getType().equals(EntityTypes.TREASURE)) {
+                } else if (component.equals(EntityTypes.TREASURE)) {
                     requiredTreasure = true;
-                } else if (component.getType().equals(EntityTypes.KEY)) {
+                } else if (component.equals(EntityTypes.KEY)) {
                     requiredKey = true;
                 }
             }

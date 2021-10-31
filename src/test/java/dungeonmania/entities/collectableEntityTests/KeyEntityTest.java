@@ -23,7 +23,7 @@ public class KeyEntityTest implements ICollectableEntityTest {
         assertEntityResponseInfoEquals(
             key,
             "key-0-0-0",
-            "key",
+            EntityTypes.KEY,
             new Position(0,0),
             false
         );

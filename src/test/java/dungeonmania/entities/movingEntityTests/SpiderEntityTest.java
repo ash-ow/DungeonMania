@@ -159,7 +159,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         assertEntityResponseInfoEquals(
             spider,
             "spider-0-0-0",
-            "spider",
+            EntityTypes.SPIDER,
             new Position(0,0),
             false
         );

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 
 public class DestroyGoal implements IGoal {
@@ -17,9 +18,9 @@ public class DestroyGoal implements IGoal {
 
     public boolean checkGoal(Dungeon dungeon) {
         List<IEntity> enemies = new ArrayList<>();
-        enemies.addAll(dungeon.getEntities("spider"));
-        enemies.addAll(dungeon.getEntities("mercenary"));
-        enemies.addAll(dungeon.getEntities("zombie_toast"));
+        enemies.addAll(dungeon.getEntities(EntityTypes.SPIDER));
+        enemies.addAll(dungeon.getEntities(EntityTypes.MERCENARY));
+        enemies.addAll(dungeon.getEntities(EntityTypes.ZOMBIE_TOAST));
         if (enemies.size() == 0) {
             return true;
         }

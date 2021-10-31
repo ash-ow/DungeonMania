@@ -32,7 +32,7 @@ public class DoorEntity extends Entity implements IBlocker {
         // TODO move this to the inventory implementation
         return player
             .getInventory()
-            .getAllEntitiesOfType("key")
+            .getAllEntitiesOfType(EntityTypes.KEY)
             .stream()
             .map(KeyEntity.class::cast)
             .filter(k -> k.getKeyNumber() == keyNumber)

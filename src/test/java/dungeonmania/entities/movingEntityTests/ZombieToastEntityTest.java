@@ -76,7 +76,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         assertEntityResponseInfoEquals(
             zombie,
             "zombie_toast-0-0-0",
-            "zombie_toast",
+            EntityTypes.ZOMBIE_TOAST,
             new Position(0,0),
             false
         );

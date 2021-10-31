@@ -43,6 +43,15 @@ public enum EntityTypes {
         this.type = type;
     }
 
+    public static EntityTypes getEntityType(String type) {
+        for (EntityTypes entityType : EntityTypes.values()) { 
+            if (type.equals(entityType.getType())) {
+                return entityType;
+            }
+        }
+        return null;
+    }
+
     public String getType() {
         return this.type;
     }

@@ -61,7 +61,7 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         assertEntityResponseInfoEquals(
             player,
             "player-0-4-0",
-            "player",
+            EntityTypes.PLAYER,
             new Position(0,4),
             false
         );

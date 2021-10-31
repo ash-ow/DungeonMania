@@ -12,6 +12,7 @@ import dungeonmania.util.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,6 +65,20 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
             zombie.move(entities, player);
             assertEquals(zombie.getPosition(), expectPosition);
         }
+    }
+
+    @Test
+    public void testDropArmour() {
+        CharacterEntity player = new CharacterEntity();
+        ZombieToastEntity zombie = new ZombieToastEntity();
+        zombie.setDropProbability(1f);
+        EntitiesControl entitiesControl = new EntitiesControl();
+        entitiesControl.addEntities(zombie);
+
+        zombie.Battle(entitiesControl, player);
+        EntitiesControl inventory = player.getInventory();
+
+        assertTrue(inventory.getAllEntitiesOfType("armour").size() == 1);
     }
 
     @Override

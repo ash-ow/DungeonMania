@@ -4,7 +4,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public class SwordEntity extends Entity implements ICollectableEntity, IWeaponEntity{
+public class SwordEntity extends CollectableEntity implements IWeaponEntity{
     public int durability;
 
     public SwordEntity() {
@@ -13,24 +13,11 @@ public class SwordEntity extends Entity implements ICollectableEntity, IWeaponEn
 
     public SwordEntity(int x, int y, int layer) {
         super(x, y, layer, EntityTypes.SWORD);
-    }
-
-    public int getDurability(){
-        return this.durability;
-    }
-
-    public void setDurability(int durability){
-        this.durability = durability;
-    }
-
-    @Override
-    public void used(CharacterEntity player) {
-
+        this.durability = 5;
     }
 
     @Override
     public boolean isPlacedAfterUsing() {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 }

@@ -1,9 +1,5 @@
 package dungeonmania.entities.collectableEntityTests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.entities.EntityTypes;
@@ -22,7 +18,7 @@ public class ArrowsEntityTest implements ICollectableEntityTest {
     @Override
     public void TestUseCollectable() {
         ArrowsEntity arrow = new ArrowsEntity(0, 0, 0);
-        assertEntityIsUsed(arrow);
+        assertEntityIsUsedAndPlacedIfApplicable(arrow);
     }
 
     @Test

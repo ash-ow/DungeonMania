@@ -5,7 +5,7 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
 import dungeonmania.entities.collectableEntities.ArmourEntity;
-import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
@@ -80,7 +80,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         CharacterEntity player = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity(0, 0, 0, 1f, 10);
         zombie.dropEntities(player, 1f);
-        List<ICollectableEntity> inventory = player.getInventory();
+        List<CollectableEntity> inventory = player.getInventory();
         assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, ArmourEntity.class));
     }
 
@@ -90,7 +90,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         CharacterEntity player = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity(0, 0, 0);
         zombie.dropEntities(player, 1f);
-        List<ICollectableEntity> inventory = player.getInventory();
+        List<CollectableEntity> inventory = player.getInventory();
         assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
     }
 
@@ -125,6 +125,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     public void TestDeath() {
         CharacterEntity character = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity();
+        
         EntitiesControl entitiesControl = new EntitiesControl();
         entitiesControl.addEntity(zombie);
         zombie.battle(entitiesControl, character);

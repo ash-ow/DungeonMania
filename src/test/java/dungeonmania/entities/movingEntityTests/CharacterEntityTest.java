@@ -17,14 +17,13 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
-import dungeonmania.entities.collectableEntities.ICollectableEntity;
-import dungeonmania.entities.collectableEntities.OneRingEntity;
+import dungeonmania.entities.collectableEntities.ArrowsEntity;
+import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
-import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -85,7 +84,6 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         character.setHealth(2);
         zombie.battle(entitiesControl, character);
         assertFalse(character.isAlive());
-        // TODO add assertions for character death
     }
 
     @Test
@@ -96,6 +94,25 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         assertEquals(1, character.getInventory().size());
         character.removeEntityFromInventory(wood);
         assertEquals(0, character.getInventory().size());
+    }
+
+    @Test
+    public void TestBuildBow() {
+        CharacterEntity player = new CharacterEntity();
+        WoodEntity wood = new WoodEntity();
+        ArrowsEntity arrow1 = new ArrowsEntity();
+        ArrowsEntity arrow2 = new ArrowsEntity();
+        ArrowsEntity arrow3 = new ArrowsEntity();
+        player.addEntityToInventory(wood);
+        player.addEntityToInventory(arrow1);
+        player.addEntityToInventory(arrow2);
+        player.addEntityToInventory(arrow3);
+        player.build(EntityTypes.BOW);
+        List<CollectableEntity> inventory = player.getInventory();
+        for (CollectableEntity item : inventory) {
+            assertEquals(item.getType(), EntityTypes.BOW);
+        }
+        assertEquals(1, player.getInventory().size());
     }
 
     @Override

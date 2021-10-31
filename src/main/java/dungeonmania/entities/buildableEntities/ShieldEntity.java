@@ -1,8 +1,6 @@
 package dungeonmania.entities.buildableEntities;
 
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.collectableEntities.ArrowsEntity;
-import dungeonmania.entities.collectableEntities.WoodEntity;
 
 public class ShieldEntity extends BuildableEntity {
     public ShieldEntity() {
@@ -15,8 +13,8 @@ public class ShieldEntity extends BuildableEntity {
     
     @Override
     public void initialiseRequiredComponents() {
-        // TODO Get real required components
-        this.requiredComponents.put(new WoodEntity(), 1);
-        this.requiredComponents.put(new ArrowsEntity(), 3);
+        this.requiredComponents.put(EntityTypes.WOOD, 2);
+        this.requiredComponents.put(EntityTypes.TREASURE, 1);
+        this.requiredComponents.put(EntityTypes.KEY, 1);
     }
 }

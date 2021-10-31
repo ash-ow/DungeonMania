@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.collectableEntities.*;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
 import dungeonmania.entities.*;
@@ -289,4 +290,5 @@ public class EntitiesControl {
             .findFirst()
             .orElse(null);
     }
+
 }

@@ -60,7 +60,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return 3;
     }
 
-    public void loseHealth(float enemyHealth, int enemyDamage) {
+    @Override
+    public void loseHealth(float enemyHealth, float enemyDamage) {
         float damage = ((enemyHealth * enemyDamage) / 10);
         if(this.containedInInventory("armour")) {
             ArmourEntity armour = (ArmourEntity) findFirstInInventory("armour");
@@ -73,10 +74,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.health -= damage;
     }
 
-    @Override
-    public void loseHealth(float enemyHealth, float enemyDamage) {
-        this.health -= ((enemyHealth * enemyDamage) / 10);
-    }
+    // @Override
+    // public void loseHealth(float enemyHealth, float enemyDamage) {
+    //     this.health -= ((enemyHealth * enemyDamage) / 10);
+    // }
 
     public void addTeammates(IBattlingEntity teamMember) {
         teammates.add(teamMember);

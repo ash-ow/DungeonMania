@@ -1,6 +1,7 @@
 package dungeonmania.entities.collectableEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
 
@@ -21,9 +22,21 @@ public class ArmourEntityTest implements ICollectableEntityTest {
         assertEntityResponseInfoEquals(armour, "armour-0-0-0", "armour", new Position(0,0), false);
     }
 
+    @Test
     @Override
     public void TestUseCollectable() {
-        // TODO Auto-generated method stub
+        ArmourEntity armour = new ArmourEntity(0, 0, 0);
+        armour.setDurability(2);
+        CharacterEntity player = new CharacterEntity(0, 1, 0);
+        EntitiesControl entities = new EntitiesControl();
+
+        entities.addEntities(armour);
+        armour.contactWithPlayer(entities, player);
+        armour.used(player);
+        
+        assertNotNull(player.getInventoryItem(armour.getId()), "Inventory should contain entity " + armour.getId());
+        assertEquals(1, armour.getDurability());
+        assertEntityIsUsed(armour);    
     }
 
     @Test

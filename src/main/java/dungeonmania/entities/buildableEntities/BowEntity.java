@@ -36,13 +36,11 @@ public class BowEntity extends BuildableEntity implements IWeaponEntity{
 
     @Override
     public void used(CharacterEntity player){
-        if (this.durability > 2) {
-            setDurability(this.durability - 2);
-        } else if (this.durability == 1) {
+        if (this.durability > 0) {
             setDurability(this.durability - 1);
-        }
-        if(this.durability == 0) {
-            player.removeEntityFromInventory(this);
+            if(this.durability == 0) {
+                player.removeEntityFromInventory(this);
+            }
         }
     }
 

@@ -1,6 +1,8 @@
 package dungeonmania.entities.buildableEntityTest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.entities.buildableEntities.BowEntity;
 import dungeonmania.entities.collectableEntities.*;
+import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Position;
 
 public class BowTest implements IBuildableEntityTests {
@@ -59,5 +62,17 @@ public class BowTest implements IBuildableEntityTests {
     public void TestEntityResponseInfo() {
         BowEntity bow = new BowEntity();
         assertEntityResponseInfoEquals(bow, "bow-0-0-0", "bow", new Position(0,0,0), true);
+    }
+
+    @Test
+    public void usedBow() {
+        CharacterEntity player = new CharacterEntity(0, 1, 0);
+        BowEntity bow = new BowEntity();
+        bow.setDurability(2);
+        player.addEntityToInventory(bow);
+        bow.used(player);
+        assertEquals(1, bow.getDurability());
+        bow.used(player);
+        assertNull(player.getInventoryItem(bow.getId()), "Inventory should not contain entity " + bow.getId());
     }
 }

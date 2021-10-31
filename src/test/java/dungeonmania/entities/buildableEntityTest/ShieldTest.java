@@ -1,6 +1,8 @@
 package dungeonmania.entities.buildableEntityTest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.entities.buildableEntities.ShieldEntity;
 import dungeonmania.entities.collectableEntities.*;
+import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Position;
 
 public class ShieldTest implements IBuildableEntityTests {
@@ -57,5 +60,17 @@ public class ShieldTest implements IBuildableEntityTests {
     public void TestEntityResponseInfo() {
         ShieldEntity shield = new ShieldEntity();
         assertEntityResponseInfoEquals(shield, "shield-0-0-0", "shield", new Position(0,0,0), false);
+    }
+
+    @Test
+    public void usedShield() {
+        CharacterEntity player = new CharacterEntity(0, 1, 0);
+        ShieldEntity shield = new ShieldEntity();
+        shield.setDurability(2);
+        player.addEntityToInventory(shield);
+        shield.used(player);
+        assertEquals(1, shield.getDurability());
+        shield.used(player);
+        assertNull(player.getInventoryItem(shield.getId()), "Inventory should not contain entity " + shield.getId());
     }
 }

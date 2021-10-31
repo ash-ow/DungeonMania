@@ -14,3 +14,4 @@ bin/
 .settings
 yarn.lock
 .vscode
+src/main/resources/savedGames

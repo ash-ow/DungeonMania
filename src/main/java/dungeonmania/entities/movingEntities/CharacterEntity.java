@@ -18,9 +18,9 @@ import dungeonmania.util.Position;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
     private List<ICollectableEntity> inventory = new ArrayList<>();
-    private Position previousPosition;
-    public List<IBattlingEntity> teammates = new ArrayList<>();
-    private boolean isInvincible;
+    private transient Position previousPosition;
+    public transient List<IBattlingEntity> teammates = new ArrayList<>();
+    private transient boolean isInvincible;
 
     public CharacterEntity() {
         this(0, 0, 0);

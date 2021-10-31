@@ -22,7 +22,6 @@ public class EntitiesControl {
     private Random rand = new Random();
     private Integer tickCounter = 0;
     private Integer entityCounter = 0;
-    private boolean oneRingDropStatus = false;
 
     public EntitiesControl() {
         entities = new ArrayList<IEntity>();
@@ -285,14 +284,5 @@ public class EntitiesControl {
             .findFirst()
             .orElse(null);
     }
-    /*TO DO: Implement One Ring Random Drop 
-    public void setOneRingDropStatus(boolean oneRingDropStatus) {
-        this.oneRingDropStatus = oneRingDropStatus;
-    }
 
-    public boolean getOneRingDropStatus() {
-        return this.oneRingDropStatus;
-    }
-
-    */
 }

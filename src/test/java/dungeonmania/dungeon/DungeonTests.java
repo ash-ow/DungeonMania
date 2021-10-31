@@ -32,26 +32,4 @@ public class DungeonTests {
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
         assertDoesNotThrow(() -> new Dungeon(entities, "Standard", player, j));
     }
-
-    @Test
-    public void testSaveGame() {
-        DungeonManiaController controller = new DungeonManiaController();
-        controller.newGame("advanced", "Standard");
-        controller.tick(null, Direction.DOWN);
-        controller.tick(null, Direction.DOWN);
-        controller.tick(null, Direction.DOWN);
-        DungeonResponse saved = controller.saveGame("test");
-        DungeonResponse load = controller.loadGame("test");
-        DungeonManiaController controller2 = new DungeonManiaController();
-        DungeonResponse load2 = controller2.loadGame("test");
-
-        assertEquals(saved, load);
-        assertEquals(saved, load2);
-
-        File file = new File("src/main/java/dungeonmania/savedGames/", "test.json"); //filepath is being passes through //ioc         //and filename through a method 
-        if (file.exists()) {
-            file.delete(); //you might want to check if delete was successfull
-            System.out.println("Deleted");
-        }
-    }
 }

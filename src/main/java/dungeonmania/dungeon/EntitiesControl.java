@@ -22,7 +22,7 @@ import dungeonmania.entities.staticEntities.*;
 public class EntitiesControl {
     private List<IEntity> entities;
     private Random rand = new Random();
-    private Integer tickCounter = 0;
+    private Integer tickCounter = 1;
     private Integer entityCounter = 0;
     public final static HashMap<String, Double> difficulty;
     private Position playerStartPosition = new Position(0, 0);

@@ -12,6 +12,7 @@ import dungeonmania.entities.IContactingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.util.Position;
+import dungeonmania.util.RandomChance;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
 import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
@@ -179,6 +180,8 @@ public class EntitiesControl {
             case "zombie_toast_spawner":
                 this.createNewEntityOnMap(new ZombieToastSpawnerEntity(xAxis, yAxis, layer));
                 break;
+            case "one_ring":
+                this.createNewEntityOnMap(new OneRingEntity(xAxis, yAxis, layer));
         }
     }
 
@@ -249,7 +252,7 @@ public class EntitiesControl {
             int largestY = largestCoordinate.getY();
             int randomX = rand.nextInt(largestX);
             int randomY = rand.nextInt(largestY);
-            if (getRandomBoolean((float) .05) 
+            if (RandomChance.getRandomBoolean((float) .05) 
                 && !this.positionContainsEntityType(new Position(randomX, randomY), BoulderEntity.class)) {
                 this.createEntity(randomX, randomY, "spider");
             }
@@ -267,10 +270,6 @@ public class EntitiesControl {
                 );
             }
         }
-    }
-
-    public boolean getRandomBoolean(float p){
-        return rand.nextFloat() < p;
     }
 
     public List<IEntity> getAllAdjacentEntities(Position position) {

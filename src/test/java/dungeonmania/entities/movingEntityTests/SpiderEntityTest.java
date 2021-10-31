@@ -58,7 +58,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         EntitiesControl entities = new EntitiesControl();
 
         entities.createEntity(6, 5, 0, "boulder");
-        entities.addEntities(spider);
+        entities.addEntity(spider);
 
         List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(6, 4), new Position(6, 4),
             new Position(5, 4), new Position(4, 4), new Position(4, 5), new Position(4, 6), new Position(5, 6), new Position(6, 6),
@@ -100,8 +100,8 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         BoulderEntity boulder = new BoulderEntity(5, 4, 0);
         EntitiesControl entities = new EntitiesControl();
 
-        entities.addEntities(boulder);
-        entities.addEntities(spider);
+        entities.addEntity(boulder);
+        entities.addEntity(spider);
 
         List<Position> expectPositions = Arrays.asList(new Position(5, 5), new Position(5, 5), new Position(5, 5), new Position(5, 5));
         
@@ -118,8 +118,8 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         BoulderEntity boulder = new BoulderEntity(5, 4, 0);
         EntitiesControl entities = new EntitiesControl();
 
-        entities.addEntities(boulder);
-        entities.addEntities(spider);
+        entities.addEntity(boulder);
+        entities.addEntity(spider);
 
         entities.moveAllMovingEntities(Direction.DOWN, player);
         assertEquals(spider.getPosition(), new Position(5, 5));
@@ -138,10 +138,10 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
 
         EntitiesControl entities = new EntitiesControl();
 
-        entities.addEntities(player);
-        entities.addEntities(spider);
-        entities.addEntities(boulder1);
-        entities.addEntities(boulder2);
+        entities.addEntity(player);
+        entities.addEntity(spider);
+        entities.addEntity(boulder1);
+        entities.addEntity(boulder2);
 
         List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(5, 4), new Position(5, 4), new Position(5, 4), new Position(5, 4), new Position(5, 4));
         
@@ -184,7 +184,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         CharacterEntity character = new CharacterEntity();
         SpiderEntity spider = new SpiderEntity();
         EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(spider);
+        entitiesControl.addEntity(spider);
         spider.battle(entitiesControl, character);
         assertFalse(entitiesControl.contains(spider));
         // TODO add assertions for spider death

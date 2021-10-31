@@ -61,7 +61,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
 //region Inventory
     public void addEntityToInventory(IEntity entity) {
-        inventory.addEntities(entity);
+        inventory.addEntity(entity);
     }
 
     public EntitiesControl getInventory() {
@@ -130,7 +130,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         item.used(this);
         if (item.isPlacedAfterUsing()) {
             item.setPosition(this.getPosition());
-            entitiesControl.addEntities(item);
+            entitiesControl.addEntity(item);
         }
     }
 }

@@ -25,8 +25,8 @@ public class InventoryTest{
         SwordEntity sword = new SwordEntity(0,1,0);
         EntitiesControl entities = new EntitiesControl();
         
-        entities.addEntities(armour);
-        entities.addEntities(sword);
+        entities.addEntity(armour);
+        entities.addEntity(sword);
         assertEquals(2, entities.getEntities().size());
 
         // Pick up first item

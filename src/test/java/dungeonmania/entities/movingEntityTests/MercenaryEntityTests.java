@@ -21,7 +21,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         EntitiesControl entitiesControl = new EntitiesControl();
         CharacterEntity player = new CharacterEntity(5, 0, 0);
         MercenaryEntity mercenary = new MercenaryEntity(0, 0, 0);
-        entitiesControl.addEntities(mercenary);
+        entitiesControl.addEntity(mercenary);
         mercenary.move(entitiesControl, player);
         assertEquals(new Position(1, 0), mercenary.getPosition());
     }
@@ -32,8 +32,8 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         MercenaryEntity mercenary = new MercenaryEntity(5, 5, 0);
         WallEntity wall = new WallEntity(4, 5, 0);
         EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(mercenary);
-        entitiesControl.addEntities(wall);
+        entitiesControl.addEntity(mercenary);
+        entitiesControl.addEntity(wall);
         mercenary.move(entitiesControl, player);
         assertEquals(new Position(5, 4), mercenary.getPosition());
     }
@@ -45,9 +45,9 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         WallEntity wall = new WallEntity(4, 5, 0);
         WallEntity wall2 = new WallEntity(5, 4, 0);
         EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(mercenary);
-        entitiesControl.addEntities(wall);
-        entitiesControl.addEntities(wall2);
+        entitiesControl.addEntity(mercenary);
+        entitiesControl.addEntity(wall);
+        entitiesControl.addEntity(wall2);
         mercenary.move(entitiesControl, player);
         assertEquals(new Position(5, 5), mercenary.getPosition());
     }
@@ -73,7 +73,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         CharacterEntity character = new CharacterEntity();
         MercenaryEntity mercenary = new MercenaryEntity();
         EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(mercenary);
+        entitiesControl.addEntity(mercenary);
         mercenary.battle(entitiesControl, character);
         assertFalse(entitiesControl.contains(mercenary));        
     }
@@ -83,7 +83,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         CharacterEntity character = new CharacterEntity();
         MercenaryEntity mercenary = new MercenaryEntity(1,0,0);
         EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(mercenary);
+        entitiesControl.addEntity(mercenary);
         assertEquals(100, character.getHealth());
         assertEquals(100, mercenary.getHealth());
         character.move(Direction.RIGHT, entitiesControl);
@@ -95,7 +95,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         CharacterEntity character = new CharacterEntity();
         MercenaryEntity mercenary = new MercenaryEntity(2,0,0);
         EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(mercenary);
+        entitiesControl.addEntity(mercenary);
         assertEquals(100, character.getHealth());
         assertEquals(100, mercenary.getHealth());
         character.move(Direction.RIGHT, entitiesControl);

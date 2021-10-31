@@ -40,7 +40,7 @@ public class PortalEntity extends Entity implements IContactingEntity {
      */
     private PortalEntity getPortalPair(EntitiesControl entities) {
         if (this.portalPair == null) {
-            List<PortalEntity> portalsOnMap = entities.getAllEntitiesOfType(EntityTypes.PORTAL).stream().map(PortalEntity.class::cast).collect(Collectors.toList());
+            List<PortalEntity> portalsOnMap = entities.getAllEntitiesOfType(PortalEntity.class);
             for (PortalEntity portal : portalsOnMap) {
                 if (!portal.equals(this) && portal.getColour().equals(this.colour)) {
                     this.portalPair = portal;

@@ -3,8 +3,7 @@ package dungeonmania.dungeon.goals;
 import java.util.List;
 
 import dungeonmania.dungeon.Dungeon;
-import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.IEntity;
+import dungeonmania.entities.collectableEntities.TreasureEntity;
 
 public class CollectingGoal  implements IGoal {
     private String type;
@@ -14,7 +13,7 @@ public class CollectingGoal  implements IGoal {
     }
 
     public boolean checkGoal(Dungeon dungeon) {
-        List<IEntity> collectablesOnFloor = dungeon.getEntities(EntityTypes.TREASURE);
+        List<TreasureEntity> collectablesOnFloor = dungeon.getAllEntitiesOfType(TreasureEntity.class);
         if (collectablesOnFloor.isEmpty()) {
             return true;
         }

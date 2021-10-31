@@ -11,7 +11,7 @@ public final class EntityResponse {
 
     public EntityResponse(String id, EntityTypes type, Position position, boolean isInteractable) {
         this.id = id;
-        this.type = type.getType();
+        this.type = type.toString();
         this.position = position;
         this.isInteractable = isInteractable;
     }

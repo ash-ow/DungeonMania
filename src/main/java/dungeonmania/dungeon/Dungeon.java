@@ -145,7 +145,7 @@ public class Dungeon {
         return this.player;
     }
 
-    public List<IEntity> getEntities(EntityTypes type) {
+    public <T extends IEntity> List<T> getAllEntitiesOfType(Class<T> type) {
         return this.entitiesControl.getAllEntitiesOfType(type);
     }
 }

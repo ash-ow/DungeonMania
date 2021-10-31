@@ -21,7 +21,7 @@ public abstract class BuildableEntity extends Entity {
             ICollectableEntity component = entry.getKey();
             int quantity = entry.getValue();
             if (numberOfComponentItemsInInventory(inventory, component) < quantity) {
-                System.out.println("Needs more " + component.getId());
+                System.out.println("Needs more " + component.getType());
                 return false;
             }
         }

@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.staticEntities.ExitEntity;
+import dungeonmania.entities.staticEntities.SwitchEntity;
 import dungeonmania.util.Position;
 
 public class BoulderGoal implements IGoal {
@@ -20,8 +22,8 @@ public class BoulderGoal implements IGoal {
     }
 
     public boolean checkGoal(Dungeon dungeon) {
-        List<Position> switchPosition = dungeon.getEntities(EntityTypes.SWITCH).stream().map(IEntity::getPosition).collect(Collectors.toList());
-        List<Position> boulderPosition = dungeon.getEntities(EntityTypes.BOULDER).stream().map(IEntity::getPosition).collect(Collectors.toList());
+        List<Position> switchPosition = dungeon.getAllEntitiesOfType(SwitchEntity.class).stream().map(IEntity::getPosition).collect(Collectors.toList());
+        List<Position> boulderPosition = dungeon.getAllEntitiesOfType(BoulderEntity.class).stream().map(IEntity::getPosition).collect(Collectors.toList());
         return boulderPosition.containsAll(switchPosition);
     }
 

@@ -8,7 +8,7 @@ public final class ItemResponse {
 
     public ItemResponse(String id, EntityTypes type) {
         this.id = id;
-        this.type = type.getType();
+        this.type = type.toString();
     }
 
     public ItemResponse(String id, String type) {

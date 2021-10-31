@@ -45,14 +45,15 @@ public enum EntityTypes {
 
     public static EntityTypes getEntityType(String type) {
         for (EntityTypes entityType : EntityTypes.values()) { 
-            if (type.equals(entityType.getType())) {
+            if (type.equals(entityType.toString())) {
                 return entityType;
             }
         }
         return null;
     }
 
-    public String getType() {
-        return this.type;
+    @Override
+    public String toString() {
+        return this.type.toLowerCase();
     }
 }

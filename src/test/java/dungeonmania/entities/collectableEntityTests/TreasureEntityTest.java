@@ -31,6 +31,6 @@ public class TreasureEntityTest implements ICollectableEntityTest {
     @Override
     public void TestUseCollectable() {
         TreasureEntity treasure = new TreasureEntity(0, 0, 0);
-        assertEntityIsUsed(treasure);
+        assertEntityIsUsedAndPlacedIfApplicable(treasure);
     }
 }

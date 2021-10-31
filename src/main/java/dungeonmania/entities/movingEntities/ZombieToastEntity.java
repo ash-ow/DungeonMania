@@ -74,7 +74,6 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
     }
 
     public float getDamage() {
-        // TODO determine correct ZombieToast damage
         return 3;
     }
 

@@ -35,6 +35,7 @@
         "key": "images/tileset/items/key_gold.png",
         "health_potion": "images/tileset/items/potion_4.png",
         "invisibility_potion": "images/tileset/items/potion_2.png",
+        "shield": "images/tileset/items/shield.png",
         "zombie_toast": "images/tileset/entities/zombie_00.png",
         "one_ring": "images/tileset/items/ring_0_special.png",
         "armour": "images/tileset/items/armour.png"

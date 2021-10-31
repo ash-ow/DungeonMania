@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.buildableEntities.BuildableEntity;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.EntityTypes;

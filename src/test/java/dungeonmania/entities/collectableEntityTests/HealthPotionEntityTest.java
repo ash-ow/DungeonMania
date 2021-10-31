@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +19,7 @@ import dungeonmania.entities.collectableEntities.HealthPotionEntity;
 import dungeonmania.entities.collectableEntities.InvisibilityPotionEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.spiderEntity.*;
+
 
 public class HealthPotionEntityTest implements ICollectableEntityTest {
     @Override

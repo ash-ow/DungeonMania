@@ -2,6 +2,7 @@ package dungeonmania.entities.movingEntities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
@@ -9,16 +10,18 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.entities.collectableEntities.IUseableEntity;
+import dungeonmania.entities.collectableEntities.CollectableEntity;
+import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
+import dungeonmania.entities.collectableEntities.*;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
-    private List<ICollectableEntity> inventory = new ArrayList<>();
+    private List<CollectableEntity> inventory = new ArrayList<>();
     private Position previousPosition;
     public List<IBattlingEntity> teammates = new ArrayList<>();
     private int invincibilityRemaining = 0;
@@ -63,7 +66,16 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     @Override
     public void loseHealth(float enemyHealth, float enemyDamage) {
         if (!this.isInvincible()) {
-            this.health -= ((enemyHealth * enemyDamage) / 10);
+            float damage = ((enemyHealth * enemyDamage) / 10);
+            if(this.containedInInventory(EntityTypes.ARMOUR)) {
+                ArmourEntity armour = (ArmourEntity) findFirstInInventory(EntityTypes.ARMOUR);
+                damage = armour.reduceDamage(damage, this);
+            }
+            if(this.containedInInventory(EntityTypes.SHIELD)) {
+                ShieldEntity shield = (ShieldEntity) findFirstInInventory(EntityTypes.SHIELD);
+                damage = shield.reduceDamage(damage, this);
+            }
+            this.health -= damage;
         }
     }
 
@@ -89,11 +101,11 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 //endregion
 
 //region Inventory
-    public void addEntityToInventory(ICollectableEntity entity) {
+    public void addEntityToInventory(CollectableEntity entity) {
         inventory.add(entity);
     }
 
-    public List<ICollectableEntity> getInventory() {
+    public List<CollectableEntity> getInventory() {
         return this.inventory;
     }
 
@@ -103,11 +115,40 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     public List<ItemResponse> getInventoryInfo() {
         List<ItemResponse> info = new ArrayList<ItemResponse>();
-        for (ICollectableEntity entity : inventory) {
+        for (CollectableEntity entity : inventory) {
             info.add(new ItemResponse(entity.getId(), entity.getType()));
         }
         return info;
     }
+
+    public boolean containedInInventory(EntityTypes type) {
+        for (CollectableEntity entity: inventory) {
+            if(entity.getType().equals(type)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public CollectableEntity findFirstInInventory(EntityTypes type) {
+        for (CollectableEntity entity: inventory) {
+            if(entity.getType().equals(type)) {
+                return entity;
+            }
+        }
+        return null;
+    }
+
+    public CollectableEntity findCollectableById(String id) {
+        for (CollectableEntity entity: inventory) {
+            if(entity.getId().equals(id)) {
+                return entity;
+            }
+        }
+        return null;
+    }
+
+
 //endregion
 
 //Player Potion Effects region 
@@ -128,9 +169,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.invisibilityRemaining = invisibilityRemaining;
     }
 
-//End Region
+//endregion
 
 //region Moving
+
     public void move(Direction direction, EntitiesControl entitiesControl) {
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
@@ -146,6 +188,61 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.invisibilityRemaining--;
         this.invincibilityRemaining--;
     }
+//endregion
+
+// region Build
+    public void build(EntityTypes itemToBuild) {
+        if (itemToBuild.equals(EntityTypes.BOW)) {
+            BowEntity bow = new BowEntity();
+            if (bow.isBuildable(this.inventory)) {
+                this.addEntityToInventory(bow);
+                removeBuildMaterials(EntityTypes.WOOD, 1);
+                removeBuildMaterials(EntityTypes.ARROW, 3);
+            }
+        } else if (itemToBuild.equals(EntityTypes.SHIELD)) {
+            ShieldEntity shield = new ShieldEntity();
+            if (shield.isBuildable(this.inventory)) {
+                this.addEntityToInventory(shield);
+                removeBuildMaterials(EntityTypes.WOOD, 2);
+                if(this.containedInInventory(EntityTypes.TREASURE)) {
+                    removeBuildMaterials(EntityTypes.TREASURE, 1);
+                } else if (this.containedInInventory(EntityTypes.KEY)) {
+                    removeBuildMaterials(EntityTypes.KEY, 1);
+                }
+            }
+        }
+    }
+
+    public void removeBuildMaterials(EntityTypes type, int amount) {
+        int removed = 0;
+        List<CollectableEntity> toRemove = new ArrayList<>();
+        while(removed < amount) {
+            for(CollectableEntity material : this.inventory) {
+                if (material.getType().equals(type)){
+                    toRemove.add(material);
+                    removed++;
+                }
+            }
+        }
+        for (CollectableEntity material : toRemove) {
+            removeEntityFromInventory(material);
+        }
+    }
+
+    public List<String> getBuildableList() {
+        List<EntityTypes> buildable = new ArrayList<>();
+        BowEntity bow = new BowEntity();
+        if (bow.isBuildable(this.inventory)) {
+            buildable.add(EntityTypes.BOW);
+        }
+        ShieldEntity shield = new ShieldEntity();
+        if (shield.isBuildable(this.inventory)) {
+            buildable.add(EntityTypes.SHIELD);
+        }
+        return buildable.stream().map(EntityTypes::toString).collect(Collectors.toList());
+    }
+
+//endregion
 
     private void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
         List<IContactingEntity> targetInteractable = entitiesControl.getInteractableEntitiesFrom(targetEntities);
@@ -168,7 +265,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         if (!(entitiesControl.getEntityById(itemID) instanceof IUseableEntity)) {
             throw new IllegalArgumentException();
         }
-        for (ICollectableEntity item : this.inventory) {
+        for (CollectableEntity item : this.inventory) {
             if (item.getId().equals(itemID)) {
                 this.useItemCore(item, entitiesControl);
                 return;
@@ -176,8 +273,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         }
     }
 
-    private void useItemCore(ICollectableEntity item, EntitiesControl entitiesControl) {
-        // TODO decrement the amount of this item in the inventory
+    private void useItemCore(CollectableEntity item, EntitiesControl entitiesControl) {
         item.used(this);
         if (item.isPlacedAfterUsing()) {
             item.setPosition(this.getPosition());

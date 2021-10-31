@@ -18,7 +18,7 @@ public class ArrowsEntityTest implements ICollectableEntityTest {
     @Override
     public void TestUseCollectable() {
         ArrowsEntity arrow = new ArrowsEntity(0, 0, 0);
-        assertEntityIsUsed(arrow);
+        assertEntityIsUsedAndPlacedIfApplicable(arrow);
     }
 
     @Test

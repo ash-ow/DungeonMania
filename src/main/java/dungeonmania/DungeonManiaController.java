@@ -2,7 +2,6 @@ package dungeonmania;
 
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
-import dungeonmania.entities.buildableEntities.BuildableEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.util.Direction;
@@ -118,6 +117,7 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse build(String buildable) throws IllegalArgumentException, InvalidActionException {
-        return null;
+        dungeon.build(buildable);
+        return dungeon.getInfo();
     }
 }

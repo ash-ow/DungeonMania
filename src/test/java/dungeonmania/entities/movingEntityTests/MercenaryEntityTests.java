@@ -14,6 +14,7 @@ import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
+import dungeonmania.entities.collectableEntities.InvincibilityPotionEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -147,6 +148,22 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         assertEquals(new Position(1, 0), mercenary.getPosition());
         mercenary.runAway(entitiesControl, player);
         assertEquals(new Position(0, 0), mercenary.getPosition());
+    }
+
+    @Test
+    public void doesntRunAway() {
+        EntitiesControl entitiesControl = new EntitiesControl();
+        InvincibilityPotionEntity potion = new InvincibilityPotionEntity();       
+        CharacterEntity player = new CharacterEntity(5, 0, 0, "Hard");
+        MercenaryEntity mercenary = new MercenaryEntity(0, 0, 0);
+        entitiesControl.addEntity(mercenary);
+        entitiesControl.addEntity(potion);
+        potion.contactWithPlayer(entitiesControl, player);
+        player.useItem(potion.getId(), entitiesControl);
+        entitiesControl.moveAllMovingEntities(player);
+        assertEquals(new Position(1, 0), mercenary.getPosition());
+        entitiesControl.moveAllMovingEntities(player);
+        assertEquals(new Position(2, 0), mercenary.getPosition());
     }
 
     @Test

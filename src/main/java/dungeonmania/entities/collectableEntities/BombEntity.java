@@ -11,6 +11,7 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.staticEntities.SwitchEntity;
 import dungeonmania.util.Direction;
+import dungeonmania.util.Position;
 
 public class BombEntity extends CollectableEntity implements ITicker, IBlocker, IUseableEntity {
     boolean isArmed = false;
@@ -53,7 +54,7 @@ public class BombEntity extends CollectableEntity implements ITicker, IBlocker, 
         adjacentEntities.addAll(entitiesControl.getAllEntitiesFromPosition(this.getPosition()));
         if (isAdjacentSwitchActive(adjacentEntities)) {
             for (IEntity entity : adjacentEntities) {
-                explodeNonCharacterEntity(entity, entitiesControl);
+                explodeNonCharacterEntity(entity, entitiesControl);               
             }
         }
     }

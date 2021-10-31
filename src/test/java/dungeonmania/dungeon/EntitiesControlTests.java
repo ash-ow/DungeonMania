@@ -28,6 +28,6 @@ public class EntitiesControlTests {
         for (int i = 0; i < 10; i++) {
             dungeon.tick(Direction.DOWN);
         }
-        assertEquals(3, dungeon.getAllEntitiesOfType(ZombieToastEntity.class).size());
+        assertEquals(1, dungeon.getAllEntitiesOfType(ZombieToastEntity.class).size());
     }
 }

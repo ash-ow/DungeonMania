@@ -184,7 +184,7 @@ public class EntitiesControl {
             case ZOMBIE_TOAST_SPAWNER:
                 this.createNewEntityOnMap(new ZombieToastSpawnerEntity(xAxis, yAxis, layer));
                 break;
-            case "one_ring":
+            case ONE_RING:
                 this.createNewEntityOnMap(new OneRingEntity(xAxis, yAxis, layer));
         }
     }

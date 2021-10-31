@@ -18,9 +18,10 @@ import dungeonmania.util.Position;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
     private List<ICollectableEntity> inventory = new ArrayList<>();
-    private transient Position previousPosition;
-    public transient List<IBattlingEntity> teammates = new ArrayList<>();
-    private transient boolean isInvincible;
+    private Position previousPosition;
+    public List<IBattlingEntity> teammates = new ArrayList<>();
+    private int invincibilityRemaining = 0;
+    private int invisibilityRemaining = 0;
 
     public CharacterEntity() {
         this(0, 0, 0);
@@ -31,7 +32,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.previousPosition = new Position(x, y);
     }
 
-    @Override
     public EntityResponse getInfo() {
         return new EntityResponse(this.getId(), this.getType(), this.getPosition(), false);
     }
@@ -55,13 +55,15 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     public float getDamage() {
-        // TODO determine correct Character damage
         return 3;
     }
 
+
     @Override
     public void loseHealth(float enemyHealth, float enemyDamage) {
-        this.health -= ((enemyHealth * enemyDamage) / 10);
+        if (!this.isInvincible()) {
+            this.health -= ((enemyHealth * enemyDamage) / 10);
+        }
     }
 
     public void addTeammates(IBattlingEntity teamMember) {
@@ -70,10 +72,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     public IEntity getInventoryItem(String itemID) {
         return inventory.stream().filter(item -> item.getId().equals(itemID)).findFirst().orElse(null);
-    }
-
-    public boolean getInvincible() {
-        return this.isInvincible;
     }
 
     @Override
@@ -111,15 +109,41 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 //endregion
 
+//Player Potion Effects region 
+
+    public boolean isInvincible() {
+        return this.invincibilityRemaining > 0;
+    }
+
+    public void setInvincibilityRemaining(int invincibilityRemaining) {
+        this.invincibilityRemaining = invincibilityRemaining;
+    }
+
+    public boolean isInvisible() {
+        return this.invisibilityRemaining > 0;
+    }
+    
+    public void setInvisiblilityRemaining(int invisibilityRemaining) {
+        this.invisibilityRemaining = invisibilityRemaining;
+    }
+
+//End Region
+
 //region Moving
     public void move(Direction direction, EntitiesControl entitiesControl) {
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
         if ( !EntitiesControl.containsBlockingEntities(targetEntities) || canUnblock(targetEntities, direction, entitiesControl) ) {
             this.previousPosition = this.position;
-            this.move(direction);            
+            this.move(direction); 
+            decrementPotionDurations();    
             interactWithAll(targetEntities, entitiesControl);
         }
+    }
+
+    private void decrementPotionDurations() {
+        this.invisibilityRemaining--;
+        this.invincibilityRemaining--;
     }
 
     private void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
@@ -133,7 +157,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         List<IBlocker> targetBlockers = EntitiesControl.getEntitiesOfType(targetEntities, IBlocker.class);
         boolean targetIsUnblocked = true;
         for (IBlocker blocker : targetBlockers) {
-            // TODO fix bug where player interacts with many things stacked on top of each other and keeps moving
             targetIsUnblocked = blocker.tryUnblock(this, direction, entitiesControl);
         }
         return targetIsUnblocked;
@@ -150,7 +173,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     private void useItemCore(ICollectableEntity item, EntitiesControl entitiesControl) {
-        // TODO create an ItemType class with constant strings
         // TODO decrement the amount of this item in the inventory
         item.used(this);
         if (item.isPlacedAfterUsing()) {

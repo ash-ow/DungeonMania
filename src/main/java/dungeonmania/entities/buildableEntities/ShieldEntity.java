@@ -1,8 +1,6 @@
 package dungeonmania.entities.buildableEntities;
 
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.collectableEntities.ArrowsEntity;
-import dungeonmania.entities.collectableEntities.WoodEntity;
 
 public class ShieldEntity extends BuildableEntity {
     public ShieldEntity() {

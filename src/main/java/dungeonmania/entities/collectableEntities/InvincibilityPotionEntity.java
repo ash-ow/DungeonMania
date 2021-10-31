@@ -15,9 +15,11 @@ public class InvincibilityPotionEntity extends Entity implements ICollectableEnt
         super(x, y, layer, EntityTypes.INVINCIBILITY_POTION);
     }
 
+
     @Override
     public void used(CharacterEntity player) {
-        // TODO implement
+       player.setInvincibilityRemaining(10);
+       player.removeEntityFromInventory(this);
     }
 
     @Override

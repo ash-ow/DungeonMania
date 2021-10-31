@@ -50,7 +50,7 @@ public class DungeonManiaController {
         if (!dungeons().contains(dungeonName)) {
             throw new IllegalArgumentException("dungeonName does not exist");
         }
-        if (!gameMode.equals("Standard") && !gameMode.equals("Peaceful") && !gameMode.equals("Hard")) {
+        if (!getGameModes().contains(gameMode)) {
             throw new IllegalArgumentException("invalid gameMode");
         }
         try {
@@ -76,8 +76,8 @@ public class DungeonManiaController {
             JsonObject jsonObject = new Gson().fromJson(dungeonJson, JsonObject.class);
             String id = UUID.randomUUID().toString(); 
             JsonObject goalCondition = jsonObject.getAsJsonObject("goal-condition");
-            String gameMode = jsonObject.getAsJsonObject("gameMode").getAsString();
-            String dungeonName = jsonObject.getAsJsonObject("dungeonName").getAsString();
+            String gameMode = jsonObject.get("gameMode").getAsString();
+            String dungeonName = jsonObject.get("dungeonName").getAsString();
             this.dungeon = new Dungeon(jsonObject.get("entities").getAsJsonArray(), goalCondition , gameMode, id, dungeonName);                  
         } catch (IOException e) {
         }
@@ -86,7 +86,11 @@ public class DungeonManiaController {
     }
 
     public List<String> allGames() {
-        return new ArrayList<>();
+        try {
+            return FileLoader.listFileNamesInResourceDirectory("/savedGames");
+        } catch (IOException e) {
+            return new ArrayList<>();
+        }
     }
 
     public DungeonResponse tick(String itemUsed, Direction movementDirection) throws IllegalArgumentException, InvalidActionException {

@@ -10,10 +10,13 @@ import com.google.gson.JsonObject;
 import dungeonmania.dungeon.goals.Goals;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
+import dungeonmania.entities.staticEntities.DoorEntity;
+import dungeonmania.entities.staticEntities.PortalEntity;
 import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.*;
@@ -160,7 +163,8 @@ public class Dungeon {
         File file = new File("src/main/resources/savedGames/", saveGameName + ".json");
         JsonObject finalObject = saveCurentStateToJson();
         if (file.exists()) {
-            try (FileWriter writer = new FileWriter(file, true)) {
+            file.delete();
+            try (FileWriter writer = new FileWriter(file)) {
                 gson.toJson(finalObject, writer);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -176,33 +180,56 @@ public class Dungeon {
     }
 
     public JsonObject saveCurentStateToJson() {
-        JsonObject finalObject = new JsonObject();       
-        
+        JsonObject finalObject = new JsonObject();              
         JsonArray entities = new JsonArray();
         for (IEntity entity: entitiesControl.getEntities()) {
-            JsonObject entityInfo = new JsonObject();
-            entityInfo.addProperty("x", entity.getPosition().getX());
-            entityInfo.addProperty("y", entity.getPosition().getY());
-            entityInfo.addProperty("type", entity.getType().toString());
-            entities.add(entityInfo);
+            int x = entity.getPosition().getX();
+            int y = entity.getPosition().getY();
+            String type = entity.getType().toString();
+            if (entity.getType().equals(EntityTypes.KEY) ) {
+                KeyEntity key = (KeyEntity) entity;
+                entities.add(getJsonKeyDoor(x, y, key.getKeyNumber(), type));
+            } else if (entity.getType().equals(EntityTypes.DOOR)) {
+                DoorEntity door = (DoorEntity) entity;
+                entities.add(getJsonKeyDoor(x, y, door.getKeyNumber(), type));
+            } else if (entity.getType().equals(EntityTypes.PORTAL)) {
+                PortalEntity portal = (PortalEntity) entity;
+                entities.add(getJsonPortal(x, y, portal.getColour(), type));
+            } else {
+                entities.add(getJsonVersion(x, y, type));
+            }           
         }
-
         for (IEntity entity: player.getInventory()) {
-            JsonObject entityInfo = new JsonObject();
-            entityInfo.addProperty("x", player.getPosition().getX());
-            entityInfo.addProperty("y", player.getPosition().getY());
-            entityInfo.addProperty("type", entity.getType().toString());
-            entities.add(entityInfo);
+            entities.add(getJsonVersion(player.getPosition().getX(), player.getPosition().getY(), entity.getType().toString()));
         }
-
+        entities.add(getJsonVersion(player.getPosition().getX(), player.getPosition().getY(), player.getType().toString()));       
         finalObject.add("entities", entities);
         finalObject.add("goal-condition", initalGoals);
         finalObject.addProperty("dungeonName", dungeonName);
         finalObject.addProperty("gameMode", gameMode);
-
         return finalObject;
     }
 
+
+    public JsonObject getJsonVersion(int x, int y, String type) {
+        JsonObject entityInfo = new JsonObject();
+        entityInfo.addProperty("x", x);
+        entityInfo.addProperty("y", y);
+        entityInfo.addProperty("type", type);
+        return entityInfo;
+    }
+
+    public JsonObject getJsonKeyDoor(int x, int y, int keyNumber, String type) {
+        JsonObject entityInfo = getJsonVersion(x, y, type);
+        entityInfo.addProperty("key", keyNumber);
+        return entityInfo;
+    }
+
+    public JsonObject getJsonPortal(int x, int y, String colour, String type) {
+        JsonObject entityInfo = getJsonVersion(x, y, type);
+        entityInfo.addProperty("colour", colour);
+        return entityInfo;
+    }
 
     public static void main(String[] args) {
         CharacterEntity player = new CharacterEntity(0, 1, 0);

@@ -14,7 +14,7 @@ public class ShieldEntity extends BuildableEntity {
     int durability = 10;
     
     public ShieldEntity() {
-        this(0, 0, 0);
+        this(0, 0, 0); 
     }
     
     public ShieldEntity(int x, int y, int layer) {

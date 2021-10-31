@@ -5,6 +5,8 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
+import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
@@ -14,6 +16,7 @@ import dungeonmania.util.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,7 +61,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         EntitiesControl entities = new EntitiesControl();
 
         entities.createEntity(6, 5, 0, "boulder");
-        entities.addEntities(spider);
+        entities.addEntity(spider);
 
         List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(6, 4), new Position(6, 4),
             new Position(5, 4), new Position(4, 4), new Position(4, 5), new Position(4, 6), new Position(5, 6), new Position(6, 6),
@@ -100,8 +103,8 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         BoulderEntity boulder = new BoulderEntity(5, 4, 0);
         EntitiesControl entities = new EntitiesControl();
 
-        entities.addEntities(boulder);
-        entities.addEntities(spider);
+        entities.addEntity(boulder);
+        entities.addEntity(spider);
 
         List<Position> expectPositions = Arrays.asList(new Position(5, 5), new Position(5, 5), new Position(5, 5), new Position(5, 5));
         
@@ -118,8 +121,8 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         BoulderEntity boulder = new BoulderEntity(5, 4, 0);
         EntitiesControl entities = new EntitiesControl();
 
-        entities.addEntities(boulder);
-        entities.addEntities(spider);
+        entities.addEntity(boulder);
+        entities.addEntity(spider);
 
         entities.moveAllMovingEntities(player);
         assertEquals(spider.getPosition(), new Position(5, 5));
@@ -138,10 +141,10 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
 
         EntitiesControl entities = new EntitiesControl();
 
-        entities.addEntities(player);
-        entities.addEntities(spider);
-        entities.addEntities(boulder1);
-        entities.addEntities(boulder2);
+        entities.addEntity(player);
+        entities.addEntity(spider);
+        entities.addEntity(boulder1);
+        entities.addEntity(boulder2);
 
         List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(5, 4), new Position(5, 4), new Position(5, 4), new Position(5, 4), new Position(5, 4));
         
@@ -186,9 +189,19 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         
 
         EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(spider);
+        entitiesControl.addEntity(spider);
         spider.battle(entitiesControl, character);
         assertFalse(entitiesControl.contains(spider));
         // TODO add assertions for spider death
+    }
+
+    @Test
+    @Override
+    public void testDropOneRing() {
+        CharacterEntity player = new CharacterEntity();
+        SpiderEntity spider = new SpiderEntity(0, 0, 0);
+        spider.dropEntities(player, 1f);
+        List<ICollectableEntity> inventory = player.getInventory();
+        assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
     }
 }

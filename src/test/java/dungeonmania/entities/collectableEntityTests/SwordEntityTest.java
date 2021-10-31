@@ -31,7 +31,7 @@ public class SwordEntityTest implements ICollectableEntityTest {
         CharacterEntity player = new CharacterEntity(0, 1, 0);
         EntitiesControl entities = new EntitiesControl();
 
-        entities.addEntities(sword);
+        entities.addEntity(sword);
         sword.contactWithPlayer(entities, player);
         sword.used(player);
         

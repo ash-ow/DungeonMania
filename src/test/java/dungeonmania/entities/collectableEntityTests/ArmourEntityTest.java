@@ -30,7 +30,7 @@ public class ArmourEntityTest implements ICollectableEntityTest {
         CharacterEntity player = new CharacterEntity(0, 1, 0);
         EntitiesControl entities = new EntitiesControl();
 
-        entities.addEntities(armour);
+        entities.addEntity(armour);
         armour.contactWithPlayer(entities, player);
         armour.used(player);
         

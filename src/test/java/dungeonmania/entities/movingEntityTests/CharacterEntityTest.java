@@ -2,6 +2,7 @@ package dungeonmania.entities.movingEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -19,11 +20,13 @@ import dungeonmania.entities.buildableEntities.ShieldEntity;
 import dungeonmania.entities.collectableEntities.ArrowsEntity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.entities.collectableEntities.KeyEntity;
+import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
+import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
@@ -80,8 +83,8 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         CharacterEntity character = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity();
         EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(character);
-        entitiesControl.addEntities(zombie);
+        entitiesControl.addEntity(character);
+        entitiesControl.addEntity(zombie);
         character.setHealth(2);
         zombie.battle(entitiesControl, character);
         assertFalse(character.isAlive());
@@ -184,8 +187,8 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         CharacterEntity character = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity();
         EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(character);
-        entitiesControl.addEntities(zombie);
+        entitiesControl.addEntity(character);
+        entitiesControl.addEntity(zombie);
         zombie.battle(entitiesControl, character);
         assertEquals(58, character.getHealth());
         assertEquals(-2.0, zombie.getHealth());
@@ -212,5 +215,11 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         ZombieToastEntity zombie = new ZombieToastEntity();
         zombie.doBattle(player);
         assertTrue(zombie.getHealth() < 40);
+    }
+
+    @Test
+    @Override
+    public void testDropOneRing() {
+        // null because when character dies, it does not need to drop ring
     }
 }

@@ -14,7 +14,8 @@ public class HealthPotionEntity extends Entity implements ICollectableEntity {
 
     @Override
     public void used(CharacterEntity player) {
-            player.setHealth(100);
+        player.setHealth(100);
+        player.removeEntityFromInventory(this);
     }  
 
     @Override

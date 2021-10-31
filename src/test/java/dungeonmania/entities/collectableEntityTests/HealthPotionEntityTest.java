@@ -2,12 +2,15 @@ package dungeonmania.entities.collectableEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.util.Position;
+import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.HealthPotionEntity;
 import dungeonmania.entities.movingEntities.spiderEntity.*;
 
@@ -40,13 +43,21 @@ public class HealthPotionEntityTest implements ICollectableEntityTest {
 
     @Test
     public void TestUseCollectable() {
-        HealthPotionEntity health_potion = new HealthPotionEntity(0,0,0);
-        CharacterEntity player = new CharacterEntity(0,0,0);
+        ArrayList<IEntity> entities = new ArrayList<>();
+        CharacterEntity player = new CharacterEntity(0, 0, 0);
+        HealthPotionEntity health_potion = new HealthPotionEntity(0,1,0);
+        entities.add(health_potion);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
         
+        dungeon.tick(Direction.DOWN);
+        assertItemInInventory("health_potion-0-1-0", player, dungeon.entitiesControl);
+        assertEquals(new Position(0, 1, 0), player.getPosition());
+
         player.setHealth(40);
-        health_potion.used(player);
+        dungeon.tick("health_potion-0-1-0");
         assertEquals(100, player.getHealth());
-}
+        assertItemNotInInventory("health_potion-0-1-0", player, dungeon.entitiesControl);
+    }
 
     @Test
     public void TestPotionBattle() {

@@ -51,7 +51,6 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
         CharacterEntity player = new CharacterEntity(0,0,0);
         invincibility_potion.used(player);
         assertTrue(player.isInvincible());
-        
     }
 
     @Test
@@ -67,8 +66,23 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
         invincibility_potion.used(player);
         player.move(Direction.DOWN);
         spider.doBattle(player);
+        assertEquals(100, player.getHealth());
         assertEquals(0, spider.getHealth());
         assertFalse(spider.isAlive()); 
+    }
+
+    @Test
+    public void TestInvincibilityRunsOut() {
+        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0,0,0);
+        CharacterEntity player = new CharacterEntity(0,0,0);
+        invincibility_potion.used(player);
+        assertTrue(player.isInvincible());
+
+        // Add a dungeon or otherwise make the player move 10 times 
+
+        assertFalse(player.isInvincible());
+
+        // Repeat for the invis potion
     }
 
     /*

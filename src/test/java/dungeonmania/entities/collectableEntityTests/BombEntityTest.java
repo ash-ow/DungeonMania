@@ -46,7 +46,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
         dungeon.tick("bomb-0-1-0");
         assertEquals(new Position(0, 1, 0), dungeon.entitiesControl.getEntityById("bomb-0-1-0").getPosition(), "Bomb should be placed in the players new position");
         assertTrue(bomb.isArmed(), "Bomb should be active");
-        assertNull(player.getInventoryItem(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
+        assertItemNotInInventory("bomb-0-1-0", player, dungeon.entitiesControl);
     }
 
     @Test

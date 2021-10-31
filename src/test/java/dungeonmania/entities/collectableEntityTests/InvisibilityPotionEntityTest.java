@@ -86,31 +86,15 @@ public class  InvisibilityPotionEntityTest implements ICollectableEntityTest {
         assertEquals(100, player.getHealth());
         assertEquals(100, spider.getHealth());
     }
-    /* TO DO: Fix Duration && redo test 
+
     @Test
-    public void TestDuration() {
+    public void TestCanStillCollect() {
+        CharacterEntity player = new CharacterEntity(0, 1, 0);
+        EntitiesControl entities = new EntitiesControl();
         InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0,0,0);
-        CharacterEntity player = new CharacterEntity(0,0,0);
-        invisibility_potion.used(player);
-
-        //test duration
-			//player.move(Direction.DOWN);
-            
-            //assertTrue(player.isInvisible());
-
-            //player.move(Direction.DOWN);
-            //assertEquals(player.getDuration(), 8);
-            //assertTrue(player.isInvisible());
+        entities.addEntity(invisibility_potion);
         
-            for (int i=1;i<10;i++) {
-            player.move(Direction.DOWN);
-            }
-            assertEquals(player.getDuration(), 0);
-            assertFalse(player.isInvisible());
-	
-        }
-        */
-    
-    
-
+        invisibility_potion.contactWithPlayer(entities, player);
+        assertItemInInventory(invisibility_potion.getId(), player, entities);
+    }
 }

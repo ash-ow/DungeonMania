@@ -2,7 +2,6 @@ package dungeonmania.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -21,6 +20,8 @@ import dungeonmania.entities.staticEntities.*;
 public class EntitiesControl {
     private List<IEntity> entities;
     private Random rand = new Random();
+    private Integer tickCounter = 0;
+    private Integer entityCounter = 0;
 
     public EntitiesControl() {
         entities = new ArrayList<IEntity>();
@@ -28,6 +29,8 @@ public class EntitiesControl {
 
     public void addEntities(IEntity entity) {
         entities.add(entity);
+        entity.setId(Integer.toString(entityCounter));
+        entityCounter++;
     }
 
     public void removeEntity(IEntity entity) {
@@ -58,30 +61,23 @@ public class EntitiesControl {
     }
 
     public void moveAllMovingEntities(Direction direction, CharacterEntity player) {
-        List<IMovingEntity> movingEntities = getAllMovingEntities();
-
-        for (IMovingEntity entity : movingEntities) {
-            entity.move(direction, this, player);
+        List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
+        for (IAutoMovingEntity entity : movingEntities) {
+            entity.move(this, player);
         }
     }
 
-    public List<IMovingEntity> getAllMovingEntities() {
-        return entities.stream()
-            .filter(IMovingEntity.class::isInstance)
-            .map(IMovingEntity.class::cast)
-            .collect(Collectors.toList());
+// region Filter
+    public List<IAutoMovingEntity> getAllAutoMovingEntities() {
+        return EntitiesControl.getEntitiesOfType(this.entities, IAutoMovingEntity.class);
     }
 
-    public List<IEntity> getAllEntitiesFromPosition(Position position) {
-        return this.entities.stream().filter(entity -> entity != null && entity.getPosition().equals(position)).collect(Collectors.toList());
+    public List<IInteractingEntity> getInteractableEntitiesFrom(List<IEntity> entityList) {
+        return EntitiesControl.getEntitiesOfType(entityList, IInteractingEntity.class);
     }
 
-    public List<IEntity> entitiesOfType(String type) {
-        return this.entities.stream().filter(entity -> entity.getType().equals(type)).collect(Collectors.toList());
-    }
-
-    public List<IInteractingEntity> entitiesInteractableInRange(List<IEntity> entityList) {
-        return entityList.stream().filter(entity -> entity instanceof IInteractingEntity).map(IInteractingEntity.class::cast).collect(Collectors.toList());
+    public static <T> List<T> getEntitiesOfType(List<IEntity> entityList, Class<T> cls) {
+        return entityList.stream().filter(cls::isInstance).map(cls::cast).collect(Collectors.toList());
     }
 
     public List<ICollectableEntity> entitiesFromCollectables() {
@@ -92,78 +88,34 @@ public class EntitiesControl {
         return entityList.stream().anyMatch(entity -> !entity.isPassable());
     }
 
-    public static boolean interactingEntitiesUnpassable(List<IInteractingEntity> entityList) {
-        return entityList.stream().anyMatch(entity -> !entity.isPassable());
+    public List<IEntity> getAllEntitiesFromPosition(Position position) {
+        return this.entities.stream().filter(entity -> entity != null && entity.getPosition().equals(position)).collect(Collectors.toList());
     }
 
-    public static IEntity entitiesContainsType(List<IEntity> entityList, Class<?> cls) {
-        return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findAny().orElse(null);
+    public static boolean containsBlockingEntities(List<IEntity> entityList) {
+        return entityList.stream().filter(IBlocker.class::isInstance).map(IBlocker.class::cast).anyMatch(IBlocker::isBlocking);
+    }
+
+    public static IEntity getFirstEntityOfType(List<IEntity> entityList, Class<?> cls) {
+        return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findFirst().orElse(null);
     }
 
     public boolean positionContainsEntityType(Position position, Class<?> cls) {
         List<IEntity> entityList =  this.getAllEntitiesFromPosition(position);
         
-        if (entitiesContainsType(entityList, cls) != null) {
+        if (getFirstEntityOfType(entityList, cls) != null) {
             return true;
         }
         return false;
     }
+// endregion
 
     public void createEntity(JsonObject entityObj) {
         String type = entityObj.get("type").getAsString();
         Integer xAxis = entityObj.get("x").getAsInt();
         Integer yAxis = entityObj.get("y").getAsInt();
         Integer layer = getAllEntitiesFromPosition(new Position(xAxis, yAxis)).size();
-        switch (type) {
-            case "wall":
-                this.addEntities(new WallEntity(xAxis, yAxis, layer));
-                break;
-            case "exit":
-                this.addEntities(new ExitEntity(xAxis, yAxis, layer));
-                break;
-            case "door":
-                this.addEntities(new DoorEntity(xAxis, yAxis, layer));
-                break;
-            case "portal":
-                this.addEntities(new PortalEntity(xAxis, yAxis, layer, entityObj.get("colour").getAsString()));
-                break;
-            case "switch":
-                this.addEntities(new SwitchEntity(xAxis, yAxis, layer));
-                break;
-            case "boulder":
-                this.addEntities(new BoulderEntity(xAxis, yAxis, layer));
-                break;
-            case "wood":
-                this.addEntities(new WoodEntity(xAxis, yAxis, layer));
-                break;
-            case "arrow":
-                this.addEntities(new ArrowsEntity(xAxis, yAxis, layer));
-                break;
-            case "bomb":
-                this.addEntities(new BombEntity(xAxis, yAxis, layer));
-                break;
-            case "sword":
-                this.addEntities(new SwordEntity(xAxis, yAxis, layer));
-                break;
-            case "armour":
-                this.addEntities(new ArmourEntity(xAxis, yAxis, layer));
-                break;
-            case "treasure":
-                this.addEntities(new TreasureEntity(xAxis, yAxis, layer));
-                break;
-            case "key":
-                this.addEntities(new KeyEntity(xAxis, yAxis, layer));
-                break;
-            case "health_potion":
-                this.addEntities(new HealthPotionEntity(xAxis, yAxis, layer));
-                break;
-            case "invisibility_potion":
-                this.addEntities(new InvisibilityPotionEntity(xAxis, yAxis, layer));
-                break;
-            case "invincibility_potion":
-                this.addEntities(new InvincibilityPotionEntity(xAxis, yAxis, layer));
-                break;
-        }
+        createEntity(xAxis, yAxis, layer, type);
     }
 
     public void createEntity(Integer xAxis, Integer yAxis, Integer layer, String type) {
@@ -173,12 +125,6 @@ public class EntitiesControl {
                 break;
             case "exit":
                 this.addEntities(new ExitEntity(xAxis, yAxis, layer));
-                break;
-            case "door":
-                this.addEntities(new DoorEntity(xAxis, yAxis, layer));
-                break;
-            case "portal":
-                this.addEntities(new PortalEntity(xAxis, yAxis, layer, "BLUE"));
                 break;
             case "switch":
                 this.addEntities(new SwitchEntity(xAxis, yAxis, layer));
@@ -207,9 +153,6 @@ public class EntitiesControl {
             case "treasure":
                 this.addEntities(new TreasureEntity(xAxis, yAxis, layer));
                 break;
-            case "key":
-                this.addEntities(new KeyEntity(xAxis, yAxis, layer));
-                break;
             case "health_potion":
                 this.addEntities(new HealthPotionEntity(xAxis, yAxis, layer));
                 break;
@@ -219,8 +162,36 @@ public class EntitiesControl {
             case "invincibility_potion":
                 this.addEntities(new InvincibilityPotionEntity(xAxis, yAxis, layer));
                 break;
+            case "mercenary":
+                this.addEntities(new MercenaryEntity(xAxis, yAxis, layer));
+                break;
+            case "zombie_toast":
+                this.addEntities(new ZombieToastEntity(xAxis, yAxis, layer));
+                break;
+            case "zombie_toast_spawner":
+                this.addEntities(new ZombieToastSpawnerEntity(xAxis, yAxis, layer));
+                break;
         }
     }
+
+	public void createEntity(Integer xAxis, Integer yAxis, Integer layer, Integer keyNumber, String type) {
+        switch (type) {
+            case "door":
+                this.addEntities(new DoorEntity(xAxis, yAxis, layer, keyNumber));
+                break;
+            case "key":
+                this.addEntities(new KeyEntity(xAxis, yAxis, layer, keyNumber));
+                break;
+        }
+	}
+
+	public void createEntity(Integer xAxis, Integer yAxis, Integer layer, String colour, String type) {
+        switch (type) {
+            case "portal":
+                this.addEntities(new PortalEntity(xAxis, yAxis, layer, colour));
+                break;
+        }
+	}
 
     public void createEntity(Integer x, Integer y, String type) {
         Integer layer = getNumberOfEntitiesInPosition(new Position(x, y));
@@ -232,10 +203,10 @@ public class EntitiesControl {
     }
 
     public List<IEntity> getAllEntitiesOfType(String type) {
-        return this.entitiesOfType(this.entities, type);
+        return EntitiesControl.getEntitiesOfType(this.entities, type);
     }
 
-    public List<IEntity> entitiesOfType(List<IEntity> entitiyList, String type) {
+    public static List<IEntity> getEntitiesOfType(List<IEntity> entitiyList, String type) {
         // TODO refactor to accept Class<?> instead of string type
         List<IEntity> sameType = new ArrayList<>();
         for (IEntity entity : entitiyList) {
@@ -261,9 +232,12 @@ public class EntitiesControl {
 
     public void generateEnemyEntities() {
         generateSpider();
+        generateZombieToast();
+        tickCounter++;
     }
 
     private void generateSpider() {
+        // TODO replace this with an enemy generator
         List<IEntity> spiders = this.getAllEntitiesOfType("spider");
         if (spiders.size() < 4) {
             Position largestCoordinate = this.getLargestCoordinate();
@@ -274,6 +248,19 @@ public class EntitiesControl {
             if (getRandomBoolean((float) .05) 
                 && !this.positionContainsEntityType(new Position(randomX, randomY), BoulderEntity.class)) {
                 this.createEntity(randomX, randomY, "spider");
+            }
+        }
+    }
+
+    private void generateZombieToast() {
+        if (tickCounter % 5 == 0) {
+            List<IEntity> spawnerEntities = getAllEntitiesOfType("zombie_toast_spawner");
+            for (IEntity spawner : spawnerEntities) {
+                this.createEntity(
+                    spawner.getPosition().getX(), 
+                    spawner.getPosition().getY(), 
+                    "zombie_toast"
+                );
             }
         }
     }
@@ -298,13 +285,9 @@ public class EntitiesControl {
     }
     
     public IEntity getEntityById(String id) {
-        try {
-            return this.entities.stream()
-                .filter(entity -> entity.getId().equals(id))
-                .findFirst()
-                .get();
-        } catch (NoSuchElementException e) {
-            return null;
-        }
+        return this.entities.stream()
+            .filter(entity -> entity.getId().equals(id))
+            .findFirst()
+            .orElse(null);
     }
 }

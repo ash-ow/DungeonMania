@@ -1,20 +1,15 @@
 package dungeonmania.entities.movingEntities.spiderEntity;
 
-import java.util.Arrays;
-import java.util.List;
-
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
-import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.IAutoMovingEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
-import dungeonmania.entities.movingEntities.IMovingEntity;
-import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
-public class SpiderEntity extends Entity implements IInteractingEntity, IMovingEntity, IBattlingEntity {
+public class SpiderEntity extends Entity implements IInteractingEntity, IBattlingEntity, IAutoMovingEntity {
     private SpiderState spiderMovement;
     private Position firstPosition;
     private Integer movementCount = 0;
@@ -29,9 +24,10 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
         firstPosition = this.position;
     }
 
-    @Override
-    public void move(Direction direction, EntitiesControl entities, CharacterEntity player) {
+    // region Moving
 
+    @Override
+    public void move(EntitiesControl entities, CharacterEntity player) {
         if (!spiderMovement.moveSpider(movementCount, this, entities)) {
             if (!this.position.equals(firstPosition) && movementCount > 0) {
                 movementCount = (movementCount - 2) % 8;
@@ -39,6 +35,9 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
             }
         } else {
             movementCount = (movementCount + 1) % 8;
+        }
+        if (this.isInSamePositionAs(player)) {
+            interactWithPlayer(entities, player);
         }
     }
 
@@ -55,6 +54,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
         }
         return spiderMovement;
     }
+//endregion
 
 //region Battle
     private float health = 100;
@@ -84,13 +84,4 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IMovingE
         this.health -= ((enemyHealth * enemyDamage) / 5);
     }
 //endregion
-
-    @Override
-    public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
-        // To do!!!!
-        System.out.println("Oh shit that's a spider!");
-        this.move(Direction.DOWN, entities, player);
-        //player.move(direction);
-        return true;
-    }
 }

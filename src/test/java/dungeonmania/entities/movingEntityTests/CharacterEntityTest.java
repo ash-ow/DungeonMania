@@ -1,6 +1,10 @@
 package dungeonmania.entities.movingEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+<<<<<<< HEAD
+=======
+import static org.junit.jupiter.api.Assertions.assertFalse;
+>>>>>>> master
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -74,32 +78,24 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
     }
 
     @Test
-    public void TestBattle() {
-        CharacterEntity character = new CharacterEntity();
-        CharacterEntity character2 = new CharacterEntity();
-
-        assertEquals(100, character.getHealth());
-        assertEquals(100, character2.getHealth());
-
-        character2.Battle(character);
-
-        assertEquals(100, character.getHealth());
-        assertEquals(100, character2.getHealth());
-    }
-
-    @Test
     public void TestDeath() {
         CharacterEntity character = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity();
         
-        character.setHealth(100);
-        character.setDamage(2);
-        zombie.setDamage(20);
-        zombie.Battle(character);
+        // character.setHealth(100);
+        // character.setDamage(2);
+        // zombie.setDamage(20);
+        // zombie.Battle(character);
 
-        assertEquals(-100, character.getHealth());
-        assertEquals(60, zombie.getHealth());
+        // assertEquals(-100, character.getHealth());
+        // assertEquals(60, zombie.getHealth());
 
+        EntitiesControl entitiesControl = new EntitiesControl();
+        entitiesControl.addEntities(character);
+        entitiesControl.addEntities(zombie);
+        character.setHealth(2);
+        zombie.battle(entitiesControl, character);
+        assertFalse(character.isAlive());
         // TODO add assertions for character death
     }
 
@@ -192,5 +188,19 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
             i++;
         }
         assertTrue(player.getInventory().size() == 2);
+    }
+
+    @Override
+    @Test
+    public void TestBattle() {
+        // TODO Auto-generated method stub
+        CharacterEntity character = new CharacterEntity();
+        ZombieToastEntity zombie = new ZombieToastEntity();
+        EntitiesControl entitiesControl = new EntitiesControl();
+        entitiesControl.addEntities(character);
+        entitiesControl.addEntities(zombie);
+        zombie.battle(entitiesControl, character);
+        assertEquals(58, character.getHealth());
+        assertEquals(-2.0, zombie.getHealth());
     }
 }

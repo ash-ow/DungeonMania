@@ -15,8 +15,9 @@ public class HealthPotionEntity extends CollectableEntity {
 
     @Override
     public void used(CharacterEntity player) {
-        // TODO Auto-generated method stub 
-    }
+        player.setHealth(100);
+        player.removeEntityFromInventory(this);
+    }  
 
     @Override
     public boolean isPlacedAfterUsing() {

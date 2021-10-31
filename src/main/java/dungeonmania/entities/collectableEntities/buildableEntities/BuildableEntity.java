@@ -14,23 +14,23 @@ public abstract class BuildableEntity extends CollectableEntity {
         initialiseRequiredComponents();
     }
     
-    protected Map<CollectableEntity, Integer> requiredComponents = new HashMap<CollectableEntity, Integer>();
+    protected Map<EntityTypes, Integer> requiredComponents = new HashMap<EntityTypes, Integer>();
     public boolean isBuildable(List<CollectableEntity> inventory) {
-        for (Map.Entry<CollectableEntity, Integer> entry : requiredComponents.entrySet()) {
-            CollectableEntity component = entry.getKey();
+        for (Map.Entry<EntityTypes, Integer> entry : requiredComponents.entrySet()) {
+            EntityTypes component = entry.getKey();
             int quantity = entry.getValue();
             if (numberOfComponentItemsInInventory(inventory, component) < quantity) {
-                System.out.println("Needs more " + component.getType());
+                System.out.println("Needs more " + component.toString());
                 return false;
             }
         }
         return true;
     }
 
-    protected int numberOfComponentItemsInInventory(List<CollectableEntity> inventory, CollectableEntity component) {
+    protected int numberOfComponentItemsInInventory(List<CollectableEntity> inventory, EntityTypes component) {
         return inventory
             .stream()
-            .filter(ent -> ent.getClass().equals(component.getClass()))
+            .filter(ent -> ent.getType() == component)
             .collect(Collectors.toList())
             .size();
     }

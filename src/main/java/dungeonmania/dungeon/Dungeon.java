@@ -230,16 +230,5 @@ public class Dungeon {
         entityInfo.addProperty("colour", colour);
         return entityInfo;
     }
-
-    public static void main(String[] args) {
-        CharacterEntity player = new CharacterEntity(0, 1, 0);
-        BoulderEntity boulder = new BoulderEntity(0, 2, 0);
-        ArrayList<IEntity> entities = new ArrayList<>();
-        entities.add(boulder);
-        String jsonGoals = "{ \"goal\": \"boulders\"}";
-        JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
-        Dungeon dungeon = new Dungeon(entities, "Standard", player, j);
-        dungeon.saveGame("player1");
-    }
 }
  

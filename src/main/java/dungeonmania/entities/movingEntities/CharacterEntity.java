@@ -14,6 +14,7 @@ import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.BombEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.buildableEntities.*;
+import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
@@ -92,6 +93,18 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public boolean getInvincible() {
         return this.isInvincible;
     }
+
+    @Override
+    public boolean isAlive() {
+        if (this.getHealth() <= 0) {
+            OneRingEntity ring = (OneRingEntity) EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class);
+            if (ring != null) {
+                ring.used(this);
+            }
+            return false;
+        }
+        return true;
+    }
 //endregion
 
 //region Inventory
@@ -115,8 +128,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return info;
     }
 
-    public boolean containedInInventory(String type) {
-        for (ICollectableEntity entity: inventory) {
+    public boolean containedInInventory(EntityTypes type) {
+        for (CollectableEntity entity: inventory) {
             if(entity.getType().equals(type)) {
                 return true;
             }
@@ -124,8 +137,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return false;
     }
 
-    public ICollectableEntity findFirstInInventory(String type) {
-        for (ICollectableEntity entity: inventory) {
+    public CollectableEntity findFirstInInventory(EntityTypes type) {
+        for (CollectableEntity entity: inventory) {
             if(entity.getType().equals(type)) {
                 return entity;
             }
@@ -200,13 +213,13 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         List<EntityTypes> buildable = new ArrayList<>();
         BowEntity bow = new BowEntity();
         if (bow.isBuildable(this.inventory)) {
-            buildable.add(("bow"));
+            buildable.add(EntityTypes.BOW);
         }
         ShieldEntity shield = new ShieldEntity();
         if (shield.isBuildable(this.inventory)) {
-            buildable.add("shield");
+            buildable.add(EntityTypes.SHIELD);
         }
-        return buildable.stream().map(b -> b.toString()).collect(Collectors.toList());
+        return buildable.stream().map(EntityTypes::toString).collect(Collectors.toList());
     }
 
 //endregion    

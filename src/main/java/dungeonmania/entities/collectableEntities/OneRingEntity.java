@@ -21,7 +21,8 @@ public class OneRingEntity extends CollectableEntity {
 
     @Override
     public void used(CharacterEntity player) {
-        // TODO
+        player.setHealth(100);
+        player.removeEntityFromInventory(this);
     }
 
     @Override

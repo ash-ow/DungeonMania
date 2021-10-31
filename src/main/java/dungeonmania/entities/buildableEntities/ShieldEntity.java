@@ -5,6 +5,8 @@ import java.util.Map;
 
 import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
+import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.collectableEntities.ArrowsEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
@@ -18,7 +20,7 @@ public class ShieldEntity extends BuildableEntity {
     }
     
     public ShieldEntity(int x, int y, int layer) {
-        super(x, y, layer, "shield");
+        super(x, y, layer, EntityTypes.SHIELD);
     }
     
     @Override
@@ -68,7 +70,6 @@ public class ShieldEntity extends BuildableEntity {
         this.durability = durability;
     }
 
-    @Override
     public void used(CharacterEntity player){
         if (this.durability > 0) {
             setDurability(this.durability - 1);

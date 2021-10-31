@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.ArmourEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.response.models.ItemResponse;
@@ -19,7 +20,7 @@ public class ArmourEntityTest implements ICollectableEntityTest {
     @Override
     public void TestEntityResponseInfo() {
         ArmourEntity armour = new ArmourEntity(0, 0, 0);
-        assertEntityResponseInfoEquals(armour, "armour-0-0-0", "armour", new Position(0,0), false);
+        assertEntityResponseInfoEquals(armour, "armour-0-0-0", EntityTypes.ARMOUR, new Position(0,0), false);
     }
 
     @Test

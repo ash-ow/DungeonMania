@@ -8,11 +8,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.SwordEntity;
-import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.response.models.ItemResponse;
-import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class SwordEntityTest implements ICollectableEntityTest {
@@ -20,7 +17,7 @@ public class SwordEntityTest implements ICollectableEntityTest {
     @Override
     public void TestEntityResponseInfo() {
         SwordEntity sword = new SwordEntity(0, 0, 0);
-        assertEntityResponseInfoEquals(sword, "sword-0-0-0", "sword", new Position(0,0), false);
+        assertEntityResponseInfoEquals(sword, "sword-0-0-0", EntityTypes.SWORD, new Position(0,0), false);
     }
 
     @Test

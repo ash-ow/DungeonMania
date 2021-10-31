@@ -2,14 +2,14 @@ package dungeonmania.entities.movingEntities.spiderEntity;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
-import dungeonmania.entities.IContactingEntity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IAutoMovingEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
 import dungeonmania.util.Position;
 
 
-public class SpiderEntity extends Entity implements IContactingEntity, IBattlingEntity, IAutoMovingEntity {
+public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMovingEntity {
     private SpiderState spiderMovement;
     private Position firstPosition;
     private Integer movementCount = 0;
@@ -19,12 +19,12 @@ public class SpiderEntity extends Entity implements IContactingEntity, IBattling
     }
     
     public SpiderEntity(int x, int y, int layer) {
-        super(x, y, layer, "spider");
+        super(x, y, layer, EntityTypes.SPIDER);
         spiderMovement = new SpiderClockwise();
         firstPosition = this.position;
     }
 
-    // region Moving
+// region Moving
 
     @Override
     public void move(EntitiesControl entities, CharacterEntity player) {
@@ -70,7 +70,6 @@ public class SpiderEntity extends Entity implements IContactingEntity, IBattling
     }
 
     public float getDamage() {
-        // TODO determine correct Spider damage
         return 2;
     }
 

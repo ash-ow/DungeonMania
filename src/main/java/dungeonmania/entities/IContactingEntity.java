@@ -2,7 +2,6 @@ package dungeonmania.entities;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.Direction;
 
 public interface IContactingEntity extends IEntity {
     /**

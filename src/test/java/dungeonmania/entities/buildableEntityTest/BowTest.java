@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.buildableEntities.BowEntity;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -61,7 +62,7 @@ public class BowTest implements IBuildableEntityTests {
     @Override
     public void TestEntityResponseInfo() {
         BowEntity bow = new BowEntity();
-        assertEntityResponseInfoEquals(bow, "bow-0-0-0", "bow", new Position(0,0,0), true);
+        assertEntityResponseInfoEquals(bow, "bow-0-0-0", EntityTypes.BOW, new Position(0,0,0), true);
     }
 
     @Test

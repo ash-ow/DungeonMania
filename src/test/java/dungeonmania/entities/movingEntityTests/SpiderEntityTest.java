@@ -2,6 +2,7 @@ package dungeonmania.entities.movingEntityTests;
 
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
@@ -60,7 +61,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         SpiderEntity spider = new SpiderEntity(5, 5, 0);
         EntitiesControl entities = new EntitiesControl();
 
-        entities.createEntity(6, 5, 0, "boulder");
+        entities.createEntity(6, 5, 0, EntityTypes.BOULDER);
         entities.addEntity(spider);
 
         List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(6, 4), new Position(6, 4),
@@ -162,7 +163,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         assertEntityResponseInfoEquals(
             spider,
             "spider-0-0-0",
-            "spider",
+            EntityTypes.SPIDER,
             new Position(0,0),
             false
         );

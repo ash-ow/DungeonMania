@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
@@ -27,7 +28,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     }
 
     public MercenaryEntity(int x, int y, int layer) {
-        super(x, y, layer, "mercenary");
+        super(x, y, layer, EntityTypes.MERCENARY);
         this.health = 100;
         this.damage = 3;
         this.isBribed = false;

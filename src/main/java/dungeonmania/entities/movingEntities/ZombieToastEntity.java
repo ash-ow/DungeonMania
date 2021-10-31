@@ -14,7 +14,7 @@ import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
 
 
-public class ZombieToastEntity extends Entity implements IInteractingEntity, IAutoMovingEntity, IBattlingEntity {
+public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoMovingEntity {
     Random rand = new Random();
     Integer seed;
     private float armourEntityProbability = 0.2f;
@@ -46,17 +46,12 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IAu
         Direction direction = Direction.getRandomDirection(new Random(rand.nextInt()));
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
-        if (!EntitiesControl.containsUnpassableEntities(targetEntities)) {
+        if ( !EntitiesControl.containsBlockingEntities(targetEntities) ) {
             this.move(direction);
         }
         if (this.isInSamePositionAs(player)) {
-            interactWithPlayer(entitiesControl, Direction.NONE, player);
+            interactWithPlayer(entitiesControl, player);
         }
-    }
-
-    @Override
-    public boolean isPassable() {
-        return true;
     }
 
     @Override
@@ -93,12 +88,6 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IAu
 //endregion
 
     @Override
-    public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
-        Battle(entities, player);
-        return false;
-    }
-
-    @Override
     public void dropEntities(CharacterEntity player) {
         OneRingEntity ring = new OneRingEntity();
         ArmourEntity armour = new ArmourEntity();
@@ -120,5 +109,11 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IAu
         if (RandomChance.getRandomBoolean(probability)) {
             player.addEntityToInventory(armour);
         }
+    }
+
+    @Override
+    public void interactWithPlayer(EntitiesControl entities, CharacterEntity player) {
+        // TODO Auto-generated method stub
+        
     }
 }

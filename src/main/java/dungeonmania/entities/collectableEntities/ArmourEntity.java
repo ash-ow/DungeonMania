@@ -3,7 +3,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public class ArmourEntity extends Entity implements ICollectableEntity {
-    private final float dropChance = 0.1f;
+    private final float dropChance = 0.5f;
 
     public float getDropChance() {
         return dropChance;

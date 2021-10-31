@@ -6,14 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
-import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IEntityTests;
-import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
-import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -79,7 +74,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         MercenaryEntity mercenary = new MercenaryEntity();
         EntitiesControl entitiesControl = new EntitiesControl();
         entitiesControl.addEntities(mercenary);
-        mercenary.Battle(entitiesControl, character);
+        mercenary.battle(entitiesControl, character);
         assertFalse(entitiesControl.contains(mercenary));        
     }
 

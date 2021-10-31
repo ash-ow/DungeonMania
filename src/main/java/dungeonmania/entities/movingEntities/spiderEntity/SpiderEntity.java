@@ -1,17 +1,11 @@
 package dungeonmania.entities.movingEntities.spiderEntity;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.plaf.metal.MetalBorders.PaletteBorder;
-
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IAutoMovingEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
-import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
@@ -30,6 +24,8 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IBattlin
         firstPosition = this.position;
     }
 
+    // region Moving
+
     @Override
     public void move(EntitiesControl entities, CharacterEntity player) {
         if (!spiderMovement.moveSpider(movementCount, this, entities)) {
@@ -41,7 +37,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IBattlin
             movementCount = (movementCount + 1) % 8;
         }
         if (this.isInSamePositionAs(player)) {
-            interactWithPlayer(entities, Direction.NONE, player);
+            interactWithPlayer(entities, player);
         }
     }
 
@@ -58,6 +54,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IBattlin
         }
         return spiderMovement;
     }
+//endregion
 
 //region Battle
     private float health = 100;
@@ -84,8 +81,8 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IBattlin
 //endregion
 
     @Override
-    public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
-        Battle(entities, player);
-        return true;
+    public void interactWithPlayer(EntitiesControl entities, CharacterEntity player) {
+        // TODO Auto-generated method stub
+        
     }
 }

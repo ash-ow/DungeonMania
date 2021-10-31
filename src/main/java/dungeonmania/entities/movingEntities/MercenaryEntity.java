@@ -88,19 +88,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         }       
     }
 
-    public void moveToUsefulUnblocked(List<Direction> usefulDirections, EntitiesControl entitiesControl) {
-        for (Direction d : usefulDirections) {
-            if (!targetPositionIsBlocked(d, entitiesControl)) {
-                this.move(d);
-                break;
-            }
-        }
-    }
-
-    private boolean targetPositionIsBlocked(Direction d, EntitiesControl entitiesControl) {
-            Position target = this.position.translateBy(d);
-            return EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(target));
-    }
+    
 
     private List<Direction> getUsefuDirections(CharacterEntity player) {
         Position diff = Position.calculatePositionBetween(this.position, player.getPosition());

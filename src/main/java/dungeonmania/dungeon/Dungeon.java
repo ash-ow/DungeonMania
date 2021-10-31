@@ -93,15 +93,24 @@ public class Dungeon {
 
     public void tick(Direction direction) {
         player.move(direction, entitiesControl);
-        entitiesControl.moveAllMovingEntities(direction, player);
+        if (player.getInvincible()) {
+            entitiesControl.runAwayAllMovingEntities(player);
+        } else {
+            entitiesControl.moveAllMovingEntities(player);
+        }
         entitiesControl.tick();
         entitiesControl.generateEnemyEntities();
     }
 
     public void tick(String itemID) {
         player.useItem(itemID, this.entitiesControl);
+        if (player.getInvincible()) {
+            entitiesControl.runAwayAllMovingEntities(player);
+        } else {
+            entitiesControl.moveAllMovingEntities(player);
+        }
+        entitiesControl.tick();
         entitiesControl.generateEnemyEntities();
-        // TODO implement
     }
 
     public void interact(String entityID) throws IllegalArgumentException, InvalidActionException{

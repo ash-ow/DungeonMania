@@ -60,10 +60,17 @@ public class EntitiesControl {
             .collect(Collectors.toList());
     }
 
-    public void moveAllMovingEntities(Direction direction, CharacterEntity player) {
+    public void moveAllMovingEntities(CharacterEntity player) {
         List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
         for (IAutoMovingEntity entity : movingEntities) {
             entity.move(this, player);
+        }
+    }
+
+    public void runAwayAllMovingEntities(CharacterEntity player) {
+        List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
+        for (IAutoMovingEntity entity : movingEntities) {
+            entity.runAway(this, player);
         }
     }
 

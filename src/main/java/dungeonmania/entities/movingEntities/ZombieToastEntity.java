@@ -84,12 +84,11 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
     @Override
     public void dropEntities(CharacterEntity player) {
         OneRingEntity ring = new OneRingEntity();
-        ArmourEntity armour = new ArmourEntity();
         if (RandomChance.getRandomBoolean(ring.getDropChance())) {
             player.addEntityToInventory(ring);
         }
-        if (RandomChance.getRandomBoolean(armour.getDropChance())) {
-            player.addEntityToInventory(armour);
+        if (equipped != null) {
+            player.addEntityToInventory(equipped);
         }
     }
 
@@ -100,7 +99,7 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         if (RandomChance.getRandomBoolean(probability)) {
             player.addEntityToInventory(ring);
         }
-        if (RandomChance.getRandomBoolean(probability)) {
+        if (equipped != null) {
             player.addEntityToInventory(armour);
         }
     }

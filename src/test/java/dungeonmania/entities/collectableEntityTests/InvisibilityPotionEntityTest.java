@@ -58,20 +58,17 @@ public class  InvisibilityPotionEntityTest implements ICollectableEntityTest {
         invisibility_potion.used(player);
         assertTrue(player.isInvisible());
     }
-
     
 
     @Test
-    public void TestInteract() {
+    public void TestAvoidBattle() {
         InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0,0,0);
         CharacterEntity player = new CharacterEntity(0,0,0);
         SpiderEntity spider = new SpiderEntity(0,1,0);
-        WoodEntity wood = new WoodEntity(0,2,0);
         ArrayList<IEntity> entities = new ArrayList<>();
         
         entities.add(spider);
         entities.add(invisibility_potion);
-        entities.add(wood);
 
         invisibility_potion.used(player);
        
@@ -83,41 +80,50 @@ public class  InvisibilityPotionEntityTest implements ICollectableEntityTest {
         assertEquals(100, player.getHealth());
         assertEquals(100, spider.getHealth());
 
+    }
+
+    @Test
+    public void TestCanStillCollect() {
+        CharacterEntity player = new CharacterEntity(0,0,0);
+        ArrayList<IEntity> entities = new ArrayList<>();
+        InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0,0,0);
+        WoodEntity wood = new WoodEntity(0,1,0);
+        entities.add(invisibility_potion);
+        entities.add(wood);
+        
+        invisibility_potion.used(player);
         //Player can pick up wood while invisible 
         player.move(Direction.DOWN);
         assertTrue(player.isInvisible());
-        assertEquals(new Position(0, 2, 0), player.getPosition());
-        assertEquals(new Position(0, 2, 0), wood.getPosition());
+        assertEquals(new Position(0, 1, 0), player.getPosition());
+        assertEquals(new Position(0, 1, 0), wood.getPosition());
         assertEntityIsCollected(wood);
-        
-
-
     }
-    /* TO DO: Fix Duration && redo test 
+
     @Test
-    public void TestDuration() {
-        InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0,0,0);
-        CharacterEntity player = new CharacterEntity(0,0,0);
-        invisibility_potion.used(player);
-
-        //test duration
-			//player.move(Direction.DOWN);
-            
-            //assertTrue(player.isInvisible());
-
-            //player.move(Direction.DOWN);
-            //assertEquals(player.getDuration(), 8);
-            //assertTrue(player.isInvisible());
+    public void TestInvisibilityRunsOut() {
+        ArrayList<IEntity> entities = new ArrayList<>();
+        InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0,1,0);
+        CharacterEntity player = new CharacterEntity(0, 0, 0);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        entities.add(invisibility_potion);
         
-            for (int i=1;i<10;i++) {
-            player.move(Direction.DOWN);
-            }
-            assertEquals(player.getDuration(), 0);
-            assertFalse(player.isInvisible());
-	
-        }
-        */
-    
-    
+        dungeon.tick(Direction.DOWN);
+        assertItemInInventory("invisibility_potion-0-1-0", player, dungeon.entitiesControl);
+        assertEquals(new Position(0, 1, 0), player.getPosition());
 
+        invisibility_potion.used(player);
+        //Item remains in player inventory while Invisible
+        assertItemInInventory("invisibility_potion-0-1-0", player, dungeon.entitiesControl);
+        assertTrue(player.isInvisible());
+
+        
+        // Player moves down 10 times
+        for (int i = 0; i < 9;i++) {
+            dungeon.tick(Direction.DOWN);
+        }
+        //check duration
+        assertFalse(player.isInvisible());
+        assertItemNotInInventory("invincibility_potion-0-0-0", player, dungeon.entitiesControl);
+    }
 }

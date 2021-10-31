@@ -13,10 +13,8 @@ public class InvisibilityPotionEntity extends Entity implements ICollectableEnti
     }
 
     @Override
-    //TO DO: Implement Duration
     public void used(CharacterEntity player) {
-        player.setInvisible(true);
-        //player.getDuration();
+        player.setInvisiblilityRemaining(10);
     }
 
     @Override

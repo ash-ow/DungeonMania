@@ -16,12 +16,10 @@ import dungeonmania.util.Position;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
     private List<ICollectableEntity> inventory = new ArrayList<>();
-    private Position previousPosition;
+    private Position previousPosition = new Position(0, 0);
     public List<IBattlingEntity> teammates = new ArrayList<>();
-    private int countBattle;
-    private int countMove;
-    boolean isInvincible = false;
-    boolean isInvisible = false;
+    private int invincibilityRemaining = 0;
+    private int invisibilityRemaining = 0;
 
     public CharacterEntity() {
         this(0, 0, 0);
@@ -29,11 +27,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     
     public CharacterEntity(int x, int y, int layer) {
         super(x, y, layer, "player");
-        this.countBattle = 0;
-        this.countMove = 10;
-        this.isInvincible = false;
-        this.isInvisible = false; 
-        this.previousPosition = new Position(x, y);
     }
 
     public EntityResponse getInfo() {
@@ -59,14 +52,15 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     public float getDamage() {
-        // TODO determine correct Character damage
         return 3;
     }
 
 
     @Override
     public void loseHealth(float enemyHealth, float enemyDamage) {
-        this.health -= ((enemyHealth * enemyDamage) / 10);
+        if (!this.isInvincible()) {
+            this.health -= ((enemyHealth * enemyDamage) / 10);
+        }
     }
 
     public void addTeammates(IBattlingEntity teamMember) {
@@ -77,9 +71,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return inventory.stream().filter(item -> item.getId().equals(itemID)).findFirst().orElse(null);
     }
 
-    public boolean getInvincible() {
-        return this.isInvincible;
-    }
 //endregion
 
 //region Inventory
@@ -105,51 +96,21 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 //endregion
 
 //Player Potion Effects region 
-    
-    public int getDuration() {
-       return this.getCountMove();
-    }
-
 
     public boolean isInvincible() {
-        return isInvincible;
+        return this.invincibilityRemaining > 0;
     }
 
-    public void setInvincible(boolean isInvincible) {
-        if(isInvincible){
-            this.isInvincible = true;
-            this.setBattleCount(true);
-        }
-        else {
-            this.isInvincible = false;
-        }
+    public void setInvincibilityRemaining(int invincibilityRemaining) {
+        this.invincibilityRemaining = invincibilityRemaining;
     }
 
     public boolean isInvisible() {
-        return isInvisible;
-        }
-    
-    public void setInvisible(boolean isInvisible) {
-        if(isInvisible){
-            this.isInvisible = true;
-            }
-            else {
-                this.isInvisible = false;
-            }
-        }
-    
-    public int getBattleCount() {
-        return countBattle;
+        return this.invisibilityRemaining > 0;
     }
-    //TO DO: recheck how this is implemented for invincibility potion 
-    public void setBattleCount(boolean reset) {
-        if(reset)
-        {
-            countBattle=0;
-        }else 
-        {
-            countBattle++;
-        }      
+    
+    public void setInvisiblilityRemaining(int invisibilityRemaining) {
+        this.invisibilityRemaining = invisibilityRemaining;
     }
 
 //End Region
@@ -161,23 +122,14 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         if ( !EntitiesControl.containsBlockingEntities(targetEntities) || canUnblock(targetEntities, direction, entitiesControl) ) {
             this.previousPosition = this.position;
             this.move(direction); 
-            setCountMove(false);           
+            decrementPotionDurations();    
             interactWithAll(targetEntities, entitiesControl);
         }
     }
-    
-    //TO DO: Implement with Potion Duration
-    public int getCountMove(){
-        return countMove;
-    }
 
-    public void setCountMove(boolean decrement) {
-        if (decrement){
-            countMove--;
-        }
-        else {
-            countMove++;
-        }
+    private void decrementPotionDurations() {
+        this.invisibilityRemaining--;
+        this.invincibilityRemaining--;
     }
 
     private void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
@@ -191,7 +143,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         List<IBlocker> targetBlockers = EntitiesControl.getEntitiesOfType(targetEntities, IBlocker.class);
         boolean targetIsUnblocked = true;
         for (IBlocker blocker : targetBlockers) {
-            // TODO fix bug where player interacts with many things stacked on top of each other and keeps moving
             targetIsUnblocked = blocker.tryUnblock(this, direction, entitiesControl);
         }
         return targetIsUnblocked;
@@ -208,7 +159,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     private void useItemCore(ICollectableEntity item, EntitiesControl entitiesControl) {
-        // TODO create an ItemType class with constant strings
         // TODO decrement the amount of this item in the inventory
         item.used(this);
         if (item.isPlacedAfterUsing()) {

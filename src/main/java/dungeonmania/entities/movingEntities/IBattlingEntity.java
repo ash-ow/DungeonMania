@@ -13,13 +13,16 @@ public interface IBattlingEntity extends IContactingEntity {
     public void loseHealth(float enemyHealth, float enemyDamage);
 
     public default void battle(EntitiesControl entitiesControl, CharacterEntity player) {
-        while (!(player.isInvisible()) && player.isAlive() && !checkEnemyDeath(entitiesControl, player)) {
+        while (
+            !player.isInvisible() &&
+            player.isAlive() &&
+            !enemyIsAlive(entitiesControl, player)
+        ) {
             doBattle(player);
-            player.setBattleCount(false);
         }
     }
 
-    default boolean checkEnemyDeath(EntitiesControl entitiesControl, CharacterEntity player) {
+    default boolean enemyIsAlive(EntitiesControl entitiesControl, CharacterEntity player) {
         if (!this.isAlive()) {
             dropEntities(player);
             entitiesControl.removeEntity(this);

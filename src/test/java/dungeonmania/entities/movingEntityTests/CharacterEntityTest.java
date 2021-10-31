@@ -137,6 +137,6 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
     @Test
     @Override
     public void testDropOneRing() {
-        
+        // null because when character dies, it does not need to drop ring
     }
 }

@@ -28,7 +28,7 @@ public interface ICollectableEntityTest extends IEntityTests {
         CharacterEntity player = new CharacterEntity(0, 1, 0);
         EntitiesControl entities = new EntitiesControl();
         
-        entities.addEntities(entity);
+        entities.addEntity(entity);
         assertItemNotInInventory(entity.getId(), player, entities);
         
         entity.contactWithPlayer(entities, player);
@@ -38,7 +38,7 @@ public interface ICollectableEntityTest extends IEntityTests {
     public default void assertEntityIsUsed(ICollectableEntity entity) {
         CharacterEntity player = new CharacterEntity(0, 1, 0);
         EntitiesControl entities = new EntitiesControl();
-        entities.addEntities(entity);
+        entities.addEntity(entity);
         entity.contactWithPlayer(entities, player);
         entity.used(player);
         assertNull(player.getInventoryItem(entity.getId()), "Inventory should not contain entity " + entity.getId());

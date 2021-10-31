@@ -116,7 +116,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     public boolean containedInInventory(String type) {
         for (ICollectableEntity entity: inventory) {
-            if(entity.getType() == type) {
+            if(entity.getType().equals(type)) {
                 return true;
             }
         }
@@ -125,7 +125,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     public ICollectableEntity findFirstInInventory(String type) {
         for (ICollectableEntity entity: inventory) {
-            if(entity.getType() == type) {
+            if(entity.getType().equals(type)) {
                 return entity;
             }
         }
@@ -184,7 +184,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         while(removed < amount) {
             for(ICollectableEntity material : this.inventory) {
                 //Might have to go through the entity itself so that there aren't empty functions
-                if (material.getType() == type) {
+                if (material.getType().equals(type)){
                     toRemove.add(material);
                     removed++;
                 }
@@ -199,11 +199,11 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         List<String> buildable = new ArrayList<>();
         BowEntity bow = new BowEntity();
         if (bow.isBuildable(this.inventory)) {
-            buildable.add(bow.getType());
+            buildable.add(("bow"));
         }
         ShieldEntity shield = new ShieldEntity();
         if (shield.isBuildable(this.inventory)) {
-            buildable.add(shield.getType());
+            buildable.add("shield");
         }
         return buildable;
     }

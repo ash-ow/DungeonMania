@@ -136,6 +136,11 @@ We heavily utilised the strategy pattern here, such as:
 
 - xxx
 
+**one ring:**
+
+- There was no reason to make a separate IRareCollectableEntities interface just for this single implementation
+
+
 ### Generator entities
 write up about how we generate mercenearies spiders and zombies
 

@@ -1,5 +1,6 @@
 package dungeonmania.entities.buildableEntities;
 
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.ArrowsEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 
@@ -9,7 +10,7 @@ public class ShieldEntity extends BuildableEntity {
     }
     
     public ShieldEntity(int x, int y, int layer) {
-        super(x, y, layer, "shield");
+        super(x, y, layer, EntityTypes.SHIELD);
     }
     
     @Override

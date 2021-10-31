@@ -16,7 +16,7 @@ public enum EntityTypes {
     ZOMBIE_TOAST("zombie_toast"),    
     MERCENARY("mercenary"),
     
-    // Moving Entities
+    // Collectable Entities
     TREASURE("treasure"),    
     KEY("key"),    
     HEALTH_POTION("health_potion"),    
@@ -27,9 +27,14 @@ public enum EntityTypes {
     BOMB("bomb"),    
     SWORD("sword"),    
     ARMOUR("armour"),    
+    ONE_RING("one_ring"),    
+
+    // IBuildableEntity
+    SHIELD("shield"),    
+    BOW("bow"),    
 
     // Player
-    PLAYER("player"),    
+    PLAYER("player")
     
     ;
 

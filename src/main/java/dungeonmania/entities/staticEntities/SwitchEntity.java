@@ -2,6 +2,7 @@ package dungeonmania.entities.staticEntities;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.ITicker;
 
 public class SwitchEntity extends Entity implements ITicker {
@@ -10,7 +11,7 @@ public class SwitchEntity extends Entity implements ITicker {
     }
     
     public SwitchEntity(int x, int y, int layer) {
-        super(x, y, layer, "switch");
+        super(x, y, layer, EntityTypes.SWITCH);
     }
 
     @Override

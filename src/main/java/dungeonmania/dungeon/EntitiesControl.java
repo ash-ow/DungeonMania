@@ -24,7 +24,7 @@ public class EntitiesControl {
     private Random rand = new Random();
     private Integer tickCounter = 0;
     private Integer entityCounter = 0;
-    private final static HashMap<String, Double> difficulty;
+    public final static HashMap<String, Double> difficulty;
     static {
         difficulty = new HashMap<>();
         difficulty.put("Hard", 20.0/15.0);

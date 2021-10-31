@@ -2,7 +2,6 @@ package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.movingEntities.PlayerState;
 
 public class InvisibilityPotionEntity extends Entity implements ICollectableEntity {
     public InvisibilityPotionEntity() {
@@ -16,7 +15,7 @@ public class InvisibilityPotionEntity extends Entity implements ICollectableEnti
     @Override
     public void used(CharacterEntity player) {
         player.setInvisible(true);
-        player.getDuration();
+        //player.getDuration();
     }
 
     @Override

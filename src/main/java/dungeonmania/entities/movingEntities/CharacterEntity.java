@@ -9,7 +9,6 @@ import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
-import dungeonmania.entities.movingEntities.PlayerState;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
@@ -17,9 +16,10 @@ import dungeonmania.util.Position;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
     private EntitiesControl inventory = new EntitiesControl();
-    private PlayerState playerState;
     private int countBattle;
     private int countMove;
+    boolean isInvincible = false;
+    boolean isInvisible = false;
 
     public CharacterEntity() {
         this(0, 0, 0);
@@ -27,9 +27,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     
     public CharacterEntity(int x, int y, int layer) {
         super(x, y, layer, "player");
-        this.playerState = PlayerState.NONE;
         this.countBattle = 0;
         this.countMove = 10;
+        this.isInvincible = false;
+        this.isInvisible = false; 
     }
 
     public EntityResponse getInfo() {
@@ -88,32 +89,12 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 //endregion
 
-//Player State region 
-    boolean isInvincible = false;
-    boolean isInvisible = false;
-
-	public PlayerState getPlayerState() {
-		return playerState;
-	}
-
-	public void setPlayerState(PlayerState newState){
-		this.playerState = newState;
-	}
-
+//Player Potion Effects region 
     
     public int getDuration() {
        return this.getCountMove();
     }
 
-    //TO DO: FIX Duration, defaults to 10??? 
-    public void updateDuration() {
-        System.out.println(this.getCountMove() +"steps left");
-        if((getCountMove()>0) && (!(playerState==PlayerState.NONE))){ 
-            this.setCountMove(true);
-        } else if (getCountMove() == 0 && !(playerState==PlayerState.NONE)){
-            playerState = PlayerState.NONE;
-        }       
-    }
 
     public boolean isInvincible() {
         return isInvincible;
@@ -121,29 +102,41 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     public void setInvincible(boolean isInvincible) {
         if(isInvincible){
-            playerState = PlayerState.INVINCIBLE;
-            //When the value true is passed, reset the battle count
+            this.isInvincible = true;
             this.setBattleCount(true);
         }
         else {
-            playerState = PlayerState.NONE;
+            this.isInvincible = false;
         }
-        this.isInvincible = isInvincible;
-    }
-    
-    public boolean isInvisible() {
-    return isInvisible;
     }
 
+    public boolean isInvisible() {
+        return isInvisible;
+        }
+    
     public void setInvisible(boolean isInvisible) {
         if(isInvisible){
-            playerState = PlayerState.INVISIBLE;
-
-        }else {
-            playerState = PlayerState.NONE;
+            this.isInvisible = true;
+            }
+            else {
+                this.isInvisible = false;
+            }
         }
-    this.isInvisible = isInvisible;
+    
+
+    //TO DO: FIX Duration, defaults to 10??? 
+    /*
+    public void updateDuration() {
+        System.out.println(this.getCountMove() +"steps left");
+        if((getCountMove()>0) && ((isInvisible) || (isInvincible))){
+            this.setCountMove(true);
+        } else if (getCountMove() == 0 && !((isInvisible) || (isInvincible)))
+        {
+        ;
+        }       
     }
+    */
+    
 
     public int getBattleCount() {
         return countBattle;

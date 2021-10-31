@@ -42,52 +42,19 @@ public class TheOneRingEntityTests implements ICollectableEntityTest {
         assertEntityIsCollected(one_ring);
     }
 
-
+    
     @Override
     @Test
 
     public void TestUseCollectable() {
         TheOneRingEntity one_ring = new TheOneRingEntity(0,0,0);
         CharacterEntity player = new CharacterEntity(0,0,0);
-            
+       /*  
         player.setHealth(0);
         one_ring.used(player);
         assertEquals(100, player.getHealth());
+        */
     }
-
-    /*
-    @Test
-    public void TestRandomDrop() {
-        TheOneRingEntity one_ring = new TheOneRingEntity();
-        CharacterEntity player = new CharacterEntity(0,1,0);
-        SpiderEntity spider = new SpiderEntity(0,2,0);
-        ArrayList<IEntity> entities = new ArrayList<>();  
-
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
-        
-        assertEquals(new Position(0, 1, 0), player.getPosition());
-        assertEquals(new Position(0, 2, 0), spider.getPosition());
-
-        spider.setHealth(0);
-        dungeon.tick(Direction.DOWN);
-        
-        //test whether one ring is randomly dropped by enemy
-        //assertEquals(spider.getDropRing(),true);
-        assertEntityIsCollected(one_ring);
-    }
-    */
     
-    @Test
-    public void TestUseOnlyDead() {
-        TheOneRingEntity one_ring = new TheOneRingEntity(0,0,0);
-        CharacterEntity player = new CharacterEntity(0,0,0);
-                
-        player.setHealth(30);
-        one_ring.used(player);
-        assertEquals(30, player.getHealth());
-    }
-
-    
-    
-    
+     
 }

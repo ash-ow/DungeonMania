@@ -14,7 +14,6 @@ import dungeonmania.entities.IEntity;
 import dungeonmania.dungeon.*;
 import dungeonmania.util.Position;
 import dungeonmania.entities.collectableEntities.InvincibilityPotionEntity;
-import dungeonmania.entities.movingEntities.PlayerState;
 import dungeonmania.entities.movingEntities.spiderEntity.*;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 
@@ -51,7 +50,7 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
         InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0,0,0);
         CharacterEntity player = new CharacterEntity(0,0,0);
         invincibility_potion.used(player);
-        assertTrue(player.getPlayerState().equals(PlayerState.INVINCIBLE));
+        assertTrue(player.isInvincible());
         
     }
 

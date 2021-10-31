@@ -19,10 +19,8 @@ public class TheOneRingEntity extends CollectableEntity {
     }
     
     public void used(CharacterEntity player){
-        if (player.getHealth() <= 0) {
-            player.setHealth(100);
+        //TO DO: need to implement 
         } 
-    }
     
     @Override
     public boolean isPlacedAfterUsing() {

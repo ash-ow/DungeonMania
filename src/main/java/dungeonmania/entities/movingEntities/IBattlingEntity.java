@@ -1,7 +1,6 @@
 package dungeonmania.entities.movingEntities;
 
 import dungeonmania.dungeon.EntitiesControl;
-import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.util.RandomChance;
 import dungeonmania.entities.IContactingEntity;

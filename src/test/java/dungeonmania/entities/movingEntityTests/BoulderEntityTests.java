@@ -10,7 +10,6 @@ import com.google.gson.*;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
-import dungeonmania.dungeon.goals.IGoalTests;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlockerTest;
 import dungeonmania.entities.IEntity;

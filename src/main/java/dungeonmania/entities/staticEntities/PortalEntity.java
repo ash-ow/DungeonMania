@@ -1,7 +1,6 @@
 package dungeonmania.entities.staticEntities;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;

@@ -1,13 +1,10 @@
 package dungeonmania.dungeon.goals;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.Dungeon;
-import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;

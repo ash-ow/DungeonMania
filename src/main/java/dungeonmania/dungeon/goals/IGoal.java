@@ -1,7 +1,5 @@
 package dungeonmania.dungeon.goals;
 
-import java.util.HashMap;
-
 import dungeonmania.dungeon.Dungeon;
 
 /* to do:

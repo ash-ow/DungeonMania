@@ -14,17 +14,17 @@ public class ArrowsEntityTest implements ICollectableEntityTest {
         assertEntityResponseInfoEquals(arrows, "arrow-0-0-0", EntityTypes.ARROW, new Position(0,0), false);
     }
 
-    @Test
-    @Override
-    public void TestUseCollectable() {
-        ArrowsEntity arrow = new ArrowsEntity(0, 0, 0);
-        assertEntityIsUsedAndPlacedIfApplicable(arrow);
-    }
 
     @Test
     @Override
     public void TestCollect() {
         ArrowsEntity arrows = new ArrowsEntity(0,0,0);
         assertEntityIsCollected(arrows);
+    }
+
+
+    @Override
+    public void TestUseCollectable() {
+        // arrows never used
     }
 }

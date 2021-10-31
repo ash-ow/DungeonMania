@@ -1,6 +1,5 @@
 package dungeonmania.entities.collectableEntities;
 
-import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
 

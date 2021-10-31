@@ -8,11 +8,8 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
-<<<<<<< HEAD
 import dungeonmania.entities.buildableEntities.*;
 import dungeonmania.entities.collectableEntities.BombEntity;
-=======
->>>>>>> master
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
@@ -85,13 +82,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         inventory.add(entity);
     }
 
-<<<<<<< HEAD
     public List<ICollectableEntity> getInventory() {
         return inventory;
-=======
-    public EntitiesControl getInventory() {
-        return this.inventory;
->>>>>>> master
     }
 
     public void removeEntityFromInventory(ICollectableEntity entity) {
@@ -199,13 +191,13 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return buildable;
     }
 //endregion 
-    private boolean entityIsNotAnArmedBomb(IInteractingEntity entity) {
-        // TODO stop interacting with entities before you determine if you can move into that space. Once you've worked that out, remove this method
-        if (entity instanceof BombEntity) {
-            BombEntity bomb = (BombEntity)entity;
-            return !bomb.isArmed();
-        }
-    }
+    // private boolean entityIsNotAnArmedBomb(IInteractingEntity entity) {
+    //     // TODO stop interacting with entities before you determine if you can move into that space. Once you've worked that out, remove this method
+    //     if (entity instanceof BombEntity) {
+    //         BombEntity bomb = (BombEntity)entity;
+    //         return !bomb.isArmed();
+    //     }
+    // }
     
     private void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
         List<IInteractingEntity> targetInteractable = entitiesControl.getInteractableEntitiesFrom(targetEntities);

@@ -92,5 +92,10 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         return usefulDirections;    
     }
     // endregion
+
+    @Override
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
     
 }

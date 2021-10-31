@@ -25,7 +25,7 @@ public class ShieldEntity extends BuildableEntity {
     public void initialiseRequiredComponents() {
         this.requiredComponents.put(new WoodEntity(), 2);
         this.requiredComponents.put(new TreasureEntity(), 1);
-        this.requiredComponents.put(new KeyEntity(), 1);
+        this.requiredComponents.put(new KeyEntity(0,0,0,1), 1);
     }
     
     @Override

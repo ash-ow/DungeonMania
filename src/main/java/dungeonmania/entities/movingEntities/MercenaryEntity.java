@@ -12,6 +12,8 @@ import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
+import dungeonmania.entities.movingEntities.moveBehaviour.FollowPlayer;
+import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
@@ -22,6 +24,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     private float health;
     private float damage;
     private boolean isBribed;
+    private IMovingBehaviour moveBehaviour;
 
     public MercenaryEntity() {
         this(0, 0, 0);
@@ -32,6 +35,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         this.health = 100;
         this.damage = 3;
         this.isBribed = false;
+        this.moveBehaviour = new FollowPlayer();
     }
 
     @Override
@@ -80,9 +84,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         if (isBribed) {
             setPosition(player.getPreviousPosition());
         } else {
-            List<Direction> usefulDirections = getUsefuDirections(player);
-            // TODO check player is invisible here
-            moveToUsefulUnblocked(usefulDirections, entitiesControl);
+            this.move(moveBehaviour.getBehaviourDirection(entitiesControl, player, position));
             if (this.isInSamePositionAs(player)) {
                 contactWithPlayer(entitiesControl, player);
             }
@@ -111,4 +113,8 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     }
     // endregion
     
+    @Override
+    public void setMoveBehvaiour(IMovingBehaviour newBehaviour) {
+        this.moveBehaviour = newBehaviour;        
+    }
 }

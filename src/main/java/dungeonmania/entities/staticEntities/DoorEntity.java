@@ -7,6 +7,7 @@ import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
+import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 
 public class DoorEntity extends Entity implements IBlocker {
@@ -60,5 +61,14 @@ public class DoorEntity extends Entity implements IBlocker {
             this.unlockWith(key, player);
         }
         return !this.isLocked;
+    }
+
+    @Override
+    public EntityResponse getInfo() {
+        if (isLocked) {
+            return new EntityResponse(id, type, position, false);
+        } else {
+            return new EntityResponse(id, "unlocked_door", position, false);
+        }
     }
 }

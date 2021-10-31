@@ -6,6 +6,7 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IAutoMovingEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
+import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.util.Position;
 
 
@@ -13,6 +14,7 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
     private SpiderState spiderMovement;
     private Position firstPosition;
     private Integer movementCount = 0;
+    private IMovingBehaviour moveBehaviour;
 
     public SpiderEntity() {
         this(0, 0, 0);
@@ -28,17 +30,21 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
 
     @Override
     public void move(EntitiesControl entities, CharacterEntity player) {
-        if (!spiderMovement.moveSpider(movementCount, this, entities)) {
-            if (!this.position.equals(firstPosition) && movementCount > 0) {
-                movementCount = (movementCount - 2) % 8;
-                changeDirection();
+        if (moveBehaviour == null) {
+            if (!spiderMovement.moveSpider(movementCount, this, entities)) {
+                if (!this.position.equals(firstPosition) && movementCount > 0) {
+                    movementCount = (movementCount - 2) % 8;
+                    changeDirection();
+                }
+            } else {
+                movementCount = (movementCount + 1) % 8;
+            }
+            if (this.isInSamePositionAs(player)) {
+                contactWithPlayer(entities, player);
             }
         } else {
-            movementCount = (movementCount + 1) % 8;
-        }
-        if (this.isInSamePositionAs(player)) {
-            contactWithPlayer(entities, player);
-        }
+            this.move(moveBehaviour.getBehaviourDirection(entities, player, position));
+        }       
     }
 
     @Override
@@ -54,6 +60,7 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
         }
         return spiderMovement;
     }
+    
 //endregion
 
 //region Battle
@@ -78,4 +85,9 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
         this.health -= ((enemyHealth * enemyDamage) / 5);
     }
 //endregion
+
+    @Override
+    public void setMoveBehvaiour(IMovingBehaviour newBehaviour) {
+        this.moveBehaviour = newBehaviour;        
+    }
 }

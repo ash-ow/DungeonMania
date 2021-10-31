@@ -107,9 +107,8 @@ public class Dungeon {
         player.move(direction, entitiesControl);
         if (player.isInvincible()) {
             entitiesControl.runAwayAllMovingEntities(player);
-        } else {
-            entitiesControl.moveAllMovingEntities(player);
         }
+        entitiesControl.moveAllMovingEntities(player);
         entitiesControl.tick();
         entitiesControl.generateEnemyEntities(gameMode);
     }

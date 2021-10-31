@@ -9,6 +9,8 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.ArmourEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
+import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
+import dungeonmania.entities.movingEntities.moveBehaviour.RandomMove;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
@@ -19,12 +21,14 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
     Integer seed;
     private float armourEntityProbability = 0.2f;
     private ArmourEntity equipped;
+    private IMovingBehaviour moveBehaviour;
     
     public ZombieToastEntity(int x, int y, int layer) {
         super(x, y, layer, EntityTypes.ZOMBIE_TOAST);
         if (RandomChance.getRandomBoolean((float) armourEntityProbability)) {
             equipped = new ArmourEntity();
         }
+        this.moveBehaviour = new RandomMove();
     }
     
     public ZombieToastEntity() {
@@ -39,17 +43,12 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         if (RandomChance.getRandomBoolean((float) armourEntityProbability)) {
             equipped = new ArmourEntity();
         }
+        this.moveBehaviour = new RandomMove(seed);
     }
 
     @Override
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {
-        Direction direction = Direction.getRandomDirection(new Random(rand.nextInt()));
-        // TODO this is the same as the players - could we abstract this to IMovingEntity or something?
-        Position target = position.translateBy(direction);
-        List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
-        if ( !EntitiesControl.containsBlockingEntities(targetEntities) ) {
-            this.move(direction);
-        }
+        this.move(moveBehaviour.getBehaviourDirection(entitiesControl, player, position));      
         if (this.isInSamePositionAs(player)) {
             contactWithPlayer(entitiesControl, player);
         }
@@ -102,6 +101,11 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         if (equipped != null) {
             player.addEntityToInventory(armour);
         }
+    }
+
+    @Override
+    public void setMoveBehvaiour(IMovingBehaviour newBehaviour) {
+        this.moveBehaviour = newBehaviour;        
     }
 
 }

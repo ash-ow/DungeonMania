@@ -16,6 +16,7 @@ import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
+import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
 import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
 import dungeonmania.entities.staticEntities.*;
 
@@ -84,7 +85,7 @@ public class EntitiesControl {
     public void runAwayAllMovingEntities(CharacterEntity player) {
         List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
         for (IAutoMovingEntity entity : movingEntities) {
-            entity.runAway(this, player);
+            entity.setMoveBehvaiour(new RunAway());
         }
     }
 

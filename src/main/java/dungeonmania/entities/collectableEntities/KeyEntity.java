@@ -21,7 +21,7 @@ public class KeyEntity extends Entity implements ICollectableEntity {
 
     @Override
     public void used(CharacterEntity player){
-        player.removeEntityFromInventory(this);
+        player.getInventory().remove(this);
     }
 
     @Override

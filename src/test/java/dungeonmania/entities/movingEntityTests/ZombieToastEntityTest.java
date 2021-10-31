@@ -31,7 +31,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         character.move(Direction.UP);
         assertEquals(zombie.getPosition(), character.getPosition());
 
-        zombie.interactWithPlayer(new EntitiesControl(), character);
+        zombie.contactWithPlayer(new EntitiesControl(), character);
         assertEquals(58, character.getHealth());
         assertFalse(zombie.isAlive());
     }
@@ -90,13 +90,10 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         assertEquals(100, character.getHealth());
         assertEquals(100, zombie.getHealth());
 
-        // zombie.setDamage(5);
-        // character.setDamage(2);
-        // zombie.Battle(character);
-        // zombie.doBattle(character);
+        zombie.doBattle(character);
 
-        assertEquals(50, character.getHealth());
-        assertEquals(60, zombie.getHealth());
+        assertEquals(70, character.getHealth());
+        assertEquals(40, zombie.getHealth());
     }
 
     @Test
@@ -104,14 +101,6 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         CharacterEntity character = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity();
         
-        // zombie.setHealth(10);
-        // zombie.setDamage(5);
-        // character.setDamage(1);
-        // zombie.Battle(character);
-
-        // assertEquals(95, character.getHealth());
-        // assertEquals(-10, zombie.getHealth());
-        // TODO add assertions for zombie death
         EntitiesControl entitiesControl = new EntitiesControl();
         entitiesControl.addEntities(zombie);
         zombie.battle(entitiesControl, character);

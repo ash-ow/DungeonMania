@@ -77,17 +77,10 @@ public final class Position {
         return new Position(b.x - a.x, b.y - a.y);
     }
 
-    public  static final boolean isAdjacent(Position a, Position b) {
-        if (!a.equals(b)) {
-            int x = Math.abs(a.x - b.x);
-            if (x <= 1) {
-                int y = Math.abs(a.y - b.y);
-                if (y <= 1) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    public static final boolean isAdjacent(Position a, Position b) {
+        int x = a.x - b.x;
+        int y = a.y - b.y;
+        return x + y == 1;
     }
 
     // (Note: doesn't include z)
@@ -113,6 +106,15 @@ public final class Position {
         adjacentPositions.add(new Position(x+1, y+1));
         adjacentPositions.add(new Position(x  , y+1));
         adjacentPositions.add(new Position(x-1, y+1));
+        adjacentPositions.add(new Position(x-1, y));
+        return adjacentPositions;
+    }
+
+    public List<Position> getCardinallyAdjacentPositions() {
+        List<Position> adjacentPositions = new ArrayList<>();
+        adjacentPositions.add(new Position(x  , y-1));
+        adjacentPositions.add(new Position(x+1, y));
+        adjacentPositions.add(new Position(x  , y+1));
         adjacentPositions.add(new Position(x-1, y));
         return adjacentPositions;
     }

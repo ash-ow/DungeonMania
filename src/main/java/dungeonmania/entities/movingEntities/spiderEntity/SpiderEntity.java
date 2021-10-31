@@ -2,14 +2,14 @@ package dungeonmania.entities.movingEntities.spiderEntity;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
-import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IAutoMovingEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
 import dungeonmania.util.Position;
 
 
-public class SpiderEntity extends Entity implements IInteractingEntity, IBattlingEntity, IAutoMovingEntity {
+public class SpiderEntity extends Entity implements IContactingEntity, IBattlingEntity, IAutoMovingEntity {
     private SpiderState spiderMovement;
     private Position firstPosition;
     private Integer movementCount = 0;
@@ -37,7 +37,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IBattlin
             movementCount = (movementCount + 1) % 8;
         }
         if (this.isInSamePositionAs(player)) {
-            interactWithPlayer(entities, player);
+            contactWithPlayer(entities, player);
         }
     }
 
@@ -69,18 +69,13 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IBattlin
         this.health = health;
     }
 
-    protected int damage = 0;
-
-    public int getDamage() {
-        return this.damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;   
+    public float getDamage() {
+        // TODO determine correct Spider damage
+        return 2;
     }
 
     @Override
-    public void loseHealth(float enemyHealth, int enemyDamage) {
+    public void loseHealth(float enemyHealth, float enemyDamage) {
         this.health -= ((enemyHealth * enemyDamage) / 5);
     }
 //endregion

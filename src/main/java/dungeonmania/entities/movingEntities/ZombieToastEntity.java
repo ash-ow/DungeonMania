@@ -5,6 +5,7 @@ import java.util.Random;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -37,7 +38,7 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
             this.move(direction);
         }
         if (this.isInSamePositionAs(player)) {
-            interactWithPlayer(entitiesControl, player);
+            contactWithPlayer(entitiesControl, player);
         }
     }
 
@@ -59,19 +60,14 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         this.health = health;
     }
 
-    protected int damage = 0;
-
-    public int getDamage() {
-        return this.damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;   
+    public float getDamage() {
+        return 3;
     }
 
     @Override
-    public void loseHealth(float enemyHealth, int enemyDamage) {
+    public void loseHealth(float enemyHealth, float enemyDamage) {
         this.health -= ((enemyHealth * enemyDamage) / 5);
     }
 //endregion
+
 }

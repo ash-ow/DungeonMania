@@ -1,10 +1,7 @@
 package dungeonmania.entities.movingEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-<<<<<<< HEAD
-=======
 import static org.junit.jupiter.api.Assertions.assertFalse;
->>>>>>> master
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -25,6 +22,7 @@ import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.response.models.ItemResponse;
@@ -81,22 +79,12 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
     public void TestDeath() {
         CharacterEntity character = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity();
-        
-        // character.setHealth(100);
-        // character.setDamage(2);
-        // zombie.setDamage(20);
-        // zombie.Battle(character);
-
-        // assertEquals(-100, character.getHealth());
-        // assertEquals(60, zombie.getHealth());
-
         EntitiesControl entitiesControl = new EntitiesControl();
         entitiesControl.addEntities(character);
         entitiesControl.addEntities(zombie);
         character.setHealth(2);
         zombie.battle(entitiesControl, character);
         assertFalse(character.isAlive());
-        // TODO add assertions for character death
     }
 
     @Test
@@ -104,10 +92,9 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         CharacterEntity character = new CharacterEntity();
         WoodEntity wood = new WoodEntity();
         character.addEntityToInventory(wood);
-        List<ICollectableEntity> inventory = character.getInventory();
-        assertEquals(1, inventory.size());
+        assertEquals(1, character.getInventory().size());
         character.removeEntityFromInventory(wood);
-        assertEquals(0, inventory.size());
+        assertEquals(0, character.getInventory().size());
     }
 
     @Test
@@ -151,7 +138,7 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         CharacterEntity player = new CharacterEntity();
         WoodEntity wood = new WoodEntity();
         WoodEntity wood2 = new WoodEntity();
-        KeyEntity key = new KeyEntity();
+        KeyEntity key = new KeyEntity(0,0,0,1);
         player.addEntityToInventory(wood);
         player.addEntityToInventory(wood2);
         player.addEntityToInventory(key);
@@ -169,7 +156,7 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         WoodEntity wood = new WoodEntity();
         WoodEntity wood2 = new WoodEntity();
         TreasureEntity treasure = new TreasureEntity();
-        KeyEntity key = new KeyEntity();
+        KeyEntity key = new KeyEntity(0,0,0,1);
         player.addEntityToInventory(wood);
         player.addEntityToInventory(wood2);
         player.addEntityToInventory(treasure);
@@ -202,5 +189,28 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         zombie.battle(entitiesControl, character);
         assertEquals(58, character.getHealth());
         assertEquals(-2.0, zombie.getHealth());
+    }
+
+    @Test
+    public void TestBattleAgainstTeam() {
+        CharacterEntity character = new CharacterEntity();
+        MercenaryEntity mercenaryEntity = new MercenaryEntity();
+        character.addTeammates(mercenaryEntity);
+        ZombieToastEntity zombie = new ZombieToastEntity();
+        zombie.doBattle(character);
+        assertTrue(zombie.getHealth() < 40);
+    }
+
+    @Test
+    public void TestMercenaryJoinsTeam() {
+        CharacterEntity player = new CharacterEntity(0, 5, 0);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 4, 0);
+        TreasureEntity treasure = new TreasureEntity();       
+        player.addEntityToInventory(treasure); 
+        mercenary.interactWith(player);
+        assertTrue(player.teammates.contains(mercenary));
+        ZombieToastEntity zombie = new ZombieToastEntity();
+        zombie.doBattle(player);
+        assertTrue(zombie.getHealth() < 40);
     }
 }

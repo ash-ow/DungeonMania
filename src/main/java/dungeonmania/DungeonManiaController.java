@@ -78,12 +78,16 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse tick(String itemUsed, Direction movementDirection) throws IllegalArgumentException, InvalidActionException {
+        if (itemUsed != null) {
+            dungeon.tick(itemUsed);
+        }
         dungeon.tick(movementDirection);
         return dungeon.getInfo();
     }
 
     public DungeonResponse interact(String entityId) throws IllegalArgumentException, InvalidActionException {
-        return null;
+        dungeon.interact(entityId);
+        return dungeon.getInfo();
     }
 
     public DungeonResponse build(String buildable) throws IllegalArgumentException, InvalidActionException {

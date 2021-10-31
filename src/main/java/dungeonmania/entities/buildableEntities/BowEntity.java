@@ -1,11 +1,11 @@
 package dungeonmania.entities.buildableEntities;
 
 import dungeonmania.entities.collectableEntities.ArrowsEntity;
+import dungeonmania.entities.collectableEntities.IWeaponEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public class BowEntity extends BuildableEntity {
-    //TODO: set default durability
+public class BowEntity extends BuildableEntity implements IWeaponEntity{
     int durability;
 
     public BowEntity() {
@@ -36,16 +36,13 @@ public class BowEntity extends BuildableEntity {
 
     @Override
     public void used(CharacterEntity player){
-        player.setDamage(2);
         if (this.durability > 2) {
             setDurability(this.durability - 2);
         } else if (this.durability == 1) {
-            player.setDamage(1);
             setDurability(this.durability - 1);
         }
         if(this.durability == 0) {
             player.removeEntityFromInventory(this);
-            player.setDamage(0);
         }
     }
 

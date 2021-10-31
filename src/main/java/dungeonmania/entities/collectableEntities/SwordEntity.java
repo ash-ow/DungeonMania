@@ -3,8 +3,7 @@ package dungeonmania.entities.collectableEntities;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public class SwordEntity extends Entity implements ICollectableEntity {
-    //TODO: set default durability
+public class SwordEntity extends Entity implements ICollectableEntity, IWeaponEntity{
     public int durability;
 
     public SwordEntity() {
@@ -25,12 +24,10 @@ public class SwordEntity extends Entity implements ICollectableEntity {
 
     @Override
     public void used(CharacterEntity player){
-        player.setDamage(1);
         if (this.durability > 0) {
             setDurability(this.durability - 1);
             if(this.durability == 0) {
                 player.removeEntityFromInventory(this);
-                player.setDamage(0);
             }
         }
     }

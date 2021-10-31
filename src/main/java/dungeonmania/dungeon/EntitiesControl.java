@@ -9,8 +9,8 @@ import com.google.gson.JsonObject;
 
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IContactingEntity;
-import dungeonmania.util.Direction;
 import dungeonmania.entities.collectableEntities.*;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
 import dungeonmania.entities.*;

@@ -60,7 +60,7 @@ public class HealthPotionEntityTest implements ICollectableEntityTest {
         dungeon.tick("health_potion-0-1-0");
         health_potion.used(player);
         assertEquals(100, player.getHealth());
-        assertItemNotInInventory("health_potion-0-1-0", player, dungeon.entitiesControl);
+        assertItemNotInInventory("health_potion-0-1-0", player, dungeon.entitiesControl, false);
     }
 
     @Test

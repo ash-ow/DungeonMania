@@ -3,29 +3,18 @@ package dungeonmania.entities.collectableEntityTests;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.util.List;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.dungeon.*;
 import dungeonmania.util.Position;
 import dungeonmania.entities.collectableEntities.InvincibilityPotionEntity;
 import dungeonmania.entities.movingEntities.spiderEntity.*;
-import dungeonmania.entities.movingEntities.MercenaryEntity;
-
-import dungeonmania.entities.IEntityTests;
 import dungeonmania.util.Direction;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.response.models.ItemResponse;
-import org.junit.jupiter.api.Test;
-
-import dungeonmania.util.Position;
-import dungeonmania.entities.collectableEntities.InvincibilityPotionEntity;
 import dungeonmania.entities.EntityTypes;
 
 public class InvincibilityPotionEntityTest implements ICollectableEntityTest {

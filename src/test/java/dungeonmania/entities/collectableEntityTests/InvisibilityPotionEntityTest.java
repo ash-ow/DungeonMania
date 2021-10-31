@@ -107,17 +107,14 @@ public class  InvisibilityPotionEntityTest implements ICollectableEntityTest {
         assertEquals(new Position(0, 1, 0), player.getPosition());
 
         invisibility_potion.used(player);
-        //Item remains in player inventory while Invisible
-        assertItemInInventory("invisibility_potion-0-1-0", player, dungeon.entitiesControl);
+        assertItemNotInInventory("invisibility_potion-0-1-0", player, dungeon.entitiesControl, false);
         assertTrue(player.isInvisible());
 
-        
-        // Player moves down 10 times
-        for (int i = 0; i < 9;i++) {
+        for (int i = 0; i < 11;i++) {
             dungeon.tick(Direction.DOWN);
         }
-        //check duration
+        
         assertFalse(player.isInvisible());
-        assertItemNotInInventory("invincibility_potion-0-0-0", player, dungeon.entitiesControl);
+        assertItemNotInInventory("invincibility_potion-0-0-0", player, dungeon.entitiesControl, false);
     }
 }

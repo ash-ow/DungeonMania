@@ -71,6 +71,9 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse loadGame(String name) throws IllegalArgumentException {
+        if (!allGames().contains(name)) {
+            throw new IllegalArgumentException("game doesn't exist");
+        }
         try {
             String dungeonJson = FileLoader.loadResourceFile("savedGames/" + name + ".json");
             JsonObject jsonObject = new Gson().fromJson(dungeonJson, JsonObject.class);

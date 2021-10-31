@@ -11,13 +11,10 @@ import com.google.gson.JsonObject;
 
 import org.junit.jupiter.api.Test;
 
-import dungeonmania.DungeonManiaController;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.staticEntities.SwitchEntity;
-import dungeonmania.response.models.DungeonResponse;
-import dungeonmania.util.Direction;
 
 public class DungeonTests {
     @Test

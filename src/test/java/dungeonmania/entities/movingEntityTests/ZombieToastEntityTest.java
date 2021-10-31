@@ -38,7 +38,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Test
     public void TestMove() {
         CharacterEntity player = new CharacterEntity();
-        ZombieToastEntity zombie = new ZombieToastEntity(5, 5, 0, 10);
+        ZombieToastEntity zombie = new ZombieToastEntity(5, 5, 0, 1f, 10);
         EntitiesControl entities = new EntitiesControl();
         entities.addEntities(zombie);
 
@@ -54,7 +54,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Test
     public void TestBlockMove() {
         CharacterEntity player = new CharacterEntity();
-        ZombieToastEntity zombie = new ZombieToastEntity(5, 5, 0, 10);
+        ZombieToastEntity zombie = new ZombieToastEntity(5, 5, 0, 1f, 10);
         EntitiesControl entities = new EntitiesControl();
         entities.addEntities(zombie);
         entities.createEntity(6, 4, 0, "wall");
@@ -70,12 +70,9 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Test
     public void testDropArmour() {
         CharacterEntity player = new CharacterEntity();
-        ZombieToastEntity zombie = new ZombieToastEntity(0, 0, 0, 1f, 1f);
-        EntitiesControl entitiesControl = new EntitiesControl();
-
-        zombie.Battle(entitiesControl, player);
+        ZombieToastEntity zombie = new ZombieToastEntity(0, 0, 0, 1f, 10);
+        zombie.dropEntities(player, 1f);
         EntitiesControl inventory = player.getInventory();
-
         assertTrue(inventory.getAllEntitiesOfType("armour").size() == 1);
     }
 

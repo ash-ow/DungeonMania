@@ -21,6 +21,7 @@ public interface IBattlingEntity extends IEntity {
 
     default boolean checkEnemyDeath(EntitiesControl entitiesControl, CharacterEntity player) {
         if (!this.isAlive()) {
+            dropEntities(player);
             entitiesControl.removeEntity(this);
             return true;
         }
@@ -35,5 +36,19 @@ public interface IBattlingEntity extends IEntity {
 
     default boolean isAlive() {
         return this.getHealth() > 0;
+    }
+
+    default void dropEntities(CharacterEntity player) {
+        OneRingEntity ring = new OneRingEntity();
+        if (RandomChance.getRandomBoolean(ring.getDropChance())) {
+            player.addEntityToInventory(ring);
+        }
+    }
+
+    default void dropEntities(CharacterEntity player, float probability) {
+        OneRingEntity ring = new OneRingEntity();
+        if (RandomChance.getRandomBoolean(probability)) {
+            player.addEntityToInventory(ring);
+        }
     }
 }

@@ -4,12 +4,18 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public class OneRingEntity extends Entity implements ICollectableEntity {
+    private final float dropChance = 0.1f;
+
     public OneRingEntity() {
         this(0, 0, 0);
     }
 
     public OneRingEntity(int x, int y, int layer) {
         super(x, y, layer, "one_ring");
+    }
+
+    public float getDropChance() {
+        return dropChance;
     }
 
     @Override

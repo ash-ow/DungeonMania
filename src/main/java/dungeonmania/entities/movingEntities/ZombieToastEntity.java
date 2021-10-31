@@ -1,7 +1,5 @@
 package dungeonmania.entities.movingEntities;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -9,22 +7,18 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
-import dungeonmania.entities.buildableEntities.ShieldEntity;
 import dungeonmania.entities.collectableEntities.ArmourEntity;
-import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
 
 
-public class ZombieToastEntity extends Entity implements IInteractingEntity, IAutoMovingEntity, IDroppingEntities {
+public class ZombieToastEntity extends Entity implements IInteractingEntity, IAutoMovingEntity, IBattlingEntity {
     Random rand = new Random();
     Integer seed;
     private float armourEntityProbability = 0.2f;
     private ArmourEntity equipped;
-    private float dropProbability = 0.1f;
-    
     
     public ZombieToastEntity(int x, int y, int layer) {
         super(x, y, layer, "zombie_toast");
@@ -33,23 +27,18 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IAu
         }
     }
     
-    public ZombieToastEntity(int x, int y, int layer, float ArmourEntityProbability, float dropProbability) {
+    public ZombieToastEntity() {
+        this(0, 0, 0);
+    }
+    
+    public ZombieToastEntity(int x, int y, int layer, float ArmourEntityProbability, int seed) {
         this(x, y, layer);
+        this.seed = seed;
+        rand = new Random(seed);
         this.armourEntityProbability = ArmourEntityProbability;
         if (RandomChance.getRandomBoolean((float) armourEntityProbability)) {
             equipped = new ArmourEntity();
         }
-        this.dropProbability = dropProbability;
-    }
-    
-    public ZombieToastEntity() {
-        this(0, 0, 0);
-    }
-
-    public ZombieToastEntity(int x, int y, int layer, int seed) {
-        this(x, y, layer);
-        this.seed = seed;
-        rand = new Random(seed);
     }
 
     @Override
@@ -73,21 +62,6 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IAu
     @Override
     public void setPosition(Position position) {
         this.position = position;
-    }
-
-    @Override
-    public boolean checkEnemyDeath(EntitiesControl entitiesControl, CharacterEntity player) {
-        if (!this.isAlive()) {
-            if (RandomChance.getRandomBoolean(dropProbability)){
-                player.addEntityToInventory(new OneRingEntity());
-            }
-            if (equipped != null) {
-                player.addEntityToInventory(equipped);
-            }
-            entitiesControl.removeEntity(this);
-            return true;
-        }
-        return false;
     }
 
 //region Description
@@ -125,16 +99,26 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IAu
     }
 
     @Override
-    public void setDropProbability(float probability) {
-        this.dropProbability = probability;
+    public void dropEntities(CharacterEntity player) {
+        OneRingEntity ring = new OneRingEntity();
+        ArmourEntity armour = new ArmourEntity();
+        if (RandomChance.getRandomBoolean(ring.getDropChance())) {
+            player.addEntityToInventory(ring);
+        }
+        if (RandomChance.getRandomBoolean(armour.getDropChance())) {
+            player.addEntityToInventory(armour);
+        }
     }
 
-    public float getArmourEntityProbability() {
-        return ArmourEntityProbability;
+    @Override
+    public void dropEntities(CharacterEntity player, float probability) {
+        OneRingEntity ring = new OneRingEntity();
+        ArmourEntity armour = new ArmourEntity();
+        if (RandomChance.getRandomBoolean(probability)) {
+            player.addEntityToInventory(ring);
+        }
+        if (RandomChance.getRandomBoolean(probability)) {
+            player.addEntityToInventory(armour);
+        }
     }
-
-    public void setArmourEntityProbability(float armourEntityProbability) {
-        ArmourEntityProbability = armourEntityProbability;
-    }
-
 }

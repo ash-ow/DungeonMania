@@ -133,7 +133,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     private void useItemCore(ICollectableEntity item, EntitiesControl entitiesControl) {
         // TODO create an ItemType class with constant strings
         // TODO decrement the amount of this item in the inventory
-        System.out.println("using " + type);
         item.used(this);
         if (item.isPlacedAfterUsing()) {
             item.setPosition(this.getPosition());

@@ -100,6 +100,7 @@ public class Dungeon {
 
     public void tick(String itemID) {
         player.useItem(itemID, this.entitiesControl);
+        entitiesControl.generateEnemyEntities();
         // TODO implement
     }
 

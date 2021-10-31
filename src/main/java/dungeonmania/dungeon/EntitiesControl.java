@@ -34,7 +34,6 @@ public class EntitiesControl {
     }
 
     public void removeEntity(IEntity entity) {
-        System.out.println(entity.getType() + " " + entity.getId());
         entities.remove(entity);
     }
 

@@ -102,7 +102,7 @@ public class Dungeon {
             entitiesControl.moveAllMovingEntities(player);
         }
         entitiesControl.tick();
-        entitiesControl.generateEnemyEntities();
+        entitiesControl.generateEnemyEntities(gameMode);
     }
 
     public void tick(String itemID) {

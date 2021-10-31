@@ -233,13 +233,13 @@ public class EntitiesControl {
         return new Position(x, y);
     }
 
-    public void generateEnemyEntities() {
-        generateSpider();
-        generateZombieToast();
+    public void generateEnemyEntities(String gameMode) {
+        generateSpider(gameMode);
+        generateZombieToast(gameMode);
         tickCounter++;
     }
 
-    private void generateSpider() {
+    private void generateSpider(String gameMode) {
         // TODO replace this with an enemy generator
         List<SpiderEntity> spiders = this.getAllEntitiesOfType(SpiderEntity.class);
         if (spiders.size() < 4) {
@@ -248,15 +248,15 @@ public class EntitiesControl {
             int largestY = largestCoordinate.getY();
             int randomX = rand.nextInt(largestX);
             int randomY = rand.nextInt(largestY);
-            if (RandomChance.getRandomBoolean((float) .05) 
+            if (RandomChance.getRandomBoolean((float) (.05f * difficulty.get(gameMode)))
                 && !this.positionContainsEntityType(new Position(randomX, randomY), BoulderEntity.class)) {
                 this.createEntity(randomX, randomY, EntityTypes.SPIDER);
             }
         }
     }
 
-    private void generateZombieToast() {
-        if (tickCounter % 5 == 0) {
+    private void generateZombieToast(String gameMode) {
+        if (tickCounter % (int) Math.ceil(20 / difficulty.get(gameMode)) == 0) {
             List<ZombieToastSpawnerEntity> spawnerEntities = getEntitiesOfType(ZombieToastSpawnerEntity.class);
             for (ZombieToastSpawnerEntity spawner : spawnerEntities) {
                 this.createEntity(

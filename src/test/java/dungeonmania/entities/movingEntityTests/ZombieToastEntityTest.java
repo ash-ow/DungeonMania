@@ -31,7 +31,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         character.move(Direction.UP);
         assertEquals(zombie.getPosition(), character.getPosition());
 
-        zombie.interactWithPlayer(new EntitiesControl(), character);
+        zombie.contactWithPlayer(new EntitiesControl(), character);
         assertEquals(58, character.getHealth());
         assertFalse(zombie.isAlive());
     }
@@ -42,7 +42,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         CharacterEntity player = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity(5, 5, 0, 10);
         EntitiesControl entities = new EntitiesControl();
-        entities.addEntities(zombie);
+        entities.addEntity(zombie);
 
         List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(4, 4), new Position(5, 4), new Position(6, 4), 
             new Position(6, 5), new Position(6, 4));
@@ -58,7 +58,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         CharacterEntity player = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity(5, 5, 0, 10);
         EntitiesControl entities = new EntitiesControl();
-        entities.addEntities(zombie);
+        entities.addEntity(zombie);
         entities.createEntity(6, 4, 0, "wall");
 
         List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(4, 4), new Position(5, 4), new Position(5, 4));
@@ -101,7 +101,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         CharacterEntity character = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity();
         EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(zombie);
+        entitiesControl.addEntity(zombie);
         zombie.battle(entitiesControl, character);
         assertFalse(entitiesControl.contains(zombie));
     }

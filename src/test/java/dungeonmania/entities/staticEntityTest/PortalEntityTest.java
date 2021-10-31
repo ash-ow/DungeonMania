@@ -34,8 +34,8 @@ public class PortalEntityTest implements IEntityTests, IInteractingEntityTest{
         PortalEntity portal1 = new PortalEntity(0, 1, 0, "BLUE");
         PortalEntity portal2 = new PortalEntity(5, 1, 0, "BLUE");
         EntitiesControl entities = new EntitiesControl();
-        entities.addEntities(portal1);
-        entities.addEntities(portal2);
+        entities.addEntity(portal1);
+        entities.addEntity(portal2);
         player.move(Direction.DOWN, entities);
         assertEquals(new Position(5, 1), player.getPosition());
         player.move(Direction.DOWN, entities);
@@ -50,9 +50,9 @@ public class PortalEntityTest implements IEntityTests, IInteractingEntityTest{
         PortalEntity portal2 = new PortalEntity(5, 1, 0, "BLUE");
         WallEntity wall = new WallEntity(5, 2, 0);
         EntitiesControl entities = new EntitiesControl();
-        entities.addEntities(portal1);
-        entities.addEntities(portal2);
-        entities.addEntities(wall);
+        entities.addEntity(portal1);
+        entities.addEntity(portal2);
+        entities.addEntity(wall);
         player.move(Direction.DOWN, entities);
         assertEquals(new Position(5, 1), player.getPosition());
     }

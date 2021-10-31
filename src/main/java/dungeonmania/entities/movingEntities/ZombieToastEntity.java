@@ -39,7 +39,7 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
             this.move(direction);
         }
         if (this.isInSamePositionAs(player)) {
-            interactWithPlayer(entitiesControl, player);
+            contactWithPlayer(entitiesControl, player);
         }
     }
 
@@ -61,14 +61,15 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         this.health = health;
     }
 
-    public int getDamage() {
+    public float getDamage() {
         // TODO determine correct ZombieToast damage
         return 3;
     }
 
     @Override
-    public void loseHealth(float enemyHealth, int enemyDamage) {
+    public void loseHealth(float enemyHealth, float enemyDamage) {
         this.health -= ((enemyHealth * enemyDamage) / 5);
     }
 //endregion
+
 }

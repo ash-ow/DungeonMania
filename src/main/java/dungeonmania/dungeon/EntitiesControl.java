@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.IContactingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.util.Position;
@@ -27,9 +27,14 @@ public class EntitiesControl {
         entities = new ArrayList<IEntity>();
     }
 
-    public void addEntities(IEntity entity) {
+    public void addEntity(IEntity entity) {
         entities.add(entity);
+        entityCounter++;
+    }
+
+    private void createNewEntityOnMap(IEntity entity) {
         entity.setId(Integer.toString(entityCounter));
+        entities.add(entity);
         entityCounter++;
     }
 
@@ -60,10 +65,17 @@ public class EntitiesControl {
             .collect(Collectors.toList());
     }
 
-    public void moveAllMovingEntities(Direction direction, CharacterEntity player) {
+    public void moveAllMovingEntities(CharacterEntity player) {
         List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
         for (IAutoMovingEntity entity : movingEntities) {
             entity.move(this, player);
+        }
+    }
+
+    public void runAwayAllMovingEntities(CharacterEntity player) {
+        List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
+        for (IAutoMovingEntity entity : movingEntities) {
+            entity.runAway(this, player);
         }
     }
 
@@ -72,12 +84,16 @@ public class EntitiesControl {
         return EntitiesControl.getEntitiesOfType(this.entities, IAutoMovingEntity.class);
     }
 
-    public List<IInteractingEntity> getInteractableEntitiesFrom(List<IEntity> entityList) {
-        return EntitiesControl.getEntitiesOfType(entityList, IInteractingEntity.class);
+    public List<IContactingEntity> getInteractableEntitiesFrom(List<IEntity> entityList) {
+        return EntitiesControl.getEntitiesOfType(entityList, IContactingEntity.class);
     }
 
     public static <T> List<T> getEntitiesOfType(List<IEntity> entityList, Class<T> cls) {
         return entityList.stream().filter(cls::isInstance).map(cls::cast).collect(Collectors.toList());
+    }
+
+    public <T> List<T> getEntitiesOfType(Class<T> cls) {
+        return getEntitiesOfType(this.entities, cls);
     }
 
     public List<IEntity> getAllEntitiesFromPosition(Position position) {
@@ -88,7 +104,7 @@ public class EntitiesControl {
         return entityList.stream().filter(IBlocker.class::isInstance).map(IBlocker.class::cast).anyMatch(IBlocker::isBlocking);
     }
 
-    public static IEntity getFirstEntityOfType(List<IEntity> entityList, Class<?> cls) {
+    public static <T extends IEntity> IEntity getFirstEntityOfType(List<T> entityList, Class<?> cls) {
         return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findFirst().orElse(null);
     }
 
@@ -113,55 +129,55 @@ public class EntitiesControl {
     public void createEntity(Integer xAxis, Integer yAxis, Integer layer, EntityTypes type) {
         switch (type) {
             case WALL:
-                this.addEntities(new WallEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new WallEntity(xAxis, yAxis, layer));
                 break;
             case EXIT:
-                this.addEntities(new ExitEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new ExitEntity(xAxis, yAxis, layer));
                 break;
             case SWITCH:
-                this.addEntities(new SwitchEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new SwitchEntity(xAxis, yAxis, layer));
                 break;
             case BOULDER:
-                this.addEntities(new BoulderEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new BoulderEntity(xAxis, yAxis, layer));
                 break;
             case SPIDER:
-                this.addEntities(new SpiderEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new SpiderEntity(xAxis, yAxis, layer));
                 break;
             case WOOD:
-                this.addEntities(new WoodEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new WoodEntity(xAxis, yAxis, layer));
                 break;
             case ARROW:
-                this.addEntities(new ArrowsEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new ArrowsEntity(xAxis, yAxis, layer));
                 break;
             case BOMB:
-                this.addEntities(new BombEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new BombEntity(xAxis, yAxis, layer));
                 break;
             case SWORD:
-                this.addEntities(new SwordEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new SwordEntity(xAxis, yAxis, layer));
                 break;
             case ARMOUR:
-                this.addEntities(new ArmourEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new ArmourEntity(xAxis, yAxis, layer));
                 break;
             case TREASURE:
-                this.addEntities(new TreasureEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new TreasureEntity(xAxis, yAxis, layer));
                 break;
             case HEALTH_POTION:
-                this.addEntities(new HealthPotionEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new HealthPotionEntity(xAxis, yAxis, layer));
                 break;
             case INVISIBILITY_POTION:
-                this.addEntities(new InvisibilityPotionEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new InvisibilityPotionEntity(xAxis, yAxis, layer));
                 break;
             case INVINCIBILITY_POTION:
-                this.addEntities(new InvincibilityPotionEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new InvincibilityPotionEntity(xAxis, yAxis, layer));
                 break;
             case MERCENARY:
-                this.addEntities(new MercenaryEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new MercenaryEntity(xAxis, yAxis, layer));
                 break;
             case ZOMBIE_TOAST:
-                this.addEntities(new ZombieToastEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new ZombieToastEntity(xAxis, yAxis, layer));
                 break;
             case ZOMBIE_TOAST_SPAWNER:
-                this.addEntities(new ZombieToastSpawnerEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new ZombieToastSpawnerEntity(xAxis, yAxis, layer));
                 break;
         }
     }
@@ -169,10 +185,10 @@ public class EntitiesControl {
 	public void createEntity(Integer xAxis, Integer yAxis, Integer layer, Integer keyNumber, EntityTypes type) {
         switch (type) {
             case DOOR:
-                this.addEntities(new DoorEntity(xAxis, yAxis, layer, keyNumber));
+                this.createNewEntityOnMap(new DoorEntity(xAxis, yAxis, layer, keyNumber));
                 break;
             case KEY:
-                this.addEntities(new KeyEntity(xAxis, yAxis, layer, keyNumber));
+                this.createNewEntityOnMap(new KeyEntity(xAxis, yAxis, layer, keyNumber));
                 break;
         }
 	}
@@ -180,18 +196,14 @@ public class EntitiesControl {
 	public void createEntity(Integer xAxis, Integer yAxis, Integer layer, String colour, EntityTypes type) {
         switch (type) {
             case PORTAL:
-                this.addEntities(new PortalEntity(xAxis, yAxis, layer, colour));
+                this.createNewEntityOnMap(new PortalEntity(xAxis, yAxis, layer, colour));
                 break;
         }
 	}
 
     public void createEntity(Integer x, Integer y, EntityTypes type) {
-        Integer layer = getNumberOfEntitiesInPosition(new Position(x, y));
+        Integer layer = this.getAllEntitiesFromPosition(new Position(x,y)).size();
         createEntity(x, y, layer, type);
-    }
-
-    private Integer getNumberOfEntitiesInPosition(Position position) {
-        return this.getAllEntitiesFromPosition(this.getLargestCoordinate()).size();
     }
 
     public List<IEntity> getAllEntitiesOfType(EntityTypes type) {
@@ -265,7 +277,7 @@ public class EntitiesControl {
         List<IEntity> adjacentEntities = new ArrayList<IEntity>();
         for (IEntity ent : this.entities) {
             Position entPosition = ent.getPosition();
-            if (Position.isAdjacent(position, entPosition)) {
+            if (Position.isAdjacent(position, entPosition) || Position.isAdjacent(entPosition, position)) { // why tho @braedon
                 adjacentEntities.add(ent);
             }
         }

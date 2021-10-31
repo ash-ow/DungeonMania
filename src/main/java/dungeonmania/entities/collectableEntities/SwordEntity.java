@@ -4,7 +4,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public class SwordEntity extends Entity implements ICollectableEntity {
+public class SwordEntity extends Entity implements ICollectableEntity, IWeaponEntity{
     public int durability;
 
     public SwordEntity() {

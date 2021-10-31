@@ -25,17 +25,17 @@ public class InventoryTest{
         SwordEntity sword = new SwordEntity(0,1,0);
         EntitiesControl entities = new EntitiesControl();
         
-        entities.addEntities(armour);
-        entities.addEntities(sword);
+        entities.addEntity(armour);
+        entities.addEntity(sword);
         assertEquals(2, entities.getEntities().size());
 
         // Pick up first item
-        armour.interactWithPlayer(entities, player);
+        armour.contactWithPlayer(entities, player);
         assertEquals(1, player.getInventoryInfo().size());
         assertEquals(1, entities.getEntities().size());
 
         // Pick up second item
-        sword.interactWithPlayer(entities, player);
+        sword.contactWithPlayer(entities, player);
         assertEquals(2, player.getInventoryInfo().size());
 
         assertEquals(0, entities.getEntities().size());

@@ -14,8 +14,10 @@ import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
+import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
@@ -72,8 +74,8 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         CharacterEntity character = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity();
         EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(character);
-        entitiesControl.addEntities(zombie);
+        entitiesControl.addEntity(character);
+        entitiesControl.addEntity(zombie);
         character.setHealth(2);
         zombie.battle(entitiesControl, character);
         assertFalse(character.isAlive());
@@ -85,10 +87,9 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         CharacterEntity character = new CharacterEntity();
         WoodEntity wood = new WoodEntity();
         character.addEntityToInventory(wood);
-        EntitiesControl inventory = character.getInventory();
-        assertEquals(1, inventory.getEntities().size());
+        assertEquals(1, character.getInventory().size());
         character.removeEntityFromInventory(wood);
-        assertEquals(0, inventory.getEntities().size());
+        assertEquals(0, character.getInventory().size());
     }
 
     @Override
@@ -98,10 +99,33 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         CharacterEntity character = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity();
         EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(character);
-        entitiesControl.addEntities(zombie);
+        entitiesControl.addEntity(character);
+        entitiesControl.addEntity(zombie);
         zombie.battle(entitiesControl, character);
         assertEquals(58, character.getHealth());
         assertEquals(-2.0, zombie.getHealth());
+    }
+
+    @Test
+    public void TestBattleAgainstTeam() {
+        CharacterEntity character = new CharacterEntity();
+        MercenaryEntity mercenaryEntity = new MercenaryEntity();
+        character.addTeammates(mercenaryEntity);
+        ZombieToastEntity zombie = new ZombieToastEntity();
+        zombie.doBattle(character);
+        assertTrue(zombie.getHealth() < 40);
+    }
+
+    @Test
+    public void TestMercenaryJoinsTeam() {
+        CharacterEntity player = new CharacterEntity(0, 5, 0);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 4, 0);
+        TreasureEntity treasure = new TreasureEntity();       
+        player.addEntityToInventory(treasure); 
+        mercenary.interactWith(player);
+        assertTrue(player.teammates.contains(mercenary));
+        ZombieToastEntity zombie = new ZombieToastEntity();
+        zombie.doBattle(player);
+        assertTrue(zombie.getHealth() < 40);
     }
 }

@@ -2,10 +2,18 @@ package dungeonmania.entities.movingEntities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.IContactingEntity;
+import dungeonmania.entities.IEntity;
+import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.TreasureEntity;
+import dungeonmania.exceptions.InvalidActionException;
+import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -13,6 +21,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
 
     private float health;
     private int damage;
+    private boolean isBribed;
 
     public MercenaryEntity() {
         this(0, 0, 0);
@@ -22,6 +31,16 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         super(x, y, layer, EntityTypes.MERCENARY);
         this.health = 100;
         this.damage = 3;
+        this.isBribed = false;
+    }
+
+    @Override
+    public EntityResponse getInfo() {
+        return new EntityResponse(id, type, position, !isBribed);
+    }
+
+    public boolean isBribed() {
+        return isBribed;
     }
 
     @Override
@@ -35,12 +54,12 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     }
 
     @Override
-    public int getDamage() {
+    public float getDamage() {
         return damage;
     }
 
     @Override
-    public void loseHealth(float enemyHealth, int enemyDamage) {
+    public void loseHealth(float enemyHealth, float enemyDamage) {
         this.health -= ((enemyHealth * enemyDamage) / 5);
     }
 
@@ -49,49 +68,45 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         this.position = position;        
     }
 
-// region Moving
+    @Override
+    public void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
+        if (!this.isBribed) {
+            battle(entities, player);
+        }       
+    }
+
     @Override
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {
-        List<Direction> usefulDirections = getUsefuDirections(player);
-        // TODO check player is invisible here
-        moveToUsefulUnblocked(usefulDirections, entitiesControl);
-        if (this.isInSamePositionAs(player)) {
-            interactWithPlayer(entitiesControl, player);
-        }
-    }
-
-    public void moveToUsefulUnblocked(List<Direction> usefulDirections, EntitiesControl entitiesControl) {
-        for (Direction d : usefulDirections) {
-            if (!targetPositionIsBlocked(d, entitiesControl)) {
-                this.move(d);
-                break;
+        if (isBribed) {
+            setPosition(player.getPreviousPosition());
+        } else {
+            List<Direction> usefulDirections = getUsefuDirections(player);
+            // TODO check player is invisible here
+            moveToUsefulUnblocked(usefulDirections, entitiesControl);
+            if (this.isInSamePositionAs(player)) {
+                contactWithPlayer(entitiesControl, player);
             }
-        }
+        }       
     }
 
-    private boolean targetPositionIsBlocked(Direction d, EntitiesControl entitiesControl) {
-            Position target = this.position.translateBy(d);
-            return EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(target));
+
+
+    public void interactWith(CharacterEntity player) throws InvalidActionException {
+        IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);
+        if (treasureFound == null) {
+            throw new InvalidActionException("Player has no treasure");
+        }
+        if (!isInRange(player)) {
+            throw new InvalidActionException("Player is too far away");
+        }
+        player.removeEntityFromInventory(treasureFound);
+        player.addTeammates(this);
+        this.isBribed = true;       
     }
 
-    private List<Direction> getUsefuDirections(CharacterEntity player) {
-        Position diff = Position.calculatePositionBetween(this.position, player.getPosition());
-        List<Direction> usefulDirections = new ArrayList<>();
-        if (diff.getX() < 0) {
-            usefulDirections.add(Direction.LEFT);
-        } else if (diff.getX() > 0) {
-            usefulDirections.add(Direction.RIGHT);
-        } 
-        if (diff.getY() < 0) {
-            usefulDirections.add(Direction.UP);
-        } else if (diff.getY() > 0) {
-            usefulDirections.add(Direction.DOWN);
-        }
-        if (usefulDirections.isEmpty()) {
-            usefulDirections.add(Direction.NONE);
-        }
-        return usefulDirections;    
+    public boolean isInRange(CharacterEntity player) {
+        Position diff = Position.calculatePositionBetween(this.getPosition(), player.getPosition());
+        int sum = Math.abs(diff.getX()) + Math.abs(diff.getY());
+        return sum <= 2;
     }
-    // endregion
-    
 }

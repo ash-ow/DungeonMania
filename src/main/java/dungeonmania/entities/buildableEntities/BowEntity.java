@@ -2,9 +2,10 @@ package dungeonmania.entities.buildableEntities;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.ArrowsEntity;
+import dungeonmania.entities.collectableEntities.IWeaponEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 
-public class BowEntity extends BuildableEntity {
+public class BowEntity extends BuildableEntity implements IWeaponEntity{
 
     public BowEntity() {
         this(0, 0, 0);

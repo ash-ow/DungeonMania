@@ -6,11 +6,10 @@ import java.util.stream.Collectors;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.Position;
 
-public class PortalEntity extends Entity implements IInteractingEntity{
+public class PortalEntity extends Entity implements IContactingEntity {
     String colour;
     PortalEntity portalPair;
     public PortalEntity(String colour) {
@@ -27,11 +26,10 @@ public class PortalEntity extends Entity implements IInteractingEntity{
     }
 
     @Override
-    public void interactWithPlayer(EntitiesControl entities, CharacterEntity player) {
+    public void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
         PortalEntity portalPair = getPortalPair(entities);
-        Position positionShift = Position.calculatePositionBetween(this.getPosition(), portalPair.getPosition());
         player.setPosition(
-            player.getPosition().translateBy(positionShift)  
+            portalPair.getPosition()
         );
     }
 
@@ -42,7 +40,7 @@ public class PortalEntity extends Entity implements IInteractingEntity{
      */
     private PortalEntity getPortalPair(EntitiesControl entities) {
         if (this.portalPair == null) {
-            List<PortalEntity> portalsOnMap = entities.getAllEntitiesOfType("portal").stream().map(PortalEntity.class::cast).collect(Collectors.toList());
+            List<PortalEntity> portalsOnMap = entities.getAllEntitiesOfType(EntityTypes.PORTAL).stream().map(PortalEntity.class::cast).collect(Collectors.toList());
             for (PortalEntity portal : portalsOnMap) {
                 if (!portal.equals(this) && portal.getColour().equals(this.colour)) {
                     this.portalPair = portal;

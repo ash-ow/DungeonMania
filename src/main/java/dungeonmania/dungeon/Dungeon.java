@@ -11,6 +11,10 @@ import dungeonmania.dungeon.goals.Goals;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.MercenaryEntity;
+import dungeonmania.entities.movingEntities.ZombieToastEntity;
+import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
+import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -90,14 +94,44 @@ public class Dungeon {
 
     public void tick(Direction direction) {
         player.move(direction, entitiesControl);
-        entitiesControl.moveAllMovingEntities(direction, player);
+        if (player.getInvincible()) {
+            entitiesControl.runAwayAllMovingEntities(player);
+        } else {
+            entitiesControl.moveAllMovingEntities(player);
+        }
         entitiesControl.tick();
         entitiesControl.generateEnemyEntities();
     }
 
-    public void tick(String itemType) {
-        player.useItem(itemType, this.entitiesControl);
-        // TODO implement
+    public void tick(String itemID) {
+        player.useItem(itemID, this.entitiesControl);
+        if (player.getInvincible()) {
+            entitiesControl.runAwayAllMovingEntities(player);
+        } else {
+            entitiesControl.moveAllMovingEntities(player);
+        }
+        entitiesControl.tick();
+        entitiesControl.generateEnemyEntities();
+    }
+
+    public void interact(String entityID) throws IllegalArgumentException, InvalidActionException{
+        IEntity interacting = this.entitiesControl.getEntityById(entityID);
+        if (interacting == null) {
+            throw new IllegalArgumentException("Entity doesnt exist");
+        } else {
+            switch (interacting.getType()) {
+                case ("mercenary"):
+                    MercenaryEntity mercenaryEntity = (MercenaryEntity) interacting;
+                    mercenaryEntity.interactWith(player);
+                    break;
+                case ("zombie_toast_spawner"):
+                    ZombieToastSpawnerEntity spawner = (ZombieToastSpawnerEntity) interacting;
+                    spawner.interactWith(entitiesControl, player);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Entity is not interactable");
+            }
+        }
     }
 
     public String getGoals() {

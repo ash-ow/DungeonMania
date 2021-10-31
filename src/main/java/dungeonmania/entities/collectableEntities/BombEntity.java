@@ -35,7 +35,7 @@ public class BombEntity extends Entity implements ICollectableEntity, ITicker, I
     }
 
     @Override    
-    public void interactWithPlayer(EntitiesControl entities, CharacterEntity player) {
+    public void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
         if (!this.isArmed) {
             player.addEntityToInventory(this);
             entities.removeEntity(this);

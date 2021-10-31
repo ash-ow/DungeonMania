@@ -37,7 +37,7 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
             movementCount = (movementCount + 1) % 8;
         }
         if (this.isInSamePositionAs(player)) {
-            interactWithPlayer(entities, player);
+            contactWithPlayer(entities, player);
         }
     }
 
@@ -69,12 +69,12 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
         this.health = health;
     }
 
-    public int getDamage() {
+    public float getDamage() {
         return 2;
     }
 
     @Override
-    public void loseHealth(float enemyHealth, int enemyDamage) {
+    public void loseHealth(float enemyHealth, float enemyDamage) {
         this.health -= ((enemyHealth * enemyDamage) / 5);
     }
 //endregion

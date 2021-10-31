@@ -11,11 +11,8 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.SwordEntity;
 import dungeonmania.entities.collectableEntities.ArmourEntity;
-import dungeonmania.util.Direction;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.response.models.ItemResponse;
-import dungeonmania.entities.collectableEntities.SwordEntity;
-import dungeonmania.entities.collectableEntities.ArmourEntity;
 
 public class InventoryTest{
     @Test
@@ -48,7 +45,7 @@ public class InventoryTest{
 
         int i = 0;
         for (ItemResponse item : inventory) {
-            assertEquals(item.getType(), expected.get(i).getType());
+            assertEquals(item.getType(), expected.get(i).getType().toString());
             i++;
         }
     }

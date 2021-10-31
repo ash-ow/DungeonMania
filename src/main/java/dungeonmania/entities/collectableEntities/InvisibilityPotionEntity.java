@@ -1,6 +1,7 @@
 package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public class InvisibilityPotionEntity extends Entity implements ICollectableEntity {
@@ -9,7 +10,7 @@ public class InvisibilityPotionEntity extends Entity implements ICollectableEnti
     }
     
     public InvisibilityPotionEntity(int x, int y, int layer) {
-        super(x, y, layer, "invisibility_potion");
+        super(x, y, layer, EntityTypes.INVISIBILITY_POTION);
     }
 
     @Override

@@ -5,6 +5,8 @@ import java.util.Map;
 
 import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
+import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.collectableEntities.ArrowsEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
@@ -18,7 +20,7 @@ public class ShieldEntity extends BuildableEntity {
     }
     
     public ShieldEntity(int x, int y, int layer) {
-        super(x, y, layer, "shield");
+        super(x, y, layer, EntityTypes.SHIELD);
     }
     
     @Override
@@ -38,11 +40,11 @@ public class ShieldEntity extends BuildableEntity {
             int quantity = entry.getValue();
             if (numberOfComponentItemsInInventory(inventory, component) >= quantity) {
                 // System.out.println("Needs more " + component.getId());
-                if (component.getType().equals("wood")) {
+                if (component.getType().equals(EntityTypes.WOOD)) {
                     requiredWood = true;
-                } else if (component.getType().equals("treasure")) {
+                } else if (component.getType().equals(EntityTypes.TREASURE)) {
                     requiredTreasure = true;
-                } else if (component.getType().equals("key")) {
+                } else if (component.getType().equals(EntityTypes.KEY)) {
                     requiredKey = true;
                 }
             }

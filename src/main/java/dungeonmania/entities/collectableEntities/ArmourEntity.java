@@ -1,5 +1,6 @@
 package dungeonmania.entities.collectableEntities;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public class ArmourEntity extends Entity implements ICollectableEntity {
@@ -11,7 +12,7 @@ public class ArmourEntity extends Entity implements ICollectableEntity {
     }
 
     public ArmourEntity(int x, int y, int layer) {
-        super(x, y, layer, "armour");
+        super(x, y, layer, EntityTypes.ARMOUR);
     }
 
     public int getDurability(){

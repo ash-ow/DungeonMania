@@ -3,6 +3,7 @@ package dungeonmania.entities.movingEntities;
 import java.util.List;
 
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
@@ -16,7 +17,7 @@ public class BoulderEntity extends Entity implements IBlocker {
     }
     
     public BoulderEntity(int x, int y, int layer) {
-        super(x, y, layer, "boulder");
+        super(x, y, layer, EntityTypes.BOULDER);
     }
 
     @Override

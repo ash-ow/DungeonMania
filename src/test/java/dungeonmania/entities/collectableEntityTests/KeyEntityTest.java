@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.util.Position;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.KeyEntity;
 
 import dungeonmania.util.Direction;
@@ -23,7 +24,7 @@ public class KeyEntityTest implements ICollectableEntityTest {
         assertEntityResponseInfoEquals(
             key,
             "key-0-0-0",
-            "key",
+            EntityTypes.KEY,
             new Position(0,0),
             false
         );

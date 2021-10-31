@@ -8,8 +8,10 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.SwordEntity;
+import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Position;
 
 public class SwordEntityTest implements ICollectableEntityTest {

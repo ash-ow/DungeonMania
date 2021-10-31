@@ -10,7 +10,7 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public abstract class BuildableEntity extends Entity {
+public abstract class BuildableEntity extends Entity implements ICollectableEntity {
     protected BuildableEntity(int x, int y, int layer, EntityTypes type) {
         super(x, y, layer, type);
         initialiseRequiredComponents();

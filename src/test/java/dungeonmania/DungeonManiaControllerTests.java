@@ -38,14 +38,13 @@ public class DungeonManiaControllerTests {
 
         assertThrows(IllegalArgumentException.class, 
         () -> dungeonManiaController.loadGame("Some Random ID"), "id is not a valid game id");
-        // dungeon is null rewrite this
         assertThrows(IllegalArgumentException.class, 
-        () -> dungeonManiaController.tick("my precious", Direction.LEFT));
-        // "itemUsed is not a bomb, health_potion, invincibility_potion, or an invisibility_potion, or null (if no item is being used)");
-        // assertThrows(IllegalArgumentException.class, 
-        // () -> dungeonManiaController.build("Death Star"), "buildable is not one of bow, shield");
-        // assertThrows(IllegalArgumentException.class, 
-        // () -> dungeonManiaController.interact("Execute Order 66"), "entityId is not a valid entity ID");
+        () -> dungeonManiaController.tick("my precious", Direction.LEFT),
+        "itemUsed is not a bomb, health_potion, invincibility_potion, or an invisibility_potion, or null (if no item is being used)");
+        assertThrows(IllegalArgumentException.class, 
+        () -> dungeonManiaController.build("Death Star"), "buildable is not one of bow, shield");
+        assertThrows(IllegalArgumentException.class, 
+        () -> dungeonManiaController.interact("Execute Order 66"), "entityId is not a valid entity ID");
     }
 
     @Test

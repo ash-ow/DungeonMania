@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class DungeonManiaController {
     private Dungeon dungeon;
@@ -99,6 +100,11 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse tick(String itemUsed, Direction movementDirection) throws IllegalArgumentException, InvalidActionException {
+        // List<BuildableEntity> buildableEntities = dungeon.entitiesControl.getAllEntitiesOfType(BuildableEntity.class);
+        // List<String> buildableEntityID = buildableEntities.stream().map(BuildableEntity::getId).collect(Collectors.toList());
+        // if (!buildableEntityID.contains(itemUsed)) {
+        //     throw new IllegalArgumentException();
+        // }
         if (itemUsed != null) {
             dungeon.tick(itemUsed);
         }

@@ -54,12 +54,12 @@ public class EntitiesControl {
 
 
     public void tick() {
-        List<BuildableEntity> buildableEntities = this.getAllEntitiesOfType(BuildableEntity.class);
-        List<String> buildableEntityID = buildableEntities.stream().map(BuildableEntity::getId).collect(Collectors.toList());
-        // TODO add item id here
-        if (!buildableEntityID.contains("itemID")) {
-            throw new IllegalArgumentException();
-        }
+        // List<BuildableEntity> buildableEntities = this.getAllEntitiesOfType(BuildableEntity.class);
+        // List<String> buildableEntityID = buildableEntities.stream().map(BuildableEntity::getId).collect(Collectors.toList());
+        // // TODO add item id here
+        // if (!buildableEntityID.contains("itemID")) {
+        //     throw new IllegalArgumentException();
+        // }
 
         List<ITicker> tickers = getAllTickingEntities();
         for (ITicker ticker : tickers) {

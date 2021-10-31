@@ -16,3 +16,4 @@ yarn.lock
 .vscode
 src/main/resources/savedGames/*
 !src/main/resources/savedGames/README.md
+!src/main/resources/savedGames/test.json

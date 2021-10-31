@@ -43,7 +43,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
         assertItemInInventory("bomb-0-1-0", player, dungeon.entitiesControl);
         assertEquals(new Position(0, 1, 0), player.getPosition());
 
-        dungeon.tick("bomb");
+        dungeon.tick("bomb-0-1-0");
         assertEquals(new Position(0, 1, 0), dungeon.entitiesControl.getEntityById("bomb-0-1-0").getPosition(), "Bomb should be placed in the players new position");
         assertTrue(bomb.isArmed(), "Bomb should be active");
         assertNull(player.getInventoryItem(bomb.getId()), "Inventory should not contain entity " + bomb.getId());
@@ -85,20 +85,19 @@ public void TestExplode() {
     // Teleport the player to the bomb to arm it, then force a tick
     dungeon.tick(Direction.DOWN);
     dungeon.tick(Direction.LEFT);
-    dungeon.tick("bomb");
-    dungeon.tick(Direction.NONE);
+    dungeon.tick("6");
 
     Assertions.assertAll( "Once the bomb is armed, it will explode",
         () -> assertEntityStillOnMap( dungeon, "0",  "spider"),
         () -> assertEntityStillOnMap( dungeon, "1",  "wall"),
-        () -> assertEntityNotOnMap( dungeon, "2",  "wall"),
+        () -> assertEntityStillOnMap( dungeon, "2",  "wall"),
         () -> assertEntityNotOnMap(   dungeon, "3",  "switch"),
         () -> assertEntityNotOnMap(   dungeon, "4",  "boulder"),
         () -> assertEntityNotOnMap(   dungeon, "5",  "wall"),
         () -> assertEntityNotOnMap(   dungeon, "6",  "bomb"),
         () -> assertEntityNotOnMap(   dungeon, "7",  "switch"),
         () -> assertItemInInventory("8", dungeon.getPlayer(), dungeon.entitiesControl),
-        () -> assertEntityNotOnMap( dungeon, "9", "spider"), // ?
+        () -> assertEntityNotOnMap( dungeon, "9", "spider"),
         () -> assertEntityNotOnMap( dungeon, "10", "arrow"),
         () -> assertEntityStillOnMap( dungeon, "11", "spider"), // ?
         () -> assertEntityStillOnMap( dungeon, "12", "exit"),
@@ -172,7 +171,7 @@ private Dungeon getDungeonWithBombTestData() {
         assertItemInInventory("bomb-0-1-0", player, dungeon.entitiesControl);
         assertEquals(new Position(0, 1, 0), player.getPosition());
 
-        dungeon.tick("bomb");
+        dungeon.tick("bomb-0-1-0");
         assertEquals(new Position(0, 1, 0), dungeon.entitiesControl.getEntityById("bomb-0-1-0").getPosition(), "Bomb should be placed in the players new position");
         assertTrue(bomb.isArmed(), "Bomb should be active");
         assertNull(player.getInventoryItem(bomb.getId()), "Inventory should not contain entity " + bomb.getId());

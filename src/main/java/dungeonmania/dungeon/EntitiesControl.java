@@ -277,7 +277,7 @@ public class EntitiesControl {
         List<IEntity> adjacentEntities = new ArrayList<IEntity>();
         for (IEntity ent : this.entities) {
             Position entPosition = ent.getPosition();
-            if (Position.isAdjacent(position, entPosition)) {
+            if (Position.isAdjacent(position, entPosition) || Position.isAdjacent(entPosition, position)) { // why tho @braedon
                 adjacentEntities.add(ent);
             }
         }

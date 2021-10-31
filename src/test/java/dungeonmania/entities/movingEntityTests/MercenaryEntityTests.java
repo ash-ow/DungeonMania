@@ -135,7 +135,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         EntitiesControl entitiesControl = new EntitiesControl();
         CharacterEntity player = new CharacterEntity(5, 0, 0);
         MercenaryEntity mercenary = new MercenaryEntity(0, 0, 0);
-        entitiesControl.addEntities(mercenary);
+        entitiesControl.addEntity(mercenary);
         mercenary.move(entitiesControl, player);
         mercenary.move(entitiesControl, player);
         assertEquals(new Position(2, 0), mercenary.getPosition());

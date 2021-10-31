@@ -250,8 +250,8 @@ public class EntitiesControl {
 
     private void generateZombieToast() {
         if (tickCounter % 5 == 0) {
-            List<ZombieToastSpawnerEntity> spawnerEntities = getAllEntitiesOfType(ZombieToastSpawnerEntity.class);
-            for (IEntity spawner : spawnerEntities) {
+            List<ZombieToastSpawnerEntity> spawnerEntities = getEntitiesOfType(ZombieToastSpawnerEntity.class);
+            for (ZombieToastSpawnerEntity spawner : spawnerEntities) {
                 this.createEntity(
                     spawner.getPosition().getX(), 
                     spawner.getPosition().getY(), 

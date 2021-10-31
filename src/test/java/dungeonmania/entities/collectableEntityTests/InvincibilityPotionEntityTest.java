@@ -59,10 +59,10 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
         InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0,0,0);
         CharacterEntity player = new CharacterEntity(0,0,0);
         SpiderEntity spider = new SpiderEntity(0,1,0);
-        EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(player);
-        entitiesControl.addEntities(spider);
-        entitiesControl.addEntities(invincibility_potion);
+        ArrayList<IEntity> entities = new ArrayList<>();
+    
+        entities.add(spider);
+        entities.add(invincibility_potion);
         
         invincibility_potion.used(player);
         player.move(Direction.DOWN);

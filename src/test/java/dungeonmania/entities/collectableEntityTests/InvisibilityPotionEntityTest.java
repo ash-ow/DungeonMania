@@ -65,10 +65,10 @@ public class  InvisibilityPotionEntityTest implements ICollectableEntityTest {
         InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0,0,0);
         CharacterEntity player = new CharacterEntity(0,0,0);
         SpiderEntity spider = new SpiderEntity(0,1,0);
-        EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(player);
-        entitiesControl.addEntities(spider);
-        entitiesControl.addEntities(invisibility_potion);
+        ArrayList<IEntity> entities = new ArrayList<>();
+        
+        entities.add(spider);
+        entities.add(invisibility_potion);
 
         assertEquals(new Position(0, 0, 0), player.getPosition());
         assertEquals(new Position(0, 1, 0), spider.getPosition());

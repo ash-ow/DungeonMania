@@ -2,9 +2,11 @@ package dungeonmania.entities.movingEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.*;
 
@@ -14,11 +16,14 @@ import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
+import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
+import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -127,5 +132,11 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         ZombieToastEntity zombie = new ZombieToastEntity();
         zombie.doBattle(player);
         assertTrue(zombie.getHealth() < 40);
+    }
+
+    @Test
+    @Override
+    public void testDropOneRing() {
+        
     }
 }

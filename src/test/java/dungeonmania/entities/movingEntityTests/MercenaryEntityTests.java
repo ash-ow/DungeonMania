@@ -2,15 +2,19 @@ package dungeonmania.entities.movingEntityTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
@@ -143,5 +147,14 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         assertEquals(new Position(1, 0), mercenary.getPosition());
         mercenary.runAway(entitiesControl, player);
         assertEquals(new Position(0, 0), mercenary.getPosition());
+    }
+
+    @Test
+    public void testDropOneRing() {
+        CharacterEntity player = new CharacterEntity();
+        MercenaryEntity mercenary = new MercenaryEntity(0, 0, 0);
+        mercenary.dropEntities(player, 1f);
+        List<ICollectableEntity> inventory = player.getInventory();
+        assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
     }
 }

@@ -71,7 +71,7 @@ public class SpiderEntity extends Entity implements IContactingEntity, IBattling
 
     public float getDamage() {
         // TODO determine correct Spider damage
-        return 3;
+        return 2;
     }
 
     @Override

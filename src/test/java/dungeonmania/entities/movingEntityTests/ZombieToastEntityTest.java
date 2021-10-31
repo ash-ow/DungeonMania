@@ -3,7 +3,9 @@ package dungeonmania.entities.movingEntityTests;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
+import dungeonmania.entities.collectableEntities.ArmourEntity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
@@ -13,6 +15,7 @@ import dungeonmania.util.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -77,7 +80,17 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         ZombieToastEntity zombie = new ZombieToastEntity(0, 0, 0, 1f, 10);
         zombie.dropEntities(player, 1f);
         List<ICollectableEntity> inventory = player.getInventory();
-        assertTrue(inventory.size() == 1);
+        assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, ArmourEntity.class));
+    }
+
+    @Test
+    @Override
+    public void testDropOneRing() {
+        CharacterEntity player = new CharacterEntity();
+        ZombieToastEntity zombie = new ZombieToastEntity(0, 0, 0);
+        zombie.dropEntities(player, 1f);
+        List<ICollectableEntity> inventory = player.getInventory();
+        assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
     }
 
     @Override

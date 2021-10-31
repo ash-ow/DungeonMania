@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlockerTest;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.*;
@@ -27,7 +28,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
     @Override
     public void TestEntityResponseInfo() {
         BombEntity bomb = new BombEntity(0, 0, 0);
-        assertEntityResponseInfoEquals(bomb, "bomb-0-0-0", "bomb", new Position(0, 0), false);
+        assertEntityResponseInfoEquals(bomb, "bomb-0-0-0", EntityTypes.BOMB, new Position(0,0), false);
     }
 
     @Test
@@ -56,60 +57,68 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
         BombEntity bomb = new BombEntity(0, 0, 0);
         assertEntityIsCollected(bomb);
     }
-
-    // region TestExplode
-
+    
+// region TestExplode
+    
     @Test
     public void TestExplode() {
         // Move the player left to push the boulder into the bomb
         Dungeon dungeon = getDungeonWithBombTestData();
         dungeon.tick(Direction.LEFT);
 
-        Assertions.assertAll("Before the bomb is armed, nothing will explode",
-                () -> assertEntityStillOnMap(dungeon, "0", "spider"),
-                () -> assertEntityStillOnMap(dungeon, "1", "wall"), () -> assertEntityStillOnMap(dungeon, "2", "wall"),
-                () -> assertEntityStillOnMap(dungeon, "3", "switch"),
-                () -> assertEntityStillOnMap(dungeon, "4", "boulder"),
-                () -> assertEntityStillOnMap(dungeon, "5", "wall"), () -> assertEntityStillOnMap(dungeon, "6", "bomb"),
-                () -> assertEntityStillOnMap(dungeon, "7", "switch"),
-                () -> assertEntityStillOnMap(dungeon, "8", "wood"),
-                () -> assertEntityStillOnMap(dungeon, "9", "spider"),
-                () -> assertEntityStillOnMap(dungeon, "11", "spider"),
-                () -> assertEntityStillOnMap(dungeon, "10", "arrow"),
-                () -> assertEntityStillOnMap(dungeon, "12", "exit"),
+        Assertions.assertAll( "Before the bomb is armed, nothing will explode",
+            () -> assertEntityStillOnMap( dungeon, "0",  EntityTypes.SPIDER),
+            () -> assertEntityStillOnMap( dungeon, "1",  EntityTypes.WALL),
+            () -> assertEntityStillOnMap( dungeon, "2",  EntityTypes.WALL),
+            () -> assertEntityStillOnMap( dungeon, "3",  EntityTypes.SWITCH),
+            () -> assertEntityStillOnMap( dungeon, "4",  EntityTypes.BOULDER),
+            () -> assertEntityStillOnMap( dungeon, "5",  EntityTypes.WALL),
+            () -> assertEntityStillOnMap( dungeon, "6",  EntityTypes.BOMB),
+            () -> assertEntityStillOnMap( dungeon, "7",  EntityTypes.SWITCH),
+            () -> assertEntityStillOnMap( dungeon, "8",  EntityTypes.WOOD),
+            () -> assertEntityStillOnMap( dungeon, "9",  EntityTypes.SPIDER),
+            () -> assertEntityStillOnMap( dungeon, "11", EntityTypes.SPIDER),
+            () -> assertEntityStillOnMap( dungeon, "10", EntityTypes.ARROW),
+            () -> assertEntityStillOnMap( dungeon, "12", EntityTypes.EXIT),
 
-                () -> assertNotNull(dungeon.getPlayer()));
+            () -> assertNotNull( dungeon.getPlayer())
+        );
 
         // Teleport the player to the bomb to arm it, then force a tick
         dungeon.tick(Direction.DOWN);
         dungeon.tick(Direction.LEFT);
         dungeon.tick("6");
 
-        Assertions.assertAll("Once the bomb is armed, it will explode",
-                () -> assertEntityStillOnMap(dungeon, "0", "spider"),
-                () -> assertEntityStillOnMap(dungeon, "1", "wall"), () -> assertEntityStillOnMap(dungeon, "2", "wall"),
-                () -> assertEntityNotOnMap(dungeon, "3", "switch"), () -> assertEntityNotOnMap(dungeon, "4", "boulder"),
-                () -> assertEntityNotOnMap(dungeon, "5", "wall"), () -> assertEntityNotOnMap(dungeon, "6", "bomb"),
-                () -> assertEntityNotOnMap(dungeon, "7", "switch"),
-                () -> assertItemInInventory("8", dungeon.getPlayer(), dungeon.entitiesControl),
-                () -> assertEntityNotOnMap(dungeon, "9", "spider"), () -> assertEntityNotOnMap(dungeon, "10", "arrow"),
-                () -> assertEntityStillOnMap(dungeon, "11", "spider"), // ?
-                () -> assertEntityStillOnMap(dungeon, "12", "exit"),
+        Assertions.assertAll( "Once the bomb is armed, it will explode",
+            () -> assertEntityStillOnMap( dungeon, "0",  EntityTypes.SPIDER),
+            () -> assertEntityStillOnMap( dungeon, "1",  EntityTypes.WALL),
+            () -> assertEntityStillOnMap( dungeon, "2",  EntityTypes.WALL),
+            () -> assertEntityNotOnMap(   dungeon, "3",  EntityTypes.SWITCH),
+            () -> assertEntityNotOnMap(   dungeon, "4",  EntityTypes.BOULDER),
+            () -> assertEntityNotOnMap(   dungeon, "5",  EntityTypes.WALL),
+            () -> assertEntityNotOnMap(   dungeon, "6",  EntityTypes.BOMB),
+            () -> assertEntityNotOnMap(   dungeon, "7",  EntityTypes.SWITCH),
+            () -> assertItemInInventory("8", dungeon.getPlayer(), dungeon.entitiesControl),
+            () -> assertEntityNotOnMap( dungeon, "9",    EntityTypes.SPIDER),
+            () -> assertEntityNotOnMap( dungeon, "10",   EntityTypes.ARROW),
+            () -> assertEntityStillOnMap( dungeon, "11", EntityTypes.SPIDER),
+            () -> assertEntityStillOnMap( dungeon, "12", EntityTypes.EXIT),
 
-                () -> assertNotNull(dungeon.getPlayer()));
+            () -> assertNotNull( dungeon.getPlayer())
+        );
     }
 
-    public void assertEntityStillOnMap(Dungeon dungeon, String id, String expectedType) {
+    public void assertEntityStillOnMap(Dungeon dungeon, String id, EntityTypes expectedType) {
         IEntity ent = dungeon.entitiesControl.getEntityById(id);
-        assertEquals(expectedType, ent.getType(),
-                "Entity type should be " + expectedType + " but was " + ent.getType());
+        assertEquals(expectedType, ent.getType(), "Entity type should be " + expectedType + " but was " + ent.getType());
         assertNotNull(ent, "Entity should still be on the map " + expectedType + " " + id);
     }
 
-    public void assertEntityNotOnMap(Dungeon dungeon, String id, String expectedType) {
+    public void assertEntityNotOnMap(Dungeon dungeon, String id, EntityTypes expectedType) {
         IEntity ent = dungeon.entitiesControl.getEntityById(id);
         assertNull(ent, "Entity should no longer be on the map " + expectedType + " " + id);
     }
+
 
     private Dungeon getDungeonWithBombTestData() {
         /*

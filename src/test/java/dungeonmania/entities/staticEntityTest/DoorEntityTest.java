@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlockerTest;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.collectableEntities.KeyEntity;
@@ -29,7 +30,7 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         assertEntityResponseInfoEquals(
             door,
             "door-0-0-0",
-            "door",
+            EntityTypes.DOOR,
             new Position(0,0,0),
             false
         );

@@ -22,14 +22,24 @@ import dungeonmania.entities.IEntityTests;
 import dungeonmania.util.Direction;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.response.models.ItemResponse;
+import org.junit.jupiter.api.Test;
+
+import dungeonmania.util.Position;
+import dungeonmania.entities.collectableEntities.InvincibilityPotionEntity;
+import dungeonmania.entities.EntityTypes;
 
 public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0, 0, 0);
-        assertEntityResponseInfoEquals(invincibility_potion, "invincibility_potion-0-0-0", "invincibility_potion",
-                new Position(0, 0), false);
+        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0,0,0);
+        assertEntityResponseInfoEquals(
+            invincibility_potion,
+            "invincibility_potion-0-0-0",
+            EntityTypes.INVINCIBILITY_POTION,
+            new Position(0,0),
+            false
+        );
     }
 
     @Test

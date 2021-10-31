@@ -5,10 +5,12 @@ import java.util.List;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
@@ -16,7 +18,7 @@ import dungeonmania.util.Position;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
     private List<ICollectableEntity> inventory = new ArrayList<>();
-    private Position previousPosition = new Position(0, 0);
+    private Position previousPosition;
     public List<IBattlingEntity> teammates = new ArrayList<>();
     private int invincibilityRemaining = 0;
     private int invisibilityRemaining = 0;
@@ -26,7 +28,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
     
     public CharacterEntity(int x, int y, int layer) {
-        super(x, y, layer, "player");
+        super(x, y, layer, EntityTypes.PLAYER);
+        this.previousPosition = new Position(x, y);
     }
 
     public EntityResponse getInfo() {
@@ -71,6 +74,17 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return inventory.stream().filter(item -> item.getId().equals(itemID)).findFirst().orElse(null);
     }
 
+    @Override
+    public boolean isAlive() {
+        if (this.getHealth() <= 0) {
+            OneRingEntity ring = (OneRingEntity) EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class);
+            if (ring != null) {
+                ring.used(this);
+            }
+            return false;
+        }
+        return true;
+    }
 //endregion
 
 //region Inventory

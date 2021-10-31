@@ -2,6 +2,7 @@ package dungeonmania.entities.staticEntityTest;
 
 import org.junit.jupiter.api.Test;
 
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.staticEntities.ExitEntity;
 import dungeonmania.util.Position;
@@ -14,7 +15,7 @@ public class ExitEntityTest implements IEntityTests {
         assertEntityResponseInfoEquals(
             exit,
             "exit-0-0-0",
-            "exit",
+            EntityTypes.EXIT,
             new Position(0,0,0),
             false
         );

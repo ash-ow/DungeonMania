@@ -117,9 +117,6 @@ public class Dungeon {
         IEntity interacting = this.entitiesControl.getEntityById(entityID);
         if (interacting == null) {
             throw new IllegalArgumentException("Entity doesnt exist");
-        }
-        if (interacting.getType() != "mercenary" && interacting.getType() != "zombie_toast_spawner" ) {
-            throw new IllegalArgumentException("Entity is not interactable");
         } else {
             switch (interacting.getType()) {
                 case ("mercenary"):
@@ -130,6 +127,8 @@ public class Dungeon {
                     ZombieToastSpawnerEntity spawner = (ZombieToastSpawnerEntity) interacting;
                     spawner.interactWith(entitiesControl, player);
                     break;
+                default:
+                    throw new IllegalArgumentException("Entity is not interactable");
             }
         }
     }

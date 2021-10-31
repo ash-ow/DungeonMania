@@ -88,26 +88,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         }       
     }
 
-    
 
-    private List<Direction> getUsefuDirections(CharacterEntity player) {
-        Position diff = Position.calculatePositionBetween(this.position, player.getPosition());
-        List<Direction> usefulDirections = new ArrayList<>();
-        if (diff.getX() < 0) {
-            usefulDirections.add(Direction.LEFT);
-        } else if (diff.getX() > 0) {
-            usefulDirections.add(Direction.RIGHT);
-        } 
-        if (diff.getY() < 0) {
-            usefulDirections.add(Direction.UP);
-        } else if (diff.getY() > 0) {
-            usefulDirections.add(Direction.DOWN);
-        }
-        if (usefulDirections.isEmpty()) {
-            usefulDirections.add(Direction.NONE);
-        }
-        return usefulDirections;    
-    }
 
     public void interactWith(CharacterEntity player) throws InvalidActionException {
         IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);

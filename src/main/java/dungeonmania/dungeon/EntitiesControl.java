@@ -87,6 +87,10 @@ public class EntitiesControl {
         return entityList.stream().filter(cls::isInstance).map(cls::cast).collect(Collectors.toList());
     }
 
+    public <T> List<T> getEntitiesOfType(Class<T> cls) {
+        return getEntitiesOfType(this.entities, cls);
+    }
+
     public List<IEntity> getAllEntitiesFromPosition(Position position) {
         return this.entities.stream().filter(entity -> entity != null && entity.getPosition().equals(position)).collect(Collectors.toList());
     }

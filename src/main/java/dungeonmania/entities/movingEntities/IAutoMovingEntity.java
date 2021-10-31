@@ -2,6 +2,8 @@ package dungeonmania.entities.movingEntities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.util.Direction;
@@ -11,29 +13,29 @@ public interface IAutoMovingEntity extends IMovingEntity{
     public void move(EntitiesControl entitiesControl, CharacterEntity player);
 
     public default void runAway(EntitiesControl entitiesControl, CharacterEntity player) {
-        List<Direction> usefulDirections = getRunAwayDirections(player);
+        List<Direction> usefulDirections = getUsefuDirections(player).stream().map(dir -> Direction.getOppositeDirection(dir)).collect(Collectors.toList());
         moveToUsefulUnblocked(usefulDirections, entitiesControl);
     }
 
-    private List<Direction> getRunAwayDirections(CharacterEntity player) {
+    public default List<Direction> getUsefuDirections(CharacterEntity player) {
         Position diff = Position.calculatePositionBetween(this.getPosition(), player.getPosition());
         List<Direction> usefulDirections = new ArrayList<>();
         if (diff.getX() < 0) {
-            usefulDirections.add(Direction.RIGHT);
-        } else if (diff.getX() > 0) {
             usefulDirections.add(Direction.LEFT);
+        } else if (diff.getX() > 0) {
+            usefulDirections.add(Direction.RIGHT);
         } 
         if (diff.getY() < 0) {
-            usefulDirections.add(Direction.DOWN);
-        } else if (diff.getY() > 0) {
             usefulDirections.add(Direction.UP);
+        } else if (diff.getY() > 0) {
+            usefulDirections.add(Direction.DOWN);
         }
         if (usefulDirections.isEmpty()) {
             usefulDirections.add(Direction.NONE);
         }
         return usefulDirections;    
     }
-
+    
     public default void moveToUsefulUnblocked(List<Direction> usefulDirections, EntitiesControl entitiesControl) {
         for (Direction d : usefulDirections) {
             if (!targetPositionIsBlocked(d, entitiesControl)) {

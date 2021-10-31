@@ -18,6 +18,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     private List<ICollectableEntity> inventory = new ArrayList<>();
     private Position previousPosition;
     public List<IBattlingEntity> teammates = new ArrayList<>();
+    private boolean isInvincible;
 
     public CharacterEntity() {
         this(0, 0, 0);
@@ -67,6 +68,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     public IEntity getInventoryItem(String itemID) {
         return inventory.stream().filter(item -> item.getId().equals(itemID)).findFirst().orElse(null);
+    }
+
+    public boolean getInvincible() {
+        return this.isInvincible;
     }
 //endregion
 

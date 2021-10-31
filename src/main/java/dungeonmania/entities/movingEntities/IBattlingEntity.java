@@ -12,12 +12,16 @@ public interface IBattlingEntity extends IContactingEntity {
     public void loseHealth(float enemyHealth, float enemyDamage);
 
     public default void battle(EntitiesControl entitiesControl, CharacterEntity player) {
-        while (player.isAlive() && !checkEnemyDeath(entitiesControl, player)) {
+        while (
+            !player.isInvisible() &&
+            player.isAlive() &&
+            !enemyIsAlive(entitiesControl, player)
+        ) {
             doBattle(player);
         }
     }
 
-    default boolean checkEnemyDeath(EntitiesControl entitiesControl, CharacterEntity player) {
+    default boolean enemyIsAlive(EntitiesControl entitiesControl, CharacterEntity player) {
         if (!this.isAlive()) {
             dropEntities(player);
             entitiesControl.removeEntity(this);
@@ -27,12 +31,17 @@ public interface IBattlingEntity extends IContactingEntity {
     }
     
     default void doBattle(CharacterEntity player) {
-        float enemyInitialHealth = this.getHealth();
-        this.loseHealth(player.getHealth(), player.getDamage());
-        for (IBattlingEntity teammate : player.teammates) {
-            this.loseHealth(teammate.getHealth(), teammate.getDamage());
+        if (player.isInvincible()){
+            this.setHealth(0);
         }
-        player.loseHealth(enemyInitialHealth, this.getDamage());
+        else {
+            float enemyInitialHealth = this.getHealth();
+            this.loseHealth(player.getHealth(), player.getDamage());
+            for (IBattlingEntity teammate : player.teammates) {
+                this.loseHealth(teammate.getHealth(), teammate.getDamage());
+            }
+            player.loseHealth(enemyInitialHealth, this.getDamage());
+        }
     }
 
     default boolean isAlive() {
@@ -57,4 +66,7 @@ public interface IBattlingEntity extends IContactingEntity {
     public default void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
         battle(entities, player);
     }
+
 }
+
+    

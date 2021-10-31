@@ -15,7 +15,8 @@ public class InvisibilityPotionEntity extends Entity implements IUseableEntity {
 
     @Override
     public void used(CharacterEntity player) {
-        // TODO implement
+        player.setInvisiblilityRemaining(10);
+        player.removeEntityFromInventory(this);
     }
 
     @Override

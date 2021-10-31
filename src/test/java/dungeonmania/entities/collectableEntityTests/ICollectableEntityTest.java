@@ -18,9 +18,13 @@ public interface ICollectableEntityTest extends IEntityTests {
         assertNull(entitiesControl.getEntityById(id), "EntitiesControl should not contain entity " + id);
     }
     
-    public default void assertItemNotInInventory(String id, CharacterEntity player, EntitiesControl entitiesControl) {
+    public default void assertItemNotInInventory(String id, CharacterEntity player, EntitiesControl entitiesControl, boolean shouldBePlacedInMap) {
         assertNull(player.getInventoryItem(id), "Inventory should not contain entity " + id);
-        assertNotNull(entitiesControl.getEntityById(id), "EntitiesControl should contain entity " + id);
+        if (shouldBePlacedInMap) {
+            assertNotNull(entitiesControl.getEntityById(id), "EntitiesControl should contain entity " + id);
+        } else {
+            assertNull(entitiesControl.getEntityById(id), "EntitiesControl should contain entity " + id);
+        }
     }
 
     public default void assertEntityIsCollected(ICollectableEntity entity) {
@@ -28,7 +32,7 @@ public interface ICollectableEntityTest extends IEntityTests {
         EntitiesControl entities = new EntitiesControl();
         
         entities.addEntity(entity);
-        assertItemNotInInventory(entity.getId(), player, entities);
+        assertItemNotInInventory(entity.getId(), player, entities, true);
         
         entity.contactWithPlayer(entities, player);
         assertItemInInventory(entity.getId(), player, entities);
@@ -42,5 +46,7 @@ public interface ICollectableEntityTest extends IEntityTests {
         entity.used(player);
         assertNull(player.getInventoryItem(entity.getId()), "Inventory should not contain entity " + entity.getId());
     }
+
+    
 
 }

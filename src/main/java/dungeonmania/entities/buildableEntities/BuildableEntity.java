@@ -31,7 +31,7 @@ public abstract class BuildableEntity extends Entity {
     private int numberOfComponentItemsInInventory(List<ICollectableEntity> inventory, EntityTypes component) {
         return inventory
             .stream()
-            .filter(ent -> ent.getClass().equals(component.getClass()))
+            .filter(ent -> ent.getType() == component)
             .collect(Collectors.toList())
             .size();
     }

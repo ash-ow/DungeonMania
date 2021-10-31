@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -21,7 +22,7 @@ public class PortalEntityTest implements IEntityTests, IInteractingEntityTest{
         assertEntityResponseInfoEquals(
             portal,
             "portal-0-0-0",
-            "portal",
+            EntityTypes.PORTAL,
             new Position(0,0,0),
             false
         );

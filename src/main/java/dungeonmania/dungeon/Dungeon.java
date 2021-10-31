@@ -120,11 +120,11 @@ public class Dungeon {
             throw new IllegalArgumentException("Entity doesnt exist");
         } else {
             switch (interacting.getType()) {
-                case ("mercenary"):
+                case MERCENARY:
                     MercenaryEntity mercenaryEntity = (MercenaryEntity) interacting;
                     mercenaryEntity.interactWith(player);
                     break;
-                case ("zombie_toast_spawner"):
+                case ZOMBIE_TOAST_SPAWNER:
                     ZombieToastSpawnerEntity spawner = (ZombieToastSpawnerEntity) interacting;
                     spawner.interactWith(entitiesControl, player);
                     break;

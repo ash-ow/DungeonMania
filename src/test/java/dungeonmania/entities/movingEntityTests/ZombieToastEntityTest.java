@@ -1,6 +1,7 @@
 package dungeonmania.entities.movingEntityTests;
 
 import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -59,7 +60,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
         ZombieToastEntity zombie = new ZombieToastEntity(5, 5, 0, 10);
         EntitiesControl entities = new EntitiesControl();
         entities.addEntity(zombie);
-        entities.createEntity(6, 4, 0, "wall");
+        entities.createEntity(6, 4, 0, EntityTypes.WALL);
 
         List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(4, 4), new Position(5, 4), new Position(5, 4));
 

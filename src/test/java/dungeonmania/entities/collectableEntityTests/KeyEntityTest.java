@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.util.Position;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.KeyEntity;
 
 import dungeonmania.util.Direction;

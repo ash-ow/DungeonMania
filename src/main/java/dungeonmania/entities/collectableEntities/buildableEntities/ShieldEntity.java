@@ -11,7 +11,6 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
 
 public class ShieldEntity extends BuildableEntity {
-    int durability = 10;
     
     public ShieldEntity() {
         this(0, 0, 0); 
@@ -19,6 +18,7 @@ public class ShieldEntity extends BuildableEntity {
     
     public ShieldEntity(int x, int y, int layer) {
         super(x, y, layer, EntityTypes.SHIELD);
+        this.durability = 10;
     }
     
     @Override

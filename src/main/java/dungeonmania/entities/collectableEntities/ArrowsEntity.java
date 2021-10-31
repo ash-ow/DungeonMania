@@ -1,6 +1,5 @@
 package dungeonmania.entities.collectableEntities;
 
-import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 
 public class ArrowsEntity extends CollectableEntity {
@@ -14,7 +13,6 @@ public class ArrowsEntity extends CollectableEntity {
 
     @Override
     public boolean isPlacedAfterUsing() {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 }

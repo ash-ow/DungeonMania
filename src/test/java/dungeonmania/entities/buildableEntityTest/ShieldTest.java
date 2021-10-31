@@ -98,7 +98,7 @@ public class ShieldTest implements IBuildableEntityTests {
     }
 
     @Test
-    public void usedShield() {
+    public void TestUsedShield() {
         CharacterEntity player = new CharacterEntity(0, 1, 0);
         ShieldEntity shield = new ShieldEntity();
         player.addEntityToInventory(shield);

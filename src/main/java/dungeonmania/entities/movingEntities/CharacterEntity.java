@@ -2,7 +2,6 @@ package dungeonmania.entities.movingEntities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
@@ -11,7 +10,6 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.collectableEntities.BombEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
@@ -178,7 +176,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
                 removeBuildMaterials(EntityTypes.WOOD, 1);
                 removeBuildMaterials(EntityTypes.ARROW, 3);
             }
-        } else if (itemToBuild.equals(EntityTypes.SHIELD)){
+        } else if (itemToBuild.equals(EntityTypes.SHIELD)) {
             ShieldEntity shield = new ShieldEntity();
             if (shield.isBuildable(this.inventory)) {
                 this.addEntityToInventory(shield);
@@ -197,7 +195,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         List<CollectableEntity> toRemove = new ArrayList<>();
         while(removed < amount) {
             for(CollectableEntity material : this.inventory) {
-                //Might have to go through the entity itself so that there aren't empty functions
                 if (material.getType().equals(type)){
                     toRemove.add(material);
                     removed++;

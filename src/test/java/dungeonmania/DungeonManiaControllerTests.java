@@ -26,22 +26,39 @@ public class DungeonManiaControllerTests {
     }
 
     @Test
-    public void testIllegalArgumentExceptionFail() {
+    public void testNewGameWrongMode() {
         DungeonManiaController dungeonManiaController = new DungeonManiaController();
         assertThrows(IllegalArgumentException.class, 
         () -> dungeonManiaController.newGame("test", "easy"), "gameMode is not a valid game mode");
+    }
+
+    @Test
+    public void testNewGameWrongName() {
+        DungeonManiaController dungeonManiaController = new DungeonManiaController();
         assertThrows(IllegalArgumentException.class, 
         () -> dungeonManiaController.newGame("fly", "Hard"), "dungeonName is not a dungeon that exists");
+    }
+
+    @Test
+    public void testLoadGameWrongId() {
+        DungeonManiaController dungeonManiaController = new DungeonManiaController();
 
         dungeonManiaController.newGame("testExeptions", "Hard");
         dungeonManiaController.saveGame("test");
 
         assertThrows(IllegalArgumentException.class, 
         () -> dungeonManiaController.loadGame("Some Random ID"), "id is not a valid game id");
+    }
+
+    @Test
+    public void testBuildWrongId() {
+        DungeonManiaController dungeonManiaController = new DungeonManiaController();
+
+        dungeonManiaController.newGame("testExeptions", "Hard");
+        dungeonManiaController.saveGame("test");
+
         assertThrows(IllegalArgumentException.class, 
         () -> dungeonManiaController.build("Death Star"), "buildable is not one of bow, shield");
-        assertThrows(IllegalArgumentException.class, 
-        () -> dungeonManiaController.interact("Execute Order 66"), "entityId is not a valid entity ID");
     }
 
     @Test

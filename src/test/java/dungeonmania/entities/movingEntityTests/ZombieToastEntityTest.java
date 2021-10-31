@@ -70,10 +70,8 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Test
     public void testDropArmour() {
         CharacterEntity player = new CharacterEntity();
-        ZombieToastEntity zombie = new ZombieToastEntity();
-        zombie.setDropProbability(1f);
+        ZombieToastEntity zombie = new ZombieToastEntity(0, 0, 0, 1f, 1f);
         EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(zombie);
 
         zombie.Battle(entitiesControl, player);
         EntitiesControl inventory = player.getInventory();

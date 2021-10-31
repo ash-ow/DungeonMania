@@ -4,6 +4,8 @@ import javax.swing.text.PlainDocument;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.collectableEntities.OneRingEntity;
+import dungeonmania.util.RandomChance;
 
 public interface IBattlingEntity extends IEntity {
     public float getHealth();
@@ -12,12 +14,12 @@ public interface IBattlingEntity extends IEntity {
     public void loseHealth(float enemyHealth, int enemyDamage);
 
     public default void Battle(EntitiesControl entitiesControl, CharacterEntity player) {
-        while (player.isAlive() && !checkEnemyDeath(entitiesControl)) {
+        while (player.isAlive() && !checkEnemyDeath(entitiesControl, player)) {
             doBattle(player);
         }
     }
 
-    default boolean checkEnemyDeath(EntitiesControl entitiesControl) {
+    default boolean checkEnemyDeath(EntitiesControl entitiesControl, CharacterEntity player) {
         if (!this.isAlive()) {
             entitiesControl.removeEntity(this);
             return true;

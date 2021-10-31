@@ -11,14 +11,16 @@ import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IAutoMovingEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
+import dungeonmania.entities.movingEntities.IDroppingEntities;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 
-public class SpiderEntity extends Entity implements IInteractingEntity, IBattlingEntity, IAutoMovingEntity {
+public class SpiderEntity extends Entity implements IInteractingEntity, IDroppingEntities, IAutoMovingEntity {
     private SpiderState spiderMovement;
     private Position firstPosition;
     private Integer movementCount = 0;
+    private float dropProbability = 0.1f;
 
     public SpiderEntity() {
         this(0, 0, 0);
@@ -74,7 +76,7 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IBattlin
 
     public int getDamage() {
         // TODO determine correct Spider damage
-        return 2;
+        return 3;
     }
 
     @Override
@@ -87,5 +89,9 @@ public class SpiderEntity extends Entity implements IInteractingEntity, IBattlin
     public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
         Battle(entities, player);
         return true;
+    }
+
+    public void setDropProbability(float probability) {
+        this.dropProbability = probability;
     }
 }

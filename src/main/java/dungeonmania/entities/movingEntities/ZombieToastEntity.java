@@ -9,20 +9,41 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractingEntity;
+import dungeonmania.entities.buildableEntities.ShieldEntity;
+import dungeonmania.entities.collectableEntities.ArmourEntity;
+import dungeonmania.entities.collectableEntities.ICollectableEntity;
+import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
+import dungeonmania.util.RandomChance;
 
 
-public class ZombieToastEntity extends Entity implements IInteractingEntity, IBattlingEntity, IAutoMovingEntity {
+public class ZombieToastEntity extends Entity implements IInteractingEntity, IAutoMovingEntity, IDroppingEntities {
     Random rand = new Random();
     Integer seed;
-
-    public ZombieToastEntity() {
-        this(0, 0, 0);
-    }
+    private float armourEntityProbability = 0.2f;
+    private ArmourEntity equipped;
+    private float dropProbability = 0.1f;
+    
     
     public ZombieToastEntity(int x, int y, int layer) {
         super(x, y, layer, "zombie_toast");
+        if (RandomChance.getRandomBoolean((float) armourEntityProbability)) {
+            equipped = new ArmourEntity();
+        }
+    }
+    
+    public ZombieToastEntity(int x, int y, int layer, float ArmourEntityProbability, float dropProbability) {
+        this(x, y, layer);
+        this.armourEntityProbability = ArmourEntityProbability;
+        if (RandomChance.getRandomBoolean((float) armourEntityProbability)) {
+            equipped = new ArmourEntity();
+        }
+        this.dropProbability = dropProbability;
+    }
+    
+    public ZombieToastEntity() {
+        this(0, 0, 0);
     }
 
     public ZombieToastEntity(int x, int y, int layer, int seed) {
@@ -54,6 +75,21 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IBa
         this.position = position;
     }
 
+    @Override
+    public boolean checkEnemyDeath(EntitiesControl entitiesControl, CharacterEntity player) {
+        if (!this.isAlive()) {
+            if (RandomChance.getRandomBoolean(dropProbability)){
+                player.addEntityToInventory(new OneRingEntity());
+            }
+            if (equipped != null) {
+                player.addEntityToInventory(equipped);
+            }
+            entitiesControl.removeEntity(this);
+            return true;
+        }
+        return false;
+    }
+
 //region Description
     private float health = 100;
 
@@ -69,12 +105,16 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IBa
 
     public int getDamage() {
         // TODO determine correct ZombieToast damage
-        return 3;
+        return 1;
     }
 
     @Override
     public void loseHealth(float enemyHealth, int enemyDamage) {
-        this.health -= ((enemyHealth * enemyDamage) / 5);
+        if (equipped != null) {
+            this.health -= ((enemyHealth * enemyDamage) / 10);
+        } else {
+            this.health -= ((enemyHealth * enemyDamage) / 5);
+        }
     }
 //endregion
 
@@ -82,6 +122,19 @@ public class ZombieToastEntity extends Entity implements IInteractingEntity, IBa
     public boolean interactWithPlayer(EntitiesControl entities, Direction direction, CharacterEntity player) {
         Battle(entities, player);
         return false;
+    }
+
+    @Override
+    public void setDropProbability(float probability) {
+        this.dropProbability = probability;
+    }
+
+    public float getArmourEntityProbability() {
+        return ArmourEntityProbability;
+    }
+
+    public void setArmourEntityProbability(float armourEntityProbability) {
+        ArmourEntityProbability = armourEntityProbability;
     }
 
 }

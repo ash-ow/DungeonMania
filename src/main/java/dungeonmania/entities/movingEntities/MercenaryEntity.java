@@ -9,10 +9,11 @@ import dungeonmania.entities.IInteractingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class MercenaryEntity extends Entity implements IInteractingEntity, IBattlingEntity, IAutoMovingEntity{
+public class MercenaryEntity extends Entity implements IInteractingEntity, IDroppingEntities, IAutoMovingEntity{
 
     private float health;
     private int damage;
+    private float dropProbability = 0.1f;
 
     public MercenaryEntity() {
         this(0, 0, 0);
@@ -101,6 +102,11 @@ public class MercenaryEntity extends Entity implements IInteractingEntity, IBatt
             usefulDirections.add(Direction.NONE);
         }
         return usefulDirections;    
+    }
+
+    @Override
+    public void setDropProbability(float probability) {
+        this.dropProbability = probability;
     }
     
 }

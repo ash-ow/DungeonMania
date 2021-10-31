@@ -25,14 +25,21 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public List<IBattlingEntity> teammates = new ArrayList<>();
     private int invincibilityRemaining = 0;
     private int invisibilityRemaining = 0;
+    private String gameMode;
 
     public CharacterEntity() {
         this(0, 0, 0);
     }
     
     public CharacterEntity(int x, int y, int layer) {
+        this(x, y, layer, "Standard");
+    }
+    
+    public CharacterEntity(int x, int y, int layer, String gameMode) {
         super(x, y, layer, EntityTypes.PLAYER);
         this.previousPosition = new Position(x, y);
+        this.gameMode = gameMode;
+        this.health = (int) Math.ceil(100 / EntitiesControl.difficulty.get(gameMode));
     }
 
     public EntityResponse getInfo() {
@@ -57,10 +64,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.health = health;
     }
 
+    @Override
     public float getDamage() {
-        return 3;
+        return (float) (3 / EntitiesControl.difficulty.get(this.gameMode));
     }
-
 
     @Override
     public void loseHealth(float enemyHealth, float enemyDamage) {
@@ -153,6 +160,9 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 //Player Potion Effects region 
 
     public boolean isInvincible() {
+        if (gameMode.equals("Hard")) {
+            return false;
+        }
         return this.invincibilityRemaining > 0;
     }
 

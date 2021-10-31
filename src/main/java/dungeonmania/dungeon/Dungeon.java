@@ -58,7 +58,7 @@ public class Dungeon {
             // or at least by reading the JsonObject as a HashMap and passing that into a generic constructor
             // Maybe Entity class should have one more constructor which accepts a HashMap!
             if (type.equals(EntityTypes.PLAYER)) {
-                this.player = new CharacterEntity(xAxis, yAxis, layer);
+                this.player = new CharacterEntity(xAxis, yAxis, layer, gameMode);
             } else if (type.equals(EntityTypes.KEY) || type.equals(EntityTypes.DOOR)) {
                 Integer key = entityObj.get("key").getAsInt();
                 this.entitiesControl.createEntity(xAxis, yAxis, layer, key, type);
@@ -69,6 +69,8 @@ public class Dungeon {
                 this.entitiesControl.createEntity(entityObj);
             }            
         }
+        
+
         if (goalConditions != null) {
             this.goals = new Goals(goalConditions);
         }
@@ -109,7 +111,7 @@ public class Dungeon {
             entitiesControl.moveAllMovingEntities(player);
         }
         entitiesControl.tick();
-        entitiesControl.generateEnemyEntities();
+        entitiesControl.generateEnemyEntities(gameMode);
     }
 
     public void tick(String itemID) {
@@ -120,7 +122,7 @@ public class Dungeon {
             entitiesControl.moveAllMovingEntities(player);
         }
         entitiesControl.tick();
-        entitiesControl.generateEnemyEntities();
+        entitiesControl.generateEnemyEntities(gameMode);
     }
 
     public void interact(String entityID) throws IllegalArgumentException, InvalidActionException{

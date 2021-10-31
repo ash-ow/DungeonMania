@@ -1,6 +1,7 @@
 package dungeonmania.dungeon;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -23,6 +24,13 @@ public class EntitiesControl {
     private Random rand = new Random();
     private Integer tickCounter = 0;
     private Integer entityCounter = 0;
+    public final static HashMap<String, Double> difficulty;
+    static {
+        difficulty = new HashMap<>();
+        difficulty.put("Hard", 20.0/15.0);
+        difficulty.put("Peaceful", 15.0/20.0);
+        difficulty.put("Standard", 1.0);
+    }
 
     public EntitiesControl() {
         entities = new ArrayList<IEntity>();
@@ -226,13 +234,13 @@ public class EntitiesControl {
         return new Position(x, y);
     }
 
-    public void generateEnemyEntities() {
-        generateSpider();
-        generateZombieToast();
+    public void generateEnemyEntities(String gameMode) {
+        generateSpider(gameMode);
+        generateZombieToast(gameMode);
         tickCounter++;
     }
 
-    private void generateSpider() {
+    private void generateSpider(String gameMode) {
         // TODO replace this with an enemy generator
         List<SpiderEntity> spiders = this.getAllEntitiesOfType(SpiderEntity.class);
         if (spiders.size() < 4) {
@@ -241,15 +249,15 @@ public class EntitiesControl {
             int largestY = largestCoordinate.getY();
             int randomX = rand.nextInt(largestX);
             int randomY = rand.nextInt(largestY);
-            if (RandomChance.getRandomBoolean((float) .05) 
+            if (RandomChance.getRandomBoolean((float) (.05f * difficulty.get(gameMode)))
                 && !this.positionContainsEntityType(new Position(randomX, randomY), BoulderEntity.class)) {
                 this.createEntity(randomX, randomY, EntityTypes.SPIDER);
             }
         }
     }
 
-    private void generateZombieToast() {
-        if (tickCounter % 5 == 0) {
+    private void generateZombieToast(String gameMode) {
+        if (tickCounter % (int) Math.ceil(20 / difficulty.get(gameMode)) == 0) {
             List<ZombieToastSpawnerEntity> spawnerEntities = getEntitiesOfType(ZombieToastSpawnerEntity.class);
             for (ZombieToastSpawnerEntity spawner : spawnerEntities) {
                 this.createEntity(

@@ -2,6 +2,7 @@ package dungeonmania.entities.collectableEntityTests;
 
 import org.junit.jupiter.api.Test;
 
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.RareCollectableEntity;
 import dungeonmania.util.Position;
 
@@ -13,7 +14,7 @@ public class RareCollectableEntityTests implements ICollectableEntityTest {
         assertEntityResponseInfoEquals(
             ring,
             "one_ring-0-0-0",
-            "one_ring",
+            EntityTypes.ONE_RING,
             new Position(0,0,0),
             false
         );

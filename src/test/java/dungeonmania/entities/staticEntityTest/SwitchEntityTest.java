@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.movingEntities.BoulderEntity;
@@ -19,7 +20,7 @@ public class SwitchEntityTest implements IEntityTests {
         assertEntityResponseInfoEquals(
             switchEntity,
             "switch-0-0-0",
-            "switch",
+            EntityTypes.SWITCH,
             new Position(0,0,0),
             false
         );

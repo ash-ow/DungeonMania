@@ -6,10 +6,11 @@ import java.util.stream.Collectors;
 import java.util.HashMap;
 
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.ICollectableEntity;
 
 public abstract class BuildableEntity extends Entity {
-    protected BuildableEntity(int x, int y, int layer, String type) {
+    protected BuildableEntity(int x, int y, int layer, EntityTypes type) {
         super(x, y, layer, type);
         initialiseRequiredComponents();
     }
@@ -20,7 +21,7 @@ public abstract class BuildableEntity extends Entity {
             ICollectableEntity component = entry.getKey();
             int quantity = entry.getValue();
             if (numberOfComponentItemsInInventory(inventory, component) < quantity) {
-                System.out.println("Needs more " + component.getId());
+                System.out.println("Needs more " + component.getType());
                 return false;
             }
         }

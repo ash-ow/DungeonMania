@@ -74,8 +74,8 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         CharacterEntity character = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity();
         EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(character);
-        entitiesControl.addEntities(zombie);
+        entitiesControl.addEntity(character);
+        entitiesControl.addEntity(zombie);
         character.setHealth(2);
         zombie.battle(entitiesControl, character);
         assertFalse(character.isAlive());
@@ -99,8 +99,8 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         CharacterEntity character = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity();
         EntitiesControl entitiesControl = new EntitiesControl();
-        entitiesControl.addEntities(character);
-        entitiesControl.addEntities(zombie);
+        entitiesControl.addEntity(character);
+        entitiesControl.addEntity(zombie);
         zombie.battle(entitiesControl, character);
         assertEquals(58, character.getHealth());
         assertEquals(-2.0, zombie.getHealth());

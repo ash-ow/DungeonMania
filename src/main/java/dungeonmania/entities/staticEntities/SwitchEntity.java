@@ -15,7 +15,7 @@ public class SwitchEntity extends Entity implements ITicker {
 
     @Override
     public void tick(EntitiesControl entitiesControl) {
-        // TODO switches check if there is a bomb in their location and change their state to Active
+        // TODO switches check if there is a boulder on their location and set isActive = true
     }
 
     public boolean isActive() {

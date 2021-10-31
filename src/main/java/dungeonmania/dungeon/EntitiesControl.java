@@ -181,7 +181,7 @@ public class EntitiesControl {
                 this.createNewEntityOnMap(new ZombieToastSpawnerEntity(xAxis, yAxis, layer));
                 break;
             case "one_ring":
-                this.addEntities(new OneRingEntity(xAxis, yAxis, layer));
+                this.createNewEntityOnMap(new OneRingEntity(xAxis, yAxis, layer));
         }
     }
 

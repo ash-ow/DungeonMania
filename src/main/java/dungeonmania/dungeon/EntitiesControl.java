@@ -274,7 +274,7 @@ public class EntitiesControl {
         List<IEntity> adjacentEntities = new ArrayList<IEntity>();
         for (IEntity ent : this.entities) {
             Position entPosition = ent.getPosition();
-            if (position.getCardinallyAdjacentPositions().contains(entPosition)) {
+            if (position.getAdjacentPositions().contains(entPosition)) {
                 adjacentEntities.add(ent);
             }
         }

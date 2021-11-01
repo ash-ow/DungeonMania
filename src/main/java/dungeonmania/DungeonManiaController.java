@@ -11,6 +11,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -77,8 +80,8 @@ public class DungeonManiaController {
             throw new IllegalArgumentException("game doesn't exist");
         }
         try {
-            String dungeonJson = FileLoader.loadResourceFile("savedGames/" + name + ".json");
-            JsonObject jsonObject = new Gson().fromJson(dungeonJson, JsonObject.class);
+            Reader reader = Files.newBufferedReader(Paths.get(name + ".json"));
+            JsonObject jsonObject = new Gson().fromJson(reader, JsonObject.class);
             String id = UUID.randomUUID().toString(); 
             JsonObject goalCondition = jsonObject.getAsJsonObject("goal-condition");
             String gameMode = jsonObject.get("gameMode").getAsString();
@@ -92,7 +95,7 @@ public class DungeonManiaController {
 
     public List<String> allGames() {
         try {
-            return FileLoader.listFileNamesInResourceDirectory("/savedGames");
+            return FileLoader.listFileNamesInDirectoryOutsideOfResources("savedGames");
         } catch (IOException e) {
             return new ArrayList<>();
         }

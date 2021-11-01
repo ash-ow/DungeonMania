@@ -1,1 +1,0 @@
-This is the directory for all the saved game files

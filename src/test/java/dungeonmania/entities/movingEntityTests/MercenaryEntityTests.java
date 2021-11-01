@@ -38,6 +38,19 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
     }
 
     @Test
+    public void TestSpawn() {
+        CharacterEntity player = new CharacterEntity(0, 1, 0);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 0, 0);
+        ArrayList<IEntity> entities = new ArrayList<IEntity>();
+        entities.add(mercenary);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        for (int i = 0; i < 30; i++) {
+            dungeon.tick(Direction.DOWN);
+        }
+        assertEquals(2, dungeon.entitiesControl.getEntitiesOfType(MercenaryEntity.class).size());
+    }
+
+    @Test
     public void TestCorrectMove() {
         CharacterEntity player = new CharacterEntity();
         MercenaryEntity mercenary = new MercenaryEntity(5, 5, 0);

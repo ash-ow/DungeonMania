@@ -18,9 +18,4 @@ public class InvisibilityPotionEntity extends CollectableEntity implements IUsea
         player.setInvisiblilityRemaining(10);
         player.removeEntityFromInventory(this);
     }
-
-    @Override
-    public boolean isPlacedAfterUsing() {
-        return false;
-    } 
 }

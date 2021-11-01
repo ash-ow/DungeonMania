@@ -20,10 +20,5 @@ public class InvincibilityPotionEntity extends CollectableEntity implements IUse
     public void used(CharacterEntity player) {
        player.setInvincibilityRemaining(10);
        player.removeEntityFromInventory(this);
-    }
-
-    @Override
-    public boolean isPlacedAfterUsing() {
-        return false;
-    }  
+    } 
 }

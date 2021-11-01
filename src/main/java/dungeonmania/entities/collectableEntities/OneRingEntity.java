@@ -24,10 +24,4 @@ public class OneRingEntity extends CollectableEntity {
         player.setHealth(100);
         player.removeEntityFromInventory(this);
     }
-
-    @Override
-    public boolean isPlacedAfterUsing() {
-        // TODO Auto-generated method stub
-        return false;
-    } 
 }

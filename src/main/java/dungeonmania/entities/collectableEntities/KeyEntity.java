@@ -17,10 +17,5 @@ public class KeyEntity extends CollectableEntity {
 
     public int getKeyNumber() {
         return keyNumber;
-    }
-
-    @Override
-    public boolean isPlacedAfterUsing() {
-        return false;
     } 
 }

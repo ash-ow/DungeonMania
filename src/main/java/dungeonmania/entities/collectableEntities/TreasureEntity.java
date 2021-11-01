@@ -11,9 +11,4 @@ public class TreasureEntity extends CollectableEntity {
     public TreasureEntity(int x, int y, int layer) {
         super(x, y, layer, EntityTypes.TREASURE);
     }
-
-    @Override
-    public boolean isPlacedAfterUsing() {
-        return false;
-    }
 }

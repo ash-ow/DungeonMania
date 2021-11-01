@@ -10,11 +10,4 @@ public class WoodEntity extends CollectableEntity {
     public WoodEntity(int x, int y, int layer) {
         super(x, y, layer, EntityTypes.WOOD);
     }
-
-    @Override
-    public boolean isPlacedAfterUsing() {
-        // TODO Auto-generated method stub
-        // What happens when you build with this? Do you run 'used'?
-        return false;
-    }
 }

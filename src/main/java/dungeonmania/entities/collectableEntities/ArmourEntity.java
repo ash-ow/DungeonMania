@@ -18,8 +18,4 @@ public class ArmourEntity extends CollectableEntity {
         damage = damage/2;
         return damage;
     }
-
-    public boolean isPlacedAfterUsing() {
-        return false;
-    } 
 }

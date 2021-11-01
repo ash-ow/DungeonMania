@@ -16,10 +16,5 @@ public class HealthPotionEntity extends CollectableEntity implements IUseableEnt
     public void used(CharacterEntity player) {
         player.setHealth(100);
         player.removeEntityFromInventory(this);
-    }  
-
-    @Override
-    public boolean isPlacedAfterUsing() {
-        return false;
     }   
 }

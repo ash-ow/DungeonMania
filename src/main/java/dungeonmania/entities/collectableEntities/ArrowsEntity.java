@@ -10,9 +10,4 @@ public class ArrowsEntity extends CollectableEntity {
     public ArrowsEntity(int x, int y, int layer) {
         super(x, y, layer, EntityTypes.ARROW);
     }
-
-    @Override
-    public boolean isPlacedAfterUsing() {
-        return true;
-    }
 }

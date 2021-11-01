@@ -19,6 +19,7 @@ import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
+import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -157,9 +158,10 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         mercenary.move(entitiesControl, player);
         mercenary.move(entitiesControl, player);
         assertEquals(new Position(2, 0), mercenary.getPosition());
-        mercenary.runAway(entitiesControl, player);
+        mercenary.setMoveBehvaiour(new RunAway());
+        mercenary.move(entitiesControl, player);
         assertEquals(new Position(1, 0), mercenary.getPosition());
-        mercenary.runAway(entitiesControl, player);
+        mercenary.move(entitiesControl, player);
         assertEquals(new Position(0, 0), mercenary.getPosition());
     }
 

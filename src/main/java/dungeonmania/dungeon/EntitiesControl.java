@@ -16,6 +16,7 @@ import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
+import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
 import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
 import dungeonmania.entities.staticEntities.*;
 
@@ -89,7 +90,7 @@ public class EntitiesControl {
     public void runAwayAllMovingEntities(CharacterEntity player) {
         List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
         for (IAutoMovingEntity entity : movingEntities) {
-            entity.runAway(this, player);
+            entity.setMoveBehvaiour(new RunAway());
         }
     }
 
@@ -102,7 +103,7 @@ public class EntitiesControl {
         return EntitiesControl.getEntitiesOfType(entityList, IContactingEntity.class);
     }
 
-    public static <T> List<T> getEntitiesOfType(List<IEntity> entityList, Class<T> cls) {
+    public static <T> List<T> getEntitiesOfType(List<?> entityList, Class<T> cls) {
         return entityList.stream().filter(cls::isInstance).map(cls::cast).collect(Collectors.toList());
     }
 
@@ -110,7 +111,7 @@ public class EntitiesControl {
         return EntitiesControl.getEntitiesOfType(this.entities, cls);
     }
 
-    public <T> List<T> getEntitiesOfType(Class<T> cls) {
+    public <T extends IEntity> List<T> getEntitiesOfType(Class<T> cls) {
         return getEntitiesOfType(this.entities, cls);
     }
 

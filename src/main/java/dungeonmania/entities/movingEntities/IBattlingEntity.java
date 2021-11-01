@@ -1,9 +1,13 @@
 package dungeonmania.entities.movingEntities;
 
+import java.util.List;
+
 import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.entities.collectableEntities.IWeaponEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.util.RandomChance;
 import dungeonmania.entities.IContactingEntity;
+import dungeonmania.entities.IEntity;
 
 public interface IBattlingEntity extends IContactingEntity {
     public float getHealth();
@@ -39,6 +43,9 @@ public interface IBattlingEntity extends IContactingEntity {
             this.loseHealth(player.getHealth(), player.getDamage());
             for (IBattlingEntity teammate : player.teammates) {
                 this.loseHealth(teammate.getHealth(), teammate.getDamage());
+            }
+            for (IWeaponEntity weapon : EntitiesControl.getEntitiesOfType(player.getInventory(), IWeaponEntity.class)) {
+                weapon.attack(this, player);
             }
             player.loseHealth(enemyInitialHealth, this.getDamage());
         }

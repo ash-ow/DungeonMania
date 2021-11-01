@@ -8,6 +8,7 @@ import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.util.Direction;
 
 public class WallEntity extends Entity implements IBlocker {
+
     public WallEntity() {
         this(0, 0, 0);
     }

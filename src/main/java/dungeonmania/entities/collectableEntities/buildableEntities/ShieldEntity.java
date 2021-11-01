@@ -56,9 +56,4 @@ public class ShieldEntity extends BuildableEntity {
         damage = damage/2;
         return damage;
     }
-
-    @Override
-    public boolean isPlacedAfterUsing() {
-        return false;
-    }
 }

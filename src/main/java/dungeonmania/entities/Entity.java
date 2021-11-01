@@ -8,6 +8,13 @@ public abstract class Entity implements IEntity {
     protected String id;
     protected EntityTypes type;
     
+    /**
+     * Entity constructor
+     * @param x      x-coordinate on the map
+     * @param y      y-coordinate on the map
+     * @param layer  layer on the map
+     * @param type   type of entity 
+     */
     protected Entity(int x, int y, int layer, EntityTypes type) {
         this.type = type;
         this.position = new Position(x, y, layer);

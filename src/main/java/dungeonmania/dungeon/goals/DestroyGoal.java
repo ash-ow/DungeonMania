@@ -14,10 +14,17 @@ public class DestroyGoal implements IGoal {
 
     private String type;
 
+    /**
+     * DestroyGoal constructor
+     */
     public DestroyGoal() {
         this.type = "enemies";
     }
 
+    /**
+     * Evaluates whether goal has passed
+     * @param dungeon  dungeon to be checked
+     */
     public boolean checkGoal(Dungeon dungeon) {
         List<IEntity> enemies = new ArrayList<>();
         enemies.addAll(dungeon.entitiesControl.getEntitiesOfType(SpiderEntity.class));

@@ -8,11 +8,19 @@ public class ORGoal implements IGoal{
     List<IGoal> subGoals;
     String type;
 
+    /**
+     * ORGoal constructor
+     * @param subGoals  list of subGoals
+     */
     public ORGoal(List<IGoal> subGoals) {
         this.subGoals = subGoals;
         this.type = "OR";
     }
 
+    /**
+     * Evaluates whether goal has passed
+     * @param dungeon  dungeon to be checked
+     */
     @Override
     public boolean checkGoal(Dungeon dungeon) {
         boolean check = false;

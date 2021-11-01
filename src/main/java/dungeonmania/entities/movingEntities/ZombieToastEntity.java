@@ -15,7 +15,6 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
 
-
 public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoMovingEntity {
     Random rand = new Random();
     Integer seed;
@@ -63,6 +62,11 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         this.moveBehaviour = new RandomMove(seed);
     }
 
+    /**
+     * Moves the zombie toast
+     * @param entitiesControl          list of all entities
+     * @param player                   player used to determine the move behaviour                
+     */
     @Override
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {
         this.move(moveBehaviour.getBehaviourDirection(entitiesControl, player, position));      
@@ -97,6 +101,11 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         this.health -= ((enemyHealth * enemyDamage) / 5);
     }
     //endregion
+    
+    /**
+     * Drops relevant entities
+     * @param player           the player which is battling and will and the entity added to their inventory
+     */
     @Override
     public void dropEntities(CharacterEntity player) {
         OneRingEntity ring = new OneRingEntity();
@@ -108,6 +117,11 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         }
     }
 
+    /**
+     * Drops relevant entities, based on probability
+     * @param player           the player which is battling and will and the entity added to their inventory
+     * @param probaility       the probability of entities dropping
+     */
     @Override
     public void dropEntities(CharacterEntity player, float probability) {
         OneRingEntity ring = new OneRingEntity();

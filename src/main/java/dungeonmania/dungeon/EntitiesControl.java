@@ -98,7 +98,7 @@ public class EntitiesControl {
         return EntitiesControl.getEntitiesOfType(entityList, IContactingEntity.class);
     }
 
-    public static <T> List<T> getEntitiesOfType(List<IEntity> entityList, Class<T> cls) {
+    public static <T> List<T> getEntitiesOfType(List<?> entityList, Class<T> cls) {
         return entityList.stream().filter(cls::isInstance).map(cls::cast).collect(Collectors.toList());
     }
 
@@ -106,7 +106,7 @@ public class EntitiesControl {
         return EntitiesControl.getEntitiesOfType(this.entities, cls);
     }
 
-    public <T> List<T> getEntitiesOfType(Class<T> cls) {
+    public <T extends IEntity> List<T> getEntitiesOfType(Class<T> cls) {
         return getEntitiesOfType(this.entities, cls);
     }
 
@@ -274,7 +274,7 @@ public class EntitiesControl {
         List<IEntity> adjacentEntities = new ArrayList<IEntity>();
         for (IEntity ent : this.entities) {
             Position entPosition = ent.getPosition();
-            if (position.getAdjacentPositions().contains(entPosition)) {
+            if (position.getCardinallyAdjacentPositions().contains(entPosition)) {
                 adjacentEntities.add(ent);
             }
         }

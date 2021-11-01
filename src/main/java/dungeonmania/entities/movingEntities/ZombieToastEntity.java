@@ -20,6 +20,12 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
     private float armourEntityProbability = 0.2f;
     private ArmourEntity equipped;
     
+    /**
+     * Zombie Toast constructor
+     * @param x x-coordinate on the map
+     * @param y y-coordinate on the map
+     * @param layer layer on the map 
+     */
     public ZombieToastEntity(int x, int y, int layer) {
         super(x, y, layer, EntityTypes.ZOMBIE_TOAST);
         if (RandomChance.getRandomBoolean((float) armourEntityProbability)) {
@@ -27,10 +33,21 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         }
     }
     
+    /**
+     * Zombie Toast constructor
+     */
     public ZombieToastEntity() {
         this(0, 0, 0);
     }
     
+    /**
+     * Zombie Toast constructor
+     * @param x                        x-coordinate on the map
+     * @param y                        y-coordinate on the map
+     * @param layer                    layer on the map 
+     * @param ArmourEntityProbability  determines the proability that an armour will be dropped
+     * @param seed                     used to calculate probability
+     */
     public ZombieToastEntity(int x, int y, int layer, float ArmourEntityProbability, int seed) {
         this(x, y, layer);
         this.seed = seed;

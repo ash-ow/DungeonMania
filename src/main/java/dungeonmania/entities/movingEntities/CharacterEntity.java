@@ -190,7 +190,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 //endregion
 
 //Player Potion Effects region 
-
+    /**
+     * Determines whether the character is still invincible based on remaining ticks, and game mode
+     * @return true if still invincible
+     */
     public boolean isInvincible() {
         if (gameMode.equals("Hard")) {
             return false;
@@ -213,7 +216,11 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 //endregion
 
 //region Moving
-
+    /**
+     * Moves the character based on direction
+     * @param direction            new direction
+     * @param entitiesControl      list of entities
+     */
     public void move(Direction direction, EntitiesControl entitiesControl) {
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
@@ -232,6 +239,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 //endregion
 
 // region Build
+    /**
+     * Builds an item based on whether inventory. If item is built, removes the required components
+     * @param itemToBuild item to be built
+     */
     public void build(EntityTypes itemToBuild) {
         if (itemToBuild.equals(EntityTypes.BOW)) {
             BowEntity bow = new BowEntity();
@@ -258,6 +269,11 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         }
     }
 
+    /**
+     * Removes build materials based on their type, and the amount of materials which need to be removed
+     * @param type   type of entity to be removed
+     * @param amount amount of material that needs to be removed for each type
+     */
     public void removeBuildMaterials(EntityTypes type, int amount) {
         int removed = 0;
         List<CollectableEntity> toRemove = new ArrayList<>();
@@ -273,7 +289,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
             removeEntityFromInventory(material);
         }
     }
-
+    
+    /**
+     * Returns the list of items which can be built
+     */
     public List<String> getBuildableList() {
         List<EntityTypes> buildable = new ArrayList<>();
         BowEntity bow = new BowEntity();
@@ -289,6 +308,11 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
 //endregion
 
+    /**
+     * Interacts with all entities which can be interacted with
+     * @param targetEntities   list of entities to be interacted with
+     * @param entitiesControl  list of all entities
+     */
     private void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
         List<IContactingEntity> targetInteractable = entitiesControl.getInteractableEntitiesFrom(targetEntities);
         for (IContactingEntity entity : targetInteractable) {
@@ -296,6 +320,12 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         }
     }
 
+    /**
+     * Checks if an entity in the new direction can be unblocked
+     * @param targetEntities   list of entities to be interacted with
+     * @param direction        direction the chatacter is moving
+     * @param entitiesControl  list of all entities
+     */
     private boolean canUnblock(List<IEntity> targetEntities, Direction direction, EntitiesControl entitiesControl) {
         List<IBlocker> targetBlockers = EntitiesControl.getEntitiesOfType(targetEntities, IBlocker.class);
         boolean targetIsUnblocked = true;
@@ -306,6 +336,11 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 //endregion
     
+    /**
+     * Uses an item based on its ID
+     * @param itemId           Identifier of item to be used
+     * @param entitiesControl  list of all entities
+     */
     public void useItem(String itemID, EntitiesControl entitiesControl) {
         IEntity entity = EntitiesControl.getEntityById(this.inventory, itemID);
         if (entity == null) {
@@ -321,6 +356,11 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         }
     }
 
+    /**
+     * Uses an item 
+     * @param item             Item to be used
+     * @param entitiesControl  list of all entities
+     */
     private void useItemCore(CollectableEntity item, EntitiesControl entitiesControl) {
         item.used(this);
         if (item.isPlacedAfterUsing()) {

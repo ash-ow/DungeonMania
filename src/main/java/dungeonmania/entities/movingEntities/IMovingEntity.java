@@ -11,7 +11,6 @@ public interface IMovingEntity extends IEntity {
      * Moves the entity by the direction offset (e.g. Direction.UP)
      * @param direction
      */
-
     public default void move(Direction direction) {
         this.setPosition(
             this.getPosition().translateBy(direction)

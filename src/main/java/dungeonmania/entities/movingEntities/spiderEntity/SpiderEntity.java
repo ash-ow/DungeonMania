@@ -64,7 +64,7 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
 //endregion
 
 //region Battle
-    private float health = 100;
+    private float health = 35;
 
     @Override
     public float getHealth() {

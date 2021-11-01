@@ -27,7 +27,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
 
     public MercenaryEntity(int x, int y, int layer) {
         super(x, y, layer, EntityTypes.MERCENARY);
-        this.health = 100;
+        this.health = 70;
         this.damage = 3;
         this.isBribed = false;
         this.moveBehaviour = new FollowPlayer();

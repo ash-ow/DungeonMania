@@ -30,10 +30,10 @@ public class ArmourEntityTest implements ICollectableEntityTest {
 
         assertEquals(4,  armour.getDurability());
         assertEquals(100, player.getHealth());
-        assertEquals(100, zombie.getHealth());
+        assertEquals(50, zombie.getHealth());
 
         zombie.contactWithPlayer(new EntitiesControl(), player);
-        assertEquals(2,  armour.getDurability(), "Armour should do two rounds of battle");
+        assertEquals(3,  armour.getDurability(), "Armour should do two rounds of battle");
         assertFalse(zombie.isAlive());
     }
 

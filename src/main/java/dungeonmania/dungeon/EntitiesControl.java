@@ -33,6 +33,14 @@ public class EntitiesControl {
         difficulty.put("Peaceful", 15.0/20.0);
         difficulty.put("Standard", 1.0);
     }
+    public final static List<EntityTypes> usableItems;
+    static {
+        usableItems = new ArrayList<>();
+        usableItems.add(EntityTypes.HEALTH_POTION);
+        usableItems.add(EntityTypes.INVINCIBILITY_POTION);
+        usableItems.add(EntityTypes.BOMB);
+        usableItems.add(EntityTypes.INVISIBILITY_POTION);
+    }
 
     public void setPlayerStartPosition(Position playerStartPosition) {
         this.playerStartPosition = playerStartPosition;

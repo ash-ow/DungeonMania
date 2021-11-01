@@ -14,5 +14,5 @@ bin/
 .settings
 yarn.lock
 .vscode
-savedGames/*
+savedGames
 !savedGames/README.md

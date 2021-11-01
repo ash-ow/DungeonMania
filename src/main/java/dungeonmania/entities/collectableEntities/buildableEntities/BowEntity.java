@@ -6,14 +6,14 @@ import dungeonmania.entities.collectableEntities.IWeaponEntity;
 public class BowEntity extends BuildableEntity implements IWeaponEntity {
     
     /**
-     * Simple bow constructor
+     * Bow constructor
      */
     public BowEntity() {
         this(0, 0, 0);
     }
     
     /**
-     * Simple bow constructor
+     * Bow constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
      * @param layer layer on the map 

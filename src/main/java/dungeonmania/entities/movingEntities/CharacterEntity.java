@@ -29,14 +29,30 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     private int invisibilityRemaining = 0;
     private String gameMode;
 
+    /**
+     * Character constructor
+     */
     public CharacterEntity() {
         this(0, 0, 0);
     }
     
+    /**
+     * Character constructor
+     * @param x     x-coordinate on the map
+     * @param y     y-coordinate on the map
+     * @param layer layer on the map 
+     */
     public CharacterEntity(int x, int y, int layer) {
         this(x, y, layer, "Standard");
     }
     
+    /**
+     * Character constructor
+     * @param x          x-coordinate on the map
+     * @param y          y-coordinate on the map
+     * @param layer      layer on the map
+     * @param gameMode   denotes the difficulty settings of the game 
+     */
     public CharacterEntity(int x, int y, int layer, String gameMode) {
         super(x, y, layer, EntityTypes.PLAYER);
         this.previousPosition = new Position(x, y);
@@ -71,6 +87,12 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return (float) (3 / EntitiesControl.difficulty.get(this.gameMode));
     }
 
+    /**
+     * Determines how much health the character will lose based on enemy stats, and whether the character
+     * has armour or shield
+     * @param enemyHealth   Health of enemy which is used to calculate total damage   
+     * @param enemyDamage   Damage of the enemy which is used to calculate total damage
+     */
     @Override
     public void loseHealth(float enemyHealth, float enemyDamage) {
         if (!this.isInvincible()) {
@@ -87,14 +109,25 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         }
     }
 
+    /**
+     * Adds team mate to the list of teammates
+     * @param teamMemeber a battling entity which will be added to the list of team mates   
+     */
     public void addTeammates(IBattlingEntity teamMember) {
         teammates.add(teamMember);
     }
 
+    /**
+     * Finds an item in the inventory based on its id
+     * @param itemID Item identifier
+     */
     public IEntity getInventoryItem(String itemID) {
         return inventory.stream().filter(item -> item.getId().equals(itemID)).findFirst().orElse(null);
     }
 
+    /**
+     * Checks whether the character is alive. If they are not, and they have a ring, they will use the ring
+     */
     @Override
     public boolean isAlive() {
         if (this.getHealth() <= 0) {
@@ -129,6 +162,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return info;
     }
 
+    /**
+     * Checks whether a type of item is in the inventory
+     * @param type the type of item being searched for
+     */
     public boolean containedInInventory(EntityTypes type) {
         for (CollectableEntity entity: inventory) {
             if(entity.getType().equals(type)) {
@@ -138,6 +175,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return false;
     }
 
+    /**
+     * Finds the first instance of an item type in the inventory
+     * @param type the type of item being searched for
+     */
     public CollectableEntity findFirstInInventory(EntityTypes type) {
         for (CollectableEntity entity: inventory) {
             if(entity.getType().equals(type)) {
@@ -146,17 +187,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         }
         return null;
     }
-
-    public CollectableEntity findCollectableById(String id) {
-        for (CollectableEntity entity: inventory) {
-            if(entity.getId().equals(id)) {
-                return entity;
-            }
-        }
-        return null;
-    }
-
-
 //endregion
 
 //Player Potion Effects region 

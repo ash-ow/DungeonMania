@@ -9,14 +9,14 @@ import dungeonmania.entities.collectableEntities.CollectableEntity;
 
 public class ShieldEntity extends BuildableEntity {
     /**
-     * Simple bow constructor
+     * Shield constructor
      */
     public ShieldEntity() {
         this(0, 0, 0); 
     }
     
     /**
-     * Simple shield constructor
+     * Shield constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
      * @param layer layer on the map 

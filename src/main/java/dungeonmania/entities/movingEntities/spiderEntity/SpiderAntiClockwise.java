@@ -14,10 +14,21 @@ public class SpiderAntiClockwise implements SpiderState {
 
     private Direction nextDirection;
 
+    /**
+     * Setter for spider direction
+     * @param movementIndex gives the spider its next direction
+     */
     public SpiderAntiClockwise(Integer movementIndex) {
         nextDirection = getDirection(movementIndex);
     }
 
+    /**
+     * Moves the spider
+     * @param movementIndex gives the spider its next direction
+     * @param spider        the spider which is moving
+     * @param entities      the list of entities which the spider may interact with
+     * @return              Whether the spider has moved
+     */
     @Override
     public Boolean moveSpider(Integer movementIndex, SpiderEntity spider, EntitiesControl entities) {
         Direction direction = nextDirection;

@@ -5,14 +5,14 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public class ArmourEntity extends CollectableEntity {
     /**
-     * Simple armour constructor
+     * Armour constructor
      */
     public ArmourEntity() {
         this(0, 0, 0);
     }
 
     /**
-     * Simple armour constructor
+     * Armour constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
      * @param layer layer on the map 

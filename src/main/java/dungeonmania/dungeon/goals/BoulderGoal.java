@@ -12,10 +12,17 @@ import dungeonmania.util.Position;
 public class BoulderGoal implements IGoal {
     private String type;
 
+    /**
+     * BoulderGoal constructor
+     */
     public BoulderGoal() {
         this.type = "boulders";
     }
 
+    /**
+     * Evaluates whether goal has passed
+     * @param dungeon  dungeon to be checked
+     */
     public boolean checkGoal(Dungeon dungeon) {
         List<Position> switchPosition = dungeon.getAllEntitiesOfType(SwitchEntity.class).stream().map(IEntity::getPosition).collect(Collectors.toList());
         List<Position> boulderPosition = dungeon.getAllEntitiesOfType(BoulderEntity.class).stream().map(IEntity::getPosition).collect(Collectors.toList());

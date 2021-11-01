@@ -16,10 +16,19 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
     private Integer movementCount = 0;
     private IMovingBehaviour moveBehaviour;
 
+    /**
+     * Spider constructor
+     */
     public SpiderEntity() {
         this(0, 0, 0);
     }
     
+    /**
+     * Spider constructor
+     * @param x x-coordinate on the map
+     * @param y y-coordinate on the map
+     * @param layer layer on the map 
+     */
     public SpiderEntity(int x, int y, int layer) {
         super(x, y, layer, EntityTypes.SPIDER);
         spiderMovement = new SpiderClockwise();
@@ -28,6 +37,11 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
 
 // region Moving
 
+    /**
+     * Moves the spider
+     * @param entities      the list of entities which the spider may interact with
+     * @param player        player which the spider may come into contact with
+     */
     @Override
     public void move(EntitiesControl entities, CharacterEntity player) {
         if (moveBehaviour == null) {

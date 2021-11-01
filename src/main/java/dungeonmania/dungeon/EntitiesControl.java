@@ -54,13 +54,21 @@ public class EntitiesControl {
         entities.add(entity);
         entityCounter++;
     }
-
+    
+    /**
+     * Creates a new entity on the map
+     * @param entity  entity to be created
+     */
     private void createNewEntityOnMap(IEntity entity) {
         entity.setId(Integer.toString(entityCounter));
         entities.add(entity);
         entityCounter++;
     }
 
+    /**
+     * Removes the entity
+     * @param entity entity to be removed
+     */
     public void removeEntity(IEntity entity) {
         entities.remove(entity);
     }
@@ -73,7 +81,9 @@ public class EntitiesControl {
         this.entities = entities;
     }
 
-
+    /**
+     * Calls tick function for all ticking entities
+     */
     public void tick() {
         List<ITicker> tickers = getAllTickingEntities();
         for (ITicker ticker : tickers) {
@@ -88,6 +98,10 @@ public class EntitiesControl {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Moves all moving entities based on player
+     * @param player    player entity which is used to determine move behaviour
+     */
     public void moveAllMovingEntities(CharacterEntity player) {
         List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
         for (IAutoMovingEntity entity : movingEntities) {
@@ -95,6 +109,10 @@ public class EntitiesControl {
         }
     }
 
+    /**
+     * Moves all moving entities away based on player
+     * @param player    player entity which is used to determine move behaviour
+     */
     public void runAwayAllMovingEntities(CharacterEntity player) {
         List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
         for (IAutoMovingEntity entity : movingEntities) {
@@ -145,6 +163,10 @@ public class EntitiesControl {
     }
 // endregion
 
+    /**
+     * Creates an entity
+     * @param entityObj     entity to be created
+     */
     public void createEntity(JsonObject entityObj) {
         EntityTypes type = EntityTypes.getEntityType(entityObj.get("type").getAsString());
         Integer xAxis = entityObj.get("x").getAsInt();
@@ -153,6 +175,13 @@ public class EntitiesControl {
         createEntity(xAxis, yAxis, layer, type);
     }
 
+    /**
+     * Main switch case for the creation of all entities on the map
+     * @param x         x-coordinate on the map
+     * @param y         y-coordinate on the map
+     * @param layer     layer on the map 
+     * @param type      type of entity
+     */
     public void createEntity(Integer xAxis, Integer yAxis, Integer layer, EntityTypes type) {
         switch (type) {
             case WALL:
@@ -211,6 +240,14 @@ public class EntitiesControl {
         }
     }
 
+    /**
+     * Creates a door and key
+     * @param x         x-coordinate on the map
+     * @param y         y-coordinate on the map
+     * @param layer     layer on the map
+     * @param keyNumber keyNumber for a corresponding pair 
+     * @param type      type of entity
+     */
 	public void createEntity(Integer xAxis, Integer yAxis, Integer layer, Integer keyNumber, EntityTypes type) {
         switch (type) {
             case DOOR:
@@ -222,6 +259,14 @@ public class EntitiesControl {
         }
 	}
 
+    /**
+     * Creates a portal with a certain colour
+     * @param x         x-coordinate on the map
+     * @param y         y-coordinate on the map
+     * @param layer     layer on the map
+     * @param colour    colour of the portal 
+     * @param type      type of entity
+     */
 	public void createEntity(Integer xAxis, Integer yAxis, Integer layer, String colour, EntityTypes type) {
         switch (type) {
             case PORTAL:
@@ -230,6 +275,12 @@ public class EntitiesControl {
         }
 	}
 
+    /**
+     * Creates an entity
+     * @param x         x-coordinate on the map
+     * @param y         y-coordinate on the map
+     * @param type      type of entity
+     */
     public void createEntity(Integer x, Integer y, EntityTypes type) {
         Integer layer = this.getAllEntitiesFromPosition(new Position(x,y)).size();
         createEntity(x, y, layer, type);
@@ -248,6 +299,10 @@ public class EntitiesControl {
         return new Position(x, y);
     }
 
+    /**
+     * Generates enemies based on game mode
+     * @param gameMode         difficulty of the game
+     */
     public void generateEnemyEntities(String gameMode) {
         generateSpider(gameMode);
         generateZombieToast(gameMode);
@@ -255,6 +310,10 @@ public class EntitiesControl {
         tickCounter++;
     }
 
+    /**
+     * Generates mercenaries based on game mode
+     * @param gameMode         difficulty of the game
+     */
     private void generateMercenary(String gameMode) {
         if (tickCounter % (int) Math.ceil(30 / difficulty.get(gameMode)) == 0) {
             List<IMovingEntity> enemy = getEntitiesOfType(IMovingEntity.class);
@@ -264,6 +323,10 @@ public class EntitiesControl {
         }
     }
 
+    /**
+     * Generates spider based on game mode
+     * @param gameMode         difficulty of the game
+     */
     private void generateSpider(String gameMode) {
         // TODO replace this with an enemy generator
         List<SpiderEntity> spiders = this.getAllEntitiesOfType(SpiderEntity.class);
@@ -280,6 +343,10 @@ public class EntitiesControl {
         }
     }
 
+    /**
+     * Generates zombie toast based on game mode
+     * @param gameMode         difficulty of the game
+     */
     private void generateZombieToast(String gameMode) {
         if (tickCounter % (int) Math.ceil(20 / difficulty.get(gameMode)) == 0) {
             List<ZombieToastSpawnerEntity> spawnerEntities = getEntitiesOfType(ZombieToastSpawnerEntity.class);
@@ -293,6 +360,11 @@ public class EntitiesControl {
         }
     }
 
+    /**
+     * Finds all adjacent entities to a position
+     * @param position         position to be calculated from
+     * @returns list of all adjacent entities
+     */
     public List<IEntity> getAllAdjacentEntities(Position position) {
         List<IEntity> adjacentEntities = new ArrayList<IEntity>();
         for (IEntity ent : this.entities) {

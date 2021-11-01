@@ -21,10 +21,19 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     private boolean isBribed;
     private IMovingBehaviour moveBehaviour;
 
+    /**
+     * Mercenary constructor
+     */
     public MercenaryEntity() {
         this(0, 0, 0);
     }
 
+    /**
+     * Mercenary constructor
+     * @param x x-coordinate on the map
+     * @param y y-coordinate on the map
+     * @param layer layer on the map 
+     */
     public MercenaryEntity(int x, int y, int layer) {
         super(x, y, layer, EntityTypes.MERCENARY);
         this.health = 70;
@@ -67,6 +76,11 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         this.position = position;        
     }
 
+    /**
+     * Interactions with player; will only do battle if the mercenary is not bribed
+     * @param entitiesControl  the list of all entities
+     * @param player           the player which is battling or has bribed the mercenary
+     */
     @Override
     public void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
         if (!this.isBribed) {
@@ -74,6 +88,11 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         }       
     }
 
+    /**
+     * Moves the mercenary based on whether they are bribed by the player
+     * @param entitiesControl  the list of all entities
+     * @param player           the player 
+     */
     @Override
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {
         if (isBribed) {
@@ -86,8 +105,10 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         }       
     }
 
-
-
+    /**
+     * Determines the interactions of the mercenary with the player based on range and whether they have treasure
+     * @param player the player with which the mercenary will interact with 
+     */
     public void interactWith(CharacterEntity player) throws InvalidActionException {
         IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);
         if (treasureFound == null) {
@@ -101,6 +122,11 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         this.isBribed = true;       
     }
 
+    /**
+     * Determines if the player is in range of the mercenary
+     * @param player the player with which the mercenary will interact with 
+     * @return true if in range; false if not
+     */
     public boolean isInRange(CharacterEntity player) {
         Position diff = Position.calculatePositionBetween(this.getPosition(), player.getPosition());
         int sum = Math.abs(diff.getX()) + Math.abs(diff.getY());

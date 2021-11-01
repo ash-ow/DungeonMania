@@ -39,9 +39,12 @@ public class Dungeon {
     private JsonObject initalGoals;
 
     /**
-     * Main Dungeon Constructor if goalConditions exist
-     * @param type
-     * @return
+     * Main Dungeon Constructor 
+     * @param entities            list of entities in Dungeon
+     * @param goalConditions      goal conditions for the dungeon
+     * @param gameMode            difficulty of the dungeon
+     * @param id                  identifier for the dungeon
+     * @param dungeonName         name of the dungeon
      */
     public Dungeon(JsonArray entities, JsonObject goalConditions, String gameMode, String id, String dungeonName) {
         this.gameMode = gameMode;
@@ -78,7 +81,12 @@ public class Dungeon {
         }
     }
 
-
+    /**
+     * Dungeon Constructor 
+     * @param entities            list of entities in Dungeon
+     * @param gameMode            difficulty of the dungeon
+     * @param player              player inside the dungeon
+     */
     public Dungeon(ArrayList<IEntity> entities, String gameMode, CharacterEntity player) {
         this.entitiesControl = new EntitiesControl();
         this.entitiesControl.setEntities(entities);
@@ -86,6 +94,13 @@ public class Dungeon {
         this.player = player;
     }
 
+    /**
+     * Dungeon Constructor 
+     * @param entities            list of entities in Dungeon
+     * @param gameMode            difficulty of the dungeon
+     * @param player              player inside the dungeon
+     * @param goalConditions      goal conditions for the dungeon
+     */
     public Dungeon(ArrayList<IEntity> entities, String gameMode, CharacterEntity player, JsonObject goalConditions) {
         this.entitiesControl = new EntitiesControl();
         this.entitiesControl.setEntities(entities);
@@ -105,6 +120,10 @@ public class Dungeon {
         return new DungeonResponse(id, dungeonName, entitiesInfo, player.getInventoryInfo(), player.getBuildableList(), getGoals());
     }
 
+    /**
+     * Dungeon tick - moves entities and sets off ticking interactions
+     * @param direction            direction of the player
+     */
     public void tick(Direction direction) {
         player.move(direction, entitiesControl);
         if (player.isInvincible()) {
@@ -115,6 +134,10 @@ public class Dungeon {
         entitiesControl.generateEnemyEntities(gameMode);
     }
 
+    /**
+     * Dungeon tick - moves entities, sets off ticking interactions and uses an item based on id
+     * @param itemId            identifier of item to be used
+     */
     public void tick(String itemID) {
         player.useItem(itemID, this.entitiesControl);
         if (player.isInvincible()) {
@@ -126,6 +149,10 @@ public class Dungeon {
         entitiesControl.generateEnemyEntities(gameMode);
     }
 
+    /**
+     * Function for entities to interact with player
+     * @param entityId identifier of entity to be interacted with
+     */
     public void interact(String entityID) throws IllegalArgumentException, InvalidActionException{
         IEntity interacting = this.entitiesControl.getEntityById(entityID);
         if (interacting == null) {
@@ -156,16 +183,29 @@ public class Dungeon {
     public CharacterEntity getPlayer() {
         return this.player;
     }
-
+    
+     /**
+     * Finds all entities of a certain type in the dungeon
+     * @param type type to be found
+     * @returns a list of all entities of that type in the dungeon      
+     */
     public <T extends IEntity> List<T> getAllEntitiesOfType(Class<T> type) {
         return this.entitiesControl.getAllEntitiesOfType(type);
     }
 
+    /**
+     * Builds an item
+     * @param buildable item to be built    
+     */
     public void build(String buildable) {
         EntityTypes itemToBuild = EntityTypes.getEntityType(buildable);
         this.player.build(itemToBuild);
     }
     
+    /**
+     * Saves the game
+     * @param saveGameName name of save file    
+     */
     public void saveGame(String saveGameName) {
         Gson gson = new Gson();
 
@@ -193,6 +233,9 @@ public class Dungeon {
         
     }
 
+    /**
+     * Saves current state of the game to JSON
+     */
     public JsonObject saveCurentStateToJson() {
         JsonObject finalObject = new JsonObject();              
         JsonArray entities = new JsonArray();

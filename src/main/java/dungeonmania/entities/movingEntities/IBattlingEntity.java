@@ -15,6 +15,11 @@ public interface IBattlingEntity extends IContactingEntity {
     public float getDamage();
     public void loseHealth(float enemyHealth, float enemyDamage);
 
+    /**
+     * Checks status of the player and then calls battle function
+     * @param entitiesControl  the list of all entities
+     * @param player           the player which is battling
+     */
     public default void battle(EntitiesControl entitiesControl, CharacterEntity player) {
         while (
             !player.isInvisible() &&
@@ -25,6 +30,11 @@ public interface IBattlingEntity extends IContactingEntity {
         }
     }
 
+    /**
+     * Checks if the enemy is alive, and if not, drops relevant entities and is removed from the list of entities
+     * @param entitiesControl  the list of all entities
+     * @param player           the player which is battling
+     */
     default boolean enemyIsAlive(EntitiesControl entitiesControl, CharacterEntity player) {
         if (!this.isAlive()) {
             dropEntities(player);
@@ -34,6 +44,10 @@ public interface IBattlingEntity extends IContactingEntity {
         return false;
     }
     
+    /**
+     * Battle interactions
+     * @param player           the player which is battling
+     */
     default void doBattle(CharacterEntity player) {
         if (player.isInvincible()){
             this.setHealth(0);
@@ -55,6 +69,10 @@ public interface IBattlingEntity extends IContactingEntity {
         return this.getHealth() > 0;
     }
 
+    /**
+     * Drops relevant entities and adds the to player inventory
+     * @param player           the player which is battling
+     */
     default void dropEntities(CharacterEntity player) {
         OneRingEntity ring = new OneRingEntity();
         if (RandomChance.getRandomBoolean(ring.getDropChance())) {
@@ -62,6 +80,10 @@ public interface IBattlingEntity extends IContactingEntity {
         }
     }
 
+    /**
+     * Drops relevant entities and adds to player inventory based on probability
+     * @param player           the player which is battling
+     */
     default void dropEntities(CharacterEntity player, float probability) {
         OneRingEntity ring = new OneRingEntity();
         if (RandomChance.getRandomBoolean(probability)) {

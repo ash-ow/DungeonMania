@@ -40,5 +40,7 @@ public abstract class CollectableEntity extends Entity implements IContactingEnt
     /**
      * @return True if the item is supposed to be placed on the player location after being used
      */
-    public abstract boolean isPlacedAfterUsing();
+    public boolean isPlacedAfterUsing(){
+        return false;
+    }
 }

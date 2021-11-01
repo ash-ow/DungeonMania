@@ -6,10 +6,18 @@ import dungeonmania.entities.staticEntities.ExitEntity;
 
 public class ExitGoal implements IGoal {
     private String type;
+    
+    /**
+     * ExitGoal constructor
+     */
     public ExitGoal() {
         this.type = "exit";
     }
 
+    /**
+     * Evaluates whether goal has passed
+     * @param dungeon  dungeon to be checked
+     */
     public boolean checkGoal(Dungeon dungeon) {
         for (IEntity e : dungeon.getAllEntitiesOfType(ExitEntity.class)) {
             if (exitPlayerCheck(dungeon, e)) {

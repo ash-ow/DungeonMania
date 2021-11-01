@@ -71,12 +71,12 @@ public class HealthPotionEntityTest implements ICollectableEntityTest {
     assertEquals(100, character.getHealth());
     
     spider.doBattle(character);
-    assertEquals(80, character.getHealth());
-    assertEquals(40, spider.getHealth());
+    assertEquals(93.0, character.getHealth());
+    assertEquals(-25.0, spider.getHealth());
 
     health_potion.used(character);
     assertEquals(100, character.getHealth());
-    assertEquals(40, spider.getHealth());
+    assertEquals(-25.0, spider.getHealth());
     }
 
     @Test
@@ -99,7 +99,7 @@ public class HealthPotionEntityTest implements ICollectableEntityTest {
 
         dungeon.tick(Direction.DOWN);
         assertEquals(40, player.getHealth());
-        assertEquals(100, spider.getHealth());
+        assertEquals(35, spider.getHealth());
 
         dungeon.tick(Direction.DOWN);
         health_potion.used(player);

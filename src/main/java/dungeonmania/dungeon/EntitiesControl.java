@@ -16,20 +16,34 @@ import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
+import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
 import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
 import dungeonmania.entities.staticEntities.*;
 
 public class EntitiesControl {
     private List<IEntity> entities;
     private Random rand = new Random();
-    private Integer tickCounter = 0;
+    private Integer tickCounter = 1;
     private Integer entityCounter = 0;
     public final static HashMap<String, Double> difficulty;
+    private Position playerStartPosition = new Position(0, 0);
     static {
         difficulty = new HashMap<>();
         difficulty.put("Hard", 20.0/15.0);
         difficulty.put("Peaceful", 15.0/20.0);
         difficulty.put("Standard", 1.0);
+    }
+    public final static List<EntityTypes> usableItems;
+    static {
+        usableItems = new ArrayList<>();
+        usableItems.add(EntityTypes.HEALTH_POTION);
+        usableItems.add(EntityTypes.INVINCIBILITY_POTION);
+        usableItems.add(EntityTypes.BOMB);
+        usableItems.add(EntityTypes.INVISIBILITY_POTION);
+    }
+
+    public void setPlayerStartPosition(Position playerStartPosition) {
+        this.playerStartPosition = playerStartPosition;
     }
 
     public EntitiesControl() {
@@ -84,7 +98,7 @@ public class EntitiesControl {
     public void runAwayAllMovingEntities(CharacterEntity player) {
         List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
         for (IAutoMovingEntity entity : movingEntities) {
-            entity.runAway(this, player);
+            entity.setMoveBehvaiour(new RunAway());
         }
     }
 
@@ -97,7 +111,7 @@ public class EntitiesControl {
         return EntitiesControl.getEntitiesOfType(entityList, IContactingEntity.class);
     }
 
-    public static <T> List<T> getEntitiesOfType(List<IEntity> entityList, Class<T> cls) {
+    public static <T> List<T> getEntitiesOfType(List<?> entityList, Class<T> cls) {
         return entityList.stream().filter(cls::isInstance).map(cls::cast).collect(Collectors.toList());
     }
 
@@ -105,7 +119,7 @@ public class EntitiesControl {
         return EntitiesControl.getEntitiesOfType(this.entities, cls);
     }
 
-    public <T> List<T> getEntitiesOfType(Class<T> cls) {
+    public <T extends IEntity> List<T> getEntitiesOfType(Class<T> cls) {
         return getEntitiesOfType(this.entities, cls);
     }
 
@@ -237,7 +251,17 @@ public class EntitiesControl {
     public void generateEnemyEntities(String gameMode) {
         generateSpider(gameMode);
         generateZombieToast(gameMode);
+        generateMercenary(gameMode);
         tickCounter++;
+    }
+
+    private void generateMercenary(String gameMode) {
+        if (tickCounter % (int) Math.ceil(30 / difficulty.get(gameMode)) == 0) {
+            List<IMovingEntity> enemy = getEntitiesOfType(IMovingEntity.class);
+            if (enemy.size() > 0) {
+                this.createEntity(playerStartPosition.getX(), playerStartPosition.getY(), EntityTypes.MERCENARY);
+            }
+        }
     }
 
     private void generateSpider(String gameMode) {

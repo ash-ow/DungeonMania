@@ -72,7 +72,7 @@ public class  InvisibilityPotionEntityTest implements ICollectableEntityTest {
         assertEquals(new Position(0, 1, 0), spider.getPosition());
         assertTrue(player.isInvisible());
         assertEquals(100, player.getHealth());
-        assertEquals(100, spider.getHealth());
+        assertEquals(35, spider.getHealth());
 
     }
 

@@ -4,7 +4,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public class InvincibilityPotionEntity extends CollectableEntity implements IUseableEntity {
+public class InvincibilityPotionEntity extends CollectableEntity {
     /**
      * Invincibility potion constructor
      */

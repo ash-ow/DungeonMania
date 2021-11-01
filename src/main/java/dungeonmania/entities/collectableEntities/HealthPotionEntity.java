@@ -3,7 +3,7 @@ package dungeonmania.entities.collectableEntities;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public class HealthPotionEntity extends CollectableEntity implements IUseableEntity {
+public class HealthPotionEntity extends CollectableEntity {
     /**
      * Health potion constructor
      */

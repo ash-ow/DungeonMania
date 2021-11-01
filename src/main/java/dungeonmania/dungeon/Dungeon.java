@@ -26,6 +26,7 @@ import dungeonmania.util.Position;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 public class Dungeon {
     public EntitiesControl entitiesControl;
@@ -69,7 +70,7 @@ public class Dungeon {
                 this.entitiesControl.createEntity(entityObj);
             }            
         }
-        
+        entitiesControl.setPlayerStartPosition(player.getPosition());
 
         if (goalConditions != null) {
             this.goals = new Goals(goalConditions);
@@ -107,9 +108,8 @@ public class Dungeon {
         player.move(direction, entitiesControl);
         if (player.isInvincible()) {
             entitiesControl.runAwayAllMovingEntities(player);
-        } else {
-            entitiesControl.moveAllMovingEntities(player);
         }
+        entitiesControl.moveAllMovingEntities(player);
         entitiesControl.tick();
         entitiesControl.generateEnemyEntities(gameMode);
     }
@@ -167,7 +167,7 @@ public class Dungeon {
     
     public void saveGame(String saveGameName) {
         Gson gson = new Gson();
-        File file = new File("src/main/resources/savedGames/", saveGameName + ".json");
+        File file = new File("savedGames", saveGameName + ".json");
         JsonObject finalObject = saveCurentStateToJson();
         if (file.exists()) {
             file.delete();

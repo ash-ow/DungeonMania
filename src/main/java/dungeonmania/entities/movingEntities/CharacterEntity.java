@@ -10,7 +10,6 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.collectableEntities.IUseableEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.exceptions.InvalidActionException;
@@ -280,7 +279,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         IEntity entity = EntitiesControl.getEntityById(this.inventory, itemID);
         if (entity == null) {
             throw new InvalidActionException(itemID + "not in inventory");
-        } else if (!(entity instanceof IUseableEntity)) {
+        } else if (!EntitiesControl.usableItems.contains(entity.getType())) {
             throw new IllegalArgumentException();
         }
         for (CollectableEntity item : this.inventory) {

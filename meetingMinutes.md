@@ -62,6 +62,22 @@ Meeting Summary:
 -   Baktiar - Collectable Entities
 -   Koonatai - Boulder
 
+# In person meetup
+Date 30/10/2021
+Attendees: Koonatai, Ashley, Ariel
+Agenda:
+Complete UML
+Refactor code to reflect design decisions
+Finalise functionality and implementations
+
+# In Person meetup
+31/10/2021
+Attendess: Koonatai, Ashley, Ariel, Baktiar, Wilson 
+Agenda:
+Complete UML
+Refactor code to reflect design decisions
+Finalise functionality and implementations
+
 # Template
 Date: xx/xx/xxxx
 Attendess: xxx

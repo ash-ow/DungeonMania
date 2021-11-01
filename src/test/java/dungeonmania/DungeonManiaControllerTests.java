@@ -75,7 +75,7 @@ public class DungeonManiaControllerTests {
     @Test
     public void testIllegalArgumentExceptionPass() {
         DungeonManiaController dungeonManiaController = new DungeonManiaController();
-        assertDoesNotThrow(() -> dungeonManiaController.newGame("test", "Hard"));
+        assertDoesNotThrow(() -> dungeonManiaController.newGame("maze", "Hard"));
     }
 
     @Test

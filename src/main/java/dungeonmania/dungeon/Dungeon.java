@@ -26,6 +26,7 @@ import dungeonmania.util.Position;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Dungeon {
@@ -207,6 +208,12 @@ public class Dungeon {
      */
     public void saveGame(String saveGameName) {
         Gson gson = new Gson();
+
+        try {
+            Files.createDirectories(Paths.get("savedGames"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         File file = new File("savedGames", saveGameName + ".json");
         JsonObject finalObject = saveCurentStateToJson();
         if (file.exists()) {

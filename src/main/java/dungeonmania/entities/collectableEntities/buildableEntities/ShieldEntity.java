@@ -8,16 +8,27 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
 
 public class ShieldEntity extends BuildableEntity {
-    
+    /**
+     * Simple bow constructor
+     */
     public ShieldEntity() {
         this(0, 0, 0); 
     }
     
+    /**
+     * Simple shield constructor
+     * @param x x-coordinate on the map
+     * @param y y-coordinate on the map
+     * @param layer layer on the map 
+     */
     public ShieldEntity(int x, int y, int layer) {
         super(x, y, layer, EntityTypes.SHIELD);
         this.durability = 4;
     }
     
+    /**
+     * Initialises required components to build a bow
+     */
     @Override
     public void initialiseRequiredComponents() {
         this.requiredComponents.put(EntityTypes.WOOD, 2);
@@ -25,6 +36,11 @@ public class ShieldEntity extends BuildableEntity {
         this.requiredComponents.put(EntityTypes.KEY, 1);
     }
     
+    /**
+     * Checks if a shield is buildable
+     * @param inventory items in inventory are compared against required comonents
+     * @return true or false depnding on whether a shield is buildable
+     */
     @Override
     public boolean isBuildable(List<CollectableEntity> inventory) {
         boolean requiredWood = false;
@@ -51,6 +67,12 @@ public class ShieldEntity extends BuildableEntity {
         return false;
     }
     
+    /**
+     * Reduces input damage for the player
+     * @param damage input damage for the player
+     * @param player player which is being damaged
+     * @return redecued value for damage as a float
+     */
     public float reduceDamage(float damage, CharacterEntity player) {
         this.used(player);
         damage = damage/2;

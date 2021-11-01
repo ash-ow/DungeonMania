@@ -17,7 +17,7 @@ import dungeonmania.util.RandomChance;
 public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoMovingEntity {
     Random rand = new Random();
     Integer seed;
-    private float armourEntityProbability = 0.2f;
+    private float armourEntityProbability = 0.4f;
     private ArmourEntity equipped;
     
     public ZombieToastEntity(int x, int y, int layer) {
@@ -78,7 +78,11 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
     }
 
     public void loseHealth(float enemyHealth, float enemyDamage) {
-        this.health -= ((enemyHealth * enemyDamage) / 5);
+        if (equipped != null) {
+            this.health -= ((enemyHealth * enemyDamage) / 10);
+        } else {
+            this.health -= ((enemyHealth * enemyDamage) / 5);
+        }
     }
     //endregion
     @Override

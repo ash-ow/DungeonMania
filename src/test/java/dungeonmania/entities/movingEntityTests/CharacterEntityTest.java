@@ -124,8 +124,8 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         entitiesControl.addEntity(character);
         entitiesControl.addEntity(zombie);
         zombie.battle(entitiesControl, character);
-        assertEquals(58, character.getHealth());
-        assertEquals(-2.0, zombie.getHealth());
+        assertEquals(85, character.getHealth());
+        assertEquals(-10.0, zombie.getHealth());
     }
 
     @Test

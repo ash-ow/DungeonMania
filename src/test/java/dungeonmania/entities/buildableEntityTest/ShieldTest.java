@@ -117,10 +117,10 @@ public class ShieldTest implements IBuildableEntityTests {
 
         assertEquals(4,  shield.getDurability());
         assertEquals(100, player.getHealth());
-        assertEquals(100, zombie.getHealth());
+        assertEquals(50, zombie.getHealth());
 
         zombie.contactWithPlayer(new EntitiesControl(), player);
-        assertEquals(2,  shield.getDurability(), "Shield should do two rounds of battle");
+        assertEquals(3,  shield.getDurability(), "Shield should do two rounds of battle");
         assertFalse(zombie.isAlive());
     }
 

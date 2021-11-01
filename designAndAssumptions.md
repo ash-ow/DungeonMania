@@ -144,12 +144,10 @@ The state pattern is used in SpiderEntity to determine the direction of the spid
 ### Collectable Entities
 
 **Potions (health, invis, invince):**
-
-- The health potion should work regardless of player state i.e. both health potion and either an invisibility potion OR invincibility potion can be used together. 
+- The health potion should work regardless of player state i.e. 2 potions can be used together
 - The invisibility potion takes precedence over the invincibility potion i.e. if used together only the effects of the invisibility will take place 
 - Can only be used and picked up by the 'Player' character class, all other moving entities are unable to interact with potions. 
-- Both the invisibility and invincibility potion have a time limit of 10 steps (dungeon ticks).  
-- While a character is invisible, they can interact with collectable entities whilst still avoiding battle.
+
 
 **bomb:**
 
@@ -174,6 +172,7 @@ The state pattern is used in SpiderEntity to determine the direction of the spid
 **invincible potions:**
 
 - if invincible immediately wins all battles with other entities
+- While a character is invisible, they can interact with collectable entities whilst still avoiding battle.
 - potions last for 10 ticks
 - all entities run away for 10 ticks and are trapped within the game (e.g. spiders cannot climb over walls when running)
 

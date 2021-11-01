@@ -3,7 +3,6 @@ package dungeonmania.entities.movingEntities;
 import java.util.List;
 
 import dungeonmania.dungeon.EntitiesControl;
-import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.IWeaponEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.util.RandomChance;
@@ -61,8 +60,6 @@ public interface IBattlingEntity extends IContactingEntity {
             }
             for (IWeaponEntity weapon : EntitiesControl.getEntitiesOfType(player.getInventory(), IWeaponEntity.class)) {
                 weapon.attack(this, player);
-                CollectableEntity collect = (CollectableEntity) weapon;
-                collect.used(player);
             }
             player.loseHealth(enemyInitialHealth, this.getDamage());
         }

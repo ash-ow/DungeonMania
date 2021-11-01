@@ -394,16 +394,6 @@
         "type": "invincibility_potion"
       },
       {
-        "x": 10,
-        "y": 10,
-        "type": "invisibility_potion"
-      },
-      {
-        "x": 9,
-        "y": 10,
-        "type": "health_potion"
-      },
-      {
         "x": 17,
         "y": 10,
         "type": "wall"

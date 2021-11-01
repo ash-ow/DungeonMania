@@ -175,12 +175,12 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         SpiderEntity spider = new SpiderEntity();
 
         assertEquals(100, character.getHealth());
-        assertEquals(100, spider.getHealth());
+        assertEquals(35, spider.getHealth());
 
         spider.doBattle(character);
 
-        assertEquals(80, character.getHealth());
-        assertEquals(40, spider.getHealth());
+        assertEquals(93, character.getHealth());
+        assertEquals(-25.0, spider.getHealth());
     }
 
     @Test

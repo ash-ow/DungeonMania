@@ -83,12 +83,12 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         MercenaryEntity mercenary = new MercenaryEntity();
 
         assertEquals(100, character.getHealth());
-        assertEquals(100, mercenary.getHealth());
+        assertEquals(70, mercenary.getHealth());
 
         mercenary.doBattle(character);
 
-        assertEquals(70, character.getHealth());
-        assertEquals(40, mercenary.getHealth());
+        assertEquals(79, character.getHealth());
+        assertEquals(10.0, mercenary.getHealth());
     }
 
     @Override
@@ -109,7 +109,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         EntitiesControl entitiesControl = new EntitiesControl();
         entitiesControl.addEntity(mercenary);
         assertEquals(100, character.getHealth());
-        assertEquals(100, mercenary.getHealth());
+        assertEquals(70, mercenary.getHealth());
         character.move(Direction.RIGHT, entitiesControl);
         assertFalse(entitiesControl.contains(mercenary));         
     }
@@ -121,7 +121,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         EntitiesControl entitiesControl = new EntitiesControl();
         entitiesControl.addEntity(mercenary);
         assertEquals(100, character.getHealth());
-        assertEquals(100, mercenary.getHealth());
+        assertEquals(70, mercenary.getHealth());
         character.move(Direction.RIGHT, entitiesControl);
         assertTrue(entitiesControl.contains(mercenary));     
         assertEquals(new Position(1, 0), character.getPosition());

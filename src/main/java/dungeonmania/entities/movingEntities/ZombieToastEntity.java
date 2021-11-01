@@ -19,7 +19,7 @@ import dungeonmania.util.RandomChance;
 public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoMovingEntity {
     Random rand = new Random();
     Integer seed;
-    private float armourEntityProbability = 0.2f;
+    private float armourEntityProbability = 0.4f;
     private ArmourEntity equipped;
     private IMovingBehaviour moveBehaviour;
     
@@ -60,7 +60,7 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
     }
 
 //region Description
-    private float health = 100;
+    private float health = 50;
 
     @Override
     public float getHealth() {

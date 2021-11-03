@@ -60,6 +60,7 @@ public interface IBattlingEntity extends IContactingEntity {
             }
             for (IWeaponEntity weapon : EntitiesControl.getEntitiesOfType(player.getInventory(), IWeaponEntity.class)) {
                 weapon.attack(this, player);
+                player.getInventoryItem(weapon.getId()).used(player);
             }
             player.loseHealth(enemyInitialHealth, this.getDamage());
         }

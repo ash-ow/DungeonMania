@@ -120,7 +120,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * Finds an item in the inventory based on its id
      * @param itemID Item identifier
      */
-    public IEntity getInventoryItem(String itemID) {
+    public CollectableEntity getInventoryItem(String itemID) {
         return inventory.stream().filter(item -> item.getId().equals(itemID)).findFirst().orElse(null);
     }
 

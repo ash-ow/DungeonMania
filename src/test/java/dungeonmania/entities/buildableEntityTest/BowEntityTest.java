@@ -11,10 +11,12 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.BowEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.util.Position;
 
 public class BowEntityTest implements IBuildableEntityTests {
@@ -68,10 +70,6 @@ public class BowEntityTest implements IBuildableEntityTests {
     }
 
     @Test
-    public void usedBow() {
-    }
-
-    @Test
     @Override
     public void TestCollect() {
         ArmourEntity armour = new ArmourEntity(0,0,0);
@@ -81,14 +79,21 @@ public class BowEntityTest implements IBuildableEntityTests {
     @Test
     @Override
     public void TestUseCollectable() {
-        // TODO see armour tests, the below is bad
-        CharacterEntity player = new CharacterEntity(0, 1, 0);
+        ZombieToastEntity zombie = new ZombieToastEntity();
+        CharacterEntity player = new CharacterEntity();
         BowEntity bow = new BowEntity();
-        player.addEntityToInventory(bow);
+        bow.contactWithPlayer(new EntitiesControl(), player);
+
+        assertEquals(2,  bow.getDurability());
+        assertEquals(100, player.getHealth());
+        assertEquals(50, zombie.getHealth());
+
+        zombie.contactWithPlayer(new EntitiesControl(), player);
+        assertEquals(1,  bow.getDurability());
+        assertFalse(zombie.isAlive());
+
         bow.used(player);
-        assertEquals(1, bow.getDurability());
-        bow.used(player);
-        assertEquals(0, bow.getDurability());
+
         assertNull(player.getInventoryItem(bow.getId()), "Inventory should not contain entity " + bow.getId());
 
     }

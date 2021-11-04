@@ -64,6 +64,15 @@ public class EntitiesFactory extends EntitiesControl {
                 break;
             case ONE_RING:
                 entities.createNewEntityOnMap(new OneRingEntity(JsonInfo));
+                break;
+            case KEY:
+                entities.createNewEntityOnMap(new KeyEntity(JsonInfo));
+                break;
+            case PORTAL:
+                entities.createNewEntityOnMap(new PortalEntity(JsonInfo));
+                break;
+            case DOOR:
+                entities.createNewEntityOnMap(new DoorEntity(JsonInfo));
         }
     }
 }

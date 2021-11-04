@@ -18,8 +18,8 @@ public class ExitGoalTests implements IGoalTests {
     @Override
     @Test
     public void SimpleGoalTest() {
-        CharacterEntity player = new CharacterEntity(0, 4, 0);
-        ExitEntity exit = new ExitEntity(0, 3, 0);
+        CharacterEntity player = new CharacterEntity(0, 4);
+        ExitEntity exit = new ExitEntity(0, 3);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(exit);
         String jsonGoals = "{ \"goal\": \"exit\"}";

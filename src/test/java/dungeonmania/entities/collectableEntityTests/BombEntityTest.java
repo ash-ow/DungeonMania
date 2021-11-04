@@ -27,7 +27,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
     @Test
     @Override
     public void TestEntityResponseInfo() {
-        BombEntity bomb = new BombEntity(0, 0, 0);
+        BombEntity bomb = new BombEntity(0, 0);
         assertEntityResponseInfoEquals(bomb, "bomb-0-0-0", EntityTypes.BOMB, new Position(0,0), false);
     }
 
@@ -35,8 +35,8 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
     @Override
     public void TestUseCollectable() {
         ArrayList<IEntity> entities = new ArrayList<>();
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        BombEntity bomb = new BombEntity(0, 1, 0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        BombEntity bomb = new BombEntity(0, 1);
         entities.add(bomb);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
 
@@ -54,7 +54,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
     @Test
     @Override
     public void TestCollect() {
-        BombEntity bomb = new BombEntity(0, 0, 0);
+        BombEntity bomb = new BombEntity(0, 0);
         assertEntityIsCollected(bomb);
     }
     
@@ -158,8 +158,8 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
     @Override
     public void TestBlock() {
         ArrayList<IEntity> entities = new ArrayList<>();
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        BombEntity bomb = new BombEntity(0, 1, 0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        BombEntity bomb = new BombEntity(0, 1);
         entities.add(bomb);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
 

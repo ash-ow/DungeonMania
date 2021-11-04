@@ -22,8 +22,12 @@ public class JsonControl {
         Integer yAxis = entityObj.get("y").getAsInt();
         this.position = new Position(xAxis, yAxis);
         this.type = EntityTypes.getEntityType(entityObj.get("type").getAsString());
-        this.key = entityObj.get("key").getAsInt();
-        this.color = entityObj.get("colour").getAsString();
+        if (entityObj.get("key") != null) {
+            this.key = entityObj.get("key").getAsInt();
+        }
+        if (entityObj.get("colour") != null) {
+            this.color = entityObj.get("colour").getAsString();
+        }
     }
 
     public Position getPosition() {

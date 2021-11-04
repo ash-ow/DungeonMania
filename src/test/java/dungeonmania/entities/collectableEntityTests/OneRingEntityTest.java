@@ -18,7 +18,7 @@ public class OneRingEntityTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        OneRingEntity ring = new OneRingEntity(0,0,0);
+        OneRingEntity ring = new OneRingEntity(0, 0);
         assertEntityResponseInfoEquals(
             ring,
             "one_ring-0-0-0",
@@ -31,7 +31,7 @@ public class OneRingEntityTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestCollect() {
-        OneRingEntity ring = new OneRingEntity(0,0,0);
+        OneRingEntity ring = new OneRingEntity(0, 0);
         assertEntityIsCollected(ring);
     }
 

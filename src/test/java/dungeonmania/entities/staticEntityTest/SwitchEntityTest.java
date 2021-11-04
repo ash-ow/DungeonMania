@@ -30,7 +30,7 @@ public class SwitchEntityTest implements IEntityTests {
     public void BoulderPushToActive() {
         EntitiesControl entitiesControl = new EntitiesControl();
         BoulderEntity boulder = new BoulderEntity();
-        SwitchEntity switchEntity = new SwitchEntity(0, 1, 0);
+        SwitchEntity switchEntity = new SwitchEntity(0, 1);
         entitiesControl.addEntity(boulder);
         entitiesControl.addEntity(switchEntity);
         assertFalse(switchEntity.isActive());

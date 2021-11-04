@@ -28,7 +28,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public List<IBattlingEntity> teammates = new ArrayList<>();
     private int invincibilityRemaining = 0;
     private int invisibilityRemaining = 0;
-    private String gameMode;
+    private GameModeType gameMode;
 
     /**
      * Character constructor
@@ -44,7 +44,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param layer layer on the map 
      */
     public CharacterEntity(int x, int y) {
-        this(x, y, "Standard");
+        this(x, y, GameModeType.STANDARD);
     }
     
     /**
@@ -54,11 +54,11 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param layer      layer on the map
      * @param gameMode   denotes the difficulty settings of the game 
      */
-    public CharacterEntity(int x, int y, String gameMode) {
+    public CharacterEntity(int x, int y, GameModeType gameMode) {
         super(x, y, EntityTypes.PLAYER);
         this.previousPosition = new Position(x, y);
         this.gameMode = gameMode;
-        this.health = (int) Math.ceil(100 / EntitiesControl.difficulty.get(GameModeType.getGameModeType(gameMode)));
+        this.health = (int) Math.ceil(100 / EntitiesControl.difficulty.get(gameMode));
     }
 
     public CharacterEntity(JsonControl info) {

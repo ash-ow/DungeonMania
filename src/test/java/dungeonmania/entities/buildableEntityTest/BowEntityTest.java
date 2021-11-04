@@ -74,7 +74,7 @@ public class BowEntityTest implements IBuildableEntityTests {
     @Test
     @Override
     public void TestCollect() {
-        ArmourEntity armour = new ArmourEntity(0,0,0);
+        ArmourEntity armour = new ArmourEntity(0, 0);
         assertEntityIsCollected(armour);
     }
 
@@ -82,7 +82,7 @@ public class BowEntityTest implements IBuildableEntityTests {
     @Override
     public void TestUseCollectable() {
         // TODO see armour tests, the below is bad
-        CharacterEntity player = new CharacterEntity(0, 1, 0);
+        CharacterEntity player = new CharacterEntity(0, 1);
         BowEntity bow = new BowEntity();
         player.addEntityToInventory(bow);
         bow.used(player);

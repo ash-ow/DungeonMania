@@ -21,7 +21,7 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0,0,0);
+        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0, 0);
         assertEntityResponseInfoEquals(
             invincibility_potion,
             "invincibility_potion-0-0-0",
@@ -34,15 +34,15 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestCollect() {
-        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0, 0, 0);
+        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0, 0);
         assertEntityIsCollected(invincibility_potion);
     }
 
     @Test
     @Override
     public void TestUseCollectable() {
-        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0, 1, 0);
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
+        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0, 1);
+        CharacterEntity player = new CharacterEntity(0, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(invincibility_potion);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
@@ -58,9 +58,9 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
 
     @Test
     public void TestWinBattle() {
-        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0, 0, 0);
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        SpiderEntity spider = new SpiderEntity(0, 1, 0);
+        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0, 0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        SpiderEntity spider = new SpiderEntity(0, 1);
         ArrayList<IEntity> entities = new ArrayList<>();
 
         entities.add(spider);
@@ -78,8 +78,8 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
     @Test
     public void TestInvincibilityRunsOut() {
         ArrayList<IEntity> entities = new ArrayList<>();
-        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0,1,0);
-        CharacterEntity player = new CharacterEntity(0,0,0);
+        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0, 1);
+        CharacterEntity player = new CharacterEntity(0, 0);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         entities.add(invincibility_potion);
         

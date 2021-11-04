@@ -17,9 +17,9 @@ import dungeonmania.response.models.ItemResponse;
 public class InventoryTest{
     @Test
     public void TestMultipleItemsCollect() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        ArmourEntity armour = new ArmourEntity(0,0,0);
-        SwordEntity sword = new SwordEntity(0,1,0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        ArmourEntity armour = new ArmourEntity(0,0);
+        SwordEntity sword = new SwordEntity(0,1);
         EntitiesControl entities = new EntitiesControl();
         
         entities.addEntity(armour);

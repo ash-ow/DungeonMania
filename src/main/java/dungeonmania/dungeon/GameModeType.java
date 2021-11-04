@@ -12,9 +12,9 @@ public enum GameModeType {
     }
 
     public static GameModeType getGameModeType(String type) {
-        for (GameModeType entityType : GameModeType.values()) { 
-            if (type.equals(entityType.toString())) {
-                return entityType;
+        for (GameModeType gameModeType : GameModeType.values()) { 
+            if (type.equals(gameModeType.toString())) {
+                return gameModeType;
             }
         }
         return null;
@@ -22,6 +22,6 @@ public enum GameModeType {
 
     @Override
     public String toString() {
-        return this.type.toLowerCase();
+        return this.type;
     }
 }

@@ -55,7 +55,7 @@ public class Dungeon {
             JsonControl jsonInfo = new JsonControl(entityObj);
             
             if (jsonInfo.getType().equals(EntityTypes.PLAYER)) {
-                this.player = new CharacterEntity(jsonInfo.getPosition().getX(), jsonInfo.getPosition().getY(), gameMode);
+                this.player = new CharacterEntity(jsonInfo.getPosition().getX(), jsonInfo.getPosition().getY(), this.gameMode);
             } else {
                 this.entitiesControl.createEntity(jsonInfo, this.gameMode);
             }

@@ -18,6 +18,7 @@ public abstract class Entity implements IEntity {
     protected Entity(int x, int y, EntityTypes type) {
         this.type = type;
         this.position = new Position(x, y);
+        this.id = type + "-" + x + "-" + y + "-" + this.position.getLayer();
     }
 
     public EntityResponse getInfo() {

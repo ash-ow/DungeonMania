@@ -10,7 +10,7 @@ public class ArrowsEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestEntityResponseInfo() {
-        ArrowsEntity arrows = new ArrowsEntity(0, 0, 0);
+        ArrowsEntity arrows = new ArrowsEntity(0, 0);
         assertEntityResponseInfoEquals(arrows, "arrow-0-0-0", EntityTypes.ARROW, new Position(0,0), false);
     }
 
@@ -18,7 +18,7 @@ public class ArrowsEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestCollect() {
-        ArrowsEntity arrows = new ArrowsEntity(0,0,0);
+        ArrowsEntity arrows = new ArrowsEntity(0,0);
         assertEntityIsCollected(arrows);
     }
 

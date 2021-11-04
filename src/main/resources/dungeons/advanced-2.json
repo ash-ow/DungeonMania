@@ -214,6 +214,16 @@
         "type": "bomb"
       },
       {
+        "x": 12,
+        "y": 4,
+        "type": "invincibility_potion"
+      },
+      {
+        "x": 11,
+        "y": 4,
+        "type": "health_potion"
+      },
+      {
         "x": 17,
         "y": 4,
         "type": "wall"

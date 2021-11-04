@@ -6,8 +6,6 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.JsonControl;
 
 public class SwordEntity extends CollectableEntity implements IWeaponEntity{
-    public int durability;
-
     /**
      * Sword constructor
      */

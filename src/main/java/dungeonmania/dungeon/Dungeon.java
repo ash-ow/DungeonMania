@@ -31,7 +31,7 @@ import java.nio.file.Paths;
 
 public class Dungeon {
     public EntitiesControl entitiesControl;
-    private String gameMode;
+    private GameModeType gameMode;
     private String id;
     private String dungeonName;
     public CharacterEntity player;
@@ -47,7 +47,7 @@ public class Dungeon {
      * @param dungeonName         name of the dungeon
      */
     public Dungeon(JsonArray entities, JsonObject goalConditions, String gameMode, String id, String dungeonName) {
-        this.gameMode = gameMode;
+        this.gameMode = GameModeType.getGameModeType(gameMode);
         this.id = id;
         this.dungeonName = dungeonName;
         this.entitiesControl = new EntitiesControl();
@@ -59,9 +59,6 @@ public class Dungeon {
             Integer yAxis = entityObj.get("y").getAsInt();
             Integer layer = this.entitiesControl.getAllEntitiesFromPosition(new Position(xAxis, yAxis)).size();
             
-            // TODO can probably improve this with factory pattern
-            // or at least by reading the JsonObject as a HashMap and passing that into a generic constructor
-            // Maybe Entity class should have one more constructor which accepts a HashMap!
             if (type.equals(EntityTypes.PLAYER)) {
                 this.player = new CharacterEntity(xAxis, yAxis, layer, gameMode);
             } else if (type.equals(EntityTypes.KEY) || type.equals(EntityTypes.DOOR)) {
@@ -72,7 +69,9 @@ public class Dungeon {
                 this.entitiesControl.createEntity(xAxis, yAxis, layer, colour, type);
             } else {
                 this.entitiesControl.createEntity(entityObj);
-            }            
+            } 
+            
+            this.entitiesControl.createEntity(entityInfo, this.gameMode);
         }
         entitiesControl.setPlayerStartPosition(player.getPosition());
 
@@ -90,7 +89,7 @@ public class Dungeon {
     public Dungeon(ArrayList<IEntity> entities, String gameMode, CharacterEntity player) {
         this.entitiesControl = new EntitiesControl();
         this.entitiesControl.setEntities(entities);
-        this.gameMode = gameMode;
+        this.gameMode = GameModeType.getGameModeType(gameMode);
         this.player = player;
     }
 
@@ -104,7 +103,7 @@ public class Dungeon {
     public Dungeon(ArrayList<IEntity> entities, String gameMode, CharacterEntity player, JsonObject goalConditions) {
         this.entitiesControl = new EntitiesControl();
         this.entitiesControl.setEntities(entities);
-        this.gameMode = gameMode;
+        this.gameMode = GameModeType.getGameModeType(gameMode);
         this.player = player;
         this.goals = new Goals(goalConditions);
     }
@@ -131,7 +130,7 @@ public class Dungeon {
         }
         entitiesControl.moveAllMovingEntities(player);
         entitiesControl.tick();
-        entitiesControl.generateEnemyEntities(gameMode);
+        entitiesControl.generateEnemyEntities(this.gameMode.toString());
     }
 
     /**
@@ -146,7 +145,7 @@ public class Dungeon {
             entitiesControl.moveAllMovingEntities(player);
         }
         entitiesControl.tick();
-        entitiesControl.generateEnemyEntities(gameMode);
+        entitiesControl.generateEnemyEntities(this.gameMode.toString());
     }
 
     /**
@@ -263,7 +262,7 @@ public class Dungeon {
         finalObject.add("entities", entities);
         finalObject.add("goal-condition", initalGoals);
         finalObject.addProperty("dungeonName", dungeonName);
-        finalObject.addProperty("gameMode", gameMode);
+        finalObject.addProperty("gameMode", gameMode.toString());
         return finalObject;
     }
 

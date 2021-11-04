@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.IEntity;
@@ -14,6 +15,7 @@ import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
+import dungeonmania.dungeon.entitiesFactory.IEntitiesFactory;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
 import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
@@ -25,13 +27,13 @@ public class EntitiesControl {
     private Random rand = new Random();
     private Integer tickCounter = 1;
     private Integer entityCounter = 0;
-    public final static HashMap<String, Double> difficulty;
+    public final static HashMap<GameModeType, Double> difficulty;
     private Position playerStartPosition = new Position(0, 0);
     static {
         difficulty = new HashMap<>();
-        difficulty.put("Hard", 20.0/15.0);
-        difficulty.put("Peaceful", 15.0/20.0);
-        difficulty.put("Standard", 1.0);
+        difficulty.put(GameModeType.HARD, 20.0/15.0);
+        difficulty.put(GameModeType.PEACEFUL, 15.0/20.0);
+        difficulty.put(GameModeType.STANDARD, 1.0);
     }
     public final static List<EntityTypes> usableItems;
     static {
@@ -59,7 +61,7 @@ public class EntitiesControl {
      * Creates a new entity on the map
      * @param entity  entity to be created
      */
-    private void createNewEntityOnMap(IEntity entity) {
+    protected void createNewEntityOnMap(IEntity entity) {
         entity.setId(Integer.toString(entityCounter));
         entities.add(entity);
         entityCounter++;
@@ -175,6 +177,19 @@ public class EntitiesControl {
         createEntity(xAxis, yAxis, layer, type);
     }
 
+    public void createEntity(JsonElement entityObject, GameModeType gameMode) {
+        switch(gameMode) {
+            case STANDARD:
+                break;
+            case HARD:
+                break;
+            case PEACEFUL:
+                break;
+        }
+    }
+
+
+
     /**
      * Main switch case for the creation of all entities on the map
      * @param x         x-coordinate on the map
@@ -183,61 +198,7 @@ public class EntitiesControl {
      * @param type      type of entity
      */
     public void createEntity(Integer xAxis, Integer yAxis, Integer layer, EntityTypes type) {
-        switch (type) {
-            case WALL:
-                this.createNewEntityOnMap(new WallEntity(xAxis, yAxis, layer));
-                break;
-            case EXIT:
-                this.createNewEntityOnMap(new ExitEntity(xAxis, yAxis, layer));
-                break;
-            case SWITCH:
-                this.createNewEntityOnMap(new SwitchEntity(xAxis, yAxis, layer));
-                break;
-            case BOULDER:
-                this.createNewEntityOnMap(new BoulderEntity(xAxis, yAxis, layer));
-                break;
-            case SPIDER:
-                this.createNewEntityOnMap(new SpiderEntity(xAxis, yAxis, layer));
-                break;
-            case WOOD:
-                this.createNewEntityOnMap(new WoodEntity(xAxis, yAxis, layer));
-                break;
-            case ARROW:
-                this.createNewEntityOnMap(new ArrowsEntity(xAxis, yAxis, layer));
-                break;
-            case BOMB:
-                this.createNewEntityOnMap(new BombEntity(xAxis, yAxis, layer));
-                break;
-            case SWORD:
-                this.createNewEntityOnMap(new SwordEntity(xAxis, yAxis, layer));
-                break;
-            case ARMOUR:
-                this.createNewEntityOnMap(new ArmourEntity(xAxis, yAxis, layer));
-                break;
-            case TREASURE:
-                this.createNewEntityOnMap(new TreasureEntity(xAxis, yAxis, layer));
-                break;
-            case HEALTH_POTION:
-                this.createNewEntityOnMap(new HealthPotionEntity(xAxis, yAxis, layer));
-                break;
-            case INVISIBILITY_POTION:
-                this.createNewEntityOnMap(new InvisibilityPotionEntity(xAxis, yAxis, layer));
-                break;
-            case INVINCIBILITY_POTION:
-                this.createNewEntityOnMap(new InvincibilityPotionEntity(xAxis, yAxis, layer));
-                break;
-            case MERCENARY:
-                this.createNewEntityOnMap(new MercenaryEntity(xAxis, yAxis, layer));
-                break;
-            case ZOMBIE_TOAST:
-                this.createNewEntityOnMap(new ZombieToastEntity(xAxis, yAxis, layer));
-                break;
-            case ZOMBIE_TOAST_SPAWNER:
-                this.createNewEntityOnMap(new ZombieToastSpawnerEntity(xAxis, yAxis, layer));
-                break;
-            case ONE_RING:
-                this.createNewEntityOnMap(new OneRingEntity(xAxis, yAxis, layer));
-        }
+        
     }
 
     /**

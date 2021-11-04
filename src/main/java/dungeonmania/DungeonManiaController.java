@@ -64,7 +64,6 @@ public class DungeonManiaController {
             String id = UUID.randomUUID().toString(); 
             JsonObject goalCondition = jsonObject.getAsJsonObject("goal-condition");
             this.dungeon = new Dungeon(jsonObject.get("entities").getAsJsonArray(), goalCondition , gameMode, id, dungeonName);           
-            
         } catch (IOException e) {
         }
         return dungeon.getInfo();

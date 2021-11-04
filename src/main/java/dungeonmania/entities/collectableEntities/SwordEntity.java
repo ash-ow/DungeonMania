@@ -5,8 +5,6 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public class SwordEntity extends CollectableEntity implements IWeaponEntity{
-    public int durability;
-
     /**
      * Sword constructor
      */

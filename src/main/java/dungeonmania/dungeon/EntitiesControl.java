@@ -184,61 +184,6 @@ public class EntitiesControl {
         jsonElement.setType(type);
         EntitiesFactory.generateEntity(jsonElement, this, GameModeType.STANDARD);
     }
-    
-    // /**
-    //  * Creates an entity
-    //  * @param entityObj     entity to be created
-    //  */
-    // public void createEntity(JsonObject entityObj) {
-    //     createEntity(entityObj, GameModeType.STANDARD);
-    // }
-
-    // /**
-    //  * Main switch case for the creation of all entities on the map
-    //  * @param x         x-coordinate on the map
-    //  * @param y         y-coordinate on the map
-    //  * @param layer     layer on the map 
-    //  * @param type      type of entity
-    //  */
-    // public void createEntity(Integer xAxis, Integer yAxis, EntityTypes type) {
-        
-    // }
-
-    // /**
-    //  * Creates a door and key
-    //  * @param x         x-coordinate on the map
-    //  * @param y         y-coordinate on the map
-    //  * @param layer     layer on the map
-    //  * @param keyNumber keyNumber for a corresponding pair 
-    //  * @param type      type of entity
-    //  */
-	// public void createEntity(Integer xAxis, Integer yAxis, Integer keyNumber, EntityTypes type) {
-    //     switch (type) {
-    //         case DOOR:
-    //             this.createNewEntityOnMap(new DoorEntity(xAxis, yAxis, keyNumber));
-    //             break;
-    //         case KEY:
-    //             this.createNewEntityOnMap(new KeyEntity(xAxis, yAxis, keyNumber));
-    //             break;
-    //     }
-	// }
-
-    // /**
-    //  * Creates a portal with a certain colour
-    //  * @param x         x-coordinate on the map
-    //  * @param y         y-coordinate on the map
-    //  * @param layer     layer on the map
-    //  * @param colour    colour of the portal 
-    //  * @param type      type of entity
-    //  */
-	// public void createEntity(Integer xAxis, Integer yAxis, String colour, EntityTypes type) {
-    //     switch (type) {
-    //         case PORTAL:
-    //             this.createNewEntityOnMap(new PortalEntity(xAxis, yAxis, colour));
-    //             break;
-    //     }
-	// }
-
 
     public Position getLargestCoordinate() {
         int x = 1, y = 1;

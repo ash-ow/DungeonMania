@@ -22,9 +22,4 @@ public class SwordEntity extends CollectableEntity implements IWeaponEntity{
         super(x, y, layer, EntityTypes.SWORD);
         this.durability = 5;
     }
-
-    @Override
-    public String getId() {
-        return super.getId();
-    }
 }

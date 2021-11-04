@@ -9,6 +9,7 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
+import dungeonmania.util.JsonControl;
 import dungeonmania.util.Position;
 
 public class BoulderEntity extends Entity implements IBlocker {
@@ -16,7 +17,7 @@ public class BoulderEntity extends Entity implements IBlocker {
      * Boulder constructor
      */
     public BoulderEntity() {
-        this(0, 0, 0);
+        this(0, 0);
     }
     
     /**
@@ -25,8 +26,12 @@ public class BoulderEntity extends Entity implements IBlocker {
      * @param y y-coordinate on the map
      * @param layer layer on the map 
      */
-    public BoulderEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.BOULDER);
+    public BoulderEntity(int x, int y) {
+        super(x, y, EntityTypes.BOULDER);
+    }
+
+    public BoulderEntity(JsonControl info) {
+        this(info.getPosition().getX(), info.getPosition().getY());
     }
 
     @Override

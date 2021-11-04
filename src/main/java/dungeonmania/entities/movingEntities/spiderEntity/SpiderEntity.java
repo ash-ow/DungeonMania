@@ -7,6 +7,7 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IAutoMovingEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
+import dungeonmania.util.JsonControl;
 import dungeonmania.util.Position;
 
 
@@ -20,7 +21,7 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
      * Spider constructor
      */
     public SpiderEntity() {
-        this(0, 0, 0);
+        this(0, 0);
     }
     
     /**
@@ -29,10 +30,14 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
      * @param y y-coordinate on the map
      * @param layer layer on the map 
      */
-    public SpiderEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.SPIDER);
+    public SpiderEntity(int x, int y) {
+        super(x, y, EntityTypes.SPIDER);
         spiderMovement = new SpiderClockwise();
         firstPosition = this.position;
+    }
+
+    public SpiderEntity(JsonControl info) {
+        this(info.getPosition().getX(), info.getPosition().getY());
     }
 
 // region Moving

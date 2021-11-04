@@ -11,17 +11,15 @@ import dungeonmania.dungeon.goals.Goals;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.KeyEntity;
-import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
-import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.DoorEntity;
 import dungeonmania.entities.staticEntities.PortalEntity;
 import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
-import dungeonmania.util.Position;
+import dungeonmania.util.JsonControl;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -54,24 +52,13 @@ public class Dungeon {
         this.initalGoals = goalConditions;
         for (JsonElement entityInfo : entities) {
             JsonObject entityObj = entityInfo.getAsJsonObject();
-            EntityTypes type = EntityTypes.getEntityType(entityObj.get("type").getAsString());
-            Integer xAxis = entityObj.get("x").getAsInt();
-            Integer yAxis = entityObj.get("y").getAsInt();
-            Integer layer = this.entitiesControl.getAllEntitiesFromPosition(new Position(xAxis, yAxis)).size();
+            JsonControl jsonInfo = new JsonControl(entityObj);
             
-            if (type.equals(EntityTypes.PLAYER)) {
-                this.player = new CharacterEntity(xAxis, yAxis, layer, gameMode);
-            } else if (type.equals(EntityTypes.KEY) || type.equals(EntityTypes.DOOR)) {
-                Integer key = entityObj.get("key").getAsInt();
-                this.entitiesControl.createEntity(xAxis, yAxis, layer, key, type);
-            } else if (type.equals(EntityTypes.PORTAL)) {
-                String colour = entityObj.get("colour").getAsString();
-                this.entitiesControl.createEntity(xAxis, yAxis, layer, colour, type);
+            if (jsonInfo.getType().equals(EntityTypes.PLAYER)) {
+                this.player = new CharacterEntity(jsonInfo.getPosition().getX(), jsonInfo.getPosition().getY(), gameMode);
             } else {
-                this.entitiesControl.createEntity(entityObj);
-            } 
-            
-            this.entitiesControl.createEntity(entityInfo, this.gameMode);
+                this.entitiesControl.createEntity(jsonInfo, this.gameMode);
+            }
         }
         entitiesControl.setPlayerStartPosition(player.getPosition());
 
@@ -130,7 +117,7 @@ public class Dungeon {
         }
         entitiesControl.moveAllMovingEntities(player);
         entitiesControl.tick();
-        entitiesControl.generateEnemyEntities(this.gameMode.toString());
+        entitiesControl.generateEnemyEntities(this.gameMode);
     }
 
     /**
@@ -145,7 +132,7 @@ public class Dungeon {
             entitiesControl.moveAllMovingEntities(player);
         }
         entitiesControl.tick();
-        entitiesControl.generateEnemyEntities(this.gameMode.toString());
+        entitiesControl.generateEnemyEntities(this.gameMode);
     }
 
     /**

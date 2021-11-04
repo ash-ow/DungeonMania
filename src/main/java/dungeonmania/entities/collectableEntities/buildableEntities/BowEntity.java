@@ -9,7 +9,7 @@ public class BowEntity extends BuildableEntity implements IWeaponEntity {
      * Bow constructor
      */
     public BowEntity() {
-        this(0, 0, 0);
+        this(0, 0);
     }
     
     /**
@@ -18,8 +18,8 @@ public class BowEntity extends BuildableEntity implements IWeaponEntity {
      * @param y y-coordinate on the map
      * @param layer layer on the map 
      */
-    public BowEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.BOW);
+    public BowEntity(int x, int y) {
+        super(x, y, EntityTypes.BOW);
         this.durability = 2;
     }
     

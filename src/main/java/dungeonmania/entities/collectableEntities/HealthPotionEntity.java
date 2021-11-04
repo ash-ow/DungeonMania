@@ -2,13 +2,14 @@ package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.util.JsonControl;
 
 public class HealthPotionEntity extends CollectableEntity {
     /**
      * Health potion constructor
      */
     public HealthPotionEntity() {
-        this(0, 0, 0);
+        this(0, 0);
     }
     
     /**
@@ -17,8 +18,12 @@ public class HealthPotionEntity extends CollectableEntity {
      * @param y y-coordinate on the map
      * @param layer layer on the map 
      */
-    public HealthPotionEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.HEALTH_POTION);
+    public HealthPotionEntity(int x, int y) {
+        super(x, y, EntityTypes.HEALTH_POTION);
+    }
+
+    public HealthPotionEntity(JsonControl info) {
+        this(info.getPosition().getX(), info.getPosition().getY());
     }
 
     /**

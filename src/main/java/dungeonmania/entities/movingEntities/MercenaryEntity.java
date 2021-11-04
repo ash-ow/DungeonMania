@@ -12,6 +12,7 @@ import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
+import dungeonmania.util.JsonControl;
 import dungeonmania.util.Position;
 
 public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity {
@@ -25,7 +26,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      * Mercenary constructor
      */
     public MercenaryEntity() {
-        this(0, 0, 0);
+        this(0, 0);
     }
 
     /**
@@ -34,12 +35,16 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      * @param y y-coordinate on the map
      * @param layer layer on the map 
      */
-    public MercenaryEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.MERCENARY);
+    public MercenaryEntity(int x, int y) {
+        super(x, y, EntityTypes.MERCENARY);
         this.health = 70;
         this.damage = 3;
         this.isBribed = false;
         this.moveBehaviour = new FollowPlayer();
+    }
+
+    public MercenaryEntity(JsonControl info) {
+        this(info.getPosition().getX(), info.getPosition().getY());
     }
 
     @Override

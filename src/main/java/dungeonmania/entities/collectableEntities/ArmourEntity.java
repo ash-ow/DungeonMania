@@ -2,13 +2,14 @@ package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.util.JsonControl;
 
 public class ArmourEntity extends CollectableEntity {
     /**
      * Armour constructor
      */
     public ArmourEntity() {
-        this(0, 0, 0);
+        this(0, 0);
     }
 
     /**
@@ -17,9 +18,13 @@ public class ArmourEntity extends CollectableEntity {
      * @param y y-coordinate on the map
      * @param layer layer on the map 
      */
-    public ArmourEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.ARMOUR);
+    public ArmourEntity(int x, int y) {
+        super(x, y, EntityTypes.ARMOUR);
         this.durability = 4;
+    }
+    
+    public ArmourEntity(JsonControl info) {
+        this(info.getPosition().getX(), info.getPosition().getY());
     }
     
     /**

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.dungeon.GameModeType;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
@@ -17,6 +18,7 @@ import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
+import dungeonmania.util.JsonControl;
 import dungeonmania.util.Position;
 import dungeonmania.entities.collectableEntities.*;
 
@@ -32,7 +34,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * Character constructor
      */
     public CharacterEntity() {
-        this(0, 0, 0);
+        this(0, 0);
     }
     
     /**
@@ -41,8 +43,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param y     y-coordinate on the map
      * @param layer layer on the map 
      */
-    public CharacterEntity(int x, int y, int layer) {
-        this(x, y, layer, "Standard");
+    public CharacterEntity(int x, int y) {
+        this(x, y, "Standard");
     }
     
     /**
@@ -52,11 +54,15 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param layer      layer on the map
      * @param gameMode   denotes the difficulty settings of the game 
      */
-    public CharacterEntity(int x, int y, int layer, String gameMode) {
-        super(x, y, layer, EntityTypes.PLAYER);
+    public CharacterEntity(int x, int y, String gameMode) {
+        super(x, y, EntityTypes.PLAYER);
         this.previousPosition = new Position(x, y);
         this.gameMode = gameMode;
-        this.health = (int) Math.ceil(100 / EntitiesControl.difficulty.get(gameMode));
+        this.health = (int) Math.ceil(100 / EntitiesControl.difficulty.get(GameModeType.getGameModeType(gameMode)));
+    }
+
+    public CharacterEntity(JsonControl info) {
+        this(info.getPosition().getX(), info.getPosition().getY());
     }
 
     public EntityResponse getInfo() {

@@ -18,7 +18,7 @@ public class SunStoneEntity extends CollectableEntity {
      * @param layer layer on the map 
      */
     public SunStoneEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.SUNSTONE);
+        super(x, y, layer, EntityTypes.SUN_STONE);
     }
 }
 

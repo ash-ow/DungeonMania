@@ -27,7 +27,8 @@ public enum EntityTypes {
     BOMB("bomb"),    
     SWORD("sword"),    
     ARMOUR("armour"),    
-    ONE_RING("one_ring"),    
+    ONE_RING("one_ring"),
+    SUN_STONE("sun_stone"),    
 
     // IBuildableEntity
     SHIELD("shield"),    

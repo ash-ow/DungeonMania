@@ -5,6 +5,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.collectableEntities.KeyEntity;
+import dungeonmania.entities.collectableEntities.SunStoneEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.response.models.EntityResponse;
@@ -14,6 +15,7 @@ public class DoorEntity extends Entity implements IBlocker {
     private int keyNumber;
     private boolean isLocked;
     private KeyEntity key;
+    private SunStoneEntity sun_stone;
 
     public DoorEntity(int keyNumber) {
         this(0, 0, 0, keyNumber);
@@ -47,6 +49,15 @@ public class DoorEntity extends Entity implements IBlocker {
             this.isLocked = false;
         }
     }
+
+    private void stoneUnlock(SunStoneEntity sun_stone, CharacterEntity player) {
+        if (sun_stone != null) {
+            sun_stone.used(player);
+            this.isLocked = false;
+        }
+    }
+
+
 
     @Override
     public boolean isBlocking() {

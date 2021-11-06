@@ -237,6 +237,9 @@ public class EntitiesControl {
                 break;
             case ONE_RING:
                 this.createNewEntityOnMap(new OneRingEntity(xAxis, yAxis, layer));
+                break;
+            case SUN_STONE: 
+                this.createNewEntityOnMap(new SunStoneEntity(xAxis, yAxis, layer));
         }
     }
 

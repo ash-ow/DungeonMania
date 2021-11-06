@@ -50,6 +50,8 @@ public class DoorEntity extends Entity implements IBlocker {
         }
     }
 
+    //SunStone unlock doors
+    //TO DO: work with keynumber to sort out unlocking 
     private void stoneUnlock(SunStoneEntity sun_stone, CharacterEntity player) {
         if (sun_stone != null) {
             sun_stone.used(player);

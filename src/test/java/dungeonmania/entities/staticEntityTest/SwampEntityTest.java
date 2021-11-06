@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
@@ -11,11 +12,12 @@ import dungeonmania.entities.IBlockerTest;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.staticEntities.SwampEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class SwampEntityTest implements IEntityTests, IBlockerTest {
+public class SwampEntityTest implements IEntityTests {
     @Override
     @Test
     public void TestEntityResponseInfo() {
@@ -30,8 +32,7 @@ public class SwampEntityTest implements IEntityTests, IBlockerTest {
     }
 
     @Test
-    @Override
-    public void TestBlock() {
+    public void TestPlayerNotBlocked() {
         ArrayList<IEntity> entities = new ArrayList<>();
         CharacterEntity player = new CharacterEntity(0, 0, 0);
         SwampEntity swamp = new SwampEntity(0, 1, 0);
@@ -39,12 +40,34 @@ public class SwampEntityTest implements IEntityTests, IBlockerTest {
 
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         dungeon.tick(Direction.DOWN);
-        assertEquals(player.getPosition(), new Position(0, 0));
+        assertEquals(player.getPosition(), new Position(0, 1));
+        
+        dungeon.tick(Direction.DOWN);
+        assertEquals(player.getPosition(), new Position(0, 2));
     }
 
     @Test
-    @Override
-    public void TestUnblock() {
-        // Swamps cannot be unblocked
+    public void TestMercenaryBlocked() {
+        ArrayList<IEntity> entities = new ArrayList<>();
+
+        // mercenary will try to move down to follow the player
+        MercenaryEntity merc = new MercenaryEntity(0, 0, 0);
+        entities.add(merc);
+        SwampEntity swamp = new SwampEntity(0, 1, 0);
+        entities.add(swamp);
+        CharacterEntity player = new CharacterEntity(0, 3, 0);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+
+        // mercenary can move down into the swamp and gets stuck for 3 ticks
+        dungeon.tick(Direction.DOWN);
+        assertEquals(merc.getPosition(), new Position(0, 1));
+        dungeon.tick(Direction.DOWN);
+        assertEquals(merc.getPosition(), new Position(0, 1));
+        dungeon.tick(Direction.DOWN);
+        assertEquals(merc.getPosition(), new Position(0, 1));
+        
+        // mercenary is finally able to move down to follow the player
+        dungeon.tick(Direction.DOWN);
+        assertEquals(merc.getPosition(), new Position(0, 2));
     }
 }

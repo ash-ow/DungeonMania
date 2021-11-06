@@ -1,5 +1,8 @@
 package dungeonmania.entities.staticEntities;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.IBlocker;
@@ -14,6 +17,8 @@ public class SwampEntity extends Entity implements IBlocker {
     public SwampEntity(int x, int y, int layer) {
         super(x, y, layer, "swamp");
     }
+
+    Map<Entity, Integer> entitiesTryingToPass = new HashMap<Entity, Integer>();
 
     @Override
     public boolean isBlocking() {

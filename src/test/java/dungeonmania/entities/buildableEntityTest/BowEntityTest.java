@@ -72,7 +72,7 @@ public class BowEntityTest implements IBuildableEntityTests {
     @Test
     @Override
     public void TestCollect() {
-        ArmourEntity armour = new ArmourEntity(0,0,0);
+        ArmourEntity armour = new ArmourEntity(0, 0);
         assertEntityIsCollected(armour);
     }
 

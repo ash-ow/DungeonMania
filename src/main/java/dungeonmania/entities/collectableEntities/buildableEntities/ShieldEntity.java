@@ -12,7 +12,7 @@ public class ShieldEntity extends BuildableEntity {
      * Shield constructor
      */
     public ShieldEntity() {
-        this(0, 0, 0); 
+        this(0, 0); 
     }
     
     /**
@@ -21,8 +21,8 @@ public class ShieldEntity extends BuildableEntity {
      * @param y y-coordinate on the map
      * @param layer layer on the map 
      */
-    public ShieldEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.SHIELD);
+    public ShieldEntity(int x, int y) {
+        super(x, y, EntityTypes.SHIELD);
         this.durability = 4;
     }
     

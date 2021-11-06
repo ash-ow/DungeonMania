@@ -51,7 +51,7 @@ public class ShieldTest implements IBuildableEntityTests {
         CharacterEntity player = new CharacterEntity();
         WoodEntity wood = new WoodEntity();
         WoodEntity wood2 = new WoodEntity();
-        KeyEntity key = new KeyEntity(0,0,0,1);
+        KeyEntity key = new KeyEntity(0, 0, 1);
         player.addEntityToInventory(wood);
         player.addEntityToInventory(wood2);
         player.addEntityToInventory(key);
@@ -88,7 +88,7 @@ public class ShieldTest implements IBuildableEntityTests {
         ShieldEntity shield = new ShieldEntity();
         List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
         inventory.add(new WoodEntity());
-        inventory.add(new KeyEntity(0,0,0,1));
+        inventory.add(new KeyEntity(0, 0, 1));
         inventory.add(new TreasureEntity());
         assertFalse(shield.isBuildable(inventory));
     }
@@ -130,7 +130,7 @@ public class ShieldTest implements IBuildableEntityTests {
         WoodEntity wood = new WoodEntity();
         WoodEntity wood2 = new WoodEntity();
         TreasureEntity treasure = new TreasureEntity();
-        KeyEntity key = new KeyEntity(0,0,0,1);
+        KeyEntity key = new KeyEntity(0, 0, 1);
         player.addEntityToInventory(wood);
         player.addEntityToInventory(wood2);
         player.addEntityToInventory(treasure);

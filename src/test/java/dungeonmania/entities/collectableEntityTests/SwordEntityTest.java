@@ -18,7 +18,7 @@ public class SwordEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestEntityResponseInfo() {
-        SwordEntity sword = new SwordEntity(0, 0, 0);
+        SwordEntity sword = new SwordEntity(0, 0);
         assertEntityResponseInfoEquals(sword, "sword-0-0-0", EntityTypes.SWORD, new Position(0,0), false);
     }
 
@@ -49,7 +49,7 @@ public class SwordEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestCollect() {
-        SwordEntity sword = new SwordEntity(0,0,0);
+        SwordEntity sword = new SwordEntity(0, 0);
         assertEntityIsCollected(sword);
     }
 }

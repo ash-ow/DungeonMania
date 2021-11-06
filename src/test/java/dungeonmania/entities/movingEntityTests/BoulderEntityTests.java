@@ -25,7 +25,7 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IBlo
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        BoulderEntity boulder = new BoulderEntity(0, 0, 0);
+        BoulderEntity boulder = new BoulderEntity(0, 0);
         assertEntityResponseInfoEquals(
             boulder,
             "boulder-0-0-0",
@@ -38,8 +38,8 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IBlo
     @Override
     @Test
     public void TestMove() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        BoulderEntity boulder = new BoulderEntity(0, 1, 0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        BoulderEntity boulder = new BoulderEntity(0, 1);
         ArrayList<IEntity> entities = new ArrayList<>();
     
         entities.add(boulder);
@@ -59,9 +59,9 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IBlo
     @Test
     @Override
     public void TestBlock() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        BoulderEntity boulder = new BoulderEntity(0, 1, 0);
-        WallEntity wall = new WallEntity(0, 2, 0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        BoulderEntity boulder = new BoulderEntity(0, 1);
+        WallEntity wall = new WallEntity(0, 2);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(boulder);
         entities.add(wall);
@@ -73,9 +73,10 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IBlo
 
     @Test
     public void testBoulderOverlayOnSwitch() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        BoulderEntity boulder = new BoulderEntity(0, 1, 1);
-        SwitchEntity switches = new SwitchEntity(0, 1, 0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        BoulderEntity boulder = new BoulderEntity(0, 1);
+        boulder.setPosition(boulder.getPosition().asLayer(1));
+        SwitchEntity switches = new SwitchEntity(0, 1);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(boulder);
         entities.add(switches);
@@ -88,9 +89,9 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IBlo
 
     @Test
     public void testBoulderPushToSwitch() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        BoulderEntity boulder = new BoulderEntity(0, 1, 0);
-        SwitchEntity switches = new SwitchEntity(0, 2, 0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        BoulderEntity boulder = new BoulderEntity(0, 1);
+        SwitchEntity switches = new SwitchEntity(0, 2);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(boulder);
         entities.add(switches);
@@ -105,8 +106,8 @@ public class BoulderEntityTests implements IMovingEntityTest, IEntityTests, IBlo
     @Override
     @Test
     public void TestUnblock() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        BoulderEntity boulder = new BoulderEntity(0, 1, 0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        BoulderEntity boulder = new BoulderEntity(0, 1);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(boulder);
         String jsonGoals = "{ \"goal\": \"exit\"}";

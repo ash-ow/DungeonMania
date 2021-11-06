@@ -18,9 +18,9 @@ public class BoulderGoalTests implements IGoalTests {
     @Override
     @Test
     public void SimpleGoalTest() {
-        CharacterEntity player = new CharacterEntity(0, 1, 0);
-        BoulderEntity boulder = new BoulderEntity(0, 2, 0);
-        SwitchEntity switchEntity = new SwitchEntity(0, 3, 0);
+        CharacterEntity player = new CharacterEntity(0, 1);
+        BoulderEntity boulder = new BoulderEntity(0, 2);
+        SwitchEntity switchEntity = new SwitchEntity(0, 3);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(boulder);
         entities.add(switchEntity);

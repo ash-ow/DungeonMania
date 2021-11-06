@@ -31,9 +31,9 @@ public class PortalEntityTest implements IEntityTests, IInteractingEntityTest{
     @Override
     @Test
     public void TestInteraction() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        PortalEntity portal1 = new PortalEntity(0, 1, 0, "BLUE");
-        PortalEntity portal2 = new PortalEntity(5, 1, 0, "BLUE");
+        CharacterEntity player = new CharacterEntity(0, 0);
+        PortalEntity portal1 = new PortalEntity(0, 1, "BLUE");
+        PortalEntity portal2 = new PortalEntity(5, 1, "BLUE");
         EntitiesControl entities = new EntitiesControl();
         entities.addEntity(portal1);
         entities.addEntity(portal2);
@@ -46,10 +46,10 @@ public class PortalEntityTest implements IEntityTests, IInteractingEntityTest{
 
     @Test
     public void TestPortalBlocked() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        PortalEntity portal1 = new PortalEntity(0, 1, 0, "BLUE");
-        PortalEntity portal2 = new PortalEntity(5, 1, 0, "BLUE");
-        WallEntity wall = new WallEntity(5, 2, 0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        PortalEntity portal1 = new PortalEntity(0, 1, "BLUE");
+        PortalEntity portal2 = new PortalEntity(5, 1, "BLUE");
+        WallEntity wall = new WallEntity(5, 2);
         EntitiesControl entities = new EntitiesControl();
         entities.addEntity(portal1);
         entities.addEntity(portal2);

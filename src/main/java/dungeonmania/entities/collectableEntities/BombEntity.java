@@ -11,6 +11,7 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.staticEntities.SwitchEntity;
 import dungeonmania.util.Direction;
+import dungeonmania.util.DungeonEntityJsonParser;
 import dungeonmania.util.Position;
 
 public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
@@ -20,7 +21,7 @@ public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
      * Bomb constructor
      */
     public BombEntity() {
-        this(0, 0, 0);
+        this(0, 0);
     }
     
     /**
@@ -29,8 +30,12 @@ public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
      * @param y y-coordinate on the map
      * @param layer layer on the map 
      */
-    public BombEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.BOMB);
+    public BombEntity(int x, int y) {
+        super(x, y, EntityTypes.BOMB);
+    }
+
+    public BombEntity(DungeonEntityJsonParser info) {
+        this(info.getX(), info.getY());
     }
     
     /**

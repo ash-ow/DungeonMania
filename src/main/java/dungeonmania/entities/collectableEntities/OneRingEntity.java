@@ -3,6 +3,7 @@ package dungeonmania.entities.collectableEntities;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.util.DungeonEntityJsonParser;
 
 public class OneRingEntity extends CollectableEntity {
     private final float dropChance = 0.1f;
@@ -11,7 +12,7 @@ public class OneRingEntity extends CollectableEntity {
      * One Ring constructor
      */
     public OneRingEntity() {
-        this(0, 0, 0);
+        this(0, 0);
     }
 
     /**
@@ -20,8 +21,12 @@ public class OneRingEntity extends CollectableEntity {
      * @param y y-coordinate on the map
      * @param layer layer on the map 
      */
-    public OneRingEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.ONE_RING);
+    public OneRingEntity(int x, int y) {
+        super(x, y, EntityTypes.ONE_RING);
+    }
+
+    public OneRingEntity(DungeonEntityJsonParser info) {
+        this(info.getX(), info.getY());
     }
 
     public float getDropChance() {

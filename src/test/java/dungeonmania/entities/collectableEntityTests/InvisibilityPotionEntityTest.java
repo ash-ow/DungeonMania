@@ -25,7 +25,7 @@ public class  InvisibilityPotionEntityTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        InvisibilityPotionEntity  invisibility_potion = new  InvisibilityPotionEntity(0,0,0);
+        InvisibilityPotionEntity  invisibility_potion = new  InvisibilityPotionEntity(0, 0);
         assertEntityResponseInfoEquals(
             invisibility_potion,
             "invisibility_potion-0-0-0",
@@ -38,7 +38,7 @@ public class  InvisibilityPotionEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestCollect() {
-        InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0,0,0);
+        InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0, 0);
         assertEntityIsCollected(invisibility_potion);
     }
 
@@ -47,8 +47,8 @@ public class  InvisibilityPotionEntityTest implements ICollectableEntityTest {
     @Test
     @Override 
     public void TestUseCollectable() {
-        CharacterEntity player = new CharacterEntity(0,0,0);
-        InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0,0,0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0, 0);
         invisibility_potion.used(player);
         assertTrue(player.isInvisible());
     }
@@ -56,9 +56,9 @@ public class  InvisibilityPotionEntityTest implements ICollectableEntityTest {
 
     @Test
     public void TestAvoidBattle() {
-        InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0,0,0);
-        CharacterEntity player = new CharacterEntity(0,0,0);
-        SpiderEntity spider = new SpiderEntity(0,1,0);
+        InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0, 0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        SpiderEntity spider = new SpiderEntity(0, 1);
         ArrayList<IEntity> entities = new ArrayList<>();
         
         entities.add(spider);
@@ -78,10 +78,10 @@ public class  InvisibilityPotionEntityTest implements ICollectableEntityTest {
 
     @Test
     public void TestCanStillCollect() {
-        CharacterEntity player = new CharacterEntity(0,0,0);
+        CharacterEntity player = new CharacterEntity(0, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
-        InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0,0,0);
-        WoodEntity wood = new WoodEntity(0,1,0);
+        InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0, 0);
+        WoodEntity wood = new WoodEntity(0, 1);
         entities.add(invisibility_potion);
         entities.add(wood);
         
@@ -97,8 +97,8 @@ public class  InvisibilityPotionEntityTest implements ICollectableEntityTest {
     @Test
     public void TestInvisibilityRunsOut() {
         ArrayList<IEntity> entities = new ArrayList<>();
-        InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0,1,0);
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
+        InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0, 1);
+        CharacterEntity player = new CharacterEntity(0, 0);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         entities.add(invisibility_potion);
         

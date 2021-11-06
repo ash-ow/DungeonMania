@@ -2,15 +2,20 @@ package dungeonmania;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.parallel.ResourceLock;
 
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.util.Direction;
 
 public class DungeonManiaControllerTests {
+    @Test
+    public void TestFailureCICD() {
+        assertTrue(false);
+    }
+    
     @Test
     public void testCreateBoulders() {
         DungeonManiaController dungeonManiaController = new DungeonManiaController();

@@ -12,7 +12,7 @@ import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonParser;
 import dungeonmania.util.Position;
 
 public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity {
@@ -43,7 +43,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         this.moveBehaviour = new FollowPlayer();
     }
 
-    public MercenaryEntity(JsonControl info) {
+    public MercenaryEntity(DungeonEntityJsonParser info) {
         this(info.getPosition().getX(), info.getPosition().getY());
     }
 

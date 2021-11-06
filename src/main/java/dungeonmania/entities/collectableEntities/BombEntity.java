@@ -11,7 +11,7 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.staticEntities.SwitchEntity;
 import dungeonmania.util.Direction;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonParser;
 import dungeonmania.util.Position;
 
 public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
@@ -34,7 +34,7 @@ public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
         super(x, y, EntityTypes.BOMB);
     }
 
-    public BombEntity(JsonControl info) {
+    public BombEntity(DungeonEntityJsonParser info) {
         this(info.getPosition().getX(), info.getPosition().getY());
     }
     

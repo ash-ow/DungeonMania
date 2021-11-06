@@ -12,7 +12,7 @@ import com.google.gson.JsonObject;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonParser;
 import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
 import dungeonmania.dungeon.entitiesFactory.EntitiesFactory;
@@ -168,7 +168,7 @@ public class EntitiesControl {
     // endregion
     
     
-    public void createEntity(JsonControl jsonInfo, GameModeType gameMode) {
+    public void createEntity(DungeonEntityJsonParser jsonInfo, GameModeType gameMode) {
         EntitiesFactory.generateEntity(jsonInfo, this, gameMode);
     }
     
@@ -179,7 +179,7 @@ public class EntitiesControl {
      * @param type      type of entity
      */
     public void createEntity(Integer x, Integer y, EntityTypes type) {
-        JsonControl jsonElement = new JsonControl();
+        DungeonEntityJsonParser jsonElement = new DungeonEntityJsonParser();
         jsonElement.setPosition(new Position(x, y));
         jsonElement.setType(type);
         EntitiesFactory.generateEntity(jsonElement, this, GameModeType.STANDARD);

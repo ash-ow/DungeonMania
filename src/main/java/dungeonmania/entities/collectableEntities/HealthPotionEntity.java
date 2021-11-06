@@ -2,7 +2,7 @@ package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonParser;
 
 public class HealthPotionEntity extends CollectableEntity {
     /**
@@ -22,7 +22,7 @@ public class HealthPotionEntity extends CollectableEntity {
         super(x, y, EntityTypes.HEALTH_POTION);
     }
 
-    public HealthPotionEntity(JsonControl info) {
+    public HealthPotionEntity(DungeonEntityJsonParser info) {
         this(info.getPosition().getX(), info.getPosition().getY());
     }
 

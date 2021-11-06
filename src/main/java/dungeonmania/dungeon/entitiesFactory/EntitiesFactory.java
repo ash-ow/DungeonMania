@@ -2,77 +2,41 @@ package dungeonmania.dungeon.entitiesFactory;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.dungeon.GameModeType;
+import dungeonmania.entities.Entity;
+import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.movingEntities.*;
 import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
 import dungeonmania.entities.staticEntities.*;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonParser;
 
 public class EntitiesFactory extends EntitiesControl {
-    public static void generateEntity(JsonControl JsonInfo, EntitiesControl entities, GameModeType gameMode) {
-        switch (JsonInfo.getType()){
-            case WALL:
-                entities.createNewEntityOnMap(new WallEntity(JsonInfo));
-                break;
-            case EXIT:
-                entities.createNewEntityOnMap(new ExitEntity(JsonInfo));
-                break;
-            case SWITCH:
-                entities.createNewEntityOnMap(new SwitchEntity(JsonInfo));
-                break;
-            case BOULDER:
-                entities.createNewEntityOnMap(new BoulderEntity(JsonInfo));
-                break;
-            case SPIDER:
-                entities.createNewEntityOnMap(new SpiderEntity(JsonInfo));
-                break;
-            case WOOD:
-                entities.createNewEntityOnMap(new WoodEntity(JsonInfo));
-                break;
-            case ARROW:
-                entities.createNewEntityOnMap(new ArrowsEntity(JsonInfo));
-                break;
-            case BOMB:
-                entities.createNewEntityOnMap(new BombEntity(JsonInfo));
-                break;
-            case SWORD:
-                entities.createNewEntityOnMap(new SwordEntity(JsonInfo));
-                break;
-            case ARMOUR:
-                entities.createNewEntityOnMap(new ArmourEntity(JsonInfo));
-                break;
-            case TREASURE:
-                entities.createNewEntityOnMap(new TreasureEntity(JsonInfo));
-                break;
-            case HEALTH_POTION:
-                entities.createNewEntityOnMap(new HealthPotionEntity(JsonInfo));
-                break;
-            case INVISIBILITY_POTION:
-                entities.createNewEntityOnMap(new InvisibilityPotionEntity(JsonInfo));
-                break;
-            case INVINCIBILITY_POTION:
-                entities.createNewEntityOnMap(new InvincibilityPotionEntity(JsonInfo));
-                break;
-            case MERCENARY:
-                entities.createNewEntityOnMap(new MercenaryEntity(JsonInfo));
-                break;
-            case ZOMBIE_TOAST:
-                entities.createNewEntityOnMap(new ZombieToastEntity(JsonInfo));
-                break;
-            case ZOMBIE_TOAST_SPAWNER:
-                entities.createNewEntityOnMap(new ZombieToastSpawnerEntity(JsonInfo));
-                break;
-            case ONE_RING:
-                entities.createNewEntityOnMap(new OneRingEntity(JsonInfo));
-                break;
-            case KEY:
-                entities.createNewEntityOnMap(new KeyEntity(JsonInfo));
-                break;
-            case PORTAL:
-                entities.createNewEntityOnMap(new PortalEntity(JsonInfo));
-                break;
-            case DOOR:
-                entities.createNewEntityOnMap(new DoorEntity(JsonInfo));
+    public static void generateEntity(DungeonEntityJsonParser jsonInfo, EntitiesControl entities, GameModeType gameMode) {
+        IEntity entity;
+        switch (jsonInfo.getType()){
+            case WALL: entity = new WallEntity(jsonInfo); break;
+            case EXIT: entity = new ExitEntity(jsonInfo); break;
+            case SWITCH: entity = new SwitchEntity(jsonInfo); break;
+            case BOULDER: entity = new BoulderEntity(jsonInfo); break;
+            case SPIDER: entity = new SpiderEntity(jsonInfo); break;
+            case WOOD: entity = new WoodEntity(jsonInfo); break;
+            case ARROW: entity = new ArrowsEntity(jsonInfo); break;
+            case BOMB: entity = new BombEntity(jsonInfo); break;
+            case SWORD: entity = new SwordEntity(jsonInfo); break;
+            case ARMOUR: entity = new ArmourEntity(jsonInfo); break;
+            case TREASURE: entity = new TreasureEntity(jsonInfo); break;
+            case HEALTH_POTION: entity = new HealthPotionEntity(jsonInfo); break;
+            case INVISIBILITY_POTION: entity = new InvisibilityPotionEntity(jsonInfo); break;
+            case INVINCIBILITY_POTION: entity = new InvincibilityPotionEntity(jsonInfo); break;
+            case MERCENARY: entity = new MercenaryEntity(jsonInfo); break;
+            case ZOMBIE_TOAST: entity = new ZombieToastEntity(jsonInfo); break;
+            case ZOMBIE_TOAST_SPAWNER: entity = new ZombieToastSpawnerEntity(jsonInfo); break;
+            case ONE_RING: entity = new OneRingEntity(jsonInfo); break;
+            case KEY: entity = new KeyEntity(jsonInfo); break;
+            case PORTAL: entity = new PortalEntity(jsonInfo); break;
+            case DOOR: entity = new DoorEntity(jsonInfo);
+            default: entity = new WallEntity(jsonInfo);
         }
+        entities.createNewEntityOnMap(entity);
     }
 }

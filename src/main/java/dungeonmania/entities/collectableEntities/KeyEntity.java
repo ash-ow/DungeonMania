@@ -2,7 +2,7 @@ package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonParser;
 
 public class KeyEntity extends CollectableEntity {
     private int keyNumber;
@@ -27,7 +27,7 @@ public class KeyEntity extends CollectableEntity {
         this.keyNumber = keyNumber;
     }
 
-    public KeyEntity(JsonControl info) {
+    public KeyEntity(DungeonEntityJsonParser info) {
         this(info.getPosition().getX(), info.getPosition().getY(), info.getKey());
     }
 

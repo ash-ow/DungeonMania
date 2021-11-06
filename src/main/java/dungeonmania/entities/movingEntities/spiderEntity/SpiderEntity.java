@@ -7,7 +7,7 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IAutoMovingEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonParser;
 import dungeonmania.util.Position;
 
 
@@ -36,7 +36,7 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
         firstPosition = this.position;
     }
 
-    public SpiderEntity(JsonControl info) {
+    public SpiderEntity(DungeonEntityJsonParser info) {
         this(info.getPosition().getX(), info.getPosition().getY());
     }
 

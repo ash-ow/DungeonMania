@@ -18,7 +18,7 @@ import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonParser;
 import dungeonmania.util.Position;
 import dungeonmania.entities.collectableEntities.*;
 
@@ -61,7 +61,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.health = (int) Math.ceil(100 / EntitiesControl.difficulty.get(gameMode));
     }
 
-    public CharacterEntity(JsonControl info) {
+    public CharacterEntity(DungeonEntityJsonParser info) {
         this(info.getPosition().getX(), info.getPosition().getY());
     }
 

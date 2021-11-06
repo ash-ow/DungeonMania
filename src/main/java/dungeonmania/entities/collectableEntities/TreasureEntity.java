@@ -2,7 +2,7 @@ package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonParser;
 
 public class TreasureEntity extends CollectableEntity {
     /**
@@ -22,7 +22,7 @@ public class TreasureEntity extends CollectableEntity {
         super(x, y, EntityTypes.TREASURE);
     }
 
-    public TreasureEntity(JsonControl info) {
+    public TreasureEntity(DungeonEntityJsonParser info) {
         this(info.getPosition().getX(), info.getPosition().getY());
     }
 }

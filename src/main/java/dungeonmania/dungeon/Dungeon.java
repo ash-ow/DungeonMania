@@ -19,7 +19,7 @@ import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonParser;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -52,12 +52,12 @@ public class Dungeon {
         this.initalGoals = goalConditions;
         for (JsonElement entityInfo : entities) {
             JsonObject entityObj = entityInfo.getAsJsonObject();
-            JsonControl jsonInfo = new JsonControl(entityObj);
+            DungeonEntityJsonParser dungeonEntityJsonInfo = new DungeonEntityJsonParser(entityObj);
             
-            if (jsonInfo.getType().equals(EntityTypes.PLAYER)) {
-                this.player = new CharacterEntity(jsonInfo.getPosition().getX(), jsonInfo.getPosition().getY(), this.gameMode);
+            if (dungeonEntityJsonInfo.getType().equals(EntityTypes.PLAYER)) {
+                this.player = new CharacterEntity(dungeonEntityJsonInfo.getX(), dungeonEntityJsonInfo.getY(), this.gameMode);
             } else {
-                this.entitiesControl.createEntity(jsonInfo, this.gameMode);
+                this.entitiesControl.createEntity(dungeonEntityJsonInfo, this.gameMode);
             }
         }
         entitiesControl.setPlayerStartPosition(player.getPosition());

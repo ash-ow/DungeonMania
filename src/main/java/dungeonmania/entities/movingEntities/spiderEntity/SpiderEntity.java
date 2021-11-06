@@ -95,8 +95,10 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
     }
 
     @Override
-    public void loseHealth(float enemyHealth, float enemyDamage) {
-        this.health -= ((enemyHealth * enemyDamage) / 5);
+    public float loseHealth(float enemyHealth, float enemyDamage) {
+        float damage = ((enemyHealth * enemyDamage) / 5);
+        this.health -= damage;
+        return damage;
     }
 //endregion
 

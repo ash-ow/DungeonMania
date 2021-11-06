@@ -26,6 +26,7 @@ public enum EntityTypes {
     ARROW("arrow"),    
     BOMB("bomb"),    
     SWORD("sword"),    
+    ANDURIL("anduril"),    
     ARMOUR("armour"),    
     ONE_RING("one_ring"),    
 

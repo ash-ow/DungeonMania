@@ -95,15 +95,17 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param enemyDamage   Damage of the enemy which is used to calculate total damage
      */
     @Override
-    public void loseHealth(float enemyHealth, float enemyDamage) {
+    public float loseHealth(float enemyHealth, float enemyDamage) {
+        float damage = 0;
         if (!this.isInvincible()) {
-            float damage = ((enemyHealth * enemyDamage) / 10);
+            damage = ((enemyHealth * enemyDamage) / 10);
             for (CollectableEntity item : getItemsFromInventory(IDefensiveEntity.class)) {
                 IDefensiveEntity defender = (IDefensiveEntity)item;
                 damage = defender.reduceDamage(damage, this);
             }
             this.health -= damage;
         }
+        return damage;
     }
 
     /**

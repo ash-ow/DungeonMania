@@ -11,7 +11,7 @@ public interface IBattlingEntity extends IContactingEntity {
     public float getHealth();
     public void setHealth(float health);
     public float getDamage();
-    public void loseHealth(float enemyHealth, float enemyDamage);
+    public float loseHealth(float enemyHealth, float enemyDamage);
 
     /**
      * Checks status of the player and then calls battle function

@@ -1,10 +1,12 @@
 package dungeonmania.entities.movingEntities;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Queue;
 
 import dungeonmania.dungeon.EntitiesControl;
@@ -146,26 +148,19 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         this.moveBehaviour = newBehaviour;        
     }
 
-    
     /**
      * Takes the mercenary's current position and finds the closest distance to every point in the map
      * @return a map with each position on the map, and the path to get to there (path will be a series of positions to get to that point)
      */
-    public Map<Position,List<Position>> Dijkstras(Position mercenaryPosition, Position playerPosition){
-        Map<Position,List<Position>> shortestPath = new HashMap<>();
+    public List<Position> findPath(Position Position, Position playerPosition){
+        List<Position> shortestPath = new ArrayList<>();
+        PriorityQueue queue = new PriorityQueue<>();
+        Map<Position,List<Position>> pathsMap = new HashMap<>();
+        
+        
         // create a list of all positions in the dungeon unless they are Iblocker
-        // go through the list and calculate the distance between them 
+        // run dijkstra's algorithm to find out the shortest path to each position
+        // Within the paths map, return the list of positions which correspond to the player's position
         return shortestPath;
     }
-
-    // public void enqueue(){        
-    // }
-
-    // public void dequeue(){
-        
-    // }
-
-    // public void changePriority(){
-        
-    // }
 }

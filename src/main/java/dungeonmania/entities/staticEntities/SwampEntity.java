@@ -6,6 +6,7 @@ import java.util.Map;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.ITicker;
 
@@ -15,7 +16,7 @@ public class SwampEntity extends Entity implements ITicker {
     }
     
     public SwampEntity(int x, int y, int layer) {
-        super(x, y, layer, "swamp");
+        super(x, y, layer, EntityTypes.SWAMP);
     }
 
     /** The maximum number of ticks a non-player entity must remain in the swamp */

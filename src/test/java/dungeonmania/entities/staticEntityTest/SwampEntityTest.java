@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlockerTest;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
@@ -25,7 +26,7 @@ public class SwampEntityTest implements IEntityTests {
         assertEntityResponseInfoEquals(
             swamp,
             "swamp-0-0-0",
-            "swamp",
+            EntityTypes.SWAMP,
             new Position(0,0,0),
             false
         );

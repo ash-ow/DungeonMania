@@ -237,6 +237,8 @@ public class EntitiesControl {
                 break;
             case ONE_RING:
                 this.createNewEntityOnMap(new OneRingEntity(xAxis, yAxis, layer));
+            case SWAMP:
+                this.createNewEntityOnMap(new SwampEntity(xAxis, yAxis, layer));
         }
     }
 

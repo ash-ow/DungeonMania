@@ -1,10 +1,8 @@
 package dungeonmania.entities.collectableEntities;
 
-import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public class SwordEntity extends CollectableEntity implements IWeaponEntity{
+public class SwordEntity extends CollectableEntity implements IWeaponEntity {
     /**
      * Sword constructor
      */
@@ -21,5 +19,10 @@ public class SwordEntity extends CollectableEntity implements IWeaponEntity{
     public SwordEntity(int x, int y, int layer) {
         super(x, y, layer, EntityTypes.SWORD);
         this.durability = 5;
+    }
+
+    @Override
+    public float getDamage() {
+        return 3;
     }
 }

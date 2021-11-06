@@ -2,6 +2,7 @@ package dungeonmania.entities.movingEntities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
@@ -11,6 +12,7 @@ import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
+import dungeonmania.entities.collectableEntities.IDefensiveEntity;
 import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
@@ -96,13 +98,9 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public void loseHealth(float enemyHealth, float enemyDamage) {
         if (!this.isInvincible()) {
             float damage = ((enemyHealth * enemyDamage) / 10);
-            if(this.containedInInventory(EntityTypes.ARMOUR)) {
-                ArmourEntity armour = (ArmourEntity) findFirstInInventory(EntityTypes.ARMOUR);
-                damage = armour.reduceDamage(damage, this);
-            }
-            if(this.containedInInventory(EntityTypes.SHIELD)) {
-                ShieldEntity shield = (ShieldEntity) findFirstInInventory(EntityTypes.SHIELD);
-                damage = shield.reduceDamage(damage, this);
+            for (CollectableEntity item : getItemsFromInventory(IDefensiveEntity.class)) {
+                IDefensiveEntity defender = (IDefensiveEntity)item;
+                damage = defender.reduceDamage(damage, this);
             }
             this.health -= damage;
         }
@@ -133,14 +131,21 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
             OneRingEntity ring = (OneRingEntity) EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class);
             if (ring != null) {
                 ring.used(this);
+                return true;
             }
             return false;
         }
         return true;
     }
+    
 //endregion
 
 //region Inventory
+
+    List<CollectableEntity> getItemsFromInventory(Class<?> cls) {
+        return this.inventory.stream().filter(cls::isInstance).collect(Collectors.toList());
+    }
+
     public void addEntityToInventory(CollectableEntity entity) {
         inventory.add(entity);
     }

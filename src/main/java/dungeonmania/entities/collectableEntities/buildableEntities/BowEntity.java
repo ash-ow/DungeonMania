@@ -31,4 +31,9 @@ public class BowEntity extends BuildableEntity implements IWeaponEntity {
         this.requiredComponents.put(EntityTypes.WOOD, 1);
         this.requiredComponents.put(EntityTypes.ARROW, 3);
     }
+
+    @Override
+    public float getDamage() {
+        return 2;
+    }
 }

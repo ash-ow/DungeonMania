@@ -3,7 +3,7 @@ package dungeonmania.entities.collectableEntities;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public class ArmourEntity extends CollectableEntity {
+public class ArmourEntity extends CollectableEntity implements IDefensiveEntity {
     /**
      * Armour constructor
      */
@@ -22,12 +22,7 @@ public class ArmourEntity extends CollectableEntity {
         this.durability = 4;
     }
     
-    /**
-     * Reduces input damage for the player
-     * @param damage input damage for the player
-     * @param player player which is being damaged
-     * @return redecued value for damage as a float
-     */
+    @Override
     public float reduceDamage(float damage, CharacterEntity player) {
         this.used(player);
         damage = damage/2;

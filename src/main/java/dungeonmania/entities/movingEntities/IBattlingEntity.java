@@ -1,14 +1,11 @@
 package dungeonmania.entities.movingEntities;
 
-import java.util.List;
-
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.IWeaponEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.util.RandomChance;
 import dungeonmania.entities.IContactingEntity;
-import dungeonmania.entities.IEntity;
 
 public interface IBattlingEntity extends IContactingEntity {
     public float getHealth();
@@ -47,7 +44,7 @@ public interface IBattlingEntity extends IContactingEntity {
     
     /**
      * Battle interactions
-     * @param player           the player which is battling
+     * @param player the player which is battling
      */
     default void doBattle(CharacterEntity player) {
         if (player.isInvincible()){

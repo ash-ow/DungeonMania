@@ -1,15 +1,15 @@
 package dungeonmania.entities.staticEntities;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
-import dungeonmania.entities.IBlocker;
-import dungeonmania.entities.movingEntities.IMovingEntity;
-import dungeonmania.util.Direction;
+import dungeonmania.entities.IEntity;
+import dungeonmania.entities.ITicker;
 
-public class SwampEntity extends Entity implements IBlocker {
+public class SwampEntity extends Entity implements ITicker {
     public SwampEntity() {
         this(0, 0, 0);
     }
@@ -18,15 +18,39 @@ public class SwampEntity extends Entity implements IBlocker {
         super(x, y, layer, "swamp");
     }
 
-    Map<Entity, Integer> entitiesTryingToPass = new HashMap<Entity, Integer>();
+    /** The maximum number of ticks a non-player entity must remain in the swamp */
+    int ticksRequiredToPass = 3;
+    /** 
+     * @key the entity
+     * @value the number of ticks they must still remain in the swamp
+     */
+    Map<IEntity, Integer> entitiesTryingToPass = new HashMap<IEntity, Integer>();
 
     @Override
-    public boolean isBlocking() {
-        return true;
+    public void tick(EntitiesControl entitiesControl) {
+        List<IEntity> stuckEntities = entitiesControl.getAllEntitiesFromPosition(this.position);
+        addNewEntitiesToEntitiesTryingToPass(stuckEntities);
+        keepEntityStuckIfNeeded();
     }
 
-    @Override
-    public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
-        return false;
+    void addNewEntitiesToEntitiesTryingToPass(List<IEntity> stuckEntities) {
+        for (IEntity entity : stuckEntities) {
+            if (!this.entitiesTryingToPass.containsKey(entity)) {
+                this.entitiesTryingToPass.put(entity, this.ticksRequiredToPass);
+            }
+        }
+    }
+
+    void keepEntityStuckIfNeeded() {
+        for (Map.Entry<IEntity, Integer> entry : this.entitiesTryingToPass.entrySet()) {
+            IEntity entity = entry.getKey();
+            int ticksRemaining = entry.getValue();
+            if (ticksRemaining > 0) {
+                entity.setPosition(this.position);
+                this.entitiesTryingToPass.put(entity, ticksRemaining - 1);
+            } else {
+                this.entitiesTryingToPass.remove(entity);
+            }
+        }
     }
 }

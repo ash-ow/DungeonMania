@@ -226,6 +226,10 @@ public class EntitiesControl {
             case INVINCIBILITY_POTION:
                 this.createNewEntityOnMap(new InvincibilityPotionEntity(xAxis, yAxis, layer));
                 break;
+            case ANDURIL:
+                this.createNewEntityOnMap(new OneRingEntity(xAxis, yAxis, layer));
+            case ASSASSIN:
+                this.createNewEntityOnMap(new OneRingEntity(xAxis, yAxis, layer));
             case MERCENARY:
                 this.createNewEntityOnMap(new MercenaryEntity(xAxis, yAxis, layer));
                 break;

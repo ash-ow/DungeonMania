@@ -26,7 +26,7 @@ public class ZombieToastSpawnerEntity extends Entity implements IBlocker {
     }
 
     public ZombieToastSpawnerEntity(DungeonEntityJsonParser info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+        this(info.getX(), info.getY());
     }
 
     @Override

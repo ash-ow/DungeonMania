@@ -22,6 +22,6 @@ public class ArrowsEntity extends CollectableEntity {
     }
 
     public ArrowsEntity(DungeonEntityJsonParser info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+        this(info.getX(), info.getY());
     }
 }

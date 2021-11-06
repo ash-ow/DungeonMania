@@ -19,7 +19,7 @@ public class WallEntity extends Entity implements IBlocker {
     }
 
     public WallEntity(DungeonEntityJsonParser info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+        this(info.getX(), info.getY());
     }
 
     @Override

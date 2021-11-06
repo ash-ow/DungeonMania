@@ -35,7 +35,7 @@ public class DungeonEntityJsonParser {
     }
 
     public Integer getY() {
-        return getPosition().getX();
+        return getPosition().getY();
     }
 
     public Position getPosition() {

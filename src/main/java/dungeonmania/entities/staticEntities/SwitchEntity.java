@@ -21,7 +21,7 @@ public class SwitchEntity extends Entity implements ITicker {
     }
 
     public SwitchEntity(DungeonEntityJsonParser info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+        this(info.getX(), info.getY());
     }
 
     @Override

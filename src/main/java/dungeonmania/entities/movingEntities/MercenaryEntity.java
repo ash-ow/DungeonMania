@@ -44,7 +44,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     }
 
     public MercenaryEntity(DungeonEntityJsonParser info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+        this(info.getX(), info.getY());
     }
 
     @Override

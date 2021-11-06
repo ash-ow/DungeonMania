@@ -35,7 +35,7 @@ public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
     }
 
     public BombEntity(DungeonEntityJsonParser info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+        this(info.getX(), info.getY());
     }
     
     /**

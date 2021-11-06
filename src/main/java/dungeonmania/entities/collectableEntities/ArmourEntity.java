@@ -24,7 +24,7 @@ public class ArmourEntity extends CollectableEntity {
     }
     
     public ArmourEntity(DungeonEntityJsonParser info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+        this(info.getX(), info.getY());
     }
     
     /**

@@ -62,7 +62,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     public CharacterEntity(DungeonEntityJsonParser info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+        this(info.getX(), info.getY());
     }
 
     public EntityResponse getInfo() {

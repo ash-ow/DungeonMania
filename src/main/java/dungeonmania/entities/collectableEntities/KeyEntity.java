@@ -28,7 +28,7 @@ public class KeyEntity extends CollectableEntity {
     }
 
     public KeyEntity(DungeonEntityJsonParser info) {
-        this(info.getPosition().getX(), info.getPosition().getY(), info.getKey());
+        this(info.getX(), info.getY(), info.getKey());
     }
 
     public int getKeyNumber() {

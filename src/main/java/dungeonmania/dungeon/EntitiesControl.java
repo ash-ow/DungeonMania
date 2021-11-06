@@ -54,6 +54,8 @@ public class EntitiesControl {
 
     public void addEntity(IEntity entity) {
         entities.add(entity);
+        Integer layer = this.getLayerFromPosition(entity.getPosition());
+        entity.setPosition(entity.getPosition().asLayer(layer));
         entityCounter++;
     }
     
@@ -64,7 +66,7 @@ public class EntitiesControl {
     public void createNewEntityOnMap(IEntity entity) {
         entity.setId(Integer.toString(entityCounter));
         entities.add(entity);
-        Integer layer = this.getAllEntitiesFromPosition(entity.getPosition()).size();
+        Integer layer = this.getLayerFromPosition(entity.getPosition());
         entity.setPosition(entity.getPosition().asLayer(layer));
         entityCounter++;
     }
@@ -147,6 +149,10 @@ public class EntitiesControl {
 
     public List<IEntity> getAllEntitiesFromPosition(Position position) {
         return this.entities.stream().filter(entity -> entity != null && entity.getPosition().equals(position)).collect(Collectors.toList());
+    }
+
+    private Integer getLayerFromPosition(Position position) {
+        return this.getAllEntitiesFromPosition(position).size();
     }
 
     public static boolean containsBlockingEntities(List<IEntity> entityList) {

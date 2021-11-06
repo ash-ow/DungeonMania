@@ -37,7 +37,7 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
     }
 
     public SpiderEntity(DungeonEntityJsonParser info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+        this(info.getX(), info.getY());
     }
 
 // region Moving

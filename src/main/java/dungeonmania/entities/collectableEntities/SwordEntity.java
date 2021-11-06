@@ -25,6 +25,6 @@ public class SwordEntity extends CollectableEntity implements IWeaponEntity{
     }
 
     public SwordEntity(DungeonEntityJsonParser info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+        this(info.getX(), info.getY());
     }
 }

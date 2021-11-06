@@ -26,7 +26,7 @@ public class OneRingEntity extends CollectableEntity {
     }
 
     public OneRingEntity(DungeonEntityJsonParser info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+        this(info.getX(), info.getY());
     }
 
     public float getDropChance() {

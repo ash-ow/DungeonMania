@@ -24,7 +24,7 @@ public class InvincibilityPotionEntity extends CollectableEntity {
     }
 
     public InvincibilityPotionEntity(DungeonEntityJsonParser info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+        this(info.getX(), info.getY());
     }
 
     /**

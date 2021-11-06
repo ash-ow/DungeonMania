@@ -31,7 +31,7 @@ public class BoulderEntity extends Entity implements IBlocker {
     }
 
     public BoulderEntity(DungeonEntityJsonParser info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+        this(info.getX(), info.getY());
     }
 
     @Override

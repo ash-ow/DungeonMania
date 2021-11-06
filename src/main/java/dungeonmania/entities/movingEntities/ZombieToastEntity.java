@@ -38,7 +38,7 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
     }
 
     public ZombieToastEntity(DungeonEntityJsonParser info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+        this(info.getX(), info.getY());
     }
     
     /**

@@ -23,7 +23,7 @@ public class HealthPotionEntity extends CollectableEntity {
     }
 
     public HealthPotionEntity(DungeonEntityJsonParser info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+        this(info.getX(), info.getY());
     }
 
     /**

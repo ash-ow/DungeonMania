@@ -36,7 +36,7 @@ public class SwampEntity extends Entity implements ITicker {
 
     void addNewEntitiesToEntitiesTryingToPass(List<IEntity> stuckEntities) {
         for (IEntity entity : stuckEntities) {
-            if (!this.entitiesTryingToPass.containsKey(entity)) {
+            if (!this.entitiesTryingToPass.containsKey(entity) && entity != this) {
                 this.entitiesTryingToPass.put(entity, this.ticksRequiredToPass);
             }
         }

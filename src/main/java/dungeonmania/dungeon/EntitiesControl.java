@@ -1,6 +1,7 @@
 package dungeonmania.dungeon;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -9,19 +10,41 @@ import com.google.gson.JsonObject;
 
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IContactingEntity;
-import dungeonmania.util.Direction;
 import dungeonmania.entities.collectableEntities.*;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.util.Position;
+import dungeonmania.util.RandomChance;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
+import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
 import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
 import dungeonmania.entities.staticEntities.*;
 
 public class EntitiesControl {
     private List<IEntity> entities;
     private Random rand = new Random();
-    private Integer tickCounter = 0;
+    private Integer tickCounter = 1;
     private Integer entityCounter = 0;
+    public final static HashMap<String, Double> difficulty;
+    private Position playerStartPosition = new Position(0, 0);
+    static {
+        difficulty = new HashMap<>();
+        difficulty.put("Hard", 20.0/15.0);
+        difficulty.put("Peaceful", 15.0/20.0);
+        difficulty.put("Standard", 1.0);
+    }
+    public final static List<EntityTypes> usableItems;
+    static {
+        usableItems = new ArrayList<>();
+        usableItems.add(EntityTypes.HEALTH_POTION);
+        usableItems.add(EntityTypes.INVINCIBILITY_POTION);
+        usableItems.add(EntityTypes.BOMB);
+        usableItems.add(EntityTypes.INVISIBILITY_POTION);
+    }
+
+    public void setPlayerStartPosition(Position playerStartPosition) {
+        this.playerStartPosition = playerStartPosition;
+    }
 
     public EntitiesControl() {
         entities = new ArrayList<IEntity>();
@@ -31,13 +54,21 @@ public class EntitiesControl {
         entities.add(entity);
         entityCounter++;
     }
-
+    
+    /**
+     * Creates a new entity on the map
+     * @param entity  entity to be created
+     */
     private void createNewEntityOnMap(IEntity entity) {
         entity.setId(Integer.toString(entityCounter));
         entities.add(entity);
         entityCounter++;
     }
 
+    /**
+     * Removes the entity
+     * @param entity entity to be removed
+     */
     public void removeEntity(IEntity entity) {
         entities.remove(entity);
     }
@@ -50,7 +81,9 @@ public class EntitiesControl {
         this.entities = entities;
     }
 
-
+    /**
+     * Calls tick function for all ticking entities
+     */
     public void tick() {
         List<ITicker> tickers = getAllTickingEntities();
         for (ITicker ticker : tickers) {
@@ -65,6 +98,10 @@ public class EntitiesControl {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Moves all moving entities based on player
+     * @param player    player entity which is used to determine move behaviour
+     */
     public void moveAllMovingEntities(CharacterEntity player) {
         List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
         for (IAutoMovingEntity entity : movingEntities) {
@@ -72,10 +109,14 @@ public class EntitiesControl {
         }
     }
 
+    /**
+     * Moves all moving entities away based on player
+     * @param player    player entity which is used to determine move behaviour
+     */
     public void runAwayAllMovingEntities(CharacterEntity player) {
         List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
         for (IAutoMovingEntity entity : movingEntities) {
-            entity.runAway(this, player);
+            entity.setMoveBehvaiour(new RunAway());
         }
     }
 
@@ -88,11 +129,15 @@ public class EntitiesControl {
         return EntitiesControl.getEntitiesOfType(entityList, IContactingEntity.class);
     }
 
-    public static <T> List<T> getEntitiesOfType(List<IEntity> entityList, Class<T> cls) {
+    public static <T> List<T> getEntitiesOfType(List<?> entityList, Class<T> cls) {
         return entityList.stream().filter(cls::isInstance).map(cls::cast).collect(Collectors.toList());
     }
 
-    public <T> List<T> getEntitiesOfType(Class<T> cls) {
+    public <T extends IEntity> List<T> getAllEntitiesOfType(Class<T> cls) {
+        return EntitiesControl.getEntitiesOfType(this.entities, cls);
+    }
+
+    public <T extends IEntity> List<T> getEntitiesOfType(Class<T> cls) {
         return getEntitiesOfType(this.entities, cls);
     }
 
@@ -118,107 +163,127 @@ public class EntitiesControl {
     }
 // endregion
 
+    /**
+     * Creates an entity
+     * @param entityObj     entity to be created
+     */
     public void createEntity(JsonObject entityObj) {
-        String type = entityObj.get("type").getAsString();
+        EntityTypes type = EntityTypes.getEntityType(entityObj.get("type").getAsString());
         Integer xAxis = entityObj.get("x").getAsInt();
         Integer yAxis = entityObj.get("y").getAsInt();
         Integer layer = getAllEntitiesFromPosition(new Position(xAxis, yAxis)).size();
         createEntity(xAxis, yAxis, layer, type);
     }
 
-    public void createEntity(Integer xAxis, Integer yAxis, Integer layer, String type) {
+    /**
+     * Main switch case for the creation of all entities on the map
+     * @param x         x-coordinate on the map
+     * @param y         y-coordinate on the map
+     * @param layer     layer on the map 
+     * @param type      type of entity
+     */
+    public void createEntity(Integer xAxis, Integer yAxis, Integer layer, EntityTypes type) {
         switch (type) {
-            case "wall":
+            case WALL:
                 this.createNewEntityOnMap(new WallEntity(xAxis, yAxis, layer));
                 break;
-            case "exit":
+            case EXIT:
                 this.createNewEntityOnMap(new ExitEntity(xAxis, yAxis, layer));
                 break;
-            case "switch":
+            case SWITCH:
                 this.createNewEntityOnMap(new SwitchEntity(xAxis, yAxis, layer));
                 break;
-            case "boulder":
+            case BOULDER:
                 this.createNewEntityOnMap(new BoulderEntity(xAxis, yAxis, layer));
                 break;
-            case "spider":
+            case SPIDER:
                 this.createNewEntityOnMap(new SpiderEntity(xAxis, yAxis, layer));
                 break;
-            case "wood":
+            case WOOD:
                 this.createNewEntityOnMap(new WoodEntity(xAxis, yAxis, layer));
                 break;
-            case "arrow":
+            case ARROW:
                 this.createNewEntityOnMap(new ArrowsEntity(xAxis, yAxis, layer));
                 break;
-            case "bomb":
+            case BOMB:
                 this.createNewEntityOnMap(new BombEntity(xAxis, yAxis, layer));
                 break;
-            case "sword":
+            case SWORD:
                 this.createNewEntityOnMap(new SwordEntity(xAxis, yAxis, layer));
                 break;
-            case "armour":
+            case ARMOUR:
                 this.createNewEntityOnMap(new ArmourEntity(xAxis, yAxis, layer));
                 break;
-            case "treasure":
+            case TREASURE:
                 this.createNewEntityOnMap(new TreasureEntity(xAxis, yAxis, layer));
                 break;
-            case "health_potion":
+            case HEALTH_POTION:
                 this.createNewEntityOnMap(new HealthPotionEntity(xAxis, yAxis, layer));
                 break;
-            case "invisibility_potion":
+            case INVISIBILITY_POTION:
                 this.createNewEntityOnMap(new InvisibilityPotionEntity(xAxis, yAxis, layer));
                 break;
-            case "invincibility_potion":
+            case INVINCIBILITY_POTION:
                 this.createNewEntityOnMap(new InvincibilityPotionEntity(xAxis, yAxis, layer));
                 break;
-            case "mercenary":
+            case MERCENARY:
                 this.createNewEntityOnMap(new MercenaryEntity(xAxis, yAxis, layer));
                 break;
-            case "zombie_toast":
+            case ZOMBIE_TOAST:
                 this.createNewEntityOnMap(new ZombieToastEntity(xAxis, yAxis, layer));
                 break;
-            case "zombie_toast_spawner":
+            case ZOMBIE_TOAST_SPAWNER:
                 this.createNewEntityOnMap(new ZombieToastSpawnerEntity(xAxis, yAxis, layer));
                 break;
+            case ONE_RING:
+                this.createNewEntityOnMap(new OneRingEntity(xAxis, yAxis, layer));
         }
     }
 
-	public void createEntity(Integer xAxis, Integer yAxis, Integer layer, Integer keyNumber, String type) {
+    /**
+     * Creates a door and key
+     * @param x         x-coordinate on the map
+     * @param y         y-coordinate on the map
+     * @param layer     layer on the map
+     * @param keyNumber keyNumber for a corresponding pair 
+     * @param type      type of entity
+     */
+	public void createEntity(Integer xAxis, Integer yAxis, Integer layer, Integer keyNumber, EntityTypes type) {
         switch (type) {
-            case "door":
+            case DOOR:
                 this.createNewEntityOnMap(new DoorEntity(xAxis, yAxis, layer, keyNumber));
                 break;
-            case "key":
+            case KEY:
                 this.createNewEntityOnMap(new KeyEntity(xAxis, yAxis, layer, keyNumber));
                 break;
         }
 	}
 
-	public void createEntity(Integer xAxis, Integer yAxis, Integer layer, String colour, String type) {
+    /**
+     * Creates a portal with a certain colour
+     * @param x         x-coordinate on the map
+     * @param y         y-coordinate on the map
+     * @param layer     layer on the map
+     * @param colour    colour of the portal 
+     * @param type      type of entity
+     */
+	public void createEntity(Integer xAxis, Integer yAxis, Integer layer, String colour, EntityTypes type) {
         switch (type) {
-            case "portal":
+            case PORTAL:
                 this.createNewEntityOnMap(new PortalEntity(xAxis, yAxis, layer, colour));
                 break;
         }
 	}
 
-    public void createEntity(Integer x, Integer y, String type) {
+    /**
+     * Creates an entity
+     * @param x         x-coordinate on the map
+     * @param y         y-coordinate on the map
+     * @param type      type of entity
+     */
+    public void createEntity(Integer x, Integer y, EntityTypes type) {
         Integer layer = this.getAllEntitiesFromPosition(new Position(x,y)).size();
         createEntity(x, y, layer, type);
-    }
-
-    public List<IEntity> getAllEntitiesOfType(String type) {
-        return EntitiesControl.getEntitiesOfType(this.entities, type);
-    }
-
-    public static List<IEntity> getEntitiesOfType(List<IEntity> entitiyList, String type) {
-        // TODO refactor to accept Class<?> instead of string type
-        List<IEntity> sameType = new ArrayList<>();
-        for (IEntity entity : entitiyList) {
-            if (entity.getInfo().getType().equals(type)) {
-                sameType.add(entity);
-            }
-        }
-        return sameType;
     }
 
     public Position getLargestCoordinate() {
@@ -234,50 +299,77 @@ public class EntitiesControl {
         return new Position(x, y);
     }
 
-    public void generateEnemyEntities() {
-        generateSpider();
-        generateZombieToast();
+    /**
+     * Generates enemies based on game mode
+     * @param gameMode         difficulty of the game
+     */
+    public void generateEnemyEntities(String gameMode) {
+        generateSpider(gameMode);
+        generateZombieToast(gameMode);
+        generateMercenary(gameMode);
         tickCounter++;
     }
 
-    private void generateSpider() {
+    /**
+     * Generates mercenaries based on game mode
+     * @param gameMode         difficulty of the game
+     */
+    private void generateMercenary(String gameMode) {
+        if (tickCounter % (int) Math.ceil(30 / difficulty.get(gameMode)) == 0) {
+            List<IMovingEntity> enemy = getEntitiesOfType(IMovingEntity.class);
+            if (enemy.size() > 0) {
+                this.createEntity(playerStartPosition.getX(), playerStartPosition.getY(), EntityTypes.MERCENARY);
+            }
+        }
+    }
+
+    /**
+     * Generates spider based on game mode
+     * @param gameMode         difficulty of the game
+     */
+    private void generateSpider(String gameMode) {
         // TODO replace this with an enemy generator
-        List<IEntity> spiders = this.getAllEntitiesOfType("spider");
+        List<SpiderEntity> spiders = this.getAllEntitiesOfType(SpiderEntity.class);
         if (spiders.size() < 4) {
             Position largestCoordinate = this.getLargestCoordinate();
             int largestX = largestCoordinate.getX();
             int largestY = largestCoordinate.getY();
             int randomX = rand.nextInt(largestX);
             int randomY = rand.nextInt(largestY);
-            if (getRandomBoolean((float) .05) 
+            if (RandomChance.getRandomBoolean((float) (.05f * difficulty.get(gameMode)))
                 && !this.positionContainsEntityType(new Position(randomX, randomY), BoulderEntity.class)) {
-                this.createEntity(randomX, randomY, "spider");
+                this.createEntity(randomX, randomY, EntityTypes.SPIDER);
             }
         }
     }
 
-    private void generateZombieToast() {
-        if (tickCounter % 5 == 0) {
-            List<IEntity> spawnerEntities = getAllEntitiesOfType("zombie_toast_spawner");
-            for (IEntity spawner : spawnerEntities) {
+    /**
+     * Generates zombie toast based on game mode
+     * @param gameMode         difficulty of the game
+     */
+    private void generateZombieToast(String gameMode) {
+        if (tickCounter % (int) Math.ceil(20 / difficulty.get(gameMode)) == 0) {
+            List<ZombieToastSpawnerEntity> spawnerEntities = getEntitiesOfType(ZombieToastSpawnerEntity.class);
+            for (ZombieToastSpawnerEntity spawner : spawnerEntities) {
                 this.createEntity(
                     spawner.getPosition().getX(), 
                     spawner.getPosition().getY(), 
-                    "zombie_toast"
+                    EntityTypes.ZOMBIE_TOAST
                 );
             }
         }
     }
 
-    public boolean getRandomBoolean(float p){
-        return rand.nextFloat() < p;
-    }
-
+    /**
+     * Finds all adjacent entities to a position
+     * @param position         position to be calculated from
+     * @returns list of all adjacent entities
+     */
     public List<IEntity> getAllAdjacentEntities(Position position) {
         List<IEntity> adjacentEntities = new ArrayList<IEntity>();
         for (IEntity ent : this.entities) {
             Position entPosition = ent.getPosition();
-            if (Position.isAdjacent(position, entPosition) || Position.isAdjacent(entPosition, position)) { // why tho @braedon
+            if (position.getCardinallyAdjacentPositions().contains(entPosition)) {
                 adjacentEntities.add(ent);
             }
         }
@@ -290,6 +382,13 @@ public class EntitiesControl {
     
     public IEntity getEntityById(String id) {
         return this.entities.stream()
+            .filter(entity -> entity.getId().equals(id))
+            .findFirst()
+            .orElse(null);
+    }
+
+    public static <T extends IEntity> IEntity getEntityById(List<T> entityList, String id) {
+        return entityList.stream()
             .filter(entity -> entity.getId().equals(id))
             .findFirst()
             .orElse(null);

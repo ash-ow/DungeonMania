@@ -13,3 +13,6 @@ bin/
 .project
 .settings
 yarn.lock
+.vscode
+savedGames
+!savedGames/README.md

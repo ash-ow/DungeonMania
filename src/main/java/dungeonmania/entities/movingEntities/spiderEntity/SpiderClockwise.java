@@ -18,11 +18,21 @@ public class SpiderClockwise implements SpiderState {
         this.nextDirection = Direction.UP;
     }
 
+    /**
+     * Setter for spider direction
+     * @param movementIndex gives the spider its next direction
+     */
     public SpiderClockwise(Integer movementIndex) {
         nextDirection = getDirection(movementIndex);
     }
 
-
+    /**
+     * Moves the spider
+     * @param movementIndex gives the spider its next direction
+     * @param spider        the spider which is moving
+     * @param entities      the list of entities which the spider may interact with
+     * @return              Whether the spider has moved
+     */
     @Override
     public Boolean moveSpider(Integer movementIndex, SpiderEntity spider, EntitiesControl entities) {
         Direction direction = nextDirection;

@@ -1,6 +1,7 @@
 package dungeonmania;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.util.Direction;
@@ -10,10 +11,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class DungeonManiaController {
     private Dungeon dungeon;
@@ -50,7 +55,7 @@ public class DungeonManiaController {
         if (!dungeons().contains(dungeonName)) {
             throw new IllegalArgumentException("dungeonName does not exist");
         }
-        if (!gameMode.equals("Standard") && !gameMode.equals("Peaceful") && !gameMode.equals("Hard")) {
+        if (!getGameModes().contains(gameMode)) {
             throw new IllegalArgumentException("invalid gameMode");
         }
         try {
@@ -66,15 +71,34 @@ public class DungeonManiaController {
     }
     
     public DungeonResponse saveGame(String name) throws IllegalArgumentException {
-        return null;
+        dungeon.saveGame(name);
+        return dungeon.getInfo();
     }
 
     public DungeonResponse loadGame(String name) throws IllegalArgumentException {
-        return null;
+        if (!allGames().contains(name)) {
+            throw new IllegalArgumentException("game doesn't exist");
+        }
+        try {
+            Reader reader = Files.newBufferedReader(Paths.get(name + ".json"));
+            JsonObject jsonObject = new Gson().fromJson(reader, JsonObject.class);
+            String id = UUID.randomUUID().toString(); 
+            JsonObject goalCondition = jsonObject.getAsJsonObject("goal-condition");
+            String gameMode = jsonObject.get("gameMode").getAsString();
+            String dungeonName = jsonObject.get("dungeonName").getAsString();
+            this.dungeon = new Dungeon(jsonObject.get("entities").getAsJsonArray(), goalCondition , gameMode, id, dungeonName);                  
+        } catch (IOException e) {
+        }
+        dungeon.tick(Direction.NONE);
+        return dungeon.getInfo();
     }
 
     public List<String> allGames() {
-        return new ArrayList<>();
+        try {
+            return FileLoader.listFileNamesInDirectoryOutsideOfResources("savedGames");
+        } catch (IOException e) {
+            return new ArrayList<>();
+        }
     }
 
     public DungeonResponse tick(String itemUsed, Direction movementDirection) throws IllegalArgumentException, InvalidActionException {
@@ -91,6 +115,10 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse build(String buildable) throws IllegalArgumentException, InvalidActionException {
-        return null;
+        if (!buildable.equals("bow") && !buildable.equals("shield")) {
+            throw new IllegalArgumentException();
+        }
+        dungeon.build(buildable);
+        return dungeon.getInfo();
     }
 }

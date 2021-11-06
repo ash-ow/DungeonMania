@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlockerTest;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
@@ -23,7 +24,7 @@ public class WallEntityTest implements IEntityTests, IBlockerTest {
         assertEntityResponseInfoEquals(
             wall,
             "wall-0-0-0",
-            "wall",
+            EntityTypes.WALL,
             new Position(0,0,0),
             false
         );

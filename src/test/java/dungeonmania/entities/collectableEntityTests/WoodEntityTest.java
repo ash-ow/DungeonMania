@@ -1,16 +1,9 @@
 package dungeonmania.entities.collectableEntityTests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 
-import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.WoodEntity;
-import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.response.models.ItemResponse;
-import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class WoodEntityTest implements ICollectableEntityTest {
@@ -18,14 +11,13 @@ public class WoodEntityTest implements ICollectableEntityTest {
     @Override
     public void TestEntityResponseInfo() {
         WoodEntity wood = new WoodEntity(0, 0, 0);
-        assertEntityResponseInfoEquals(wood, "wood-0-0-0", "wood", new Position(0,0), false);
+        assertEntityResponseInfoEquals(wood, "wood-0-0-0", EntityTypes.WOOD, new Position(0,0), false);
     }
 
     @Test
     @Override
     public void TestUseCollectable() {
-        WoodEntity wood = new WoodEntity(0, 0, 0);
-        assertEntityIsUsed(wood);
+        // Wood never used
     }
 
     @Test

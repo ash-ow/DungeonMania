@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.*;
 
@@ -12,8 +13,11 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
+import dungeonmania.entities.collectableEntities.ArrowsEntity;
+import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -63,7 +67,7 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         assertEntityResponseInfoEquals(
             player,
             "player-0-4-0",
-            "player",
+            EntityTypes.PLAYER,
             new Position(0,4),
             false
         );
@@ -79,7 +83,6 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         character.setHealth(2);
         zombie.battle(entitiesControl, character);
         assertFalse(character.isAlive());
-        // TODO add assertions for character death
     }
 
     @Test
@@ -92,6 +95,25 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         assertEquals(0, character.getInventory().size());
     }
 
+    @Test
+    public void TestBuildBow() {
+        CharacterEntity player = new CharacterEntity();
+        WoodEntity wood = new WoodEntity();
+        ArrowsEntity arrow1 = new ArrowsEntity();
+        ArrowsEntity arrow2 = new ArrowsEntity();
+        ArrowsEntity arrow3 = new ArrowsEntity();
+        player.addEntityToInventory(wood);
+        player.addEntityToInventory(arrow1);
+        player.addEntityToInventory(arrow2);
+        player.addEntityToInventory(arrow3);
+        player.build(EntityTypes.BOW);
+        List<CollectableEntity> inventory = player.getInventory();
+        for (CollectableEntity item : inventory) {
+            assertEquals(item.getType(), EntityTypes.BOW);
+        }
+        assertEquals(1, player.getInventory().size());
+    }
+
     @Override
     @Test
     public void TestBattle() {
@@ -102,8 +124,8 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         entitiesControl.addEntity(character);
         entitiesControl.addEntity(zombie);
         zombie.battle(entitiesControl, character);
-        assertEquals(58, character.getHealth());
-        assertEquals(-2.0, zombie.getHealth());
+        assertEquals(85, character.getHealth());
+        assertEquals(-10.0, zombie.getHealth());
     }
 
     @Test
@@ -127,5 +149,11 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         ZombieToastEntity zombie = new ZombieToastEntity();
         zombie.doBattle(player);
         assertTrue(zombie.getHealth() < 40);
+    }
+
+    @Test
+    @Override
+    public void testDropOneRing() {
+        // null because when character dies, it does not need to drop ring
     }
 }

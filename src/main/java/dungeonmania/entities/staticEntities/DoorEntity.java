@@ -1,15 +1,13 @@
 package dungeonmania.entities.staticEntities;
 
-import java.util.List;
-
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
-import dungeonmania.entities.IEntity;
-import dungeonmania.entities.ITicker;
 import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
+import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 
 public class DoorEntity extends Entity implements IBlocker {
@@ -22,7 +20,7 @@ public class DoorEntity extends Entity implements IBlocker {
     }
     
     public DoorEntity(int x, int y, int layer, int keyNumber) {
-        super(x, y, layer, "door");
+        super(x, y, layer, EntityTypes.DOOR);
         this.keyNumber = keyNumber;
         this.isLocked = true;
     }
@@ -36,7 +34,7 @@ public class DoorEntity extends Entity implements IBlocker {
         return player
             .getInventory()
             .stream()
-            .filter(e -> e.getType().equals("key"))
+            .filter(e -> e.getType().equals(EntityTypes.KEY))
             .map(KeyEntity.class::cast)
             .filter(k -> k.getKeyNumber() == keyNumber)
             .findFirst()
@@ -63,5 +61,14 @@ public class DoorEntity extends Entity implements IBlocker {
             this.unlockWith(key, player);
         }
         return !this.isLocked;
+    }
+
+    @Override
+    public EntityResponse getInfo() {
+        if (isLocked) {
+            return new EntityResponse(id, type, position, false);
+        } else {
+            return new EntityResponse(id, "unlocked_door", position, false);
+        }
     }
 }

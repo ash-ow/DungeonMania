@@ -1,21 +1,25 @@
 package dungeonmania.dungeon.goals;
 
-import java.util.HashMap;
-
-
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.staticEntities.ExitEntity;
-import dungeonmania.util.Position;
 
 public class ExitGoal implements IGoal {
     private String type;
+    
+    /**
+     * ExitGoal constructor
+     */
     public ExitGoal() {
         this.type = "exit";
     }
 
+    /**
+     * Evaluates whether goal has passed
+     * @param dungeon  dungeon to be checked
+     */
     public boolean checkGoal(Dungeon dungeon) {
-        for (IEntity e : dungeon.getEntities("exit")) {
+        for (IEntity e : dungeon.getAllEntitiesOfType(ExitEntity.class)) {
             if (exitPlayerCheck(dungeon, e)) {
                 return true;
             }

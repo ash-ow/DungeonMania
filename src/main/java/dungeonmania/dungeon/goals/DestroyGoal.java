@@ -1,9 +1,7 @@
 package dungeonmania.dungeon.goals;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.Dungeon;
@@ -16,10 +14,17 @@ public class DestroyGoal implements IGoal {
 
     private String type;
 
+    /**
+     * DestroyGoal constructor
+     */
     public DestroyGoal() {
         this.type = "enemies";
     }
 
+    /**
+     * Evaluates whether goal has passed
+     * @param dungeon  dungeon to be checked
+     */
     public boolean checkGoal(Dungeon dungeon) {
         List<IEntity> enemies = new ArrayList<>();
         enemies.addAll(dungeon.entitiesControl.getEntitiesOfType(SpiderEntity.class));

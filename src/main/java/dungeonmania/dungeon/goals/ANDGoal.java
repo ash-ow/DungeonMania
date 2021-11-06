@@ -8,11 +8,19 @@ public class ANDGoal implements IGoal{
     List<IGoal> subGoals;
     String type;
 
+    /**
+     * ANDGoal constructor
+     * @param subGoals  list of subGoals
+     */
     public ANDGoal(List<IGoal> subGoals) {
         this.subGoals = subGoals;
         this.type = "AND";
     }
 
+    /**
+     * Evaluates whether goal has passed
+     * @param dungeon  dungeon to be checked
+     */
     @Override
     public boolean checkGoal(Dungeon dungeon) {
         boolean check = true;

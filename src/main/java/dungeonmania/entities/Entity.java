@@ -6,9 +6,16 @@ import dungeonmania.util.Position;
 public abstract class Entity implements IEntity {
     protected Position position;
     protected String id;
-    protected String type;
+    protected EntityTypes type;
     
-    protected Entity(int x, int y, int layer, String type) {
+    /**
+     * Entity constructor
+     * @param x      x-coordinate on the map
+     * @param y      y-coordinate on the map
+     * @param layer  layer on the map
+     * @param type   type of entity 
+     */
+    protected Entity(int x, int y, int layer, EntityTypes type) {
         this.type = type;
         this.position = new Position(x, y, layer);
         this.id = type + "-" + x + "-" + y + "-" + layer;
@@ -22,7 +29,7 @@ public abstract class Entity implements IEntity {
         return this.id;
     }
 
-    public String getType() {
+    public EntityTypes getType() {
         return this.type;
     }
 

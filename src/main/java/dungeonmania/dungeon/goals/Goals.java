@@ -12,10 +12,19 @@ import dungeonmania.dungeon.Dungeon;
 public class Goals {
     private IGoal goal;
 
+    /**
+     * Goal constructor
+     * @param goalConditions    conditions for the goal
+     */
     public Goals(JsonObject goalConditions) {
         this.goal = buildGoal(goalConditions);
     }
 
+    /**
+     * Builds the goal
+     * @param goalConditions    conditions for the goal
+     * @return the list of subgoals
+     */
     private IGoal buildGoal(JsonObject goalConditions) {
         String goal = goalConditions.get("goal").getAsString();
         JsonArray jsonSubGoals = goalConditions.getAsJsonArray("subgoals");
@@ -46,6 +55,10 @@ public class Goals {
         }
     }
 
+    /**
+     * Evaluates whether goal has passed
+     * @param dungeon  dungeon to be checked
+     */
     public String checkGoals(Dungeon dungeon) {
         if (goal.checkGoal(dungeon)) {
             return "";

@@ -1,5 +1,6 @@
 package dungeonmania.response.models;
 
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.util.Position;
 
 public final class EntityResponse {
@@ -7,6 +8,13 @@ public final class EntityResponse {
     private final String type;
     private final Position position;
     private final boolean isInteractable;
+
+    public EntityResponse(String id, EntityTypes type, Position position, boolean isInteractable) {
+        this.id = id;
+        this.type = type.toString();
+        this.position = position;
+        this.isInteractable = isInteractable;
+    }
 
     public EntityResponse(String id, String type, Position position, boolean isInteractable) {
         this.id = id;

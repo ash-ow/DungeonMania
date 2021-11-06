@@ -2,43 +2,63 @@ package dungeonmania.entities.movingEntities.spiderEntity;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
-import dungeonmania.entities.IContactingEntity;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IAutoMovingEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
+import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.util.Position;
 
 
-public class SpiderEntity extends Entity implements IContactingEntity, IBattlingEntity, IAutoMovingEntity {
+public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMovingEntity {
     private SpiderState spiderMovement;
     private Position firstPosition;
     private Integer movementCount = 0;
+    private IMovingBehaviour moveBehaviour;
 
+    /**
+     * Spider constructor
+     */
     public SpiderEntity() {
         this(0, 0, 0);
     }
     
+    /**
+     * Spider constructor
+     * @param x x-coordinate on the map
+     * @param y y-coordinate on the map
+     * @param layer layer on the map 
+     */
     public SpiderEntity(int x, int y, int layer) {
-        super(x, y, layer, "spider");
+        super(x, y, layer, EntityTypes.SPIDER);
         spiderMovement = new SpiderClockwise();
         firstPosition = this.position;
     }
 
-    // region Moving
+// region Moving
 
+    /**
+     * Moves the spider
+     * @param entities      the list of entities which the spider may interact with
+     * @param player        player which the spider may come into contact with
+     */
     @Override
     public void move(EntitiesControl entities, CharacterEntity player) {
-        if (!spiderMovement.moveSpider(movementCount, this, entities)) {
-            if (!this.position.equals(firstPosition) && movementCount > 0) {
-                movementCount = (movementCount - 2) % 8;
-                changeDirection();
+        if (moveBehaviour == null) {
+            if (!spiderMovement.moveSpider(movementCount, this, entities)) {
+                if (!this.position.equals(firstPosition) && movementCount > 0) {
+                    movementCount = (movementCount - 2) % 8;
+                    changeDirection();
+                }
+            } else {
+                movementCount = (movementCount + 1) % 8;
+            }
+            if (this.isInSamePositionAs(player)) {
+                contactWithPlayer(entities, player);
             }
         } else {
-            movementCount = (movementCount + 1) % 8;
-        }
-        if (this.isInSamePositionAs(player)) {
-            contactWithPlayer(entities, player);
-        }
+            this.move(moveBehaviour.getBehaviourDirection(entities, player, position));
+        }       
     }
 
     @Override
@@ -54,10 +74,11 @@ public class SpiderEntity extends Entity implements IContactingEntity, IBattling
         }
         return spiderMovement;
     }
+    
 //endregion
 
 //region Battle
-    private float health = 100;
+    private float health = 35;
 
     @Override
     public float getHealth() {
@@ -70,7 +91,6 @@ public class SpiderEntity extends Entity implements IContactingEntity, IBattling
     }
 
     public float getDamage() {
-        // TODO determine correct Spider damage
         return 2;
     }
 
@@ -79,4 +99,9 @@ public class SpiderEntity extends Entity implements IContactingEntity, IBattling
         this.health -= ((enemyHealth * enemyDamage) / 5);
     }
 //endregion
+
+    @Override
+    public void setMoveBehvaiour(IMovingBehaviour newBehaviour) {
+        this.moveBehaviour = newBehaviour;        
+    }
 }

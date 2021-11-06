@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlockerTest;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.collectableEntities.KeyEntity;
@@ -29,7 +30,7 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         assertEntityResponseInfoEquals(
             door,
             "door-0-0-0",
-            "door",
+            EntityTypes.DOOR,
             new Position(0,0,0),
             false
         );
@@ -109,7 +110,7 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         String goals = "{\"goal-condition\": {\"goal\": \"exit\"}}";
         JsonArray entitiesJson = new Gson().fromJson(entities, JsonObject.class).get("entities").getAsJsonArray();
         JsonObject goalsJson = new Gson().fromJson(goals, JsonObject.class).get("goal-condition").getAsJsonObject();
-        return new Dungeon(entitiesJson, goalsJson, "", "", "");
+        return new Dungeon(entitiesJson, goalsJson, "Standard", "", "");
     }
 
     @Override

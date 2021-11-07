@@ -14,7 +14,7 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class ZombieToastSpawnerEntity extends Entity implements IBlocker {
     public ZombieToastSpawnerEntity() {
@@ -25,7 +25,7 @@ public class ZombieToastSpawnerEntity extends Entity implements IBlocker {
         super(x, y, EntityTypes.ZOMBIE_TOAST_SPAWNER);
     }
 
-    public ZombieToastSpawnerEntity(DungeonEntityJsonParser info) {
+    public ZombieToastSpawnerEntity(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY());
     }
 

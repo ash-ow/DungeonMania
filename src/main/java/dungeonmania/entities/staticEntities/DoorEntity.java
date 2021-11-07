@@ -9,7 +9,7 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class DoorEntity extends Entity implements IBlocker {
     private int keyNumber;
@@ -26,7 +26,7 @@ public class DoorEntity extends Entity implements IBlocker {
         this.isLocked = true;
     }
 
-    public DoorEntity(DungeonEntityJsonParser info) {
+    public DoorEntity(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY(), info.getKey());
     }
     

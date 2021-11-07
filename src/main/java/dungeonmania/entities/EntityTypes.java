@@ -10,6 +10,7 @@ public enum EntityTypes {
     DOOR("door"),
     PORTAL("portal"),
     ZOMBIE_TOAST_SPAWNER("zombie_toast_spawner"),
+    SWAMP("swamp"),
 
     // Moving Entities
     SPIDER("spider"),    

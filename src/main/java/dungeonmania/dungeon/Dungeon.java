@@ -13,6 +13,7 @@ import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
+import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.DoorEntity;
 import dungeonmania.entities.staticEntities.PortalEntity;
 import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
@@ -185,7 +186,12 @@ public class Dungeon {
      */
     public void build(String buildable) {
         EntityTypes itemToBuild = EntityTypes.getEntityType(buildable);
-        this.player.build(itemToBuild);
+        if (
+            itemToBuild != EntityTypes.MIDNIGHT_ARMOUR ||
+            this.entitiesControl.getAllEntitiesOfType(ZombieToastEntity.class).isEmpty()
+        ) {
+            this.player.build(itemToBuild);
+        }
     }
     
     /**

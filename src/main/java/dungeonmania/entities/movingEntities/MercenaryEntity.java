@@ -33,7 +33,6 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      * Mercenary constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public MercenaryEntity(int x, int y) {
         super(x, y, EntityTypes.MERCENARY);

@@ -1,11 +1,7 @@
 package dungeonmania.entities.collectableEntities.buildableEntities;
 
-import java.util.List;
-import java.util.Map;
-
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.IDefensiveEntity;
 
 public class MidnightArmourEntity extends BuildableEntity implements IDefensiveEntity {
@@ -20,11 +16,10 @@ public class MidnightArmourEntity extends BuildableEntity implements IDefensiveE
      * MidnightArmour constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public MidnightArmourEntity(int x, int y) {
         super(x, y, EntityTypes.SHIELD);
-        this.durability = 4;
+        this.durability = Integer.MAX_VALUE;
     }
     
     /**
@@ -32,50 +27,14 @@ public class MidnightArmourEntity extends BuildableEntity implements IDefensiveE
      */
     @Override
     public void initialiseRequiredComponents() {
-        this.requiredComponents.put(EntityTypes.WOOD, 2);
-        this.requiredComponents.put(EntityTypes.TREASURE, 1);
-        this.requiredComponents.put(EntityTypes.KEY, 1);
-    }
-    
-    /**
-     * Checks if a midnightArmour is buildable
-     * @param inventory items in inventory are compared against required comonents
-     * @return true or false depnding on whether a midnightArmour is buildable
-     */
-    @Override
-    public boolean isBuildable(List<CollectableEntity> inventory) {
-        boolean requiredWood = false;
-        boolean requiredTreasure = false;
-        boolean requiredKey = false;
-        for (Map.Entry<EntityTypes, Integer> entry : requiredComponents.entrySet()) {
-            EntityTypes component = entry.getKey();
-            int quantity = entry.getValue();
-            if (numberOfComponentItemsInInventory(inventory, component) >= quantity) {
-                switch (component) {
-                    case WOOD:
-                        requiredWood = true;
-                        break;
-                    case TREASURE:
-                        requiredTreasure = true;
-                        break;
-                    case KEY:
-                        requiredKey = true;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-        return (
-            requiredWood &&
-            (requiredTreasure || requiredKey)
-        );
+        this.requiredComponents.put(EntityTypes.ARMOUR, 1);
+        this.requiredComponents.put(EntityTypes.SUN_STONE, 1);
     }
     
     @Override 
     public float reduceDamage(float damage, CharacterEntity player) {
         this.used(player);
-        damage = damage/2;
+        damage = damage/5;
         return damage;
     }
 }

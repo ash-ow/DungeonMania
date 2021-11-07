@@ -30,13 +30,7 @@ public class MidnightArmourEntityTest implements IBuildableEntityTests {
         player.addEntityToInventory(new SunStoneEntity());
         player.addEntityToInventory(new ArmourEntity());
         player.build(EntityTypes.MIDNIGHT_ARMOUR);
-
-        
-        List<ItemResponse> inventory = player.getInventoryInfo();
-        for (ItemResponse item : inventory) {
-            assertEquals(EntityTypes.SHIELD.toString(), item.getType());
-        }
-        assertEquals(1, player.getInventory().size());
+        assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.SCEPTRE), player);
     }
 
     public void assertCanBuildMidnightArmourWithKey() {

@@ -16,7 +16,6 @@ public class BowEntity extends BuildableEntity implements IWeaponEntity {
      * Bow constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public BowEntity(int x, int y) {
         super(x, y, EntityTypes.BOW);

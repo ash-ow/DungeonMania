@@ -79,32 +79,27 @@ public class MidnightArmourEntityTest implements IBuildableEntityTests {
     @Test
     @Override
     public void TestUseCollectable() {
-        // TODO Extra attack damage and protection
-
-        
+        // Do battle with Midnight Armour
         CharacterEntity player1 = new CharacterEntity();
         player1.addEntityToInventory(new MidnightArmourEntity());
         AssassinEntity assassin1 = new AssassinEntity();
+        assassin1.doBattle(player1);
         
+        // Do battle without Midnight Armour
         CharacterEntity player2 = new CharacterEntity();
         AssassinEntity assassin2 = new AssassinEntity();
+        assassin2.doBattle(player2);
 
-        float damageDealtWithMidnightArmour = assassin1.loseHealth(player1.getHealth(), player1.getDamage());
-        float damageDealtWithoutMidnightArmour = assassin2.loseHealth(player2.getHealth(), player2.getDamage());
-        
         Assertions.assertAll(
-            () -> assertEquals(60, damageDealtWithMidnightArmour),
-            () -> assertEquals(50, damageDealtWithoutMidnightArmour),
-            () -> assertTrue(damageDealtWithoutMidnightArmour < damageDealtWithMidnightArmour, "Assassin receives extra damage when player has midnight armour")
+            () -> assertEquals(-130, assassin1.getHealth()),
+            () -> assertEquals(10, assassin2.getHealth()),
+            () -> assertTrue(assassin1.getHealth() < assassin2.getHealth(), "Assassin 1 should receive extra damage since Player 1 has midnight armour")
         );
 
-        float damageReceivedWithMidnightArmour = player1.loseHealth(assassin1.getHealth(), assassin1.getDamage());
-        float damageReceivedWithoutMidnightArmour = player2.loseHealth(assassin2.getHealth(), assassin2.getDamage());
-
         Assertions.assertAll(
-            () -> assertEquals(0.6, damageReceivedWithMidnightArmour),
-            () -> assertEquals(3, damageReceivedWithoutMidnightArmour),
-            () -> assertTrue(damageReceivedWithoutMidnightArmour > damageReceivedWithMidnightArmour, "Player receives reduced damage when player has midnight armour")
+            () -> assertEquals(95.8, player1.getHealth(), 1),
+            () -> assertEquals(79, player2.getHealth()),
+            () -> assertTrue(player1.getHealth() > player2.getHealth(), "Player 1 should receive less damage since it has midnight armour")
         );
     }
 

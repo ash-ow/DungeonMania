@@ -3,8 +3,9 @@ package dungeonmania.entities.collectableEntities.buildableEntities;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.collectableEntities.IDefensiveEntity;
+import dungeonmania.entities.collectableEntities.IWeaponEntity;
 
-public class MidnightArmourEntity extends BuildableEntity implements IDefensiveEntity {
+public class MidnightArmourEntity extends BuildableEntity implements IDefensiveEntity, IWeaponEntity {
     /**
      * MidnightArmour constructor
      */
@@ -36,5 +37,10 @@ public class MidnightArmourEntity extends BuildableEntity implements IDefensiveE
         this.used(player);
         damage = damage/5;
         return damage;
+    }
+
+    @Override
+    public float getDamage() {
+        return 7;
     }
 }

@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import dungeonmania.dungeon.goals.Goals;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.IInteractableEntity;
 import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.movingEntities.AssassinEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -141,26 +142,16 @@ public class Dungeon {
      * @param entityId identifier of entity to be interacted with
      */
     public void interact(String entityID) throws IllegalArgumentException, InvalidActionException{
-        IEntity interacting = this.entitiesControl.getEntityById(entityID);
-        if (interacting == null) {
-            throw new IllegalArgumentException("Entity doesnt exist");
-        } else {
-            switch (interacting.getType()) {
-                case MERCENARY:
-                    MercenaryEntity mercenaryEntity = (MercenaryEntity) interacting;
-                    mercenaryEntity.interactWith(player);
-                    break;
-                case ZOMBIE_TOAST_SPAWNER:
-                    ZombieToastSpawnerEntity spawner = (ZombieToastSpawnerEntity) interacting;
-                    spawner.interactWith(entitiesControl, player);
-                    break;
-                case ASSASSIN:
-                    AssassinEntity assassin = (AssassinEntity) interacting;
-                    assassin.interactWith(player);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Entity is not interactable");
+        try {
+            IInteractableEntity interacting = (IInteractableEntity) this.entitiesControl.getEntityById(entityID);
+            boolean toRemove = interacting.interactWith(player);
+            if (toRemove) {
+                entitiesControl.removeEntity(interacting);
             }
+        } catch (ClassCastException e) {
+            throw new IllegalArgumentException("Entity is not interactable");
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("Entity doesnt exist");
         }
     }
 

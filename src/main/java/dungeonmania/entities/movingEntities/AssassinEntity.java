@@ -25,7 +25,7 @@ public class AssassinEntity extends MercenaryEntity implements IBoss {
     }
     
     @Override
-    public void interactWith(CharacterEntity player) throws InvalidActionException {
+    public boolean interactWith(CharacterEntity player) throws InvalidActionException {
         IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);
         IEntity oneRingFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), OneRingEntity.class);
         if (oneRingFound == null) {
@@ -38,8 +38,20 @@ public class AssassinEntity extends MercenaryEntity implements IBoss {
             throw new InvalidActionException("Player is too far away");
         }
         player.removeEntityFromInventory(treasureFound);
+        player.removeEntityFromInventory(oneRingFound);
         player.addTeammates(this);
-        this.isBribed = true;       
+        this.isBribed = true;   
+        return removeAfterInteraction();   
+    }
+
+    @Override
+    public boolean removeAfterInteraction() {
+        return true;
+    }
+
+    @Override
+    public float getDamage() {
+        return 5;
     }
 
 }

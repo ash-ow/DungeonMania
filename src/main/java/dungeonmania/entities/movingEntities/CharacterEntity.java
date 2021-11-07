@@ -250,28 +250,46 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param itemToBuild item to be built
      */
     public void build(EntityTypes itemToBuild) {
-        if (itemToBuild.equals(EntityTypes.BOW)) {
-            BowEntity bow = new BowEntity();
-            if (bow.isBuildable(this.inventory)) {
-                this.addEntityToInventory(bow);
-                removeBuildMaterials(EntityTypes.WOOD, 1);
-                removeBuildMaterials(EntityTypes.ARROW, 3);
-            } else {
+        switch (itemToBuild) {
+            case BOW:
+                BowEntity bow = new BowEntity();
+                if (bow.isBuildable(this.inventory)) {
+                    this.addEntityToInventory(bow);
+                    removeBuildMaterials(EntityTypes.WOOD, 1);
+                    removeBuildMaterials(EntityTypes.ARROW, 3);
+                }
+                break;
+            case SHIELD:
+                ShieldEntity shield = new ShieldEntity();
+                if (shield.isBuildable(this.inventory)) {
+                    this.addEntityToInventory(shield);
+                    removeBuildMaterials(EntityTypes.WOOD, 2);
+                    if(this.containedInInventory(EntityTypes.TREASURE)) {
+                        removeBuildMaterials(EntityTypes.TREASURE, 1);
+                    } else if (this.containedInInventory(EntityTypes.KEY)) {
+                        removeBuildMaterials(EntityTypes.KEY, 1);
+                    } 
+                }
+                break;
+            case SCEPTRE:
+                SceptreEntity sceptre = new SceptreEntity();
+                if (sceptre.isBuildable(this.inventory)) {
+                    this.addEntityToInventory(sceptre);
+                    removeBuildMaterials(EntityTypes.SUN_STONE, 1);
+                    if(this.containedInInventory(EntityTypes.TREASURE)) {
+                        removeBuildMaterials(EntityTypes.TREASURE, 1);
+                    } else if (this.containedInInventory(EntityTypes.KEY)) {
+                        removeBuildMaterials(EntityTypes.KEY, 1);
+                    } 
+                    if(this.containedInInventory(EntityTypes.WOOD)) {
+                        removeBuildMaterials(EntityTypes.WOOD, 1);
+                    } else if (this.containedInInventory(EntityTypes.ARROW)) {
+                        removeBuildMaterials(EntityTypes.ARROW, 1);
+                    } 
+                }
+                break;
+            default:
                 throw new InvalidActionException(itemToBuild.toString());
-            }
-        } else if (itemToBuild.equals(EntityTypes.SHIELD)) {
-            ShieldEntity shield = new ShieldEntity();
-            if (shield.isBuildable(this.inventory)) {
-                this.addEntityToInventory(shield);
-                removeBuildMaterials(EntityTypes.WOOD, 2);
-                if(this.containedInInventory(EntityTypes.TREASURE)) {
-                    removeBuildMaterials(EntityTypes.TREASURE, 1);
-                } else if (this.containedInInventory(EntityTypes.KEY)) {
-                    removeBuildMaterials(EntityTypes.KEY, 1);
-                } 
-            } else {
-                throw new InvalidActionException(itemToBuild.toString());
-            }
         }
     }
 

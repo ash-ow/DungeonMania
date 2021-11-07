@@ -2,11 +2,14 @@ package dungeonmania.entities.buildableEntityTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -125,7 +128,8 @@ public class ShieldTest implements IBuildableEntityTests {
     }
 
     @Test
-    public void TestBuildShieldHasBoth() {
+    @Override
+    public void TestOnlyUsesResourcesFromOneRecipe() {
         CharacterEntity player = new CharacterEntity();
         WoodEntity wood = new WoodEntity();
         WoodEntity wood2 = new WoodEntity();
@@ -136,18 +140,9 @@ public class ShieldTest implements IBuildableEntityTests {
         player.addEntityToInventory(treasure);
         player.addEntityToInventory(key);
         player.build(EntityTypes.SHIELD);
-
-        ShieldEntity shield = new ShieldEntity();
-        List<IEntity> expected = new ArrayList<>();
-        expected.add(key);
-        expected.add(shield);
-
-        int i = 0;
-        List<ItemResponse> inventory = player.getInventoryInfo();
-        for (ItemResponse item : inventory) {
-            assertEquals(item.getType(), expected.get(i).getType().toString());
-            i++;
-        }
-        assertTrue(player.getInventory().size() == 2); // TODO this is a bad test - you should test the inventory contains a specific item. See how other TestCollect tests work e.g. Bomb
+        
+        List<EntityTypes> expectedInventory = Arrays.asList(EntityTypes.KEY, EntityTypes.SHIELD);
+        List<EntityTypes> actualInventory = player.getInventory().stream().map(item -> item.getType()).collect(Collectors.toList());
+        assertIterableEquals(expectedInventory, actualInventory);
     }
 }

@@ -2,7 +2,7 @@ package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class ArmourEntity extends CollectableEntity {
     /**
@@ -23,7 +23,7 @@ public class ArmourEntity extends CollectableEntity {
         this.durability = 4;
     }
     
-    public ArmourEntity(DungeonEntityJsonParser info) {
+    public ArmourEntity(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY());
     }
     

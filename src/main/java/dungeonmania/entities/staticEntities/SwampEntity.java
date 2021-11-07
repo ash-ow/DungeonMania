@@ -9,14 +9,19 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.ITicker;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class SwampEntity extends Entity implements ITicker {
     public SwampEntity() {
-        this(0, 0, 0);
+        this(0, 0);
     }
     
-    public SwampEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.SWAMP);
+    public SwampEntity(int x, int y) {
+        super(x, y, EntityTypes.SWAMP);
+    }
+
+    public SwampEntity(DungeonEntityJsonObject info) {
+        this(info.getX(), info.getY());
     }
 
     /** The maximum number of ticks a non-player entity must remain in the swamp */

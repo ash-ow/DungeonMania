@@ -3,7 +3,7 @@ package dungeonmania.entities.collectableEntities;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class SwordEntity extends CollectableEntity implements IWeaponEntity{
     /**
@@ -24,7 +24,7 @@ public class SwordEntity extends CollectableEntity implements IWeaponEntity{
         this.durability = 5;
     }
 
-    public SwordEntity(DungeonEntityJsonParser info) {
+    public SwordEntity(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY());
     }
 }

@@ -135,4 +135,21 @@ public class SceptreEntityTest implements IBuildableEntityTests {
     public void TestBuildSceptreHasBoth() {
         // TODO have many of the items required to build this and assert that you only use one set
     }
+
+    @Test
+    @Override
+    public void TestOnlyUsesResourcesFromOneRecipe() {
+        CharacterEntity player = new CharacterEntity();
+        player.addEntityToInventory(new ArrowsEntity());
+        player.addEntityToInventory(new ArrowsEntity());
+        player.addEntityToInventory(new WoodEntity());
+        player.addEntityToInventory(new KeyEntity(1));
+        player.addEntityToInventory(new TreasureEntity());
+        player.addEntityToInventory(new SunStoneEntity());
+        player.build(EntityTypes.SCEPTRE);
+        
+        List<EntityTypes> expectedInventory = Arrays.asList(EntityTypes.ARROW, EntityTypes.ARROW, EntityTypes.KEY, EntityTypes.SCEPTRE);
+        List<EntityTypes> actualInventory = player.getInventory().stream().map(item -> item.getType()).collect(Collectors.toList());
+        assertIterableEquals(expectedInventory, actualInventory);
+    }
 }

@@ -125,7 +125,8 @@ public class ShieldTest implements IBuildableEntityTests {
     }
 
     @Test
-    public void TestBuildShieldHasBoth() {
+    @Override
+    public void TestOnlyUsesResourcesFromOneRecipe() {
         CharacterEntity player = new CharacterEntity();
         WoodEntity wood = new WoodEntity();
         WoodEntity wood2 = new WoodEntity();

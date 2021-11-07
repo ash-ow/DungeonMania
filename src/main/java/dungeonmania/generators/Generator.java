@@ -1,6 +1,5 @@
 package dungeonmania.generators;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -8,8 +7,6 @@ import java.util.Random;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.dungeon.GameModeType;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.IEntity;
-import dungeonmania.entities.ITicker;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;

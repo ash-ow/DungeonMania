@@ -2,8 +2,6 @@ package dungeonmania.dungeon.entitiesFactory;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.dungeon.GameModeType;
-import dungeonmania.entities.Entity;
-import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.movingEntities.*;
 import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;

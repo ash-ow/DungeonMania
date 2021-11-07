@@ -14,6 +14,7 @@ import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.exceptions.InvalidActionException;
+import dungeonmania.generators.Generator;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
@@ -58,7 +59,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         super(x, y, EntityTypes.PLAYER);
         this.previousPosition = new Position(x, y);
         this.gameMode = gameMode;
-        this.health = (int) Math.ceil(100 / EntitiesControl.difficulty.get(gameMode));
+        this.health = (int) Math.ceil(100 / Generator.difficulty.get(gameMode));
     }
 
     public CharacterEntity(DungeonEntityJsonParser info) {
@@ -89,7 +90,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     @Override
     public float getDamage() {
-        return (float) (3 / EntitiesControl.difficulty.get(this.gameMode));
+        return (float) (3 / Generator.difficulty.get(this.gameMode));
     }
 
     /**

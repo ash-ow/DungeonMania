@@ -17,9 +17,11 @@ import dungeonmania.entities.staticEntities.DoorEntity;
 import dungeonmania.entities.staticEntities.PortalEntity;
 import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
 import dungeonmania.exceptions.InvalidActionException;
+import dungeonmania.generators.Generator;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
 import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.Position;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -35,6 +37,8 @@ public class Dungeon {
     public CharacterEntity player;
     private Goals goals;
     private JsonObject initalGoals;
+    private Integer tickCounter = 1;
+    private Position playerStartPosition = new Position(0, 0);
 
     /**
      * Main Dungeon Constructor 
@@ -60,7 +64,7 @@ public class Dungeon {
                 this.entitiesControl.createEntity(dungeonEntityJsonInfo, this.gameMode);
             }
         }
-        entitiesControl.setPlayerStartPosition(player.getPosition());
+        this.playerStartPosition = player.getPosition();
 
         if (goalConditions != null) {
             this.goals = new Goals(goalConditions);
@@ -117,7 +121,8 @@ public class Dungeon {
         }
         entitiesControl.moveAllMovingEntities(player);
         entitiesControl.tick();
-        entitiesControl.generateEnemyEntities(this.gameMode);
+        Generator.generateEnemyEntities(this.entitiesControl, this.tickCounter, this.gameMode, this.playerStartPosition);
+        tickCounter++;
     }
 
     /**
@@ -132,7 +137,8 @@ public class Dungeon {
             entitiesControl.moveAllMovingEntities(player);
         }
         entitiesControl.tick();
-        entitiesControl.generateEnemyEntities(this.gameMode);
+        Generator.generateEnemyEntities(this.entitiesControl, this.tickCounter, this.gameMode, this.playerStartPosition);
+        tickCounter++;
     }
 
     /**

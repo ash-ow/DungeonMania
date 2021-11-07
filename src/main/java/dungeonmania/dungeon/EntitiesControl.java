@@ -21,6 +21,7 @@ import dungeonmania.entities.movingEntities.*;
 import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
 import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
 import dungeonmania.entities.staticEntities.*;
+import dungeonmania.generators.Generator;
 
 public class EntitiesControl {
     private List<IEntity> entities;

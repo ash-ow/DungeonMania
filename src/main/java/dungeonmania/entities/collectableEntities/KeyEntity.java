@@ -2,6 +2,7 @@ package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class KeyEntity extends CollectableEntity {
     private int keyNumber;
@@ -11,7 +12,7 @@ public class KeyEntity extends CollectableEntity {
      * @param keyNumber denotes which door the key should open
      */
     public KeyEntity(int keyNumber) {
-        this(0, 0, 0, keyNumber);
+        this(0, 0, keyNumber);
     }
 
     /**
@@ -21,9 +22,13 @@ public class KeyEntity extends CollectableEntity {
      * @param layer layer on the map
      * @param keyNumber denotes which door the key should open 
      */
-    public KeyEntity(int x, int y, int layer, int keyNumber) {
-        super(x, y, layer, EntityTypes.KEY);
+    public KeyEntity(int x, int y, int keyNumber) {
+        super(x, y, EntityTypes.KEY);
         this.keyNumber = keyNumber;
+    }
+
+    public KeyEntity(DungeonEntityJsonObject info) {
+        this(info.getX(), info.getY(), info.getKey());
     }
 
     public int getKeyNumber() {

@@ -10,18 +10,18 @@ import com.google.gson.JsonObject;
 import dungeonmania.dungeon.goals.Goals;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.IInteractableEntity;
 import dungeonmania.entities.collectableEntities.KeyEntity;
-import dungeonmania.entities.movingEntities.BoulderEntity;
+import dungeonmania.entities.movingEntities.AssassinEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
-import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.entities.staticEntities.DoorEntity;
 import dungeonmania.entities.staticEntities.PortalEntity;
 import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
-import dungeonmania.util.Position;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -31,7 +31,7 @@ import java.nio.file.Paths;
 
 public class Dungeon {
     public EntitiesControl entitiesControl;
-    private String gameMode;
+    private GameModeType gameMode;
     private String id;
     private String dungeonName;
     public CharacterEntity player;
@@ -47,34 +47,22 @@ public class Dungeon {
      * @param dungeonName         name of the dungeon
      */
     public Dungeon(JsonArray entities, JsonObject goalConditions, String gameMode, String id, String dungeonName) {
-        this.gameMode = gameMode;
+        this.gameMode = GameModeType.getGameModeType(gameMode);
         this.id = id;
         this.dungeonName = dungeonName;
         this.entitiesControl = new EntitiesControl();
         this.initalGoals = goalConditions;
         for (JsonElement entityInfo : entities) {
             JsonObject entityObj = entityInfo.getAsJsonObject();
-            EntityTypes type = EntityTypes.getEntityType(entityObj.get("type").getAsString());
-            Integer xAxis = entityObj.get("x").getAsInt();
-            Integer yAxis = entityObj.get("y").getAsInt();
-            Integer layer = this.entitiesControl.getAllEntitiesFromPosition(new Position(xAxis, yAxis)).size();
+            DungeonEntityJsonObject dungeonEntityJsonInfo = new DungeonEntityJsonObject(entityObj);
             
-            // TODO can probably improve this with factory pattern
-            // or at least by reading the JsonObject as a HashMap and passing that into a generic constructor
-            // Maybe Entity class should have one more constructor which accepts a HashMap!
-            if (type.equals(EntityTypes.PLAYER)) {
-                this.player = new CharacterEntity(xAxis, yAxis, layer, gameMode);
-            } else if (type.equals(EntityTypes.KEY) || type.equals(EntityTypes.DOOR)) {
-                Integer key = entityObj.get("key").getAsInt();
-                this.entitiesControl.createEntity(xAxis, yAxis, layer, key, type);
-            } else if (type.equals(EntityTypes.PORTAL)) {
-                String colour = entityObj.get("colour").getAsString();
-                this.entitiesControl.createEntity(xAxis, yAxis, layer, colour, type);
+            if (dungeonEntityJsonInfo.getType().equals(EntityTypes.PLAYER)) {
+                this.player = new CharacterEntity(dungeonEntityJsonInfo.getX(), dungeonEntityJsonInfo.getY(), this.gameMode);
             } else {
-                this.entitiesControl.createEntity(entityObj);
-            }            
+                this.entitiesControl.createEntity(dungeonEntityJsonInfo, this.gameMode);
+            }
         }
-        entitiesControl.setPlayerStartPosition(player.getPosition());
+        this.entitiesControl.setPlayerStartPosition(player.getPosition());
 
         if (goalConditions != null) {
             this.goals = new Goals(goalConditions);
@@ -90,7 +78,7 @@ public class Dungeon {
     public Dungeon(ArrayList<IEntity> entities, String gameMode, CharacterEntity player) {
         this.entitiesControl = new EntitiesControl();
         this.entitiesControl.setEntities(entities);
-        this.gameMode = gameMode;
+        this.gameMode = GameModeType.getGameModeType(gameMode);
         this.player = player;
     }
 
@@ -104,7 +92,7 @@ public class Dungeon {
     public Dungeon(ArrayList<IEntity> entities, String gameMode, CharacterEntity player, JsonObject goalConditions) {
         this.entitiesControl = new EntitiesControl();
         this.entitiesControl.setEntities(entities);
-        this.gameMode = gameMode;
+        this.gameMode = GameModeType.getGameModeType(gameMode);
         this.player = player;
         this.goals = new Goals(goalConditions);
     }
@@ -131,7 +119,7 @@ public class Dungeon {
         }
         entitiesControl.moveAllMovingEntities(player);
         entitiesControl.tick();
-        entitiesControl.generateEnemyEntities(gameMode);
+        entitiesControl.generateEnemyEntities(this.gameMode);
     }
 
     /**
@@ -146,7 +134,7 @@ public class Dungeon {
             entitiesControl.moveAllMovingEntities(player);
         }
         entitiesControl.tick();
-        entitiesControl.generateEnemyEntities(gameMode);
+        entitiesControl.generateEnemyEntities(this.gameMode);
     }
 
     /**
@@ -154,22 +142,16 @@ public class Dungeon {
      * @param entityId identifier of entity to be interacted with
      */
     public void interact(String entityID) throws IllegalArgumentException, InvalidActionException{
-        IEntity interacting = this.entitiesControl.getEntityById(entityID);
-        if (interacting == null) {
-            throw new IllegalArgumentException("Entity doesnt exist");
-        } else {
-            switch (interacting.getType()) {
-                case MERCENARY:
-                    MercenaryEntity mercenaryEntity = (MercenaryEntity) interacting;
-                    mercenaryEntity.interactWith(player);
-                    break;
-                case ZOMBIE_TOAST_SPAWNER:
-                    ZombieToastSpawnerEntity spawner = (ZombieToastSpawnerEntity) interacting;
-                    spawner.interactWith(entitiesControl, player);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Entity is not interactable");
+        try {
+            IInteractableEntity interacting = (IInteractableEntity) this.entitiesControl.getEntityById(entityID);
+            boolean toRemove = interacting.interactWith(player);
+            if (toRemove) {
+                entitiesControl.removeEntity(interacting);
             }
+        } catch (ClassCastException e) {
+            throw new IllegalArgumentException("Entity is not interactable");
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("Entity doesnt exist");
         }
     }
 
@@ -263,7 +245,7 @@ public class Dungeon {
         finalObject.add("entities", entities);
         finalObject.add("goal-condition", initalGoals);
         finalObject.addProperty("dungeonName", dungeonName);
-        finalObject.addProperty("gameMode", gameMode);
+        finalObject.addProperty("gameMode", gameMode.toString());
         return finalObject;
     }
 

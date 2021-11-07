@@ -16,8 +16,8 @@ public abstract class BuildableEntity extends CollectableEntity {
      * @param layer layer on the map
      * @param type type of entity 
      */
-    protected BuildableEntity(int x, int y, int layer, EntityTypes type) {
-        super(x, y, layer, type);
+    protected BuildableEntity(int x, int y, EntityTypes type) {
+        super(x, y, type);
         initialiseRequiredComponents();
     }
     

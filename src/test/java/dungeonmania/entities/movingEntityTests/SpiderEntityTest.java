@@ -30,7 +30,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
     @Test
     public void TestInteraction() {
         SpiderEntity spider = new SpiderEntity();
-        CharacterEntity character = new CharacterEntity(0, 1, 0);
+        CharacterEntity character = new CharacterEntity(0, 1);
 
         character.move(Direction.UP);
         assertEquals(spider.getPosition(), character.getPosition());
@@ -43,7 +43,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
     @Override
     @Test
     public void TestMove() {
-        SpiderEntity spider = new SpiderEntity(5, 5, 0);
+        SpiderEntity spider = new SpiderEntity(5, 5);
         assertPositionEquals(spider.getPosition(), 5, 5);
 
         List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(6, 4), new Position(6, 5),
@@ -57,11 +57,11 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
 
     @Test
     public void TestMoveHitBoulder() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        SpiderEntity spider = new SpiderEntity(5, 5, 0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        SpiderEntity spider = new SpiderEntity(5, 5);
         EntitiesControl entities = new EntitiesControl();
 
-        entities.createEntity(6, 5, 0, EntityTypes.BOULDER);
+        entities.createEntity(6, 5, EntityTypes.BOULDER);
         entities.addEntity(spider);
 
         List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(6, 4), new Position(6, 4),
@@ -77,11 +77,11 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
 
     @Test
     public void TestMoveWall() {
-        CharacterEntity player = new CharacterEntity(0, 5, 0);
-        SpiderEntity spider = new SpiderEntity(0, 4, 0);
-        WallEntity wall = new WallEntity(0, 4, 1);
-        WallEntity wall2 = new WallEntity(0, 3, 0);
-        WallEntity wall3 = new WallEntity(1, 3, 0);
+        CharacterEntity player = new CharacterEntity(0, 5);
+        SpiderEntity spider = new SpiderEntity(0, 4);
+        WallEntity wall = new WallEntity(0, 4);
+        WallEntity wall2 = new WallEntity(0, 3);
+        WallEntity wall3 = new WallEntity(1, 3);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spider);
         entities.add(wall);
@@ -99,9 +99,9 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
 
     @Test
     public void TestBoulderAboveSpiderSpawn() {
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        SpiderEntity spider = new SpiderEntity(5, 5, 0);
-        BoulderEntity boulder = new BoulderEntity(5, 4, 0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        SpiderEntity spider = new SpiderEntity(5, 5);
+        BoulderEntity boulder = new BoulderEntity(5, 4);
         EntitiesControl entities = new EntitiesControl();
 
         entities.addEntity(boulder);
@@ -117,9 +117,9 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
 
     @Test
     public void TestMovedBoulderAboveSpiderSpawn() {
-        CharacterEntity player = new CharacterEntity(6, 4, 0);
-        SpiderEntity spider = new SpiderEntity(5, 5, 0);
-        BoulderEntity boulder = new BoulderEntity(5, 4, 0);
+        CharacterEntity player = new CharacterEntity(6, 4);
+        SpiderEntity spider = new SpiderEntity(5, 5);
+        BoulderEntity boulder = new BoulderEntity(5, 4);
         EntitiesControl entities = new EntitiesControl();
 
         entities.addEntity(boulder);
@@ -135,10 +135,10 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
 
     @Test
     public void TestSpiderTrapped() {
-        CharacterEntity player = new CharacterEntity(6, 6, 0);
-        SpiderEntity spider = new SpiderEntity(5, 5, 0);
-        BoulderEntity boulder1 = new BoulderEntity(4, 4, 0);
-        BoulderEntity boulder2 = new BoulderEntity(6, 4, 0);
+        CharacterEntity player = new CharacterEntity(6, 6);
+        SpiderEntity spider = new SpiderEntity(5, 5);
+        BoulderEntity boulder1 = new BoulderEntity(4, 4);
+        BoulderEntity boulder2 = new BoulderEntity(6, 4);
 
         EntitiesControl entities = new EntitiesControl();
 
@@ -159,7 +159,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        SpiderEntity spider = new SpiderEntity(0, 0, 0);
+        SpiderEntity spider = new SpiderEntity(0, 0);
         assertEntityResponseInfoEquals(
             spider,
             "spider-0-0-0",
@@ -200,7 +200,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
     @Override
     public void testDropOneRing() {
         CharacterEntity player = new CharacterEntity();
-        SpiderEntity spider = new SpiderEntity(0, 0, 0);
+        SpiderEntity spider = new SpiderEntity(0, 0);
         spider.dropEntities(player, 1f);
         List<CollectableEntity> inventory = player.getInventory();
         assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));

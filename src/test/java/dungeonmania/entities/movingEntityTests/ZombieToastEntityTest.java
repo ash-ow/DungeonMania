@@ -26,7 +26,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Test
     public void TestInteraction() {
         ZombieToastEntity zombie = new ZombieToastEntity();
-        CharacterEntity character = new CharacterEntity(0, 1, 0);
+        CharacterEntity character = new CharacterEntity(0, 1);
 
         assertEquals(100, character.getHealth());
         assertEquals(50, zombie.getHealth());
@@ -43,7 +43,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Test
     public void TestMove() {
         CharacterEntity player = new CharacterEntity();
-        ZombieToastEntity zombie = new ZombieToastEntity(5, 5, 0, 1f, 10);
+        ZombieToastEntity zombie = new ZombieToastEntity(5, 5, 1f, 10);
         EntitiesControl entities = new EntitiesControl();
         entities.addEntity(zombie);
 
@@ -59,10 +59,10 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Test
     public void TestBlockMove() {
         CharacterEntity player = new CharacterEntity();
-        ZombieToastEntity zombie = new ZombieToastEntity(5, 5, 0, 1f, 10);
+        ZombieToastEntity zombie = new ZombieToastEntity(5, 5, 1f, 10);
         EntitiesControl entities = new EntitiesControl();
         entities.addEntity(zombie);
-        entities.createEntity(6, 4, 0, EntityTypes.WALL);
+        entities.createEntity(6, 4, EntityTypes.WALL);
 
         List<Position> expectPositions = Arrays.asList(new Position(5, 4), new Position(4, 4), new Position(5, 4), new Position(5, 4));
 
@@ -75,7 +75,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Test
     public void testDropArmour() {
         CharacterEntity player = new CharacterEntity();
-        ZombieToastEntity zombie = new ZombieToastEntity(0, 0, 0, 1f, 10);
+        ZombieToastEntity zombie = new ZombieToastEntity(0, 0, 1f, 10);
         zombie.dropEntities(player, 1f);
         List<CollectableEntity> inventory = player.getInventory();
         assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, ArmourEntity.class));
@@ -85,7 +85,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Override
     public void testDropOneRing() {
         CharacterEntity player = new CharacterEntity();
-        ZombieToastEntity zombie = new ZombieToastEntity(0, 0, 0);
+        ZombieToastEntity zombie = new ZombieToastEntity(0, 0);
         zombie.dropEntities(player, 1f);
         List<CollectableEntity> inventory = player.getInventory();
         assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
@@ -94,7 +94,7 @@ public class ZombieToastEntityTest implements IInteractingEntityTest, IMovingEnt
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        ZombieToastEntity zombie = new ZombieToastEntity(0, 0, 0);
+        ZombieToastEntity zombie = new ZombieToastEntity(0, 0);
         assertEntityResponseInfoEquals(
             zombie,
             "zombie_toast-0-0-0",

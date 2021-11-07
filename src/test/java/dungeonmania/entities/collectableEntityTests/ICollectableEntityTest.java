@@ -28,7 +28,7 @@ public interface ICollectableEntityTest extends IEntityTests {
     }
 
     public default void assertEntityIsCollected(CollectableEntity entity) {
-        CharacterEntity player = new CharacterEntity(0, 1, 0);
+        CharacterEntity player = new CharacterEntity(0, 1);
         EntitiesControl entities = new EntitiesControl();
         
         entities.addEntity(entity);
@@ -39,7 +39,7 @@ public interface ICollectableEntityTest extends IEntityTests {
     }
 
     public default void assertEntityIsUsedAndPlacedIfApplicable(CollectableEntity entity) {
-        CharacterEntity player = new CharacterEntity(0, 1, 0);
+        CharacterEntity player = new CharacterEntity(0, 1);
         EntitiesControl entities = new EntitiesControl();
         entities.addEntity(entity);
         entity.contactWithPlayer(entities, player);

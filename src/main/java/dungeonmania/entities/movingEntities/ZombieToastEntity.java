@@ -12,6 +12,7 @@ import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.entities.movingEntities.moveBehaviour.RandomMove;
 import dungeonmania.util.Direction;
+import dungeonmania.util.DungeonEntityJsonObject;
 import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
 
@@ -28,19 +29,23 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
      * @param y y-coordinate on the map
      * @param layer layer on the map 
      */
-    public ZombieToastEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.ZOMBIE_TOAST);
+    public ZombieToastEntity(int x, int y) {
+        super(x, y, EntityTypes.ZOMBIE_TOAST);
         if (RandomChance.getRandomBoolean((float) armourEntityProbability)) {
             equipped = new ArmourEntity();
         }
         this.moveBehaviour = new RandomMove();
+    }
+
+    public ZombieToastEntity(DungeonEntityJsonObject info) {
+        this(info.getX(), info.getY());
     }
     
     /**
      * Zombie Toast constructor
      */
     public ZombieToastEntity() {
-        this(0, 0, 0);
+        this(0, 0);
     }
     
     /**
@@ -51,8 +56,8 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
      * @param ArmourEntityProbability  determines the proability that an armour will be dropped
      * @param seed                     used to calculate probability
      */
-    public ZombieToastEntity(int x, int y, int layer, float ArmourEntityProbability, int seed) {
-        this(x, y, layer);
+    public ZombieToastEntity(int x, int y, float ArmourEntityProbability, int seed) {
+        this(x, y);
         this.seed = seed;
         rand = new Random(seed);
         this.armourEntityProbability = ArmourEntityProbability;
@@ -97,8 +102,10 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         return 3;
     }
 
-    public void loseHealth(float enemyHealth, float enemyDamage) {
-        this.health -= ((enemyHealth * enemyDamage) / 5);
+    public float loseHealth(float enemyHealth, float enemyDamage) {
+        float damage = ((enemyHealth * enemyDamage) / 5);
+        this.health -= damage;
+        return damage;
     }
     //endregion
     

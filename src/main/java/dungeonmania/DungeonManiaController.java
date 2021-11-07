@@ -1,7 +1,6 @@
 package dungeonmania;
 
 import dungeonmania.dungeon.Dungeon;
-import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.util.Direction;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class DungeonManiaController {
     private Dungeon dungeon;
@@ -64,7 +62,6 @@ public class DungeonManiaController {
             String id = UUID.randomUUID().toString(); 
             JsonObject goalCondition = jsonObject.getAsJsonObject("goal-condition");
             this.dungeon = new Dungeon(jsonObject.get("entities").getAsJsonArray(), goalCondition , gameMode, id, dungeonName);           
-            
         } catch (IOException e) {
         }
         return dungeon.getInfo();
@@ -115,7 +112,8 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse build(String buildable) throws IllegalArgumentException, InvalidActionException {
-        if (!buildable.equals("bow") && !buildable.equals("shield")) {
+        // TODO refactor this
+        if (!buildable.equals("bow") && !buildable.equals("shield") && !buildable.equals("sceptre") && !buildable.equals("midnight_armour")) {
             throw new IllegalArgumentException();
         }
         dungeon.build(buildable);

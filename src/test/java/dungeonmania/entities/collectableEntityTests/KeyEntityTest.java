@@ -11,7 +11,7 @@ public class KeyEntityTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        KeyEntity key = new KeyEntity(0,0,0, 0);
+        KeyEntity key = new KeyEntity(0, 0, 0);
         assertEntityResponseInfoEquals(
             key,
             "key-0-0-0",
@@ -24,7 +24,7 @@ public class KeyEntityTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestCollect() {
-        KeyEntity key = new KeyEntity(0,0,0,0);
+        KeyEntity key = new KeyEntity(0, 0, 0);
         assertEntityIsCollected(key);
     }
 

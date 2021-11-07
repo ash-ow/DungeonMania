@@ -15,10 +15,10 @@ public abstract class Entity implements IEntity {
      * @param layer  layer on the map
      * @param type   type of entity 
      */
-    protected Entity(int x, int y, int layer, EntityTypes type) {
+    protected Entity(int x, int y, EntityTypes type) {
         this.type = type;
-        this.position = new Position(x, y, layer);
-        this.id = type + "-" + x + "-" + y + "-" + layer;
+        this.position = new Position(x, y);
+        this.id = type + "-" + x + "-" + y + "-" + this.position.getLayer();
     }
 
     public EntityResponse getInfo() {

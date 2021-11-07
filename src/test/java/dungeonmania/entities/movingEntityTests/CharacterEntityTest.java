@@ -48,8 +48,8 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
 
     @Test
     public void testSimpleRestriction() {
-        CharacterEntity player = new CharacterEntity(0, 4, 0);
-        WallEntity wall = new WallEntity(0, 3, 0);
+        CharacterEntity player = new CharacterEntity(0, 4);
+        WallEntity wall = new WallEntity(0, 3);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(wall);
         String jsonGoals = "{ \"goal\": \"exit\"}";
@@ -63,7 +63,7 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        CharacterEntity player = new CharacterEntity(0, 4, 0);
+        CharacterEntity player = new CharacterEntity(0, 4);
         assertEntityResponseInfoEquals(
             player,
             "player-0-4-0",
@@ -140,8 +140,8 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
 
     @Test
     public void TestMercenaryJoinsTeam() {
-        CharacterEntity player = new CharacterEntity(0, 5, 0);
-        MercenaryEntity mercenary = new MercenaryEntity(0, 4, 0);
+        CharacterEntity player = new CharacterEntity(0, 5);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 4);
         TreasureEntity treasure = new TreasureEntity();       
         player.addEntityToInventory(treasure); 
         mercenary.interactWith(player);

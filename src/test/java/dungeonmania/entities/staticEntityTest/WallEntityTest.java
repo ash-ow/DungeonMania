@@ -34,8 +34,8 @@ public class WallEntityTest implements IEntityTests, IBlockerTest {
     @Override
     public void TestBlock() {
         ArrayList<IEntity> entities = new ArrayList<>();
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        WallEntity wall = new WallEntity(0, 1, 0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        WallEntity wall = new WallEntity(0, 1);
         entities.add(wall);
 
         Dungeon dungeon = new Dungeon(entities, "Standard", player);

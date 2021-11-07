@@ -34,6 +34,8 @@ public class EntitiesFactory extends EntitiesControl {
             case KEY: entities.createNewEntityOnMap(new KeyEntity(jsonInfo)); break;
             case PORTAL: entities.createNewEntityOnMap(new PortalEntity(jsonInfo)); break;
             case DOOR: entities.createNewEntityOnMap(new DoorEntity(jsonInfo));
+            case TIME_TRAVEL_PORTAL: entities.createNewEntityOnMap(new TimeTravelPortal(jsonInfo)); break;
+            case TIME_TURNER: entities.createNewEntityOnMap(new TimeTurnerEntity(jsonInfo)); break;
         }
     }
 }

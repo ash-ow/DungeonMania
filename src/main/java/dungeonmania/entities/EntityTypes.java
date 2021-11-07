@@ -10,6 +10,7 @@ public enum EntityTypes {
     DOOR("door"),
     PORTAL("portal"),
     ZOMBIE_TOAST_SPAWNER("zombie_toast_spawner"),
+    TIME_TRAVEL_PORTAL("time_travelling_portal"),
 
     // Moving Entities
     SPIDER("spider"),    
@@ -27,7 +28,8 @@ public enum EntityTypes {
     BOMB("bomb"),    
     SWORD("sword"),    
     ARMOUR("armour"),    
-    ONE_RING("one_ring"),    
+    ONE_RING("one_ring"),  
+    TIME_TURNER("time_turner"),
 
     // IBuildableEntity
     SHIELD("shield"),    

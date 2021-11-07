@@ -29,6 +29,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     private int invincibilityRemaining = 0;
     private int invisibilityRemaining = 0;
     private GameModeType gameMode;
+    private boolean isTimeTravelling = false;
 
     /**
      * Character constructor
@@ -376,5 +377,13 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     public Position getPreviousPosition() {
         return this.previousPosition;
+    }
+
+    public boolean IsTimeTravelling() {
+        return this.isTimeTravelling;
+    }
+    
+    public void timeTravel() {
+        this.isTimeTravelling = true;
     }
 }

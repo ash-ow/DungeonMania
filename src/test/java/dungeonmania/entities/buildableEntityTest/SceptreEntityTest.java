@@ -3,24 +3,20 @@ package dungeonmania.entities.buildableEntityTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.SceptreEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.movingEntities.ZombieToastEntity;
-import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Position;
 
 public class SceptreEntityTest implements IBuildableEntityTests {
@@ -43,7 +39,8 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         player.build(EntityTypes.SCEPTRE);
         
         List<EntityTypes> expectedInventory = Arrays.asList(EntityTypes.SCEPTRE);
-        assertIterableEquals(expectedInventory, player.getInventory());
+        List<EntityTypes> actualInventory = player.getInventory().stream().map(item -> item.getType()).collect(Collectors.toList());
+        assertIterableEquals(expectedInventory, actualInventory);
     }
 
     public void assertCanBuildSceptreWithWoodTreasureSunStone() {
@@ -54,7 +51,8 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         player.build(EntityTypes.SCEPTRE);
         
         List<EntityTypes> expectedInventory = Arrays.asList(EntityTypes.SCEPTRE);
-        assertIterableEquals(expectedInventory, player.getInventory());
+        List<EntityTypes> actualInventory = player.getInventory().stream().map(item -> item.getType()).collect(Collectors.toList());
+        assertIterableEquals(expectedInventory, actualInventory);
     }
 
     public void assertCanBuildSceptreWith2ArrowsTreasureSunStone() {
@@ -66,7 +64,8 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         player.build(EntityTypes.SCEPTRE);
         
         List<EntityTypes> expectedInventory = Arrays.asList(EntityTypes.SCEPTRE);
-        assertIterableEquals(expectedInventory, player.getInventory());
+        List<EntityTypes> actualInventory = player.getInventory().stream().map(item -> item.getType()).collect(Collectors.toList());
+        assertIterableEquals(expectedInventory, actualInventory);
     }
 
     public void assertCanBuildSceptreWith2ArrowsKeySunStone() {
@@ -78,7 +77,8 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         player.build(EntityTypes.SCEPTRE);
         
         List<EntityTypes> expectedInventory = Arrays.asList(EntityTypes.SCEPTRE);
-        assertIterableEquals(expectedInventory, player.getInventory());
+        List<EntityTypes> actualInventory = player.getInventory().stream().map(item -> item.getType()).collect(Collectors.toList());
+        assertIterableEquals(expectedInventory, actualInventory);
     }
     
     @Test

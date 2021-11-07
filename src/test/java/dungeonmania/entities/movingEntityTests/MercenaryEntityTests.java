@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.dungeon.GameModeType;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.InvincibilityPotionEntity;
@@ -30,8 +31,8 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
     @Test
     public void TestMove() {
         EntitiesControl entitiesControl = new EntitiesControl();
-        CharacterEntity player = new CharacterEntity(5, 0, 0);
-        MercenaryEntity mercenary = new MercenaryEntity(0, 0, 0);
+        CharacterEntity player = new CharacterEntity(5, 0);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 0);
         entitiesControl.addEntity(mercenary);
         mercenary.move(entitiesControl, player);
         assertEquals(new Position(1, 0), mercenary.getPosition());
@@ -39,8 +40,8 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
 
     @Test
     public void TestSpawn() {
-        CharacterEntity player = new CharacterEntity(0, 1, 0);
-        MercenaryEntity mercenary = new MercenaryEntity(0, 0, 0);
+        CharacterEntity player = new CharacterEntity(0, 1);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 0);
         ArrayList<IEntity> entities = new ArrayList<IEntity>();
         entities.add(mercenary);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
@@ -53,8 +54,8 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
     @Test
     public void TestCorrectMove() {
         CharacterEntity player = new CharacterEntity();
-        MercenaryEntity mercenary = new MercenaryEntity(5, 5, 0);
-        WallEntity wall = new WallEntity(4, 5, 0);
+        MercenaryEntity mercenary = new MercenaryEntity(5, 5);
+        WallEntity wall = new WallEntity(4, 5);
         EntitiesControl entitiesControl = new EntitiesControl();
         entitiesControl.addEntity(mercenary);
         entitiesControl.addEntity(wall);
@@ -65,9 +66,9 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
     @Test
     public void TestBlocked() {
         CharacterEntity player = new CharacterEntity();
-        MercenaryEntity mercenary = new MercenaryEntity(5, 5, 0);
-        WallEntity wall = new WallEntity(4, 5, 0);
-        WallEntity wall2 = new WallEntity(5, 4, 0);
+        MercenaryEntity mercenary = new MercenaryEntity(5, 5);
+        WallEntity wall = new WallEntity(4, 5);
+        WallEntity wall2 = new WallEntity(5, 4);
         EntitiesControl entitiesControl = new EntitiesControl();
         entitiesControl.addEntity(mercenary);
         entitiesControl.addEntity(wall);
@@ -106,7 +107,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
     @Test
     public void TestWalkInBattle() {
         CharacterEntity character = new CharacterEntity();
-        MercenaryEntity mercenary = new MercenaryEntity(1,0,0);
+        MercenaryEntity mercenary = new MercenaryEntity(1, 0);
         EntitiesControl entitiesControl = new EntitiesControl();
         entitiesControl.addEntity(mercenary);
         assertEquals(100, character.getHealth());
@@ -118,7 +119,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
     @Test
     public void TestBothWalkInBattle() {
         CharacterEntity character = new CharacterEntity();
-        MercenaryEntity mercenary = new MercenaryEntity(2,0,0);
+        MercenaryEntity mercenary = new MercenaryEntity(2, 0);
         EntitiesControl entitiesControl = new EntitiesControl();
         entitiesControl.addEntity(mercenary);
         assertEquals(100, character.getHealth());
@@ -134,8 +135,8 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
     
     @Test
     public void mercenaryMovesOutofWay() {
-        CharacterEntity player = new CharacterEntity(0, 5, 0);
-        MercenaryEntity mercenary = new MercenaryEntity(0, 4, 0);
+        CharacterEntity player = new CharacterEntity(0, 5);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 4);
         TreasureEntity treasure = new TreasureEntity();
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(mercenary);        
@@ -153,8 +154,8 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
     @Test
     public void runAway() {
         EntitiesControl entitiesControl = new EntitiesControl();
-        CharacterEntity player = new CharacterEntity(5, 0, 0);
-        MercenaryEntity mercenary = new MercenaryEntity(0, 0, 0);
+        CharacterEntity player = new CharacterEntity(5, 0);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 0);
         entitiesControl.addEntity(mercenary);
         mercenary.move(entitiesControl, player);
         mercenary.move(entitiesControl, player);
@@ -170,8 +171,8 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
     public void doesntRunAway() {
         EntitiesControl entitiesControl = new EntitiesControl();
         InvincibilityPotionEntity potion = new InvincibilityPotionEntity();       
-        CharacterEntity player = new CharacterEntity(5, 0, 0, "Hard");
-        MercenaryEntity mercenary = new MercenaryEntity(0, 0, 0);
+        CharacterEntity player = new CharacterEntity(5, 0, GameModeType.HARD);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 0);
         entitiesControl.addEntity(mercenary);
         entitiesControl.addEntity(potion);
         potion.contactWithPlayer(entitiesControl, player);
@@ -185,7 +186,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
     @Test
     public void testDropOneRing() {
         CharacterEntity player = new CharacterEntity();
-        MercenaryEntity mercenary = new MercenaryEntity(0, 0, 0);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 0);
         mercenary.dropEntities(player, 1f);
         List<CollectableEntity> inventory = player.getInventory();
         assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));

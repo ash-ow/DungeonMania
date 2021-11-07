@@ -72,7 +72,7 @@ public class BowEntityTest implements IBuildableEntityTests {
     @Test
     @Override
     public void TestCollect() {
-        ArmourEntity armour = new ArmourEntity(0,0,0);
+        ArmourEntity armour = new ArmourEntity(0, 0);
         assertEntityIsCollected(armour);
     }
 
@@ -96,5 +96,11 @@ public class BowEntityTest implements IBuildableEntityTests {
 
         assertNull(player.getInventoryItem(bow.getId()), "Inventory should not contain entity " + bow.getId());
 
+    }
+
+    @Test
+    @Override
+    public void TestOnlyUsesResourcesFromOneRecipe() {
+        assertTrue(true, "the bow only has one recipe");
     }
 }

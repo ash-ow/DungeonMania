@@ -19,9 +19,9 @@ import dungeonmania.entities.staticEntities.SwitchEntity;
 public class DungeonTests {
     @Test
     public void testEntitiesOverlap() {
-        CharacterEntity player = new CharacterEntity(0, 4, 0);
-        BoulderEntity boulder = new BoulderEntity(0, 5, 0);
-        SwitchEntity switches = new SwitchEntity(0, 5, 0);
+        CharacterEntity player = new CharacterEntity(0, 4);
+        BoulderEntity boulder = new BoulderEntity(0, 5);
+        SwitchEntity switches = new SwitchEntity(0, 5);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(boulder);
         entities.add(switches);

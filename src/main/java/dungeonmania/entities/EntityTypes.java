@@ -30,10 +30,12 @@ public enum EntityTypes {
     ANDURIL("anduril"),    
     ARMOUR("armour"),    
     ONE_RING("one_ring"),    
-
+    SUN_STONE("sun_stone"),    
+    
     // IBuildableEntity
     SHIELD("shield"),    
     BOW("bow"),    
+    SCEPTRE("sceptre"),    
 
     // Player
     PLAYER("player")

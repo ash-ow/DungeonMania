@@ -4,56 +4,67 @@ import java.util.List;
 import java.util.Map;
 
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
-import dungeonmania.entities.collectableEntities.IDefensiveEntity;
+import dungeonmania.entities.collectableEntities.IWeaponEntity;
 
-public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
+public class SceptreEntity extends BuildableEntity implements IWeaponEntity {
+    
     /**
-     * Shield constructor
+     * Sceptre constructor
      */
-    public ShieldEntity() {
-        this(0, 0); 
+    public SceptreEntity() {
+        this(0, 0, 0);
     }
     
     /**
-     * Shield constructor
+     * Sceptre constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
      * @param layer layer on the map 
      */
-    public ShieldEntity(int x, int y) {
-        super(x, y, EntityTypes.SHIELD);
-        this.durability = 4;
+    public SceptreEntity(int x, int y, int layer) {
+        super(x, y, layer, EntityTypes.SCEPTRE);
+        this.durability = 2;
     }
     
     /**
-     * Initialises required components to build a bow
+     * Initialises required components to build a sceptre
      */
     @Override
     public void initialiseRequiredComponents() {
-        this.requiredComponents.put(EntityTypes.WOOD, 2);
+        this.requiredComponents.put(EntityTypes.WOOD, 1);
+        this.requiredComponents.put(EntityTypes.ARROW, 2);
         this.requiredComponents.put(EntityTypes.TREASURE, 1);
         this.requiredComponents.put(EntityTypes.KEY, 1);
+        this.requiredComponents.put(EntityTypes.SUN_STONE, 1);
     }
-    
+     
     /**
-     * Checks if a shield is buildable
+     * Checks if a sceptre is buildable
      * @param inventory items in inventory are compared against required comonents
-     * @return true or false depnding on whether a shield is buildable
+     * @return true or false depnding on whether a sceptre is buildable
      */
     @Override
     public boolean isBuildable(List<CollectableEntity> inventory) {
+        boolean requiredSunStone = false;
         boolean requiredWood = false;
+        boolean requiredArrows = false;
         boolean requiredTreasure = false;
         boolean requiredKey = false;
+
         for (Map.Entry<EntityTypes, Integer> entry : requiredComponents.entrySet()) {
             EntityTypes component = entry.getKey();
             int quantity = entry.getValue();
             if (numberOfComponentItemsInInventory(inventory, component) >= quantity) {
                 switch (component) {
+                    case SUN_STONE:
+                        requiredSunStone = true;
+                        break;
                     case WOOD:
                         requiredWood = true;
+                        break;
+                    case ARROW:
+                        requiredArrows = true;
                         break;
                     case TREASURE:
                         requiredTreasure = true;
@@ -66,16 +77,12 @@ public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
                 }
             }
         }
+
         return (
-            requiredWood &&
+            requiredSunStone &&
+            (requiredWood || requiredArrows) &&
             (requiredTreasure || requiredKey)
         );
     }
     
-    @Override 
-    public float reduceDamage(float damage, CharacterEntity player) {
-        this.used(player);
-        damage = damage/2;
-        return damage;
-    }
 }

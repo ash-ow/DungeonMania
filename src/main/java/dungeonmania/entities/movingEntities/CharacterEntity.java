@@ -6,6 +6,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.dungeon.GameModeType;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
@@ -15,10 +16,12 @@ import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.IDefensiveEntity;
 import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.exceptions.InvalidActionException;
+import dungeonmania.generators.Generator;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
+import dungeonmania.util.DungeonEntityJsonParser;
 import dungeonmania.util.Position;
 import dungeonmania.entities.collectableEntities.*;
 
@@ -28,13 +31,13 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public List<IBattlingEntity> teammates = new ArrayList<>();
     private int invincibilityRemaining = 0;
     private int invisibilityRemaining = 0;
-    private String gameMode;
+    private GameModeType gameMode;
 
     /**
      * Character constructor
      */
     public CharacterEntity() {
-        this(0, 0, 0);
+        this(0, 0);
     }
     
     /**
@@ -43,8 +46,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param y     y-coordinate on the map
      * @param layer layer on the map 
      */
-    public CharacterEntity(int x, int y, int layer) {
-        this(x, y, layer, "Standard");
+    public CharacterEntity(int x, int y) {
+        this(x, y, GameModeType.STANDARD);
     }
     
     /**
@@ -54,11 +57,15 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param layer      layer on the map
      * @param gameMode   denotes the difficulty settings of the game 
      */
-    public CharacterEntity(int x, int y, int layer, String gameMode) {
-        super(x, y, layer, EntityTypes.PLAYER);
+    public CharacterEntity(int x, int y, GameModeType gameMode) {
+        super(x, y, EntityTypes.PLAYER);
         this.previousPosition = new Position(x, y);
         this.gameMode = gameMode;
-        this.health = (int) Math.ceil(100 / EntitiesControl.difficulty.get(gameMode));
+        this.health = (int) Math.ceil(100 / Generator.difficulty.get(gameMode));
+    }
+
+    public CharacterEntity(DungeonEntityJsonParser info) {
+        this(info.getX(), info.getY());
     }
 
     public EntityResponse getInfo() {
@@ -85,7 +92,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     @Override
     public float getDamage() {
-        return (float) (3 / EntitiesControl.difficulty.get(this.gameMode));
+        return (float) (3 / Generator.difficulty.get(this.gameMode));
     }
 
     /**
@@ -250,28 +257,46 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param itemToBuild item to be built
      */
     public void build(EntityTypes itemToBuild) {
-        if (itemToBuild.equals(EntityTypes.BOW)) {
-            BowEntity bow = new BowEntity();
-            if (bow.isBuildable(this.inventory)) {
-                this.addEntityToInventory(bow);
-                removeBuildMaterials(EntityTypes.WOOD, 1);
-                removeBuildMaterials(EntityTypes.ARROW, 3);
-            } else {
+        switch (itemToBuild) {
+            case BOW:
+                BowEntity bow = new BowEntity();
+                if (bow.isBuildable(this.inventory)) {
+                    this.addEntityToInventory(bow);
+                    removeBuildMaterials(EntityTypes.WOOD, 1);
+                    removeBuildMaterials(EntityTypes.ARROW, 3);
+                }
+                break;
+            case SHIELD:
+                ShieldEntity shield = new ShieldEntity();
+                if (shield.isBuildable(this.inventory)) {
+                    this.addEntityToInventory(shield);
+                    removeBuildMaterials(EntityTypes.WOOD, 2);
+                    if(this.containedInInventory(EntityTypes.TREASURE)) {
+                        removeBuildMaterials(EntityTypes.TREASURE, 1);
+                    } else if (this.containedInInventory(EntityTypes.KEY)) {
+                        removeBuildMaterials(EntityTypes.KEY, 1);
+                    } 
+                }
+                break;
+            case SCEPTRE:
+                SceptreEntity sceptre = new SceptreEntity();
+                if (sceptre.isBuildable(this.inventory)) {
+                    this.addEntityToInventory(sceptre);
+                    removeBuildMaterials(EntityTypes.SUN_STONE, 1);
+                    if(this.containedInInventory(EntityTypes.TREASURE)) {
+                        removeBuildMaterials(EntityTypes.TREASURE, 1);
+                    } else if (this.containedInInventory(EntityTypes.KEY)) {
+                        removeBuildMaterials(EntityTypes.KEY, 1);
+                    } 
+                    if(this.containedInInventory(EntityTypes.WOOD)) {
+                        removeBuildMaterials(EntityTypes.WOOD, 1);
+                    } else if (this.containedInInventory(EntityTypes.ARROW)) {
+                        removeBuildMaterials(EntityTypes.ARROW, 1);
+                    } 
+                }
+                break;
+            default:
                 throw new InvalidActionException(itemToBuild.toString());
-            }
-        } else if (itemToBuild.equals(EntityTypes.SHIELD)) {
-            ShieldEntity shield = new ShieldEntity();
-            if (shield.isBuildable(this.inventory)) {
-                this.addEntityToInventory(shield);
-                removeBuildMaterials(EntityTypes.WOOD, 2);
-                if(this.containedInInventory(EntityTypes.TREASURE)) {
-                    removeBuildMaterials(EntityTypes.TREASURE, 1);
-                } else if (this.containedInInventory(EntityTypes.KEY)) {
-                    removeBuildMaterials(EntityTypes.KEY, 1);
-                } 
-            } else {
-                throw new InvalidActionException(itemToBuild.toString());
-            }
         }
     }
 

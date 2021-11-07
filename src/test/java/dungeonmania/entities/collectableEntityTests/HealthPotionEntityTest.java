@@ -25,7 +25,7 @@ public class HealthPotionEntityTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        HealthPotionEntity health_potion = new HealthPotionEntity(0,0,0);
+        HealthPotionEntity health_potion = new HealthPotionEntity(0,0);
         assertEntityResponseInfoEquals(
             health_potion,
             "health_potion-0-0-0",
@@ -39,15 +39,15 @@ public class HealthPotionEntityTest implements ICollectableEntityTest {
 
     @Override
     public void TestCollect() {
-        HealthPotionEntity health_potion = new HealthPotionEntity(0,0,0);
+        HealthPotionEntity health_potion = new HealthPotionEntity(0,0);
         assertEntityIsCollected(health_potion);
     }
 
     @Test
     public void TestUseCollectable() {
         ArrayList<IEntity> entities = new ArrayList<>();
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        HealthPotionEntity health_potion = new HealthPotionEntity(0,1,0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        HealthPotionEntity health_potion = new HealthPotionEntity(0,1);
         entities.add(health_potion);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         
@@ -81,10 +81,10 @@ public class HealthPotionEntityTest implements ICollectableEntityTest {
 
     @Test
     public void TestTwoPotions() {
-        HealthPotionEntity health_potion = new HealthPotionEntity(0,0,0);
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        SpiderEntity spider = new SpiderEntity(0,1,0);
-        InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0,0,0); 
+        HealthPotionEntity health_potion = new HealthPotionEntity(0,0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        SpiderEntity spider = new SpiderEntity(0,1);
+        InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0,0); 
         ArrayList<IEntity> entities = new ArrayList<>();
 
         entities.add(health_potion);

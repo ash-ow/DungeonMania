@@ -1,13 +1,14 @@
 package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.util.DungeonEntityJsonParser;
 
 public class ArrowsEntity extends CollectableEntity {
     /**
      * Arrows constructor
      */
     public ArrowsEntity() {
-        this(0, 0, 0);
+        this(0, 0);
     }
     
     /**
@@ -16,7 +17,11 @@ public class ArrowsEntity extends CollectableEntity {
      * @param y y-coordinate on the map
      * @param layer layer on the map 
      */
-    public ArrowsEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.ARROW);
+    public ArrowsEntity(int x, int y) {
+        super(x, y, EntityTypes.ARROW);
+    }
+
+    public ArrowsEntity(DungeonEntityJsonParser info) {
+        this(info.getX(), info.getY());
     }
 }

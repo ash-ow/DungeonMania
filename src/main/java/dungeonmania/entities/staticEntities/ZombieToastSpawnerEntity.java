@@ -14,14 +14,19 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.util.Direction;
+import dungeonmania.util.DungeonEntityJsonParser;
 
 public class ZombieToastSpawnerEntity extends Entity implements IBlocker {
     public ZombieToastSpawnerEntity() {
-        this(0, 0, 0);
+        this(0, 0);
     }
     
-    public ZombieToastSpawnerEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.ZOMBIE_TOAST_SPAWNER);
+    public ZombieToastSpawnerEntity(int x, int y) {
+        super(x, y, EntityTypes.ZOMBIE_TOAST_SPAWNER);
+    }
+
+    public ZombieToastSpawnerEntity(DungeonEntityJsonParser info) {
+        this(info.getX(), info.getY());
     }
 
     @Override

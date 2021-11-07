@@ -10,7 +10,7 @@ public class TreasureEntityTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        TreasureEntity treasure = new TreasureEntity(0,0,0);
+        TreasureEntity treasure = new TreasureEntity(0, 0);
         assertEntityResponseInfoEquals(
             treasure,
             "treasure-0-0-0",
@@ -23,7 +23,7 @@ public class TreasureEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestCollect() {
-        TreasureEntity treasure = new TreasureEntity(0,0,0);
+        TreasureEntity treasure = new TreasureEntity(0, 0);
         assertEntityIsCollected(treasure);
     }
 

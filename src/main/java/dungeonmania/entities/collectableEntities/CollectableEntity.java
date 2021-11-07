@@ -9,8 +9,8 @@ import dungeonmania.dungeon.EntitiesControl;
 public abstract class CollectableEntity extends Entity implements IContactingEntity {
     protected int durability = 1;
 
-    protected CollectableEntity(int x, int y, int layer, EntityTypes type) {
-        super(x, y, layer, type);
+    protected CollectableEntity(int x, int y, EntityTypes type) {
+        super(x, y, type);
     }
 
     /**

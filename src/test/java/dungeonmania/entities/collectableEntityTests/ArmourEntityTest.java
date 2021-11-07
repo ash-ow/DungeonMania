@@ -16,7 +16,7 @@ public class ArmourEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestEntityResponseInfo() {
-        ArmourEntity armour = new ArmourEntity(0, 0, 0);
+        ArmourEntity armour = new ArmourEntity(0, 0);
         assertEntityResponseInfoEquals(armour, "armour-0-0-0", EntityTypes.ARMOUR, new Position(0,0), false);
     }
 
@@ -40,7 +40,7 @@ public class ArmourEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestCollect() {
-        ArmourEntity armour = new ArmourEntity(0,0,0);
+        ArmourEntity armour = new ArmourEntity(0,0);
         assertEntityIsCollected(armour);
     }
 }

@@ -62,7 +62,7 @@ public class AndurilEntityTest implements ICollectableEntityTest {
     @Test
     @Override
     public void TestCollect() {
-        AndurilEntity anduril = new AndurilEntity(0,0,0);
+        AndurilEntity anduril = new AndurilEntity();
         assertEntityIsCollected(anduril);
     }
 }

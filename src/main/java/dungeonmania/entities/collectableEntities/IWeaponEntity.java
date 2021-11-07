@@ -9,7 +9,9 @@ public interface IWeaponEntity {
      * @param enemy   enemy which is losing health
      * @param player  player which is attacking the enemy
      */
-    public default void attack(IBattlingEntity enemy, CharacterEntity player) {
-        enemy.loseHealth(player.getHealth(), player.getDamage());
+    public default float attack(IBattlingEntity enemy, CharacterEntity player) {
+        return enemy.loseHealth(player.getHealth(), this.getDamage());
     }
+
+    public float getDamage();
 }

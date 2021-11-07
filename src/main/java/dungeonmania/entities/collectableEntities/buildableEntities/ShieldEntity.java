@@ -6,8 +6,9 @@ import java.util.Map;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
+import dungeonmania.entities.collectableEntities.IDefensiveEntity;
 
-public class ShieldEntity extends BuildableEntity {
+public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
     /**
      * Shield constructor
      */
@@ -71,12 +72,7 @@ public class ShieldEntity extends BuildableEntity {
         );
     }
     
-    /**
-     * Reduces input damage for the player
-     * @param damage input damage for the player
-     * @param player player which is being damaged
-     * @return redecued value for damage as a float
-     */
+    @Override 
     public float reduceDamage(float damage, CharacterEntity player) {
         this.used(player);
         damage = damage/2;

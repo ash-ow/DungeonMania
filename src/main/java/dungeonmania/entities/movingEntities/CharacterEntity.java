@@ -2,6 +2,7 @@ package dungeonmania.entities.movingEntities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
@@ -12,6 +13,7 @@ import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
+import dungeonmania.entities.collectableEntities.IDefensiveEntity;
 import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.generators.Generator;
@@ -100,19 +102,17 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param enemyDamage   Damage of the enemy which is used to calculate total damage
      */
     @Override
-    public void loseHealth(float enemyHealth, float enemyDamage) {
+    public float loseHealth(float enemyHealth, float enemyDamage) {
+        float damage = 0;
         if (!this.isInvincible()) {
-            float damage = ((enemyHealth * enemyDamage) / 10);
-            if(this.containedInInventory(EntityTypes.ARMOUR)) {
-                ArmourEntity armour = (ArmourEntity) findFirstInInventory(EntityTypes.ARMOUR);
-                damage = armour.reduceDamage(damage, this);
-            }
-            if(this.containedInInventory(EntityTypes.SHIELD)) {
-                ShieldEntity shield = (ShieldEntity) findFirstInInventory(EntityTypes.SHIELD);
-                damage = shield.reduceDamage(damage, this);
+            damage = ((enemyHealth * enemyDamage) / 10);
+            for (CollectableEntity item : getItemsFromInventory(IDefensiveEntity.class)) {
+                IDefensiveEntity defender = (IDefensiveEntity)item;
+                damage = defender.reduceDamage(damage, this);
             }
             this.health -= damage;
         }
+        return damage;
     }
 
     /**
@@ -140,14 +140,21 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
             OneRingEntity ring = (OneRingEntity) EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class);
             if (ring != null) {
                 ring.used(this);
+                return true;
             }
             return false;
         }
         return true;
     }
+    
 //endregion
 
 //region Inventory
+
+    List<CollectableEntity> getItemsFromInventory(Class<?> cls) {
+        return this.inventory.stream().filter(cls::isInstance).collect(Collectors.toList());
+    }
+
     public void addEntityToInventory(CollectableEntity entity) {
         inventory.add(entity);
     }
@@ -257,6 +264,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
                     this.addEntityToInventory(bow);
                     removeBuildMaterials(EntityTypes.WOOD, 1);
                     removeBuildMaterials(EntityTypes.ARROW, 3);
+                } else {
+                    throw new InvalidActionException(itemToBuild.toString());
                 }
                 break;
             case SHIELD:
@@ -269,6 +278,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
                     } else if (this.containedInInventory(EntityTypes.KEY)) {
                         removeBuildMaterials(EntityTypes.KEY, 1);
                     } 
+                } else {
+                    throw new InvalidActionException(itemToBuild.toString());
                 }
                 break;
             case SCEPTRE:

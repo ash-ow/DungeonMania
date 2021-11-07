@@ -35,8 +35,8 @@ public class SwampEntityTest implements IEntityTests {
     @Test
     public void TestPlayerNotBlocked() {
         ArrayList<IEntity> entities = new ArrayList<>();
-        CharacterEntity player = new CharacterEntity(0, 0, 0);
-        SwampEntity swamp = new SwampEntity(0, 1, 0);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        SwampEntity swamp = new SwampEntity(0, 1);
         entities.add(swamp);
 
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
@@ -52,11 +52,11 @@ public class SwampEntityTest implements IEntityTests {
         ArrayList<IEntity> entities = new ArrayList<>();
 
         // mercenary will try to move down to follow the player
-        MercenaryEntity merc = new MercenaryEntity(0, 0, 0);
+        MercenaryEntity merc = new MercenaryEntity();
         entities.add(merc);
-        SwampEntity swamp = new SwampEntity(0, 1, 0);
+        SwampEntity swamp = new SwampEntity(0, 1);
         entities.add(swamp);
-        CharacterEntity player = new CharacterEntity(0, 3, 0);
+        CharacterEntity player = new CharacterEntity(0, 3);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
 
         // mercenary can move down into the swamp and gets stuck for 3 ticks

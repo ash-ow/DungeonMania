@@ -4,7 +4,7 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.DungeonEntityJsonObject;
 
-public class ArmourEntity extends CollectableEntity {
+public class ArmourEntity extends CollectableEntity implements IDefensiveEntity {
     /**
      * Armour constructor
      */
@@ -33,6 +33,7 @@ public class ArmourEntity extends CollectableEntity {
      * @param player player which is being damaged
      * @return redecued value for damage as a float
      */
+    @Override
     public float reduceDamage(float damage, CharacterEntity player) {
         this.used(player);
         damage = damage/2;

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Map.Entry;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
@@ -117,7 +118,9 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         if (isBribed) {
             setPosition(player.getPreviousPosition());
         } else if (!player.isInvisible()){
-            this.move(moveBehaviour.getBehaviourDirection(entitiesControl, player, position));
+            //this.move(moveBehaviour.getBehaviourDirection(entitiesControl, player, position));
+            Position newPos = findPath(this.position, player.getPosition()).get(0);
+            this.setPosition(newPos);
             if (this.isInSamePositionAs(player)) {
                 contactWithPlayer(entitiesControl, player);
             }
@@ -170,15 +173,35 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      * Takes the mercenary's current position and finds the closest distance to every point in the map
      * @return a map with each position on the map, and the path to get to there (path will be a series of positions to get to that point)
      */
-    public List<Position> findPath(Position Position, Position playerPosition){
+    public List<Position> findPath(Position mercenaryPosition, Position playerPosition){
         List<Position> shortestPath = new ArrayList<>();
-        PriorityQueue queue = new PriorityQueue<>();
-        Map<Position,List<Position>> pathsMap = new HashMap<>();
-        
-        
-        // create a list of all positions in the dungeon unless they are Iblocker
-        // run dijkstra's algorithm to find out the shortest path to each position
-        // Within the paths map, return the list of positions which correspond to the player's position
+        // PriorityQueue queue = new PriorityQueue<>();
+        Map<Position, List<Position>> pathsMap = new HashMap<>();
+        List<Position> previousPositions = new ArrayList<>();
+        pathsMap.put(mercenaryPosition, previousPositions);
+        while(!pathsMap.containsKey(playerPosition)) {
+            for(Map.Entry<Position, List<Position>> entry: pathsMap.entrySet()) {
+                Map<Position, List<Position>> newPathsMap = dijkstra(entry.getKey(), pathsMap);
+                pathsMap = newPathsMap;
+            }
+        }
+        shortestPath = pathsMap.get(playerPosition);
         return shortestPath;
+    }
+
+    public Map<Position, List<Position>> dijkstra(Position position, Map<Position, List<Position>> pathsMap) {
+        List<Position> currentPrevPositions = pathsMap.get(position);
+        for (Position pos:position.getCardinallyAdjacentPositions()){
+            List<Position> newPrevPositions = new ArrayList<>();
+            newPrevPositions = currentPrevPositions;
+            newPrevPositions.add(position);
+            if (!pathsMap.containsKey(pos)){
+                pathsMap.put(pos, newPrevPositions);
+            }
+            else if (newPrevPositions.size() < pathsMap.get(pos).size()){
+                pathsMap.put(pos, newPrevPositions);
+            }
+        }
+        return pathsMap;
     }
 }

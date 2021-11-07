@@ -118,4 +118,10 @@ public class DungeonManiaController {
         dungeon.build(buildable);
         return dungeon.getInfo();
     }
+
+    public DungeonResponse rewind(int ticks) throws IllegalArgumentException {
+        return dungeon.getInfo();
+    }
+
+
 }

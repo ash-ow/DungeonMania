@@ -39,6 +39,8 @@
         "zombie_toast": "images/tileset/entities/zombie_00.png",
         "one_ring": "images/tileset/items/ring_0_special.png",
         "armour": "images/tileset/items/armour.png",
-        "unlocked_door": "images/tileset/walls/wooden/door_unlocked.png"
+        "unlocked_door": "images/tileset/walls/wooden/door_unlocked.png",
+        "time_turner": "images/tileset/entities/time_turner.png",
+        "time_travelling_portal": "images/tileset/entities/portal_04.png"
     }
 }

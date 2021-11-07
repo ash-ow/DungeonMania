@@ -1,9 +1,17 @@
 package dungeonmania.entities.staticEntityTest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import org.junit.jupiter.api.Test;
 
+import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntityTests;
@@ -14,6 +22,13 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class TimeTravelPortalTest implements IEntityTests, IInteractingEntityTest {
+
+    // Test 1: create a dungeon and save the details of a json-- similar saveGame
+    // Test 2: load from the expected json
+    // Test 3: make a dungeon with some stuff-- 5 ticks rewind and then 5 ticks
+    // Test 4: yeet himself contact with player
+    // Test 5: yeet himself using object doesnt have
+    // Test 6: yeet himself when you try to move somewhere but you get blocked
 
     @Override
     @Test
@@ -38,5 +53,58 @@ public class TimeTravelPortalTest implements IEntityTests, IInteractingEntityTes
             false
         );
     }
-    
+
+    @Test
+    public void TestLoadFromTimeTravel() {
+        Dungeon d = getDungeonForTimeTravel();
+        JsonObject start = d.saveCurentStateToJson();
+        d.tick(Direction.UP);
+        d.tick(Direction.DOWN);
+        d.tick(Direction.LEFT);
+        d.tick(Direction.RIGHT);
+        assertEquals(start, d.loadJsonState(5));
+    }
+
+    @Test
+    public void TestFightBetweenNewAndOld() {
+        CharacterEntity player = new CharacterEntity(0, 0);
+        Dungeon d = new Dungeon(new ArrayList<>(), "Standard", player);
+        d.tick(Direction.DOWN);
+        d.tick(Direction.DOWN);
+        d.tick(Direction.DOWN);
+        d.tick(Direction.DOWN);
+        d.timeTravel(5);
+    }
+
+    private Dungeon getDungeonForTimeTravel() {
+        /*
+            * 0 1 2 3 0 . . . . 1 X W . . 2 W S B P 3 W O I . 4 X A . . 5 X . . T
+            */
+
+        String entities = "{\"entities\": [" + "{\"x\": 0,\"y\": 1,\"type\": \"spider\"}," + // X 0
+                "{\"x\": 1,\"y\": 1,\"type\": \"wall\"}," + // W 1
+
+                "{\"x\": 0,\"y\": 2,\"type\": \"wall\"}," + // W 2
+                "{\"x\": 1,\"y\": 2,\"type\": \"switch\"}," + // S 3
+                "{\"x\": 2,\"y\": 2,\"type\": \"boulder\"}," + // B 4
+                "{\"x\": 3,\"y\": 2,\"type\": \"player\"}," + // P
+
+                "{\"x\": 0,\"y\": 3,\"type\": \"wall\"}," + // W 5
+                "{\"x\": 1,\"y\": 3,\"type\": \"bomb\"}," + // O 6
+                "{\"x\": 1,\"y\": 3,\"type\": \"switch\"}," + // S 7
+                "{\"x\": 2,\"y\": 3,\"type\": \"wood\"}," + // I 8
+
+                "{\"x\": 0,\"y\": 4,\"type\": \"spider\"}," + // X 9
+                "{\"x\": 1,\"y\": 4,\"type\": \"arrow\"}," + // A 10
+
+                "{\"x\": 0,\"y\": 5,\"type\": \"spider\"}," + // X 11
+                "{\"x\": 3,\"y\": 5,\"type\": \"exit\"}" + // T 12
+
+                "]}";
+
+        String goals = "{\"goal-condition\": {\"goal\": \"exit\"}}";
+        JsonArray entitiesJson = new Gson().fromJson(entities, JsonObject.class).get("entities").getAsJsonArray();
+        JsonObject goalsJson = new Gson().fromJson(goals, JsonObject.class).get("goal-condition").getAsJsonObject();
+        return new Dungeon(entitiesJson, goalsJson, "Standard", "", "");
+    }
 }

@@ -102,7 +102,7 @@ public class Dungeon {
         }
         if (player.isAlive()) {
             entitiesInfo.add(player.getInfo());
-        }        
+        }
         return new DungeonResponse(id, dungeonName, entitiesInfo, player.getInventoryInfo(), player.getBuildableList(), getGoals());
     }
 
@@ -272,6 +272,14 @@ public class Dungeon {
         JsonObject entityInfo = getJsonVersion(x, y, type);
         entityInfo.addProperty("colour", colour);
         return entityInfo;
+    }
+
+    public JsonObject loadJsonState(int ticksRewind) {
+        return null;
+    }
+
+    public void timeTravel(int ticksRewind) {
+        
     }
 }
  

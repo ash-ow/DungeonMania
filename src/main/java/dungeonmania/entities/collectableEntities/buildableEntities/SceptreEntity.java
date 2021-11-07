@@ -6,6 +6,7 @@ import java.util.Map;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.IWeaponEntity;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class SceptreEntity extends BuildableEntity implements IWeaponEntity {
     
@@ -13,18 +14,21 @@ public class SceptreEntity extends BuildableEntity implements IWeaponEntity {
      * Sceptre constructor
      */
     public SceptreEntity() {
-        this(0, 0, 0);
+        this(0, 0);
     }
     
     /**
      * Sceptre constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
-    public SceptreEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.SCEPTRE);
+    public SceptreEntity(int x, int y) {
+        super(x, y, EntityTypes.SCEPTRE);
         this.durability = 2;
+    }
+
+    public SceptreEntity(DungeonEntityJsonObject info) {
+        this(info.getX(), info.getY());
     }
     
     /**

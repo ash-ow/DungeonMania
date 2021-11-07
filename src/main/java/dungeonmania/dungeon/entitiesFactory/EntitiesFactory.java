@@ -3,8 +3,9 @@ package dungeonmania.dungeon.entitiesFactory;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.dungeon.GameModeType;
 import dungeonmania.entities.collectableEntities.*;
+import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.entities.movingEntities.*;
-import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
+import dungeonmania.entities.movingEntities.spiderEntity.*;
 import dungeonmania.entities.staticEntities.*;
 import dungeonmania.util.DungeonEntityJsonObject;
 
@@ -33,6 +34,8 @@ public class EntitiesFactory extends EntitiesControl {
             case PORTAL: entities.createNewEntityOnMap(new PortalEntity(jsonInfo)); break;
             case DOOR: entities.createNewEntityOnMap(new DoorEntity(jsonInfo)); break;
             case SWAMP:entities.createNewEntityOnMap(new SwampEntity(jsonInfo)); break;
+            case SCEPTRE:entities.createNewEntityOnMap(new SceptreEntity(jsonInfo)); break;
+            case SUN_STONE:entities.createNewEntityOnMap(new SunStoneEntity(jsonInfo)); break;
         }
     }
 }

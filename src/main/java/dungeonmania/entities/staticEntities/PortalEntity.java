@@ -7,7 +7,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class PortalEntity extends Entity implements IContactingEntity {
     String colour;
@@ -21,8 +21,8 @@ public class PortalEntity extends Entity implements IContactingEntity {
         this.colour = colour;
     }
 
-    public PortalEntity(JsonControl info) {
-        this(info.getPosition().getX(), info.getPosition().getY(), info.getColor());
+    public PortalEntity(DungeonEntityJsonObject info) {
+        this(info.getX(), info.getY(), info.getColor());
     }
 
     public String getColour() {

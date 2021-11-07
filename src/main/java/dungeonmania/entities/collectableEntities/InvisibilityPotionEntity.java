@@ -3,7 +3,7 @@ package dungeonmania.entities.collectableEntities;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class InvisibilityPotionEntity extends CollectableEntity {
     /**
@@ -23,8 +23,8 @@ public class InvisibilityPotionEntity extends CollectableEntity {
         super(x, y, EntityTypes.INVISIBILITY_POTION);
     }
 
-    public InvisibilityPotionEntity(JsonControl info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+    public InvisibilityPotionEntity(DungeonEntityJsonObject info) {
+        this(info.getX(), info.getY());
     }
 
     /**

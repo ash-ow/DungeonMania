@@ -9,7 +9,7 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonObject;
 import dungeonmania.util.Position;
 
 public class BoulderEntity extends Entity implements IBlocker {
@@ -30,8 +30,8 @@ public class BoulderEntity extends Entity implements IBlocker {
         super(x, y, EntityTypes.BOULDER);
     }
 
-    public BoulderEntity(JsonControl info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+    public BoulderEntity(DungeonEntityJsonObject info) {
+        this(info.getX(), info.getY());
     }
 
     @Override

@@ -2,7 +2,7 @@ package dungeonmania.entities.staticEntities;
 
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class ExitEntity extends Entity {
     public ExitEntity() {
@@ -13,7 +13,7 @@ public class ExitEntity extends Entity {
         super(x, y, EntityTypes.EXIT);
     }
 
-    public ExitEntity(JsonControl info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+    public ExitEntity(DungeonEntityJsonObject info) {
+        this(info.getX(), info.getY());
     }
 }

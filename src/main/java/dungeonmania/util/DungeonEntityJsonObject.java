@@ -4,20 +4,20 @@ import com.google.gson.JsonObject;
 
 import dungeonmania.entities.EntityTypes;
 
-public class JsonControl {
+public class DungeonEntityJsonObject {
     Position position;
     EntityTypes type;
     Integer key;
     String color;
 
-    public JsonControl() {
+    public DungeonEntityJsonObject() {
         this.position = null;
         this.type = null;
         this.key = null;
         this.color = null;
     }
 
-    public JsonControl(JsonObject entityObj) {
+    public DungeonEntityJsonObject(JsonObject entityObj) {
         Integer xAxis = entityObj.get("x").getAsInt();
         Integer yAxis = entityObj.get("y").getAsInt();
         this.position = new Position(xAxis, yAxis);
@@ -28,6 +28,14 @@ public class JsonControl {
         if (entityObj.get("colour") != null) {
             this.color = entityObj.get("colour").getAsString();
         }
+    }
+
+    public Integer getX() {
+        return getPosition().getX();
+    }
+
+    public Integer getY() {
+        return getPosition().getY();
     }
 
     public Position getPosition() {
@@ -62,9 +70,7 @@ public class JsonControl {
         this.color = color;
     }
 
-    public static Position JsonToPosition(JsonObject entityObj) {
-        Integer xAxis = entityObj.get("x").getAsInt();
-        Integer yAxis = entityObj.get("y").getAsInt();
-        return new Position(xAxis, yAxis);
+    public boolean isPlayerJson() {
+        return getType().equals(EntityTypes.PLAYER); 
     }
 }

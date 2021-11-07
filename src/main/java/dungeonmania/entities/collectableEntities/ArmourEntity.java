@@ -2,9 +2,9 @@ package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonObject;
 
-public class ArmourEntity extends CollectableEntity {
+public class ArmourEntity extends CollectableEntity implements IDefensiveEntity {
     /**
      * Armour constructor
      */
@@ -23,8 +23,8 @@ public class ArmourEntity extends CollectableEntity {
         this.durability = 4;
     }
     
-    public ArmourEntity(JsonControl info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+    public ArmourEntity(DungeonEntityJsonObject info) {
+        this(info.getX(), info.getY());
     }
     
     /**
@@ -33,6 +33,7 @@ public class ArmourEntity extends CollectableEntity {
      * @param player player which is being damaged
      * @return redecued value for damage as a float
      */
+    @Override
     public float reduceDamage(float damage, CharacterEntity player) {
         this.used(player);
         damage = damage/2;

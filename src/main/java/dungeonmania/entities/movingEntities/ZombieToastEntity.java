@@ -12,7 +12,7 @@ import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.entities.movingEntities.moveBehaviour.RandomMove;
 import dungeonmania.util.Direction;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonObject;
 import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
 
@@ -37,8 +37,8 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         this.moveBehaviour = new RandomMove();
     }
 
-    public ZombieToastEntity(JsonControl info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+    public ZombieToastEntity(DungeonEntityJsonObject info) {
+        this(info.getX(), info.getY());
     }
     
     /**
@@ -102,8 +102,10 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         return 3;
     }
 
-    public void loseHealth(float enemyHealth, float enemyDamage) {
-        this.health -= ((enemyHealth * enemyDamage) / 5);
+    public float loseHealth(float enemyHealth, float enemyDamage) {
+        float damage = ((enemyHealth * enemyDamage) / 5);
+        this.health -= damage;
+        return damage;
     }
     //endregion
     

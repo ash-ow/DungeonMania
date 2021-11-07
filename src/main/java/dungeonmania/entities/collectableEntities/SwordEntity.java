@@ -1,16 +1,18 @@
 package dungeonmania.entities.collectableEntities;
 
-import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonObject;
 
-public class SwordEntity extends CollectableEntity implements IWeaponEntity{
+public class SwordEntity extends CollectableEntity implements IWeaponEntity {
     /**
      * Sword constructor
      */
     public SwordEntity() {
         this(0, 0);
+    }
+    
+    public SwordEntity(DungeonEntityJsonObject info) {
+        this(info.getX(), info.getY());
     }
 
     /**
@@ -24,7 +26,8 @@ public class SwordEntity extends CollectableEntity implements IWeaponEntity{
         this.durability = 5;
     }
 
-    public SwordEntity(JsonControl info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+    @Override
+    public float getDamage() {
+        return 3;
     }
 }

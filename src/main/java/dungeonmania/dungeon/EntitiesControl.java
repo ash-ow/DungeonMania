@@ -1,40 +1,25 @@
 package dungeonmania.dungeon;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonObject;
 import dungeonmania.util.Position;
-import dungeonmania.util.RandomChance;
 import dungeonmania.dungeon.entitiesFactory.EntitiesFactory;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
 import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
-import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
-import dungeonmania.entities.staticEntities.*;
+import dungeonmania.generators.Generator;
 
 public class EntitiesControl {
     private List<IEntity> entities;
-    private Random rand = new Random();
     private Integer tickCounter = 1;
     private Integer entityCounter = 0;
-    public final static HashMap<GameModeType, Double> difficulty;
     private Position playerStartPosition = new Position(0, 0);
-    static {
-        difficulty = new HashMap<>();
-        difficulty.put(GameModeType.HARD, 20.0/15.0);
-        difficulty.put(GameModeType.PEACEFUL, 15.0/20.0);
-        difficulty.put(GameModeType.STANDARD, 1.0);
-    }
     public final static List<EntityTypes> usableItems;
     static {
         usableItems = new ArrayList<>();
@@ -64,8 +49,6 @@ public class EntitiesControl {
     public void createNewEntityOnMap(IEntity entity) {
         entity.setId(Integer.toString(entityCounter));
         entities.add(entity);
-        Integer layer = this.getAllEntitiesFromPosition(entity.getPosition()).size();
-        entity.setPosition(entity.getPosition().asLayer(layer));
         entityCounter++;
     }
 
@@ -149,6 +132,10 @@ public class EntitiesControl {
         return this.entities.stream().filter(entity -> entity != null && entity.getPosition().equals(position)).collect(Collectors.toList());
     }
 
+    public Integer getLayerFromPosition(Position position) {
+        return this.getAllEntitiesFromPosition(position).size();
+    }
+
     public static boolean containsBlockingEntities(List<IEntity> entityList) {
         return entityList.stream().filter(IBlocker.class::isInstance).map(IBlocker.class::cast).anyMatch(IBlocker::isBlocking);
     }
@@ -168,7 +155,7 @@ public class EntitiesControl {
     // endregion
     
     
-    public void createEntity(JsonControl jsonInfo, GameModeType gameMode) {
+    public void createEntity(DungeonEntityJsonObject jsonInfo, GameModeType gameMode) {
         EntitiesFactory.generateEntity(jsonInfo, this, gameMode);
     }
     
@@ -179,7 +166,7 @@ public class EntitiesControl {
      * @param type      type of entity
      */
     public void createEntity(Integer x, Integer y, EntityTypes type) {
-        JsonControl jsonElement = new JsonControl();
+        DungeonEntityJsonObject jsonElement = new DungeonEntityJsonObject();
         jsonElement.setPosition(new Position(x, y));
         jsonElement.setType(type);
         EntitiesFactory.generateEntity(jsonElement, this, GameModeType.STANDARD);
@@ -203,60 +190,8 @@ public class EntitiesControl {
      * @param gameMode         difficulty of the game
      */
     public void generateEnemyEntities(GameModeType gameMode) {
-        generateSpider(gameMode);
-        generateZombieToast(gameMode);
-        generateMercenary(gameMode);
+        Generator.generateEnemyEntities(this, this.tickCounter, gameMode, this.playerStartPosition);
         tickCounter++;
-    }
-
-    /**
-     * Generates mercenaries based on game mode
-     * @param gameMode         difficulty of the game
-     */
-    private void generateMercenary(GameModeType gameMode) {
-        if (tickCounter % (int) Math.ceil(30 / difficulty.get(gameMode)) == 0) {
-            List<IMovingEntity> enemy = getEntitiesOfType(IMovingEntity.class);
-            if (enemy.size() > 0) {
-                this.createEntity(playerStartPosition.getX(), playerStartPosition.getY(), EntityTypes.MERCENARY);
-            }
-        }
-    }
-
-    /**
-     * Generates spider based on game mode
-     * @param gameMode         difficulty of the game
-     */
-    private void generateSpider(GameModeType gameMode) {
-        // TODO replace this with an enemy generator
-        List<SpiderEntity> spiders = this.getAllEntitiesOfType(SpiderEntity.class);
-        if (spiders.size() < 4) {
-            Position largestCoordinate = this.getLargestCoordinate();
-            int largestX = largestCoordinate.getX();
-            int largestY = largestCoordinate.getY();
-            int randomX = rand.nextInt(largestX);
-            int randomY = rand.nextInt(largestY);
-            if (RandomChance.getRandomBoolean((float) (.05f * difficulty.get(gameMode)))
-                && !this.positionContainsEntityType(new Position(randomX, randomY), BoulderEntity.class)) {
-                this.createEntity(randomX, randomY, EntityTypes.SPIDER);
-            }
-        }
-    }
-
-    /**
-     * Generates zombie toast based on game mode
-     * @param gameMode         difficulty of the game
-     */
-    private void generateZombieToast(GameModeType gameMode) {
-        if (tickCounter % (int) Math.ceil(20 / difficulty.get(gameMode)) == 0) {
-            List<ZombieToastSpawnerEntity> spawnerEntities = getEntitiesOfType(ZombieToastSpawnerEntity.class);
-            for (ZombieToastSpawnerEntity spawner : spawnerEntities) {
-                this.createEntity(
-                    spawner.getPosition().getX(), 
-                    spawner.getPosition().getY(), 
-                    EntityTypes.ZOMBIE_TOAST
-                );
-            }
-        }
     }
 
     /**

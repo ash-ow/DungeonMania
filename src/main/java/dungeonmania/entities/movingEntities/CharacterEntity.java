@@ -2,6 +2,7 @@ package dungeonmania.entities.movingEntities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
@@ -12,13 +13,15 @@ import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
+import dungeonmania.entities.collectableEntities.IDefensiveEntity;
 import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.exceptions.InvalidActionException;
+import dungeonmania.generators.Generator;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
-import dungeonmania.util.JsonControl;
+import dungeonmania.util.DungeonEntityJsonObject;
 import dungeonmania.util.Position;
 import dungeonmania.entities.collectableEntities.*;
 
@@ -58,11 +61,11 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         super(x, y, EntityTypes.PLAYER);
         this.previousPosition = new Position(x, y);
         this.gameMode = gameMode;
-        this.health = (int) Math.ceil(100 / EntitiesControl.difficulty.get(gameMode));
+        this.health = (int) Math.ceil(100 / Generator.difficulty.get(gameMode));
     }
 
-    public CharacterEntity(JsonControl info) {
-        this(info.getPosition().getX(), info.getPosition().getY());
+    public CharacterEntity(DungeonEntityJsonObject info) {
+        this(info.getX(), info.getY());
     }
 
     public EntityResponse getInfo() {
@@ -89,7 +92,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     @Override
     public float getDamage() {
-        return (float) (3 / EntitiesControl.difficulty.get(this.gameMode));
+        return (float) (3 / Generator.difficulty.get(this.gameMode));
     }
 
     /**
@@ -99,19 +102,17 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param enemyDamage   Damage of the enemy which is used to calculate total damage
      */
     @Override
-    public void loseHealth(float enemyHealth, float enemyDamage) {
+    public float loseHealth(float enemyHealth, float enemyDamage) {
+        float damage = 0;
         if (!this.isInvincible()) {
-            float damage = ((enemyHealth * enemyDamage) / 10);
-            if(this.containedInInventory(EntityTypes.ARMOUR)) {
-                ArmourEntity armour = (ArmourEntity) findFirstInInventory(EntityTypes.ARMOUR);
-                damage = armour.reduceDamage(damage, this);
-            }
-            if(this.containedInInventory(EntityTypes.SHIELD)) {
-                ShieldEntity shield = (ShieldEntity) findFirstInInventory(EntityTypes.SHIELD);
-                damage = shield.reduceDamage(damage, this);
+            damage = ((enemyHealth * enemyDamage) / 10);
+            for (CollectableEntity item : getItemsFromInventory(IDefensiveEntity.class)) {
+                IDefensiveEntity defender = (IDefensiveEntity)item;
+                damage = defender.reduceDamage(damage, this);
             }
             this.health -= damage;
         }
+        return damage;
     }
 
     /**
@@ -139,14 +140,21 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
             OneRingEntity ring = (OneRingEntity) EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class);
             if (ring != null) {
                 ring.used(this);
+                return true;
             }
             return false;
         }
         return true;
     }
+    
 //endregion
 
 //region Inventory
+
+    List<CollectableEntity> getItemsFromInventory(Class<?> cls) {
+        return this.inventory.stream().filter(cls::isInstance).collect(Collectors.toList());
+    }
+
     public void addEntityToInventory(CollectableEntity entity) {
         inventory.add(entity);
     }
@@ -249,28 +257,50 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param itemToBuild item to be built
      */
     public void build(EntityTypes itemToBuild) {
-        if (itemToBuild.equals(EntityTypes.BOW)) {
-            BowEntity bow = new BowEntity();
-            if (bow.isBuildable(this.inventory)) {
-                this.addEntityToInventory(bow);
-                removeBuildMaterials(EntityTypes.WOOD, 1);
-                removeBuildMaterials(EntityTypes.ARROW, 3);
-            } else {
+        switch (itemToBuild) {
+            case BOW:
+                BowEntity bow = new BowEntity();
+                if (bow.isBuildable(this.inventory)) {
+                    this.addEntityToInventory(bow);
+                    removeBuildMaterials(EntityTypes.WOOD, 1);
+                    removeBuildMaterials(EntityTypes.ARROW, 3);
+                } else {
+                    throw new InvalidActionException(itemToBuild.toString());
+                }
+                break;
+            case SHIELD:
+                ShieldEntity shield = new ShieldEntity();
+                if (shield.isBuildable(this.inventory)) {
+                    this.addEntityToInventory(shield);
+                    removeBuildMaterials(EntityTypes.WOOD, 2);
+                    if(this.containedInInventory(EntityTypes.TREASURE)) {
+                        removeBuildMaterials(EntityTypes.TREASURE, 1);
+                    } else if (this.containedInInventory(EntityTypes.KEY)) {
+                        removeBuildMaterials(EntityTypes.KEY, 1);
+                    } 
+                } else {
+                    throw new InvalidActionException(itemToBuild.toString());
+                }
+                break;
+            case SCEPTRE:
+                SceptreEntity sceptre = new SceptreEntity();
+                if (sceptre.isBuildable(this.inventory)) {
+                    this.addEntityToInventory(sceptre);
+                    removeBuildMaterials(EntityTypes.SUN_STONE, 1);
+                    if(this.containedInInventory(EntityTypes.TREASURE)) {
+                        removeBuildMaterials(EntityTypes.TREASURE, 1);
+                    } else if (this.containedInInventory(EntityTypes.KEY)) {
+                        removeBuildMaterials(EntityTypes.KEY, 1);
+                    } 
+                    if(this.containedInInventory(EntityTypes.WOOD)) {
+                        removeBuildMaterials(EntityTypes.WOOD, 1);
+                    } else if (this.containedInInventory(EntityTypes.ARROW)) {
+                        removeBuildMaterials(EntityTypes.ARROW, 1);
+                    } 
+                }
+                break;
+            default:
                 throw new InvalidActionException(itemToBuild.toString());
-            }
-        } else if (itemToBuild.equals(EntityTypes.SHIELD)) {
-            ShieldEntity shield = new ShieldEntity();
-            if (shield.isBuildable(this.inventory)) {
-                this.addEntityToInventory(shield);
-                removeBuildMaterials(EntityTypes.WOOD, 2);
-                if(this.containedInInventory(EntityTypes.TREASURE)) {
-                    removeBuildMaterials(EntityTypes.TREASURE, 1);
-                } else if (this.containedInInventory(EntityTypes.KEY)) {
-                    removeBuildMaterials(EntityTypes.KEY, 1);
-                } 
-            } else {
-                throw new InvalidActionException(itemToBuild.toString());
-            }
         }
     }
 

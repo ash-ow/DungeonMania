@@ -48,6 +48,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this(x, y, GameModeType.STANDARD);
     }
     
+    public CharacterEntity(int x, int y, EntityTypes type) {
+        super(x, y, type);
+    }
+
     /**
      * Character constructor
      * @param x          x-coordinate on the map
@@ -56,7 +60,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param gameMode   denotes the difficulty settings of the game 
      */
     public CharacterEntity(int x, int y, GameModeType gameMode) {
-        super(x, y, EntityTypes.PLAYER);
+        this(x, y, EntityTypes.PLAYER);
         this.previousPosition = new Position(x, y);
         this.gameMode = gameMode;
         this.health = (int) Math.ceil(100 / EntitiesControl.difficulty.get(gameMode));

@@ -1,9 +1,12 @@
 package dungeonmania.entities.staticEntityTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -14,9 +17,13 @@ import org.junit.jupiter.api.Test;
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
+import dungeonmania.entities.collectableEntities.BombEntity;
+import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.OlderCharacter;
 import dungeonmania.entities.staticEntities.TimeTravelPortal;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -74,7 +81,64 @@ public class TimeTravelPortalTest implements IEntityTests, IInteractingEntityTes
         d.tick(Direction.DOWN);
         d.tick(Direction.DOWN);
         d.timeTravel(5);
+        player.setHealth(200);
+        assertEquals(player.getPosition(), new Position(0, 4));
+        assertEquals(d.entitiesControl.getEntitiesOfType(OlderCharacter.class).size(), 1);
+        d.tick(Direction.UP);
+        d.tick(Direction.UP);
+        assertEquals(player.getPosition(), new Position(0, 2));
+        assertEquals(d.entitiesControl.getEntities().size(), 0);
     }
+
+    @Test
+    public void TestUseObjectDoesntExist() {
+        CharacterEntity player = new CharacterEntity(0, 0);
+        BombEntity bomb = new BombEntity(0, 3);
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(bomb);
+        Dungeon d = new Dungeon(entities, "Standard", player);
+        d.tick(Direction.DOWN);
+        d.tick(Direction.DOWN);
+        d.tick(Direction.DOWN);
+        d.tick(bomb.getId());
+        d.tick(Direction.DOWN);
+        d.timeTravel(6);
+        assertEquals(d.entitiesControl.getEntitiesOfType(OlderCharacter.class).size(), 1);
+        assertEquals(player.getPosition(), new Position(0, 4));
+        d.tick(Direction.UP);
+        d.tick(Direction.RIGHT);
+        d.tick(Direction.RIGHT);
+        d.tick(Direction.RIGHT);
+        assertEquals(d.entitiesControl.getEntitiesOfType(OlderCharacter.class).size(), 0);
+    }
+
+    @Test
+    public void TestBlocked() {
+        CharacterEntity player = new CharacterEntity(0, 0);
+        BoulderEntity boulder = new BoulderEntity(1, 2);
+        TimeTravelPortal portal = new TimeTravelPortal(2, 2);
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(boulder);
+        Dungeon d = new Dungeon(entities, "Standard", player);
+        d.tick(Direction.DOWN);
+        d.tick(Direction.DOWN);
+        d.tick(Direction.DOWN);
+        d.tick(Direction.RIGHT);
+        d.tick(Direction.RIGHT);
+        d.tick(Direction.UP);
+        assertTrue(player.IsTimeTravelling());
+        OlderCharacter olderCharacter = (OlderCharacter) d.entitiesControl.getFirstEntityOfType(OlderCharacter.class);
+        d.tick(Direction.LEFT);
+        assertEquals(player.getPosition(), new Position(1, 2));
+        assertEquals(boulder.getPosition(), new Position(0, 2));
+        for (int i = 0; i < 5; i++) {
+            d.tick(Direction.NONE);
+        }
+        assertNotEquals(olderCharacter.getPosition(), portal.getPosition());
+        assertFalse(d.entitiesControl.contains(olderCharacter));
+    }
+
+
 
     private Dungeon getDungeonForTimeTravel() {
         /*

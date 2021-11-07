@@ -36,7 +36,8 @@ public enum EntityTypes {
     BOW("bow"),    
 
     // Player
-    PLAYER("player")
+    PLAYER("player"),
+    OLDER_PLAYER("older_player")
     
     ;
 

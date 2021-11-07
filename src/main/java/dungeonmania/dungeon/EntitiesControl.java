@@ -163,6 +163,10 @@ public class EntitiesControl {
         return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findFirst().orElse(null);
     }
 
+    public <T extends IEntity> IEntity getFirstEntityOfType(Class<?> cls) {
+        return getFirstEntityOfType(this.entities, cls);
+    }
+
     public boolean positionContainsEntityType(Position position, Class<?> cls) {
         List<IEntity> entityList =  this.getAllEntitiesFromPosition(position);
         

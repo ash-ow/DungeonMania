@@ -60,7 +60,7 @@ public class Dungeon {
                 this.entitiesControl.createEntity(dungeonEntityJsonInfo, this.gameMode);
             }
         }
-        entitiesControl.setPlayerStartPosition(player.getPosition());
+        this.entitiesControl.setPlayerStartPosition(player.getPosition());
 
         if (goalConditions != null) {
             this.goals = new Goals(goalConditions);

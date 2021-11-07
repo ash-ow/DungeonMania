@@ -18,7 +18,7 @@ public class MidnightArmourEntity extends BuildableEntity implements IDefensiveE
      * @param y y-coordinate on the map
      */
     public MidnightArmourEntity(int x, int y) {
-        super(x, y, EntityTypes.SHIELD);
+        super(x, y, EntityTypes.MIDNIGHT_ARMOUR);
         this.durability = Integer.MAX_VALUE;
     }
     

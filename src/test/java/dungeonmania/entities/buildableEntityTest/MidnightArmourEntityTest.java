@@ -30,23 +30,7 @@ public class MidnightArmourEntityTest implements IBuildableEntityTests {
         player.addEntityToInventory(new SunStoneEntity());
         player.addEntityToInventory(new ArmourEntity());
         player.build(EntityTypes.MIDNIGHT_ARMOUR);
-        assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.SCEPTRE), player);
-    }
-
-    public void assertCanBuildMidnightArmourWithKey() {
-        CharacterEntity player = new CharacterEntity();
-        WoodEntity wood = new WoodEntity();
-        WoodEntity wood2 = new WoodEntity();
-        KeyEntity key = new KeyEntity(0, 0, 1);
-        player.addEntityToInventory(wood);
-        player.addEntityToInventory(wood2);
-        player.addEntityToInventory(key);
-        player.build(EntityTypes.SHIELD);
-        List<ItemResponse> inventory = player.getInventoryInfo();
-        for (ItemResponse item : inventory) {
-            assertEquals(EntityTypes.SHIELD.toString(), item.getType());
-        }
-        assertTrue(player.getInventory().size() == 1);
+        assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.MIDNIGHT_ARMOUR), player);
     }
 
     @Test
@@ -73,17 +57,20 @@ public class MidnightArmourEntityTest implements IBuildableEntityTests {
     public void TestIsNotBuildable_InsufficientCorrectItems() {
         MidnightArmourEntity midnightArmour = new MidnightArmourEntity();
         List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
-        inventory.add(new WoodEntity());
-        inventory.add(new KeyEntity(0, 0, 1));
-        inventory.add(new TreasureEntity());
+        inventory.add(new SunStoneEntity());
         assertFalse(midnightArmour.isBuildable(inventory));
+
+        
+        List<CollectableEntity> inventory2 = new ArrayList<CollectableEntity>();
+        inventory2.add(new ArmourEntity());
+        assertFalse(midnightArmour.isBuildable(inventory2));
     }
 
     @Override
     @Test
     public void TestEntityResponseInfo() {
         MidnightArmourEntity midnightArmour = new MidnightArmourEntity();
-        assertEntityResponseInfoEquals(midnightArmour, "midnightArmour-0-0-0", EntityTypes.SHIELD, new Position(0,0,0), false);
+        assertEntityResponseInfoEquals(midnightArmour, "midnightArmour-0-0-0", EntityTypes.MIDNIGHT_ARMOUR, new Position(0,0,0), false);
     }
 
     @Override
@@ -96,36 +83,12 @@ public class MidnightArmourEntityTest implements IBuildableEntityTests {
     @Test
     @Override
     public void TestUseCollectable() {
-        ZombieToastEntity zombie = new ZombieToastEntity();
-        CharacterEntity player = new CharacterEntity();
-        MidnightArmourEntity midnightArmour = new MidnightArmourEntity();
-        midnightArmour.contactWithPlayer(new EntitiesControl(), player);
-
-        assertEquals(4,  midnightArmour.getDurability());
-        assertEquals(100, player.getHealth());
-        assertEquals(50, zombie.getHealth());
-
-        zombie.contactWithPlayer(new EntitiesControl(), player);
-        assertEquals(3,  midnightArmour.getDurability(), "MidnightArmour should do two rounds of battle");
-        assertFalse(zombie.isAlive());
+        // TODO Extra attack damage and protection
     }
 
     @Test
     @Override
     public void TestOnlyUsesResourcesFromOneRecipe() {
-        CharacterEntity player = new CharacterEntity();
-        WoodEntity wood = new WoodEntity();
-        WoodEntity wood2 = new WoodEntity();
-        TreasureEntity treasure = new TreasureEntity();
-        KeyEntity key = new KeyEntity(0, 0, 1);
-        player.addEntityToInventory(wood);
-        player.addEntityToInventory(wood2);
-        player.addEntityToInventory(treasure);
-        player.addEntityToInventory(key);
-        player.build(EntityTypes.SHIELD);
-        
-        List<EntityTypes> expectedInventory = Arrays.asList(EntityTypes.KEY, EntityTypes.SHIELD);
-        List<EntityTypes> actualInventory = player.getInventory().stream().map(item -> item.getType()).collect(Collectors.toList());
-        assertIterableEquals(expectedInventory, actualInventory);
+        assertTrue(true, "There is only one recipe for the midnight armour");
     }
 }

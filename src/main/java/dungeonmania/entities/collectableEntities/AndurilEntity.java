@@ -4,7 +4,7 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
 import dungeonmania.entities.movingEntities.IBoss;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class AndurilEntity extends CollectableEntity implements IWeaponEntity {
 
@@ -17,7 +17,7 @@ public class AndurilEntity extends CollectableEntity implements IWeaponEntity {
         this.durability = Integer.MAX_VALUE;
     }
     
-    public AndurilEntity(DungeonEntityJsonParser info) {
+    public AndurilEntity(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY());
     }
 

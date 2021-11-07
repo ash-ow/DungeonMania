@@ -264,6 +264,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
                     this.addEntityToInventory(bow);
                     removeBuildMaterials(EntityTypes.WOOD, 1);
                     removeBuildMaterials(EntityTypes.ARROW, 3);
+                } else {
+                    throw new InvalidActionException(itemToBuild.toString());
                 }
                 break;
             case SHIELD:
@@ -276,6 +278,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
                     } else if (this.containedInInventory(EntityTypes.KEY)) {
                         removeBuildMaterials(EntityTypes.KEY, 1);
                     } 
+                } else {
+                    throw new InvalidActionException(itemToBuild.toString());
                 }
                 break;
             case SCEPTRE:

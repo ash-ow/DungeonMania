@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 import dungeonmania.util.Position;
 import dungeonmania.dungeon.entitiesFactory.EntitiesFactory;
 import dungeonmania.entities.*;
@@ -155,7 +155,7 @@ public class EntitiesControl {
     // endregion
     
     
-    public void createEntity(DungeonEntityJsonParser jsonInfo, GameModeType gameMode) {
+    public void createEntity(DungeonEntityJsonObject jsonInfo, GameModeType gameMode) {
         EntitiesFactory.generateEntity(jsonInfo, this, gameMode);
     }
     
@@ -166,7 +166,7 @@ public class EntitiesControl {
      * @param type      type of entity
      */
     public void createEntity(Integer x, Integer y, EntityTypes type) {
-        DungeonEntityJsonParser jsonElement = new DungeonEntityJsonParser();
+        DungeonEntityJsonObject jsonElement = new DungeonEntityJsonObject();
         jsonElement.setPosition(new Position(x, y));
         jsonElement.setType(type);
         EntitiesFactory.generateEntity(jsonElement, this, GameModeType.STANDARD);

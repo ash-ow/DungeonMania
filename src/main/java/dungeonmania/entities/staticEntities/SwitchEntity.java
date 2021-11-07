@@ -7,7 +7,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.ITicker;
 import dungeonmania.entities.movingEntities.BoulderEntity;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class SwitchEntity extends Entity implements ITicker {
     private boolean active = false;
@@ -20,7 +20,7 @@ public class SwitchEntity extends Entity implements ITicker {
         super(x, y, EntityTypes.SWITCH);
     }
 
-    public SwitchEntity(DungeonEntityJsonParser info) {
+    public SwitchEntity(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY());
     }
 

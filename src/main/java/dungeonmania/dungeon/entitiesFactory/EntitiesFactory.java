@@ -3,13 +3,14 @@ package dungeonmania.dungeon.entitiesFactory;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.dungeon.GameModeType;
 import dungeonmania.entities.collectableEntities.*;
+import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.entities.movingEntities.*;
-import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
+import dungeonmania.entities.movingEntities.spiderEntity.*;
 import dungeonmania.entities.staticEntities.*;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class EntitiesFactory extends EntitiesControl {
-    public static void generateEntity(DungeonEntityJsonParser jsonInfo, EntitiesControl entities, GameModeType gameMode) {
+    public static void generateEntity(DungeonEntityJsonObject jsonInfo, EntitiesControl entities, GameModeType gameMode) {
         switch (jsonInfo.getType()){
             case WALL: entities.createNewEntityOnMap(new WallEntity(jsonInfo)); break;
             case EXIT: entities.createNewEntityOnMap(new ExitEntity(jsonInfo)); break;
@@ -31,7 +32,10 @@ public class EntitiesFactory extends EntitiesControl {
             case ONE_RING: entities.createNewEntityOnMap(new OneRingEntity(jsonInfo)); break;
             case KEY: entities.createNewEntityOnMap(new KeyEntity(jsonInfo)); break;
             case PORTAL: entities.createNewEntityOnMap(new PortalEntity(jsonInfo)); break;
-            case DOOR: entities.createNewEntityOnMap(new DoorEntity(jsonInfo));
+            case DOOR: entities.createNewEntityOnMap(new DoorEntity(jsonInfo)); break;
+            case SWAMP:entities.createNewEntityOnMap(new SwampEntity(jsonInfo)); break;
+            case SCEPTRE:entities.createNewEntityOnMap(new SceptreEntity(jsonInfo)); break;
+            case SUN_STONE:entities.createNewEntityOnMap(new SunStoneEntity(jsonInfo)); break;
         }
     }
 }

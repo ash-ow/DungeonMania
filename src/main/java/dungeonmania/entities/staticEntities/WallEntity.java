@@ -6,7 +6,7 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class WallEntity extends Entity implements IBlocker {
 
@@ -18,7 +18,7 @@ public class WallEntity extends Entity implements IBlocker {
         super(x, y, EntityTypes.WALL);
     }
 
-    public WallEntity(DungeonEntityJsonParser info) {
+    public WallEntity(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY());
     }
 

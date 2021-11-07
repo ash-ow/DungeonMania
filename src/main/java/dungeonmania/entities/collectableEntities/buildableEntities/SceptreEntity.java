@@ -5,7 +5,7 @@ import java.util.Map;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class SceptreEntity extends BuildableEntity {
     
@@ -25,10 +25,11 @@ public class SceptreEntity extends BuildableEntity {
         super(x, y, EntityTypes.SCEPTRE);
         this.durability = 2;
     }
-    
-    public SceptreEntity(DungeonEntityJsonParser info) {
+
+    public SceptreEntity(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY());
     }
+    
     
     /**
      * Initialises required components to build a sceptre

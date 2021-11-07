@@ -1,7 +1,7 @@
 package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class SunStoneEntity extends CollectableEntity {
     public SunStoneEntity() {
@@ -11,8 +11,8 @@ public class SunStoneEntity extends CollectableEntity {
     public SunStoneEntity(int x, int y) {
         super(x, y, EntityTypes.SUN_STONE);
     }
-    
-    public SunStoneEntity(DungeonEntityJsonParser info) {
+
+    public SunStoneEntity(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY());
     }
 }

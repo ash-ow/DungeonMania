@@ -50,21 +50,25 @@ public class ShieldEntity extends BuildableEntity {
             EntityTypes component = entry.getKey();
             int quantity = entry.getValue();
             if (numberOfComponentItemsInInventory(inventory, component) >= quantity) {
-                if (component.equals(EntityTypes.WOOD)) {
-                    requiredWood = true;
-                } else if (component.equals(EntityTypes.TREASURE)) {
-                    requiredTreasure = true;
-                } else if (component.equals(EntityTypes.KEY)) {
-                    requiredKey = true;
+                switch (component) {
+                    case WOOD:
+                        requiredWood = true;
+                        break;
+                    case TREASURE:
+                        requiredTreasure = true;
+                        break;
+                    case KEY:
+                        requiredKey = true;
+                        break;
+                    default:
+                        break;
                 }
             }
         }
-        if (requiredTreasure || requiredKey) {
-            if (requiredWood) {
-                return true;
-            }
-        }
-        return false;
+        return (
+            requiredWood &&
+            (requiredTreasure || requiredKey)
+        );
     }
     
     /**

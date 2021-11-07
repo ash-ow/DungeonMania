@@ -1,6 +1,7 @@
 package dungeonmania.entities.collectableEntities.buildableEntities;
 
 import java.util.List;
+import java.util.Map;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
@@ -31,7 +32,11 @@ public class SceptreEntity extends BuildableEntity implements IWeaponEntity {
      */
     @Override
     public void initialiseRequiredComponents() {
-        // TODO one wood or two arrows, one key/treasure, and one sun stone
+        this.requiredComponents.put(EntityTypes.WOOD, 1);
+        this.requiredComponents.put(EntityTypes.ARROW, 2);
+        this.requiredComponents.put(EntityTypes.TREASURE, 1);
+        this.requiredComponents.put(EntityTypes.KEY, 1);
+        this.requiredComponents.put(EntityTypes.SUN_STONE, 1);
     }
      
     /**
@@ -41,8 +46,43 @@ public class SceptreEntity extends BuildableEntity implements IWeaponEntity {
      */
     @Override
     public boolean isBuildable(List<CollectableEntity> inventory) {
-        // TODO
-        return true;
+        boolean requiredSunStone = false;
+        boolean requiredWood = false;
+        boolean requiredArrows = false;
+        boolean requiredTreasure = false;
+        boolean requiredKey = false;
+
+        for (Map.Entry<EntityTypes, Integer> entry : requiredComponents.entrySet()) {
+            EntityTypes component = entry.getKey();
+            int quantity = entry.getValue();
+            if (numberOfComponentItemsInInventory(inventory, component) >= quantity) {
+                switch (component) {
+                    case SUN_STONE:
+                        requiredSunStone = true;
+                        break;
+                    case WOOD:
+                        requiredWood = true;
+                        break;
+                    case ARROW:
+                        requiredArrows = true;
+                        break;
+                    case TREASURE:
+                        requiredTreasure = true;
+                        break;
+                    case KEY:
+                        requiredKey = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        return (
+            requiredSunStone &&
+            (requiredWood || requiredArrows) &&
+            (requiredTreasure || requiredKey)
+        );
     }
     
 }

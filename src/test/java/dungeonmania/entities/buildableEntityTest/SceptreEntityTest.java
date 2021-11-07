@@ -1,13 +1,11 @@
 package dungeonmania.entities.buildableEntityTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Assertions;
@@ -20,6 +18,8 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Position;
 
 public class SceptreEntityTest implements IBuildableEntityTests {
+
+// region IsBuildable
     @Test
     @Override
     public void TestIsBuildable() {
@@ -80,6 +80,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         List<EntityTypes> actualInventory = player.getInventory().stream().map(item -> item.getType()).collect(Collectors.toList());
         assertIterableEquals(expectedInventory, actualInventory);
     }
+// endregion
     
     @Test
     @Override
@@ -106,7 +107,6 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         SceptreEntity sceptre = new SceptreEntity();
         List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
         inventory.add(new WoodEntity());
-        inventory.add(new KeyEntity(0,0,0,1));
         inventory.add(new SunStoneEntity());
         assertFalse(sceptre.isBuildable(inventory));
     }
@@ -115,7 +115,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
     @Test
     public void TestEntityResponseInfo() {
         SceptreEntity sceptre = new SceptreEntity();
-        assertEntityResponseInfoEquals(sceptre, "sceptre-0-0-0", EntityTypes.SUN_STONE, new Position(0,0,0), false);
+        assertEntityResponseInfoEquals(sceptre, "sceptre-0-0-0", EntityTypes.SCEPTRE, new Position(0,0,0), false);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package dungeonmania.entities.movingEntities;
 
-import java.util.List;
-
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
@@ -17,9 +15,9 @@ import dungeonmania.util.Position;
 
 public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity {
 
-    private float health;
-    private float damage;
-    private boolean isBribed;
+    protected float health;
+    protected float damage;
+    protected boolean isBribed;
     private IMovingBehaviour moveBehaviour;
 
     /**
@@ -36,15 +34,19 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      * @param layer layer on the map 
      */
     public MercenaryEntity(int x, int y) {
-        super(x, y, EntityTypes.MERCENARY);
-        this.health = 70;
-        this.damage = 3;
-        this.isBribed = false;
-        this.moveBehaviour = new FollowPlayer();
+        this(x, y, EntityTypes.MERCENARY);
     }
 
     public MercenaryEntity(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY());
+    }
+
+    public MercenaryEntity(int x, int y, EntityTypes type) {
+        super(x, y, type);
+        this.health = 70;
+        this.damage = 3;
+        this.isBribed = false;
+        this.moveBehaviour = new FollowPlayer();
     }
 
     @Override

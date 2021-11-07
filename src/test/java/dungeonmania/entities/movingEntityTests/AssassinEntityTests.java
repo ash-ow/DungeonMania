@@ -1,7 +1,7 @@
 package dungeonmania.entities.movingEntityTests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -14,6 +14,7 @@ import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.movingEntities.AssassinEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.exceptions.InvalidActionException;
 
 public class AssassinEntityTests {
     @Test
@@ -40,7 +41,6 @@ public class AssassinEntityTests {
         entities.add(assassin);        
         player.addEntityToInventory(treasure); 
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
-        dungeon.interact(assassin.getId());
-        assertFalse(assassin.isBribed());
+        assertThrows(InvalidActionException.class, () -> dungeon.interact(assassin.getId()));
     }
 }

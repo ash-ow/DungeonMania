@@ -11,6 +11,7 @@ import dungeonmania.dungeon.goals.Goals;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.KeyEntity;
+import dungeonmania.entities.movingEntities.AssassinEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.staticEntities.DoorEntity;
@@ -152,6 +153,10 @@ public class Dungeon {
                 case ZOMBIE_TOAST_SPAWNER:
                     ZombieToastSpawnerEntity spawner = (ZombieToastSpawnerEntity) interacting;
                     spawner.interactWith(entitiesControl, player);
+                    break;
+                case ASSASSIN:
+                    AssassinEntity assassin = (AssassinEntity) interacting;
+                    assassin.interactWith(player);
                     break;
                 default:
                     throw new IllegalArgumentException("Entity is not interactable");

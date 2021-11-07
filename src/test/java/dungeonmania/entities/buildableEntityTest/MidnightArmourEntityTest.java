@@ -2,24 +2,20 @@ package dungeonmania.entities.buildableEntityTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.MidnightArmourEntity;
+import dungeonmania.entities.movingEntities.AssassinEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.movingEntities.ZombieToastEntity;
-import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Position;
 
 public class MidnightArmourEntityTest implements IBuildableEntityTests {
@@ -70,7 +66,7 @@ public class MidnightArmourEntityTest implements IBuildableEntityTests {
     @Test
     public void TestEntityResponseInfo() {
         MidnightArmourEntity midnightArmour = new MidnightArmourEntity();
-        assertEntityResponseInfoEquals(midnightArmour, "midnightArmour-0-0-0", EntityTypes.MIDNIGHT_ARMOUR, new Position(0,0,0), false);
+        assertEntityResponseInfoEquals(midnightArmour, "midnight_armour-0-0-0", EntityTypes.MIDNIGHT_ARMOUR, new Position(0,0,0), false);
     }
 
     @Override
@@ -84,6 +80,32 @@ public class MidnightArmourEntityTest implements IBuildableEntityTests {
     @Override
     public void TestUseCollectable() {
         // TODO Extra attack damage and protection
+
+        
+        CharacterEntity player1 = new CharacterEntity();
+        player1.addEntityToInventory(new MidnightArmourEntity());
+        AssassinEntity assassin1 = new AssassinEntity();
+        
+        CharacterEntity player2 = new CharacterEntity();
+        AssassinEntity assassin2 = new AssassinEntity();
+
+        float damageDealtWithMidnightArmour = assassin1.loseHealth(player1.getHealth(), player1.getDamage());
+        float damageDealtWithoutMidnightArmour = assassin2.loseHealth(player2.getHealth(), player2.getDamage());
+        
+        Assertions.assertAll(
+            () -> assertEquals(60, damageDealtWithMidnightArmour),
+            () -> assertEquals(50, damageDealtWithoutMidnightArmour),
+            () -> assertTrue(damageDealtWithoutMidnightArmour < damageDealtWithMidnightArmour, "Assassin receives extra damage when player has midnight armour")
+        );
+
+        float damageReceivedWithMidnightArmour = player1.loseHealth(assassin1.getHealth(), assassin1.getDamage());
+        float damageReceivedWithoutMidnightArmour = player2.loseHealth(assassin2.getHealth(), assassin2.getDamage());
+
+        Assertions.assertAll(
+            () -> assertEquals(0.6, damageReceivedWithMidnightArmour),
+            () -> assertEquals(3, damageReceivedWithoutMidnightArmour),
+            () -> assertTrue(damageReceivedWithoutMidnightArmour > damageReceivedWithMidnightArmour, "Player receives reduced damage when player has midnight armour")
+        );
     }
 
     @Test

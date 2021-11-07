@@ -119,11 +119,16 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
         assertNull(ent, "Entity should no longer be on the map " + expectedType + " " + id);
     }
 
-
     private Dungeon getDungeonWithBombTestData() {
         /*
-         * 0 1 2 3 0 . . . . 1 X W . . 2 W S B P 3 W O I . 4 X A . . 5 X . . T
-         */
+           0 1 2 3 
+        0  . . . . 
+        1  X W . . 
+        2  W S B P
+        3  W O I .
+        4  X A . .
+        5  X . . T
+        */
 
         String entities = "{\"entities\": [" + "{\"x\": 0,\"y\": 1,\"type\": \"spider\"}," + // X 0
                 "{\"x\": 1,\"y\": 1,\"type\": \"wall\"}," + // W 1

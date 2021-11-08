@@ -42,32 +42,26 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * Character constructor
      * @param x     x-coordinate on the map
      * @param y     y-coordinate on the map
-     * @param layer layer on the map 
      */
     public CharacterEntity(int x, int y) {
         this(x, y, GameModeType.STANDARD);
     }
     
-    public CharacterEntity(int x, int y, EntityTypes type) {
+    public CharacterEntity(int x, int y, EntityTypes type, GameModeType gameMode) {
         super(x, y, type);
+        this.previousPosition = new Position(x, y);
+        this.gameMode = gameMode;
+        this.health = (int) Math.ceil(100 / EntitiesControl.difficulty.get(gameMode));
     }
 
     /**
      * Character constructor
      * @param x          x-coordinate on the map
      * @param y          y-coordinate on the map
-     * @param layer      layer on the map
      * @param gameMode   denotes the difficulty settings of the game 
      */
     public CharacterEntity(int x, int y, GameModeType gameMode) {
-        this(x, y, EntityTypes.PLAYER);
-        this.previousPosition = new Position(x, y);
-        this.gameMode = gameMode;
-        this.health = (int) Math.ceil(100 / EntitiesControl.difficulty.get(gameMode));
-    }
-
-    public CharacterEntity(DungeonEntityJsonParser info) {
-        this(info.getX(), info.getY());
+        this(x, y, EntityTypes.PLAYER, gameMode);      
     }
 
     public EntityResponse getInfo() {

@@ -35,6 +35,8 @@ public class Dungeon {
     public CharacterEntity player;
     private Goals goals;
     private JsonObject initalGoals;
+    private List<JsonObject> gameStates = new ArrayList<>();
+    private List<Instruction> ticks = new ArrayList<>();
 
     /**
      * Main Dungeon Constructor 
@@ -61,7 +63,6 @@ public class Dungeon {
             }
         }
         entitiesControl.setPlayerStartPosition(player.getPosition());
-
         if (goalConditions != null) {
             this.goals = new Goals(goalConditions);
         }

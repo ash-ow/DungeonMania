@@ -33,13 +33,17 @@ public class OlderCharacter extends CharacterEntity implements ITicker{
 
     @Override
     public void tick(EntitiesControl entitiesControl) {
-        String itemID = this.ticks.get(currentInstruction).getItemID();
-        Direction dir = this.ticks.get(currentInstruction).getDirection();
-        if (itemID != null) {
-            super.useItem(itemID, entitiesControl);
+        if (currentInstruction >= ticks.size()) {
+            entitiesControl.removeEntity(this);
         } else {
-            super.move(dir, entitiesControl);
+            String itemID = this.ticks.get(currentInstruction).getItemID();
+            Direction dir = this.ticks.get(currentInstruction).getDirection();
+            if (itemID != null) {
+                super.useItem(itemID, entitiesControl);
+            } else {
+                super.move(dir, entitiesControl);
+            }
+            currentInstruction++;
         }
-        currentInstruction++;
     }
 }

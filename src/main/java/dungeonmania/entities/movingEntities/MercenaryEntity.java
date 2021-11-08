@@ -118,9 +118,11 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         if (isBribed) {
             setPosition(player.getPreviousPosition());
         } else if (!player.isInvisible()){
-            //this.move(moveBehaviour.getBehaviourDirection(entitiesControl, player, position));
-            Position newPos = findPath(this.position, player.getPosition()).get(0);
-            this.setPosition(newPos);
+            this.move(moveBehaviour.getBehaviourDirection(entitiesControl, player, position));
+            // if (!this.isInSamePositionAs(player)) {
+            //     Position newPos = findPath(this.position, player.getPosition(), entitiesControl).get(1);
+            //     this.setPosition(newPos);
+            // }
             if (this.isInSamePositionAs(player)) {
                 contactWithPlayer(entitiesControl, player);
             }
@@ -169,39 +171,48 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         return false;
     }
 
-    /**
-     * Takes the mercenary's current position and finds the closest distance to every point in the map
-     * @return a map with each position on the map, and the path to get to there (path will be a series of positions to get to that point)
-     */
-    public List<Position> findPath(Position mercenaryPosition, Position playerPosition){
-        List<Position> shortestPath = new ArrayList<>();
-        // PriorityQueue queue = new PriorityQueue<>();
-        Map<Position, List<Position>> pathsMap = new HashMap<>();
-        List<Position> previousPositions = new ArrayList<>();
-        pathsMap.put(mercenaryPosition, previousPositions);
-        while(!pathsMap.containsKey(playerPosition)) {
-            for(Map.Entry<Position, List<Position>> entry: pathsMap.entrySet()) {
-                Map<Position, List<Position>> newPathsMap = dijkstra(entry.getKey(), pathsMap);
-                pathsMap = newPathsMap;
-            }
-        }
-        shortestPath = pathsMap.get(playerPosition);
-        return shortestPath;
-    }
+    // /**
+    //  * Takes the mercenary's current position and finds the path to the player
+    //  * @return a list of positions to get to the player
+    //  */
+    // public List<Position> findPath(Position mercenaryPosition, Position playerPosition, EntitiesControl entitiesControl){
+    //     List<Position> shortestPath = new ArrayList<>();
+    //     Map<Position, List<Position>> pathsMap = new HashMap<>();
+    //     List<Position> previousPositions = new ArrayList<>();
+    //     pathsMap.put(mercenaryPosition, previousPositions);
+    //     while(!pathsMap.containsKey(playerPosition)) {
+    //         Map<Position, List<Position>> newPathsMap = new HashMap<>();
+    //         newPathsMap.putAll(pathsMap);
+    //         for(Map.Entry<Position, List<Position>> entry: pathsMap.entrySet()) {
+    //             newPathsMap.putAll(dijkstra(entry.getKey(), newPathsMap, entitiesControl));
+    //         }
+    //         pathsMap.putAll(newPathsMap);
+    //     }
+    //     shortestPath = pathsMap.get(playerPosition);
+    //     return shortestPath;
+    // }
 
-    public Map<Position, List<Position>> dijkstra(Position position, Map<Position, List<Position>> pathsMap) {
-        List<Position> currentPrevPositions = pathsMap.get(position);
-        for (Position pos:position.getCardinallyAdjacentPositions()){
-            List<Position> newPrevPositions = new ArrayList<>();
-            newPrevPositions = currentPrevPositions;
-            newPrevPositions.add(position);
-            if (!pathsMap.containsKey(pos)){
-                pathsMap.put(pos, newPrevPositions);
-            }
-            else if (newPrevPositions.size() < pathsMap.get(pos).size()){
-                pathsMap.put(pos, newPrevPositions);
-            }
-        }
-        return pathsMap;
-    }
+    // /**
+    //  * Takes the mercenary's current position and finds the path to the player
+    //  * @return a list of positions to get to the player
+    //  */
+    // public Map<Position, List<Position>> dijkstra(Position position, Map<Position, List<Position>> pathsMap, EntitiesControl entitiesControl) {
+    //     List<Position> currentPrevPositions = pathsMap.get(position);
+    //     for (Position pos:position.getCardinallyAdjacentPositions()){
+    //         if(!EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(pos))) {
+    //             List<Position> newPrevPositions = new ArrayList<>();
+    //             for(Position prevPosition: currentPrevPositions) {
+    //                 newPrevPositions.add(prevPosition);
+    //             }
+    //             newPrevPositions.add(position);
+    //             if (!pathsMap.containsKey(pos)){
+    //                 pathsMap.put(pos, newPrevPositions);
+    //             }
+    //             else if (newPrevPositions.size() < pathsMap.get(pos).size()){
+    //                 pathsMap.put(pos, newPrevPositions);
+    //             }
+    //         }
+    //     }
+    //     return pathsMap;
+    // }
 }

@@ -96,9 +96,9 @@ public interface IBattlingEntity extends IContactingEntity {
     
     @Override
     public default void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
+        System.out.println(this.getId() + "is fighting the player");
         battle(entities, player);
     }
-
 }
 
     

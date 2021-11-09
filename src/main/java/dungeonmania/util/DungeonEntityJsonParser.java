@@ -1,5 +1,6 @@
 package dungeonmania.util;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.EntityTypes;
@@ -7,14 +8,12 @@ import dungeonmania.entities.EntityTypes;
 public class DungeonEntityJsonParser {
     Position position;
     EntityTypes type;
-    Integer key;
-    String color;
+    JsonElement info;
 
     public DungeonEntityJsonParser() {
         this.position = null;
         this.type = null;
-        this.key = null;
-        this.color = null;
+        this.info = null;
     }
 
     public DungeonEntityJsonParser(JsonObject entityObj) {
@@ -23,10 +22,10 @@ public class DungeonEntityJsonParser {
         this.position = new Position(xAxis, yAxis);
         this.type = EntityTypes.getEntityType(entityObj.get("type").getAsString());
         if (entityObj.get("key") != null) {
-            this.key = entityObj.get("key").getAsInt();
+            this.info = entityObj.get("key");
         }
         if (entityObj.get("colour") != null) {
-            this.color = entityObj.get("colour").getAsString();
+            this.info = entityObj.get("colour");
         }
     }
 
@@ -46,12 +45,8 @@ public class DungeonEntityJsonParser {
         return type;
     }
 
-    public Integer getKey() {
-        return key;
-    }
-
-    public String getColor() {
-        return color;
+    public JsonElement getInfo() {
+        return info;
     }
 
     public void setPosition(Position position) {
@@ -62,12 +57,8 @@ public class DungeonEntityJsonParser {
         this.type = type;
     }
 
-    public void setKey(Integer key) {
-        this.key = key;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
+    public void setInfo(JsonElement info) {
+        this.info = info;
     }
 
     public boolean isPlayerJson() {

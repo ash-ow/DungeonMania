@@ -1,12 +1,15 @@
 package dungeonmania.entities;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import dungeonmania.response.models.*;
 import dungeonmania.util.Position;
 
 public abstract class Entity implements IEntity {
-    protected Position position;
-    protected String id;
-    protected EntityTypes type;
+    protected transient Position position;
+    protected transient String id;
+    protected transient EntityTypes type;
     
     /**
      * Entity constructor
@@ -23,6 +26,14 @@ public abstract class Entity implements IEntity {
 
     public EntityResponse getInfo() {
         return new EntityResponse(id, type, position, false);
+    }
+
+    public JsonObject buildJson() {
+        JsonObject entityInfo = new JsonObject();
+        entityInfo.addProperty("x", this.position.getX());
+        entityInfo.addProperty("y", this.position.getY());
+        entityInfo.addProperty("type", type.toString());
+        return entityInfo;
     }
 
     public String getId() {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.sound.midi.SysexMessage;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.dungeon.GameModeType;
 import dungeonmania.entities.Entity;
@@ -228,7 +230,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public void move(Direction direction, EntitiesControl entitiesControl) {
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
-        if ( !EntitiesControl.containsBlockingEntities(targetEntities) || canUnblock(targetEntities, direction, entitiesControl) ) {
+        if (!EntitiesControl.containsBlockingEntities(targetEntities) || canUnblock(targetEntities, direction, entitiesControl) ) {
             this.previousPosition = this.position;
             this.move(direction); 
             decrementPotionDurations();    
@@ -318,8 +320,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param entitiesControl  list of all entities
      */
     private void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
+        System.out.println(this.id + " is interacting with");
         List<IContactingEntity> targetInteractable = entitiesControl.getInteractableEntitiesFrom(targetEntities);
         for (IContactingEntity entity : targetInteractable) {
+            System.out.println(entity.getId());
             entity.contactWithPlayer(entitiesControl, this);
         }
     }
@@ -381,7 +385,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return this.isTimeTravelling;
     }
     
-    public void timeTravel() {
-        this.isTimeTravelling = true;
+    public void setTimeTravelling(boolean timeTravel) {
+        this.isTimeTravelling = timeTravel;
     }
 }

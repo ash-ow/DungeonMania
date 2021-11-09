@@ -22,6 +22,7 @@ public class TimeTravelPortal extends Entity implements IContactingEntity {
 
     @Override
     public void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
-        player.timeTravel();
+        System.out.println("he bumped into my ass");
+        player.setTimeTravelling(true);
     }
 }

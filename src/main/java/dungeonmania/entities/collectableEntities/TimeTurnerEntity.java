@@ -19,6 +19,6 @@ public class TimeTurnerEntity extends CollectableEntity{
 
     @Override
     public void used(CharacterEntity player) {
-        player.timeTravel();
+        player.setTimeTravelling(true);
     }   
 }

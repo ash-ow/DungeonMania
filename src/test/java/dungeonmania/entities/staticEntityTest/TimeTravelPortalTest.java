@@ -64,7 +64,7 @@ public class TimeTravelPortalTest implements IEntityTests, IInteractingEntityTes
     @Test
     public void TestLoadFromTimeTravel() {
         Dungeon d = getDungeonForTimeTravel();
-        JsonObject start = d.saveCurentStateToJson();
+        JsonArray start = d.timeTravelSave();
         d.tick(Direction.UP);
         d.tick(Direction.DOWN);
         d.tick(Direction.LEFT);
@@ -119,6 +119,7 @@ public class TimeTravelPortalTest implements IEntityTests, IInteractingEntityTes
         TimeTravelPortal portal = new TimeTravelPortal(2, 2);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(boulder);
+        entities.add(portal);
         Dungeon d = new Dungeon(entities, "Standard", player);
         d.tick(Direction.DOWN);
         d.tick(Direction.DOWN);
@@ -126,15 +127,13 @@ public class TimeTravelPortalTest implements IEntityTests, IInteractingEntityTes
         d.tick(Direction.RIGHT);
         d.tick(Direction.RIGHT);
         d.tick(Direction.UP);
-        assertTrue(player.IsTimeTravelling());
+        assertEquals(player.getPosition(), new Position(2, 2));
         OlderCharacter olderCharacter = (OlderCharacter) d.entitiesControl.getFirstEntityOfType(OlderCharacter.class);
         d.tick(Direction.LEFT);
         assertEquals(player.getPosition(), new Position(1, 2));
-        assertEquals(boulder.getPosition(), new Position(0, 2));
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             d.tick(Direction.NONE);
         }
-        assertNotEquals(olderCharacter.getPosition(), portal.getPosition());
         assertFalse(d.entitiesControl.contains(olderCharacter));
     }
 

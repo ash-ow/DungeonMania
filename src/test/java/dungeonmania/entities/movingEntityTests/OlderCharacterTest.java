@@ -16,6 +16,7 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.collectableEntities.BombEntity;
 import dungeonmania.entities.movingEntities.BoulderEntity;
+import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.OlderCharacter;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -40,7 +41,8 @@ public class OlderCharacterTest implements IEntityTests {
         EntitiesControl entitiesControl = new EntitiesControl();
         BombEntity bomb = new BombEntity(0, 1);
         BoulderEntity boulder = new BoulderEntity(0, 2);
-        List<Instruction> ticks = new ArrayList<>();
+        CharacterEntity player = new CharacterEntity(9, 9);
+        ArrayList<Instruction> ticks = new ArrayList<>();
         ticks.add(new Instruction(Direction.DOWN));
         ticks.add(new Instruction(Direction.DOWN));
         ticks.add(new Instruction(bomb.getId()));
@@ -50,21 +52,20 @@ public class OlderCharacterTest implements IEntityTests {
         entitiesControl.addEntity(bomb);
         entitiesControl.addEntity(boulder);
         entitiesControl.addEntity(olderCharacter);
-        entitiesControl.tick();
+        entitiesControl.moveAllMovingEntities(player);
         assertFalse(entitiesControl.contains(bomb));
         assertTrue(olderCharacter.getInventory().contains(bomb));
-        entitiesControl.tick();
+        entitiesControl.moveAllMovingEntities(player);
         assertEquals(olderCharacter.getPosition(), new Position(0, 2));
         assertEquals(boulder.getPosition(), new Position(0, 3));
-        entitiesControl.tick();
+        entitiesControl.moveAllMovingEntities(player);
         assertTrue(entitiesControl.contains(bomb));
         assertFalse(olderCharacter.getInventory().contains(bomb));
-        entitiesControl.tick();
+        entitiesControl.moveAllMovingEntities(player);
         assertEquals(olderCharacter.getPosition(), new Position(0, 3));
-        entitiesControl.tick();
+        entitiesControl.moveAllMovingEntities(player);
         assertEquals(olderCharacter.getPosition(), new Position(0, 3));
-        entitiesControl.tick();
+        entitiesControl.moveAllMovingEntities(player);
         assertFalse(entitiesControl.contains(olderCharacter));
     }
-
 }

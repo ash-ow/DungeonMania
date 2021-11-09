@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class KeyEntity extends CollectableEntity {
     private int keyNumber;

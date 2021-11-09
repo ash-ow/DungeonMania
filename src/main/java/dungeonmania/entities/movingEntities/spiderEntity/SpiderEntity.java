@@ -7,7 +7,7 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IAutoMovingEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 import dungeonmania.util.Position;
 
 
@@ -36,7 +36,7 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
         firstPosition = this.position;
     }
 
-    public SpiderEntity(DungeonEntityJsonParser info) {
+    public SpiderEntity(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY());
     }
 
@@ -100,8 +100,10 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
     }
 
     @Override
-    public void loseHealth(float enemyHealth, float enemyDamage) {
-        this.health -= ((enemyHealth * enemyDamage) / 5);
+    public float loseHealth(float enemyHealth, float enemyDamage) {
+        float damage = ((enemyHealth * enemyDamage) / 5);
+        this.health -= damage;
+        return damage;
     }
 //endregion
 

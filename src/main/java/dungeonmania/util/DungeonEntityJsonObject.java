@@ -5,18 +5,18 @@ import com.google.gson.JsonObject;
 
 import dungeonmania.entities.EntityTypes;
 
-public class DungeonEntityJsonParser {
+public class DungeonEntityJsonObject {
     Position position;
     EntityTypes type;
     JsonElement info;
 
-    public DungeonEntityJsonParser() {
+    public DungeonEntityJsonObject() {
         this.position = null;
         this.type = null;
         this.info = null;
     }
 
-    public DungeonEntityJsonParser(JsonObject entityObj) {
+    public DungeonEntityJsonObject(JsonObject entityObj) {
         Integer xAxis = entityObj.get("x").getAsInt();
         Integer yAxis = entityObj.get("y").getAsInt();
         this.position = new Position(xAxis, yAxis);

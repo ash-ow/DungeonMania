@@ -97,4 +97,10 @@ public class BowEntityTest implements IBuildableEntityTests {
         assertNull(player.getInventoryItem(bow.getId()), "Inventory should not contain entity " + bow.getId());
 
     }
+
+    @Test
+    @Override
+    public void TestOnlyUsesResourcesFromOneRecipe() {
+        assertTrue(true, "the bow only has one recipe");
+    }
 }

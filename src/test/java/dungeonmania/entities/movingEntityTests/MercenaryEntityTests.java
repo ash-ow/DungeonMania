@@ -100,7 +100,8 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         EntitiesControl entitiesControl = new EntitiesControl();
         entitiesControl.addEntity(mercenary);
         mercenary.battle(entitiesControl, character);
-        assertFalse(entitiesControl.contains(mercenary));        
+        assertFalse(entitiesControl.contains(mercenary));   
+        assertEquals(76, character.getHealth());     
     }
 
     @Test

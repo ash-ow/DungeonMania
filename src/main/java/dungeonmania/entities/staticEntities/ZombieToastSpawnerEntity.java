@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.IInteractableEntity;
 import dungeonmania.entities.collectableEntities.IWeaponEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.exceptions.InvalidActionException;
@@ -14,9 +15,9 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 
-public class ZombieToastSpawnerEntity extends Entity implements IBlocker {
+public class ZombieToastSpawnerEntity extends Entity implements IBlocker, IInteractableEntity {
     public ZombieToastSpawnerEntity() {
         this(0, 0);
     }
@@ -25,7 +26,7 @@ public class ZombieToastSpawnerEntity extends Entity implements IBlocker {
         super(x, y, EntityTypes.ZOMBIE_TOAST_SPAWNER);
     }
 
-    public ZombieToastSpawnerEntity(DungeonEntityJsonParser info) {
+    public ZombieToastSpawnerEntity(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY());
     }
 
@@ -39,7 +40,8 @@ public class ZombieToastSpawnerEntity extends Entity implements IBlocker {
         return new EntityResponse(id, type, position, true);
     }
 
-    public void interactWith(EntitiesControl entitiesControl, CharacterEntity player) throws InvalidActionException {
+    
+    public boolean interactWith(CharacterEntity player) throws InvalidActionException {
         List <IEntity> inveEntities = player.getInventory().stream().map(IEntity.class::cast).collect(Collectors.toList());
         List<IWeaponEntity> weaponsFound = EntitiesControl.getEntitiesOfType(inveEntities, IWeaponEntity.class);
         if (weaponsFound.isEmpty()) {
@@ -48,7 +50,7 @@ public class ZombieToastSpawnerEntity extends Entity implements IBlocker {
         if (!isPlayerAdjacent(player)) {
             throw new InvalidActionException("Too far away");
         }
-        entitiesControl.removeEntity(this);
+        return removeAfterInteraction();
     }
     
     public boolean isPlayerAdjacent(CharacterEntity player) {
@@ -57,6 +59,11 @@ public class ZombieToastSpawnerEntity extends Entity implements IBlocker {
 
     public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
         // cannot unblock zombie spawners
+        return false;
+    }
+
+    @Override
+    public boolean removeAfterInteraction() {
         return false;
     }
 }

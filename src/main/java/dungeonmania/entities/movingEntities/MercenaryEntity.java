@@ -171,48 +171,4 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         return false;
     }
 
-    // /**
-    //  * Takes the mercenary's current position and finds the path to the player
-    //  * @return a list of positions to get to the player
-    //  */
-    // public List<Position> findPath(Position mercenaryPosition, Position playerPosition, EntitiesControl entitiesControl){
-    //     List<Position> shortestPath = new ArrayList<>();
-    //     Map<Position, List<Position>> pathsMap = new HashMap<>();
-    //     List<Position> previousPositions = new ArrayList<>();
-    //     pathsMap.put(mercenaryPosition, previousPositions);
-    //     while(!pathsMap.containsKey(playerPosition)) {
-    //         Map<Position, List<Position>> newPathsMap = new HashMap<>();
-    //         newPathsMap.putAll(pathsMap);
-    //         for(Map.Entry<Position, List<Position>> entry: pathsMap.entrySet()) {
-    //             newPathsMap.putAll(dijkstra(entry.getKey(), newPathsMap, entitiesControl));
-    //         }
-    //         pathsMap.putAll(newPathsMap);
-    //     }
-    //     shortestPath = pathsMap.get(playerPosition);
-    //     return shortestPath;
-    // }
-
-    // /**
-    //  * Takes the mercenary's current position and finds the path to the player
-    //  * @return a list of positions to get to the player
-    //  */
-    // public Map<Position, List<Position>> dijkstra(Position position, Map<Position, List<Position>> pathsMap, EntitiesControl entitiesControl) {
-    //     List<Position> currentPrevPositions = pathsMap.get(position);
-    //     for (Position pos:position.getCardinallyAdjacentPositions()){
-    //         if(!EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(pos))) {
-    //             List<Position> newPrevPositions = new ArrayList<>();
-    //             for(Position prevPosition: currentPrevPositions) {
-    //                 newPrevPositions.add(prevPosition);
-    //             }
-    //             newPrevPositions.add(position);
-    //             if (!pathsMap.containsKey(pos)){
-    //                 pathsMap.put(pos, newPrevPositions);
-    //             }
-    //             else if (newPrevPositions.size() < pathsMap.get(pos).size()){
-    //                 pathsMap.put(pos, newPrevPositions);
-    //             }
-    //         }
-    //     }
-    //     return pathsMap;
-    // }
 }

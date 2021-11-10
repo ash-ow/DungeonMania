@@ -24,7 +24,7 @@ public class MidnightArmourEntity extends BuildableEntity implements IDefensiveE
     }
     
     /**
-     * Initialises required components to build a bow
+     * Initialises required components to build a midnight armour
      */
     @Override
     public void initialiseRequiredComponents() {

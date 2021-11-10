@@ -27,7 +27,7 @@ public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
     }
     
     /**
-     * Initialises required components to build a bow
+     * Initialises required components to build a shield
      */
     @Override
     public void initialiseRequiredComponents() {

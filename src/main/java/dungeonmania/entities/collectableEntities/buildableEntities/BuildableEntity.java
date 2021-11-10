@@ -52,7 +52,7 @@ public abstract class BuildableEntity extends CollectableEntity {
     }
 
     /**
-     * Initialises required components to build a bow
+     * Initialises required components to build
      */
     protected abstract void initialiseRequiredComponents();
 }

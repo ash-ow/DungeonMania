@@ -36,7 +36,7 @@ public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
         this.requiredComponents.put(EntityTypes.WOOD, 2);
         this.requiredComponents.put(EntityTypes.TREASURE, 1);
         this.requiredComponents.put(EntityTypes.KEY, 1);
-        this.requiredComponents.put(EntityTypes.SUN_STONE,1);
+        this.requiredComponents.put(EntityTypes.SUN_STONE, 1);
     }
     
     /**

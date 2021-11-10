@@ -12,13 +12,14 @@ import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
+import dungeonmania.entities.collectableEntities.SunStoneEntity;
 import dungeonmania.entities.movingEntities.AssassinEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.exceptions.InvalidActionException;
 
 public class AssassinEntityTests extends MercenaryEntityTests {
     @Test
-    public void testBribe() {
+    public void testBribeTreasure() {
         CharacterEntity player = new CharacterEntity(0, 5);
         AssassinEntity assassin = new AssassinEntity(0, 4);
         TreasureEntity treasure = new TreasureEntity();
@@ -30,6 +31,22 @@ public class AssassinEntityTests extends MercenaryEntityTests {
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         dungeon.interact(assassin.getId());
         assertTrue(assassin.isBribed());
+    }
+
+    @Test
+    public void testBribeSunStone() {
+        CharacterEntity player = new CharacterEntity(0, 5);
+        AssassinEntity assassin = new AssassinEntity(0, 4);
+        SunStoneEntity sun_stone = new SunStoneEntity();
+        OneRingEntity oneRing = new OneRingEntity();
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(assassin);        
+        player.addEntityToInventory(sun_stone); 
+        player.addEntityToInventory(oneRing);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        dungeon.interact(assassin.getId());
+        assertTrue(assassin.isBribed());
+        //To do: test that sunstone remains in inventory
     }
 
     @Test

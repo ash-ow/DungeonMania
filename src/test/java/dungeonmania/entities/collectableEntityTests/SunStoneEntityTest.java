@@ -30,13 +30,9 @@ public class SunStoneEntityTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestUseCollectable() {
-        // test to check its function
+        // test to check see that it remains in inventory after use? 
 
-    }
 
-    @Test
-    public void TestRetain() {
-        // test to check if it remains 
     }
 
 

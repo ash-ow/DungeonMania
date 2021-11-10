@@ -16,7 +16,6 @@ public class HealthPotionEntity extends CollectableEntity {
      * Health Potion constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public HealthPotionEntity(int x, int y) {
         super(x, y, EntityTypes.HEALTH_POTION);

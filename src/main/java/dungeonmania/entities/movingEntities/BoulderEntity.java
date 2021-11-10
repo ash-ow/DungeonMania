@@ -24,7 +24,6 @@ public class BoulderEntity extends Entity implements IBlocker {
      * Boulder constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public BoulderEntity(int x, int y) {
         super(x, y, EntityTypes.BOULDER);

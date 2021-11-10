@@ -39,7 +39,8 @@ public enum EntityTypes {
     SHIELD("shield"),
     BOW("bow"),
     SCEPTRE("sceptre"),
-
+    MIDNIGHT_ARMOUR("midnight_armour"),
+    
     // Player
     PLAYER("player")
     

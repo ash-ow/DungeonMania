@@ -1,11 +1,20 @@
 package dungeonmania.entities.movingEntities;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Map.Entry;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.IInteractableEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.FollowPlayer;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
@@ -15,11 +24,11 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.DungeonEntityJsonObject;
 import dungeonmania.util.Position;
 
-public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity {
+public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity, IInteractableEntity {
 
-    private float health;
-    private float damage;
-    private boolean isBribed;
+    protected float health;
+    protected float damage;
+    protected boolean isBribed;
     private IMovingBehaviour moveBehaviour;
 
     /**
@@ -35,15 +44,19 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      * @param y y-coordinate on the map
      */
     public MercenaryEntity(int x, int y) {
-        super(x, y, EntityTypes.MERCENARY);
-        this.health = 70;
-        this.damage = 3;
-        this.isBribed = false;
-        this.moveBehaviour = new FollowPlayer();
+        this(x, y, EntityTypes.MERCENARY);
     }
 
     public MercenaryEntity(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY());
+    }
+
+    public MercenaryEntity(int x, int y, EntityTypes type) {
+        super(x, y, type);
+        this.health = 70;
+        this.damage = 3;
+        this.isBribed = false;
+        this.moveBehaviour = new FollowPlayer();
     }
 
     @Override
@@ -117,7 +130,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      * Determines the interactions of the mercenary with the player based on range and whether they have treasure
      * @param player the player with which the mercenary will interact with 
      */
-    public void interactWith(CharacterEntity player) throws InvalidActionException {
+    public boolean interactWith(CharacterEntity player) throws InvalidActionException {
         IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);
         if (treasureFound == null) {
             throw new InvalidActionException("Player has no treasure");
@@ -127,7 +140,8 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         }
         player.removeEntityFromInventory(treasureFound);
         player.addTeammates(this);
-        this.isBribed = true;       
+        this.isBribed = true;
+        return removeAfterInteraction();    
     }
 
     /**
@@ -146,4 +160,10 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     public void setMoveBehvaiour(IMovingBehaviour newBehaviour) {
         this.moveBehaviour = newBehaviour;        
     }
+
+    @Override
+    public boolean removeAfterInteraction() {
+        return false;
+    }
+
 }

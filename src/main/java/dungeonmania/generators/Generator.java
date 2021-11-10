@@ -45,7 +45,11 @@ public class Generator {
         if (tickCounter % (int) Math.ceil(30 / difficulty.get(gameMode)) == 0) {
             List<IMovingEntity> enemy = entities.getEntitiesOfType(IMovingEntity.class);
             if (enemy.size() > 0) {
-                entities.createEntity(playerStartPosition.getX(), playerStartPosition.getY(), EntityTypes.MERCENARY);
+                if (RandomChance.getRandomBoolean(.3f)) {
+                    entities.createEntity(playerStartPosition.getX(), playerStartPosition.getY(), EntityTypes.ASSASSIN);
+                } else {
+                    entities.createEntity(playerStartPosition.getX(), playerStartPosition.getY(), EntityTypes.MERCENARY);
+                }
             }
         }
     }

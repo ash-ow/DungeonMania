@@ -236,7 +236,9 @@ public class Dungeon {
     }
 
     public JsonArray timeTravelSave() {
+        JsonObject finalObject = new JsonObject();              
         JsonArray entities = saveEntities();
+
         entities.add(getJsonVersion(player.getPosition().getX(), player.getPosition().getY(), EntityTypes.OLDER_PLAYER.toString()));
         return entities;
     }

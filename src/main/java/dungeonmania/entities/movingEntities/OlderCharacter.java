@@ -7,6 +7,8 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.dungeon.GameModeType;
 import dungeonmania.dungeon.Instruction;
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.IEntity;
+import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.util.Direction;
@@ -57,4 +59,12 @@ public class OlderCharacter extends CharacterEntity implements IAutoMovingEntity
 
     @Override
     public void setMoveBehaviour(IMovingBehaviour newBehaviour) {}
+
+    public void pickupAllCollectables(EntitiesControl entitiesControl) {
+        List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(this.position);
+        List<CollectableEntity> collectables = EntitiesControl.getEntitiesOfType(targetEntities, CollectableEntity.class);
+        for (CollectableEntity c : collectables) {
+            c.contactWithPlayer(entitiesControl, this);
+        }
+    }
 }

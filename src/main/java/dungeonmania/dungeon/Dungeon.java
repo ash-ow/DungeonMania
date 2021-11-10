@@ -1,7 +1,10 @@
 package dungeonmania.dungeon;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.xml.stream.events.StartDocument;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -41,8 +44,9 @@ public class Dungeon {
     public CharacterEntity player;
     private Goals goals;
     private JsonObject initalGoals;
-    public List<JsonArray> gameStates = new ArrayList<>();
+    public List<JsonObject> gameStates = new ArrayList<>();
     public List<Instruction> ticks = new ArrayList<>();
+    private Position playerStartPosition;
 
     /**
      * Main Dungeon Constructor 
@@ -59,7 +63,7 @@ public class Dungeon {
         this.entitiesControl = new EntitiesControl();
         this.initalGoals = goalConditions;
         initializeEntities(entities);
-        entitiesControl.setPlayerStartPosition(player.getPosition());
+        this.playerStartPosition = player.getPosition();
         if (goalConditions != null) {
             this.goals = new Goals(goalConditions);
         }
@@ -77,6 +81,7 @@ public class Dungeon {
         this.entitiesControl.setEntities(entities);
         this.gameMode = GameModeType.getGameModeType(gameMode);
         this.player = player;
+        this.playerStartPosition = player.getPosition();
         gameStates.add(timeTravelSave());
     }
 
@@ -92,6 +97,7 @@ public class Dungeon {
         this.entitiesControl.setEntities(entities);
         this.gameMode = GameModeType.getGameModeType(gameMode);
         this.player = player;
+        this.playerStartPosition = player.getPosition();
         this.goals = new Goals(goalConditions);
     }
 
@@ -132,7 +138,7 @@ public class Dungeon {
         }
         entitiesControl.moveAllMovingEntities(player);
         entitiesControl.tick();
-        entitiesControl.generateEnemyEntities(this.gameMode);
+        entitiesControl.generateEnemyEntities(this.gameMode, this.playerStartPosition);
         gameStates.add(timeTravelSave());
         ticks.add(new Instruction(direction));
         if (player.IsTimeTravelling()) {
@@ -153,7 +159,7 @@ public class Dungeon {
             entitiesControl.moveAllMovingEntities(player);
         }
         entitiesControl.tick();
-        entitiesControl.generateEnemyEntities(this.gameMode);
+        entitiesControl.generateEnemyEntities(this.gameMode, this.playerStartPosition);
         gameStates.add(timeTravelSave());
         ticks.add(new Instruction(itemID));
     }
@@ -235,12 +241,13 @@ public class Dungeon {
         
     }
 
-    public JsonArray timeTravelSave() {
+    public JsonObject timeTravelSave() {
         JsonObject finalObject = new JsonObject();              
         JsonArray entities = saveEntities();
-
-        entities.add(getJsonVersion(player.getPosition().getX(), player.getPosition().getY(), EntityTypes.OLDER_PLAYER.toString()));
-        return entities;
+        finalObject.add("entities", entities);
+        finalObject.addProperty("player-x", player.getPosition().getX());
+        finalObject.addProperty("player-y", player.getPosition().getY());
+        return finalObject;
     }
 
     /**
@@ -279,18 +286,23 @@ public class Dungeon {
         return entityInfo;
     }
 
-    public JsonArray loadJsonState(int ticksRewind) {
-        int index = gameStates.size() - ticksRewind - 1;
-        if (index < 0) {
-            return gameStates.get(0);
-        }
-        return gameStates.get(index);
-    }
-
     public DungeonResponse timeTravel(int ticksRewind) {
+        int index = gameStates.size() - ticksRewind - 1;
+        int start;
+        if (index < 0) {
+            start = 0;
+        } else {
+            start = index;
+        }
         this.entitiesControl = new EntitiesControl();
-        initializeEntities(loadJsonState(ticksRewind));
-        
+        JsonObject obj = gameStates.get(start);
+        initializeEntities(obj.getAsJsonArray("entities"));
+        OlderCharacter olderCharacter = 
+                new OlderCharacter(obj.get("player-x").getAsInt(), 
+                        obj.get("player-y").getAsInt(),
+                        gameMode, ticks.subList(start, ticks.size()));
+        entitiesControl.createNewEntityOnMap(olderCharacter);
+        olderCharacter.pickupAllCollectables(entitiesControl);
         return this.getInfo();
     }
 }

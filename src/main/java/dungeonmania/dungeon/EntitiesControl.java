@@ -19,7 +19,6 @@ public class EntitiesControl {
     private List<IEntity> entities;
     private Integer tickCounter = 1;
     private Integer entityCounter = 0;
-    private Position playerStartPosition = new Position(0, 0);
     public final static List<EntityTypes> usableItems;
     static {
         usableItems = new ArrayList<>();
@@ -27,10 +26,6 @@ public class EntitiesControl {
         usableItems.add(EntityTypes.INVINCIBILITY_POTION);
         usableItems.add(EntityTypes.BOMB);
         usableItems.add(EntityTypes.INVISIBILITY_POTION);
-    }
-
-    public void setPlayerStartPosition(Position playerStartPosition) {
-        this.playerStartPosition = playerStartPosition;
     }
 
     public EntitiesControl() {
@@ -193,8 +188,8 @@ public class EntitiesControl {
      * Generates enemies based on game mode
      * @param gameMode         difficulty of the game
      */
-    public void generateEnemyEntities(GameModeType gameMode) {
-        Generator.generateEnemyEntities(this, this.tickCounter, gameMode, this.playerStartPosition);
+    public void generateEnemyEntities(GameModeType gameMode, Position playerStartPosition) {
+        Generator.generateEnemyEntities(this, this.tickCounter, gameMode, playerStartPosition);
         tickCounter++;
     }
 

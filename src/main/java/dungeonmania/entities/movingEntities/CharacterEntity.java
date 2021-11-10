@@ -356,8 +356,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param targetEntities   list of entities to be interacted with
      * @param entitiesControl  list of all entities
      */
-    private void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
-        System.out.println(this.id + " is interacting with");
+    protected void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
         List<IContactingEntity> targetInteractable = entitiesControl.getInteractableEntitiesFrom(targetEntities);
         for (IContactingEntity entity : targetInteractable) {
             System.out.println(entity.getId());

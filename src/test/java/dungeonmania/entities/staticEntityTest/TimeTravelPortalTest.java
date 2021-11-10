@@ -61,7 +61,7 @@ public class TimeTravelPortalTest implements IEntityTests, IInteractingEntityTes
         );
     }
 
-    @Test
+    /*@Test
     public void TestLoadFromTimeTravel() {
         Dungeon d = getDungeonForTimeTravel();
         JsonArray start = d.timeTravelSave();
@@ -70,7 +70,7 @@ public class TimeTravelPortalTest implements IEntityTests, IInteractingEntityTes
         d.tick(Direction.LEFT);
         d.tick(Direction.RIGHT);
         assertEquals(start, d.loadJsonState(5));
-    }
+    }*/
 
     @Test
     public void TestFightBetweenNewAndOld() {

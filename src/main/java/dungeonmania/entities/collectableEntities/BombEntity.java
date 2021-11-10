@@ -12,7 +12,6 @@ import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.entities.staticEntities.SwitchEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.DungeonEntityJsonObject;
-import dungeonmania.util.Position;
 
 public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
     boolean isArmed = false;
@@ -28,7 +27,6 @@ public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
      * Bomb constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public BombEntity(int x, int y) {
         super(x, y, EntityTypes.BOMB);

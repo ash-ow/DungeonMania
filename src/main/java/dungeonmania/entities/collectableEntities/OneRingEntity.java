@@ -19,7 +19,6 @@ public class OneRingEntity extends CollectableEntity {
      * One Ring constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public OneRingEntity(int x, int y) {
         super(x, y, EntityTypes.ONE_RING);

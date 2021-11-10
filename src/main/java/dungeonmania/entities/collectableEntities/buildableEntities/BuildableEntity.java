@@ -13,7 +13,6 @@ public abstract class BuildableEntity extends CollectableEntity {
      * Constructor for buildable entities
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map
      * @param type type of entity 
      */
     protected BuildableEntity(int x, int y, EntityTypes type) {
@@ -53,7 +52,7 @@ public abstract class BuildableEntity extends CollectableEntity {
     }
 
     /**
-     * Initialises required components to build a bow
+     * Initialises required components to build
      */
     protected abstract void initialiseRequiredComponents();
 }

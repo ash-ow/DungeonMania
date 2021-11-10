@@ -28,7 +28,6 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
      * Spider constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public SpiderEntity(int x, int y) {
         super(x, y, EntityTypes.SPIDER);

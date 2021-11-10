@@ -16,7 +16,6 @@ public class TreasureEntity extends CollectableEntity {
      * Treasure constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public TreasureEntity(int x, int y) {
         super(x, y, EntityTypes.TREASURE);

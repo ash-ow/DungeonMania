@@ -10,7 +10,7 @@ public class SunStoneEntityTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestEntityResponseInfo() {
-        SunStoneEntity sun_stone = new SunStoneEntity(0,0,0);
+        SunStoneEntity sun_stone = new SunStoneEntity(0,0);
         assertEntityResponseInfoEquals(
             sun_stone,
             "sun_stone-0-0-0",
@@ -23,7 +23,7 @@ public class SunStoneEntityTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestCollect() {
-        SunStoneEntity sun_stone = new SunStoneEntity(0,0,0);
+        SunStoneEntity sun_stone = new SunStoneEntity(0,0);
         assertEntityIsCollected(sun_stone);
     }
 

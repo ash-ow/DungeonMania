@@ -1,31 +1,31 @@
 package dungeonmania.entities.movingEntities;
 
-import java.util.List;
-
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.IInteractableEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.FollowPlayer;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
+import dungeonmania.util.DungeonEntityJsonObject;
 import dungeonmania.util.Position;
 
-public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity {
+public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity, IInteractableEntity {
 
-    private float health;
-    private float damage;
-    private boolean isBribed;
+    protected float health;
+    protected float damage;
+    protected boolean isBribed;
     private IMovingBehaviour moveBehaviour;
 
     /**
      * Mercenary constructor
      */
     public MercenaryEntity() {
-        this(0, 0, 0);
+        this(0, 0);
     }
 
     /**
@@ -34,8 +34,16 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      * @param y y-coordinate on the map
      * @param layer layer on the map 
      */
-    public MercenaryEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.MERCENARY);
+    public MercenaryEntity(int x, int y) {
+        this(x, y, EntityTypes.MERCENARY);
+    }
+
+    public MercenaryEntity(DungeonEntityJsonObject info) {
+        this(info.getX(), info.getY());
+    }
+
+    public MercenaryEntity(int x, int y, EntityTypes type) {
+        super(x, y, type);
         this.health = 70;
         this.damage = 3;
         this.isBribed = false;
@@ -67,8 +75,10 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     }
 
     @Override
-    public void loseHealth(float enemyHealth, float enemyDamage) {
-        this.health -= ((enemyHealth * enemyDamage) / 5);
+    public float loseHealth(float enemyHealth, float enemyDamage) {
+        float damage = ((enemyHealth * enemyDamage) / 5);
+        this.health -= damage;
+        return damage;
     }
 
     @Override
@@ -97,19 +107,21 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {
         if (isBribed) {
             setPosition(player.getPreviousPosition());
-        } else {
+        } else if (!player.isInvisible()){
             this.move(moveBehaviour.getBehaviourDirection(entitiesControl, player, position));
             if (this.isInSamePositionAs(player)) {
                 contactWithPlayer(entitiesControl, player);
             }
-        }       
+        } else {
+            this.move(Direction.NONE);
+        } 
     }
 
     /**
      * Determines the interactions of the mercenary with the player based on range and whether they have treasure
      * @param player the player with which the mercenary will interact with 
      */
-    public void interactWith(CharacterEntity player) throws InvalidActionException {
+    public boolean interactWith(CharacterEntity player) throws InvalidActionException {
         IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);
         if (treasureFound == null) {
             throw new InvalidActionException("Player has no treasure");
@@ -119,7 +131,8 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         }
         player.removeEntityFromInventory(treasureFound);
         player.addTeammates(this);
-        this.isBribed = true;       
+        this.isBribed = true;
+        return removeAfterInteraction();    
     }
 
     /**
@@ -137,5 +150,10 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     @Override
     public void setMoveBehvaiour(IMovingBehaviour newBehaviour) {
         this.moveBehaviour = newBehaviour;        
+    }
+
+    @Override
+    public boolean removeAfterInteraction() {
+        return false;
     }
 }

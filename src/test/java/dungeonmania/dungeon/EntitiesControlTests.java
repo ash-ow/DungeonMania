@@ -15,8 +15,8 @@ import dungeonmania.util.Direction;
 public class EntitiesControlTests {
     @Test
     public void TestSpawnZombie() {
-        CharacterEntity player = new CharacterEntity(0, 5, 0);
-        ZombieToastSpawnerEntity spawner = new ZombieToastSpawnerEntity(5, 5, 0);
+        CharacterEntity player = new CharacterEntity(0, 5);
+        ZombieToastSpawnerEntity spawner = new ZombieToastSpawnerEntity(5, 5);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spawner);
 

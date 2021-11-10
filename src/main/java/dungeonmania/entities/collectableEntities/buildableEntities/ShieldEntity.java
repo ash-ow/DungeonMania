@@ -6,13 +6,14 @@ import java.util.Map;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
+import dungeonmania.entities.collectableEntities.IDefensiveEntity;
 
-public class ShieldEntity extends BuildableEntity {
+public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
     /**
      * Shield constructor
      */
     public ShieldEntity() {
-        this(0, 0, 0); 
+        this(0, 0); 
     }
     
     /**
@@ -21,8 +22,8 @@ public class ShieldEntity extends BuildableEntity {
      * @param y y-coordinate on the map
      * @param layer layer on the map 
      */
-    public ShieldEntity(int x, int y, int layer) {
-        super(x, y, layer, EntityTypes.SHIELD);
+    public ShieldEntity(int x, int y) {
+        super(x, y, EntityTypes.SHIELD);
         this.durability = 4;
     }
     
@@ -50,29 +51,28 @@ public class ShieldEntity extends BuildableEntity {
             EntityTypes component = entry.getKey();
             int quantity = entry.getValue();
             if (numberOfComponentItemsInInventory(inventory, component) >= quantity) {
-                if (component.equals(EntityTypes.WOOD)) {
-                    requiredWood = true;
-                } else if (component.equals(EntityTypes.TREASURE)) {
-                    requiredTreasure = true;
-                } else if (component.equals(EntityTypes.KEY)) {
-                    requiredKey = true;
+                switch (component) {
+                    case WOOD:
+                        requiredWood = true;
+                        break;
+                    case TREASURE:
+                        requiredTreasure = true;
+                        break;
+                    case KEY:
+                        requiredKey = true;
+                        break;
+                    default:
+                        break;
                 }
             }
         }
-        if (requiredTreasure || requiredKey) {
-            if (requiredWood) {
-                return true;
-            }
-        }
-        return false;
+        return (
+            requiredWood &&
+            (requiredTreasure || requiredKey)
+        );
     }
     
-    /**
-     * Reduces input damage for the player
-     * @param damage input damage for the player
-     * @param player player which is being damaged
-     * @return redecued value for damage as a float
-     */
+    @Override 
     public float reduceDamage(float damage, CharacterEntity player) {
         this.used(player);
         damage = damage/2;

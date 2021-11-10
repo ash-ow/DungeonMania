@@ -22,8 +22,8 @@ import dungeonmania.exceptions.InvalidActionException;
 public class InteractTestException {
     @Test
     public void testInvalidId() {
-        CharacterEntity player = new CharacterEntity(0, 5, 0);
-        SpiderEntity spider = new SpiderEntity(0, 4, 0);
+        CharacterEntity player = new CharacterEntity(0, 5);
+        SpiderEntity spider = new SpiderEntity(0, 4);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spider);        
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
@@ -32,8 +32,8 @@ public class InteractTestException {
 
     @Test
     public void testInvalidType() {
-        CharacterEntity player = new CharacterEntity(0, 5, 0);
-        SpiderEntity spider = new SpiderEntity(0, 4, 0);
+        CharacterEntity player = new CharacterEntity(0, 5);
+        SpiderEntity spider = new SpiderEntity(0, 4);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spider);        
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
@@ -42,8 +42,8 @@ public class InteractTestException {
 
     @Test
     public void testInvalidBribeNoMoney() {
-        CharacterEntity player = new CharacterEntity(0, 5, 0);
-        MercenaryEntity mercenary = new MercenaryEntity(0, 4, 0);
+        CharacterEntity player = new CharacterEntity(0, 5);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 4);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(mercenary);        
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
@@ -52,8 +52,8 @@ public class InteractTestException {
 
     @Test
     public void testInvalidBribeTooFar() {
-        CharacterEntity player = new CharacterEntity(0, 5, 0);
-        MercenaryEntity mercenary = new MercenaryEntity(0, 2, 0);
+        CharacterEntity player = new CharacterEntity(0, 5);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 2);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(mercenary);        
         player.addEntityToInventory(new TreasureEntity()); 
@@ -63,8 +63,8 @@ public class InteractTestException {
 
     @Test
     public void successfulBribe() {
-        CharacterEntity player = new CharacterEntity(0, 5, 0);
-        MercenaryEntity mercenary = new MercenaryEntity(0, 4, 0);
+        CharacterEntity player = new CharacterEntity(0, 5);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 4);
         TreasureEntity treasure = new TreasureEntity();
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(mercenary);        
@@ -77,8 +77,8 @@ public class InteractTestException {
 
     @Test
     public void testInvalidDestroyTooFar() {
-        CharacterEntity player = new CharacterEntity(0, 5, 0);
-        ZombieToastSpawnerEntity spawner = new ZombieToastSpawnerEntity(0, 0, 0);
+        CharacterEntity player = new CharacterEntity(0, 5);
+        ZombieToastSpawnerEntity spawner = new ZombieToastSpawnerEntity(0, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spawner);        
         player.addEntityToInventory(new SwordEntity());
@@ -88,8 +88,8 @@ public class InteractTestException {
 
     @Test
     public void testInvalidDestroyNoWeapon() {
-        CharacterEntity player = new CharacterEntity(0, 5, 0);
-        ZombieToastSpawnerEntity spawner = new ZombieToastSpawnerEntity(0, 4, 0);
+        CharacterEntity player = new CharacterEntity(0, 5);
+        ZombieToastSpawnerEntity spawner = new ZombieToastSpawnerEntity(0, 4);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spawner);        
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
@@ -98,8 +98,8 @@ public class InteractTestException {
 
     @Test
     public void testSuccessfulDestroy() {
-        CharacterEntity player = new CharacterEntity(0, 5, 0);
-        ZombieToastSpawnerEntity spawner = new ZombieToastSpawnerEntity(0, 4, 0);
+        CharacterEntity player = new CharacterEntity(0, 5);
+        ZombieToastSpawnerEntity spawner = new ZombieToastSpawnerEntity(0, 4);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spawner);    
         player.addEntityToInventory(new SwordEntity());    

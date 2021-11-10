@@ -1,38 +1,25 @@
 package dungeonmania.dungeon;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
-
-import com.google.gson.JsonObject;
 
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IContactingEntity;
-import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.util.DungeonEntityJsonObject;
 import dungeonmania.util.Position;
-import dungeonmania.util.RandomChance;
+import dungeonmania.dungeon.entitiesFactory.EntitiesFactory;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
 import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
-import dungeonmania.entities.movingEntities.spiderEntity.SpiderEntity;
-import dungeonmania.entities.staticEntities.*;
+import dungeonmania.generators.Generator;
 
 public class EntitiesControl {
     private List<IEntity> entities;
-    private Random rand = new Random();
     private Integer tickCounter = 1;
     private Integer entityCounter = 0;
-    public final static HashMap<String, Double> difficulty;
     private Position playerStartPosition = new Position(0, 0);
-    static {
-        difficulty = new HashMap<>();
-        difficulty.put("Hard", 20.0/15.0);
-        difficulty.put("Peaceful", 15.0/20.0);
-        difficulty.put("Standard", 1.0);
-    }
     public final static List<EntityTypes> usableItems;
     static {
         usableItems = new ArrayList<>();
@@ -59,7 +46,7 @@ public class EntitiesControl {
      * Creates a new entity on the map
      * @param entity  entity to be created
      */
-    private void createNewEntityOnMap(IEntity entity) {
+    public void createNewEntityOnMap(IEntity entity) {
         entity.setId(Integer.toString(entityCounter));
         entities.add(entity);
         entityCounter++;
@@ -145,6 +132,10 @@ public class EntitiesControl {
         return this.entities.stream().filter(entity -> entity != null && entity.getPosition().equals(position)).collect(Collectors.toList());
     }
 
+    public Integer getLayerFromPosition(Position position) {
+        return this.getAllEntitiesFromPosition(position).size();
+    }
+
     public static boolean containsBlockingEntities(List<IEntity> entityList) {
         return entityList.stream().filter(IBlocker.class::isInstance).map(IBlocker.class::cast).anyMatch(IBlocker::isBlocking);
     }
@@ -161,123 +152,13 @@ public class EntitiesControl {
         }
         return false;
     }
-// endregion
-
-    /**
-     * Creates an entity
-     * @param entityObj     entity to be created
-     */
-    public void createEntity(JsonObject entityObj) {
-        EntityTypes type = EntityTypes.getEntityType(entityObj.get("type").getAsString());
-        Integer xAxis = entityObj.get("x").getAsInt();
-        Integer yAxis = entityObj.get("y").getAsInt();
-        Integer layer = getAllEntitiesFromPosition(new Position(xAxis, yAxis)).size();
-        createEntity(xAxis, yAxis, layer, type);
+    // endregion
+    
+    
+    public void createEntity(DungeonEntityJsonObject jsonInfo, GameModeType gameMode) {
+        EntitiesFactory.generateEntity(jsonInfo, this, gameMode);
     }
-
-    /**
-     * Main switch case for the creation of all entities on the map
-     * @param x         x-coordinate on the map
-     * @param y         y-coordinate on the map
-     * @param layer     layer on the map 
-     * @param type      type of entity
-     */
-    public void createEntity(Integer xAxis, Integer yAxis, Integer layer, EntityTypes type) {
-        switch (type) {
-            case WALL:
-                this.createNewEntityOnMap(new WallEntity(xAxis, yAxis, layer));
-                break;
-            case EXIT:
-                this.createNewEntityOnMap(new ExitEntity(xAxis, yAxis, layer));
-                break;
-            case SWITCH:
-                this.createNewEntityOnMap(new SwitchEntity(xAxis, yAxis, layer));
-                break;
-            case BOULDER:
-                this.createNewEntityOnMap(new BoulderEntity(xAxis, yAxis, layer));
-                break;
-            case SPIDER:
-                this.createNewEntityOnMap(new SpiderEntity(xAxis, yAxis, layer));
-                break;
-            case WOOD:
-                this.createNewEntityOnMap(new WoodEntity(xAxis, yAxis, layer));
-                break;
-            case ARROW:
-                this.createNewEntityOnMap(new ArrowsEntity(xAxis, yAxis, layer));
-                break;
-            case BOMB:
-                this.createNewEntityOnMap(new BombEntity(xAxis, yAxis, layer));
-                break;
-            case SWORD:
-                this.createNewEntityOnMap(new SwordEntity(xAxis, yAxis, layer));
-                break;
-            case ARMOUR:
-                this.createNewEntityOnMap(new ArmourEntity(xAxis, yAxis, layer));
-                break;
-            case TREASURE:
-                this.createNewEntityOnMap(new TreasureEntity(xAxis, yAxis, layer));
-                break;
-            case HEALTH_POTION:
-                this.createNewEntityOnMap(new HealthPotionEntity(xAxis, yAxis, layer));
-                break;
-            case INVISIBILITY_POTION:
-                this.createNewEntityOnMap(new InvisibilityPotionEntity(xAxis, yAxis, layer));
-                break;
-            case INVINCIBILITY_POTION:
-                this.createNewEntityOnMap(new InvincibilityPotionEntity(xAxis, yAxis, layer));
-                break;
-            case MERCENARY:
-                this.createNewEntityOnMap(new MercenaryEntity(xAxis, yAxis, layer));
-                break;
-            case ZOMBIE_TOAST:
-                this.createNewEntityOnMap(new ZombieToastEntity(xAxis, yAxis, layer));
-                break;
-            case ZOMBIE_TOAST_SPAWNER:
-                this.createNewEntityOnMap(new ZombieToastSpawnerEntity(xAxis, yAxis, layer));
-                break;
-            case ONE_RING:
-                this.createNewEntityOnMap(new OneRingEntity(xAxis, yAxis, layer));
-                break;
-            case SUN_STONE: 
-                this.createNewEntityOnMap(new SunStoneEntity(xAxis, yAxis, layer));
-        }
-    }
-
-    /**
-     * Creates a door and key
-     * @param x         x-coordinate on the map
-     * @param y         y-coordinate on the map
-     * @param layer     layer on the map
-     * @param keyNumber keyNumber for a corresponding pair 
-     * @param type      type of entity
-     */
-	public void createEntity(Integer xAxis, Integer yAxis, Integer layer, Integer keyNumber, EntityTypes type) {
-        switch (type) {
-            case DOOR:
-                this.createNewEntityOnMap(new DoorEntity(xAxis, yAxis, layer, keyNumber));
-                break;
-            case KEY:
-                this.createNewEntityOnMap(new KeyEntity(xAxis, yAxis, layer, keyNumber));
-                break;
-        }
-	}
-
-    /**
-     * Creates a portal with a certain colour
-     * @param x         x-coordinate on the map
-     * @param y         y-coordinate on the map
-     * @param layer     layer on the map
-     * @param colour    colour of the portal 
-     * @param type      type of entity
-     */
-	public void createEntity(Integer xAxis, Integer yAxis, Integer layer, String colour, EntityTypes type) {
-        switch (type) {
-            case PORTAL:
-                this.createNewEntityOnMap(new PortalEntity(xAxis, yAxis, layer, colour));
-                break;
-        }
-	}
-
+    
     /**
      * Creates an entity
      * @param x         x-coordinate on the map
@@ -285,8 +166,10 @@ public class EntitiesControl {
      * @param type      type of entity
      */
     public void createEntity(Integer x, Integer y, EntityTypes type) {
-        Integer layer = this.getAllEntitiesFromPosition(new Position(x,y)).size();
-        createEntity(x, y, layer, type);
+        DungeonEntityJsonObject jsonElement = new DungeonEntityJsonObject();
+        jsonElement.setPosition(new Position(x, y));
+        jsonElement.setType(type);
+        EntitiesFactory.generateEntity(jsonElement, this, GameModeType.STANDARD);
     }
 
     public Position getLargestCoordinate() {
@@ -306,61 +189,9 @@ public class EntitiesControl {
      * Generates enemies based on game mode
      * @param gameMode         difficulty of the game
      */
-    public void generateEnemyEntities(String gameMode) {
-        generateSpider(gameMode);
-        generateZombieToast(gameMode);
-        generateMercenary(gameMode);
+    public void generateEnemyEntities(GameModeType gameMode) {
+        Generator.generateEnemyEntities(this, this.tickCounter, gameMode, this.playerStartPosition);
         tickCounter++;
-    }
-
-    /**
-     * Generates mercenaries based on game mode
-     * @param gameMode         difficulty of the game
-     */
-    private void generateMercenary(String gameMode) {
-        if (tickCounter % (int) Math.ceil(30 / difficulty.get(gameMode)) == 0) {
-            List<IMovingEntity> enemy = getEntitiesOfType(IMovingEntity.class);
-            if (enemy.size() > 0) {
-                this.createEntity(playerStartPosition.getX(), playerStartPosition.getY(), EntityTypes.MERCENARY);
-            }
-        }
-    }
-
-    /**
-     * Generates spider based on game mode
-     * @param gameMode         difficulty of the game
-     */
-    private void generateSpider(String gameMode) {
-        // TODO replace this with an enemy generator
-        List<SpiderEntity> spiders = this.getAllEntitiesOfType(SpiderEntity.class);
-        if (spiders.size() < 4) {
-            Position largestCoordinate = this.getLargestCoordinate();
-            int largestX = largestCoordinate.getX();
-            int largestY = largestCoordinate.getY();
-            int randomX = rand.nextInt(largestX);
-            int randomY = rand.nextInt(largestY);
-            if (RandomChance.getRandomBoolean((float) (.05f * difficulty.get(gameMode)))
-                && !this.positionContainsEntityType(new Position(randomX, randomY), BoulderEntity.class)) {
-                this.createEntity(randomX, randomY, EntityTypes.SPIDER);
-            }
-        }
-    }
-
-    /**
-     * Generates zombie toast based on game mode
-     * @param gameMode         difficulty of the game
-     */
-    private void generateZombieToast(String gameMode) {
-        if (tickCounter % (int) Math.ceil(20 / difficulty.get(gameMode)) == 0) {
-            List<ZombieToastSpawnerEntity> spawnerEntities = getEntitiesOfType(ZombieToastSpawnerEntity.class);
-            for (ZombieToastSpawnerEntity spawner : spawnerEntities) {
-                this.createEntity(
-                    spawner.getPosition().getX(), 
-                    spawner.getPosition().getY(), 
-                    EntityTypes.ZOMBIE_TOAST
-                );
-            }
-        }
     }
 
     /**

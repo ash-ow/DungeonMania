@@ -121,7 +121,7 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse rewind(int ticks) throws IllegalArgumentException {
-        return dungeon.getInfo();
+        return dungeon.timeTravel(ticks);
     }
 
 

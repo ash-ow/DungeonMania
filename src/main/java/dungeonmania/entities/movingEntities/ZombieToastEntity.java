@@ -142,7 +142,7 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
     }
 
     @Override
-    public void setMoveBehvaiour(IMovingBehaviour newBehaviour) {
+    public void setMoveBehaviour(IMovingBehaviour newBehaviour) {
         this.moveBehaviour = newBehaviour;        
     }
 

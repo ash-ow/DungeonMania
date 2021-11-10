@@ -24,7 +24,7 @@ import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 import dungeonmania.util.Position;
 
 import java.io.File;
@@ -109,7 +109,7 @@ public class Dungeon {
     public void initializeEntities(JsonArray entities) {
         for (JsonElement entityInfo : entities) {
             JsonObject entityObj = entityInfo.getAsJsonObject();
-            DungeonEntityJsonParser dungeonEntityJsonInfo = new DungeonEntityJsonParser(entityObj);            
+            DungeonEntityJsonObject dungeonEntityJsonInfo = new DungeonEntityJsonObject(entityObj);            
             if (dungeonEntityJsonInfo.getType().equals(EntityTypes.PLAYER)) {
                 this.player = new CharacterEntity(dungeonEntityJsonInfo.getX(), dungeonEntityJsonInfo.getY(), this.gameMode);
             } else if (dungeonEntityJsonInfo.getType().equals(EntityTypes.OLDER_PLAYER)) {
@@ -211,7 +211,6 @@ public class Dungeon {
      */
     public void saveGame(String saveGameName) {
         Gson gson = new Gson();
-
         try {
             Files.createDirectories(Paths.get("savedGames"));
         } catch (IOException e) {
@@ -259,7 +258,10 @@ public class Dungeon {
     public JsonArray saveEntities() {
         JsonArray entities = new JsonArray();
         for (IEntity entity: entitiesControl.getEntities()) {
-            entities.add(entity.buildJson());         
+            if (!entity.getType().equals(EntityTypes.OLDER_PLAYER)) {
+                entities.add(entity.buildJson());
+            }
+            // TODO find way to add back older player in the normal save game
         }
         for (IEntity entity: player.getInventory()) {
             entities.add(getJsonVersion(player.getPosition().getX(), player.getPosition().getY(), entity.getType().toString()));
@@ -286,11 +288,8 @@ public class Dungeon {
     public DungeonResponse timeTravel(int ticksRewind) {
         this.entitiesControl = new EntitiesControl();
         initializeEntities(loadJsonState(ticksRewind));
-        return this.getInfo();
-    }
-
-    public static void main(String[] args) {
         
+        return this.getInfo();
     }
 }
  

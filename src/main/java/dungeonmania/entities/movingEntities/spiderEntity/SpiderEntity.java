@@ -108,7 +108,7 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
 //endregion
 
     @Override
-    public void setMoveBehvaiour(IMovingBehaviour newBehaviour) {
+    public void setMoveBehaviour(IMovingBehaviour newBehaviour) {
         this.moveBehaviour = newBehaviour;        
     }
 }

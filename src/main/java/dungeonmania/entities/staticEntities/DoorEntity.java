@@ -28,7 +28,7 @@ public class DoorEntity extends Entity implements IBlocker {
         this.isLocked = true;
     }
 
-    public DoorEntity(DungeonEntityJsonParser info) {
+    public DoorEntity(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY(), info.getInfo().getAsInt());
     }
     

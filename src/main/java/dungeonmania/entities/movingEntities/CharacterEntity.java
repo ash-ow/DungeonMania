@@ -56,7 +56,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         super(x, y, type);
         this.previousPosition = new Position(x, y);
         this.gameMode = gameMode;
-        this.health = (int) Math.ceil(100 / EntitiesControl.difficulty.get(gameMode));
+        this.health = (int) Math.ceil(100 / Generator.difficulty.get(gameMode));
     }
 
     /**

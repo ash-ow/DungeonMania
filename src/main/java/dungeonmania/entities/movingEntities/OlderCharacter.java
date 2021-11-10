@@ -10,7 +10,7 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class OlderCharacter extends CharacterEntity implements IAutoMovingEntity{
     private List<Instruction> ticks;
@@ -28,7 +28,7 @@ public class OlderCharacter extends CharacterEntity implements IAutoMovingEntity
         this.ticks = new ArrayList<>(ticks);
     }
 
-    public OlderCharacter(DungeonEntityJsonParser info, GameModeType gameMode, List<Instruction> ticks) {
+    public OlderCharacter(DungeonEntityJsonObject info, GameModeType gameMode, List<Instruction> ticks) {
         this(info.getX(), info.getY(), gameMode, ticks);
     }
 
@@ -53,9 +53,8 @@ public class OlderCharacter extends CharacterEntity implements IAutoMovingEntity
             }
             currentInstruction++;
         }
-        
     }
 
     @Override
-    public void setMoveBehvaiour(IMovingBehaviour newBehaviour) {}
+    public void setMoveBehaviour(IMovingBehaviour newBehaviour) {}
 }

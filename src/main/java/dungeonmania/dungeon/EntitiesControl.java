@@ -103,7 +103,7 @@ public class EntitiesControl {
     public void runAwayAllMovingEntities(CharacterEntity player) {
         List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
         for (IAutoMovingEntity entity : movingEntities) {
-            entity.setMoveBehvaiour(new RunAway());
+            entity.setMoveBehaviour(new RunAway());
         }
     }
 

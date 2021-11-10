@@ -5,7 +5,7 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class TimeTravelPortal extends Entity implements IContactingEntity {
     public TimeTravelPortal() {
@@ -16,7 +16,7 @@ public class TimeTravelPortal extends Entity implements IContactingEntity {
         super(x, y, EntityTypes.TIME_TRAVEL_PORTAL);
     }
 
-    public TimeTravelPortal(DungeonEntityJsonParser info) {
+    public TimeTravelPortal(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY());
     }
 

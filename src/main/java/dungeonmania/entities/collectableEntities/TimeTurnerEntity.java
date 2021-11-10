@@ -2,7 +2,7 @@ package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.DungeonEntityJsonParser;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class TimeTurnerEntity extends CollectableEntity{
     public TimeTurnerEntity() {
@@ -13,7 +13,7 @@ public class TimeTurnerEntity extends CollectableEntity{
         super(x, y, EntityTypes.TIME_TURNER);
     }
 
-    public TimeTurnerEntity(DungeonEntityJsonParser info) {
+    public TimeTurnerEntity(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY());
     }
 

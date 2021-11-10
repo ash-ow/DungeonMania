@@ -168,6 +168,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         assertEquals(new Position(0, 5), mercenary.getPosition());
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 4), mercenary.getPosition());
+        assertNotNull(player.getInventoryItem(sun_stone.getId()), "Inventory should contain entity " + sun_stone.getId());
     }
 
     @Test

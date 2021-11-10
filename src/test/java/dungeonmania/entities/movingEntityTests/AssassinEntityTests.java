@@ -3,6 +3,7 @@ package dungeonmania.entities.movingEntityTests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,7 @@ public class AssassinEntityTests extends MercenaryEntityTests {
     }
 
     @Test
+    //Test if assassin bribed by sun_stone & also item not removed
     public void testBribeSunStone() {
         CharacterEntity player = new CharacterEntity(0, 5);
         AssassinEntity assassin = new AssassinEntity(0, 4);
@@ -46,7 +48,7 @@ public class AssassinEntityTests extends MercenaryEntityTests {
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         dungeon.interact(assassin.getId());
         assertTrue(assassin.isBribed());
-        //To do: test that sunstone remains in inventory
+        assertNotNull(player.getInventoryItem(sun_stone.getId()), "Inventory should contain entity " + sun_stone.getId());
     }
 
     @Test

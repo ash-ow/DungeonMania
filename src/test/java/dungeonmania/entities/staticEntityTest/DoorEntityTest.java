@@ -60,13 +60,35 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to move in and out of unlocked door");
     }
-    /*
+    
     @Test
     public void TestUnlockDoorStone() {
-        Dungeon dungeon = getDungeonWithDoorTestData();
+        Dungeon dungeon = getDungeonWithStoneTestData();
         CharacterEntity player = (CharacterEntity)dungeon.getPlayer();
         assertNotNull(player, "Dungeon should contain the player");
-    */
+
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 1, 0), player.getPosition(), "Player should move into sun_stone's position");
+        assertNotNull(player.getInventoryItem("0"), "Inventory should contain sun_stone");
+
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should be able to move into the first door as they have sun_stone");
+        assertNotNull(player.getInventoryItem("0"), "Unlocking door should not consume sun_stone");
+        
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to move into the second door as they have sun_stone");
+        assertNotNull(player.getInventoryItem("0"), "Unlocking door should not consume sun_stone");
+
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 4, 0), player.getPosition(), "Player should be able to move into the third door as they have sun_stone");
+        assertNotNull(player.getInventoryItem("0"), "Unlocking door should not consume sun_stone");
+
+        dungeon.tick(Direction.UP);
+        dungeon.tick(Direction.UP);
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to move in and out of unlocked door");
+    }
+
         
 
     @Test
@@ -121,6 +143,32 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         return new Dungeon(entitiesJson, goalsJson, "Standard", "", "");
     }
 
+    private Dungeon getDungeonWithStoneTestData() {
+        /*
+        Map:
+
+            0
+        0   P
+        1   S1 - Sun Stone
+        2   D1 - door 1; unlock
+        3   D2 - door 2; can unlock
+        4   D3 - door 3; can unlock
+        6   Exit
+        
+        */
+        String entities = "{\"entities\": [" +
+            "{\"x\": 0,\"y\": 0,\"type\": \"player\"}," +
+            "{\"x\": 0,\"y\": 1,\"type\": \"sun_stone\"}," +
+            "{\"x\": 0,\"y\": 2,\"type\": \"door\",\"key\": 1}," +
+            "{\"x\": 0,\"y\": 3,\"type\": \"door\",\"key\": 2}," +
+            "{\"x\": 0,\"y\": 4,\"type\": \"door\",\"key\": 3}," +
+            "{\"x\": 0,\"y\": 6,\"type\": \"exit\"}" +
+            "]}";
+        String goals = "{\"goal-condition\": {\"goal\": \"exit\"}}";
+        JsonArray entitiesJson = new Gson().fromJson(entities, JsonObject.class).get("entities").getAsJsonArray();
+        JsonObject goalsJson = new Gson().fromJson(goals, JsonObject.class).get("goal-condition").getAsJsonObject();
+        return new Dungeon(entitiesJson, goalsJson, "Standard", "", "");
+    }
     @Override
     public void TestBlock() {
         // TODO Auto-generated method stub

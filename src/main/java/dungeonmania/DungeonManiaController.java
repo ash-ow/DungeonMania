@@ -35,7 +35,7 @@ public class DungeonManiaController {
     }
 
     public List<String> getGameModes() {
-        return Arrays.asList("Standard", "Peaceful", "Hard");
+        return Arrays.asList("standard", "peaceful", "hard");
     }
 
     /**
@@ -102,7 +102,7 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse tick(String itemUsed, Direction movementDirection) throws IllegalArgumentException, InvalidActionException {
-        if (itemUsed != null) {
+        if (itemUsed != null && !itemUsed.isEmpty()) {
             dungeon.tick(itemUsed);
         }
         dungeon.tick(movementDirection);

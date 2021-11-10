@@ -1,5 +1,15 @@
 package dungeonmania.entities.movingEntities;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Map.Entry;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
@@ -156,4 +166,5 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     public boolean removeAfterInteraction() {
         return false;
     }
+
 }

@@ -48,6 +48,16 @@ public class DoorEntity extends Entity implements IBlocker {
             .orElse(null);
     }
 
+    private SunStoneEntity getStoneFromInventory(CharacterEntity player) {
+        return player
+            .getInventory()
+            .stream()
+            .filter(e -> e.getType().equals(EntityTypes.SUN_STONE))
+            .map(SunStoneEntity.class::cast)
+            .findFirst()
+            .orElse(null);
+    }
+
     private void unlockWith(KeyEntity key, CharacterEntity player) {
         if (key != null) {
             key.used(player);
@@ -56,10 +66,8 @@ public class DoorEntity extends Entity implements IBlocker {
     }
 
     //SunStone unlock doors
-    //TO DO: work with keynumber to sort out unlocking 
     private void stoneUnlock(SunStoneEntity sun_stone, CharacterEntity player) {
         if (sun_stone != null) {
-            sun_stone.used(player);
             this.isLocked = false;
         }
     }
@@ -75,8 +83,15 @@ public class DoorEntity extends Entity implements IBlocker {
     public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
         if (ent instanceof CharacterEntity) {
             CharacterEntity player = (CharacterEntity) ent;
-            this.key = getKeyFromInventory(player, this.keyNumber);
-            this.unlockWith(key, player);
+            if (player.containedInInventory(EntityTypes.KEY)){
+                this.key = getKeyFromInventory(player, this.keyNumber);
+                this.unlockWith(key, player);
+            }
+            else if (player.containedInInventory(EntityTypes.SUN_STONE))
+            {
+                this.sun_stone = getStoneFromInventory(player);
+                this.stoneUnlock(sun_stone, player); 
+            }
         }
         return !this.isLocked;
     }

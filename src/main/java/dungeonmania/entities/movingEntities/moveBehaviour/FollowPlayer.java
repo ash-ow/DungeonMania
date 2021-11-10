@@ -15,35 +15,64 @@ import dungeonmania.util.Position;
 public class FollowPlayer implements IMovingBehaviour{
 
     /**
-     * Takes the current position and finds the faster path to the player
-     * @return a list of positions to get to the player
+     * Takes the current position and finds the fastest path to the player
+     * @return next direction to the player
      */
     @Override
     public Direction getBehaviourDirection(EntitiesControl entitiesControl, CharacterEntity player, Position position) {
-        // List<Direction> usefulDirections = getUsefuDirections(player, position);
-        // return moveToUsefulUnblocked(usefulDirections, entitiesControl, position);
         if (!playerIsReachable(player, entitiesControl)) {
             return Direction.NONE;
         }
-        
-        List<Position> shortestPath = new ArrayList<>();
-        Map<Position, List<Position>> pathsMap = new HashMap<>();
-        List<Position> previousPositions = new ArrayList<>();
-        pathsMap.put(position, previousPositions);
-        while(!pathsMap.containsKey(player.getPosition())) {
-            Map<Position, List<Position>> newPathsMap = new HashMap<>();
-            newPathsMap.putAll(pathsMap);
-            for(Map.Entry<Position, List<Position>> entry: pathsMap.entrySet()) {
-                newPathsMap.putAll(dijkstra(entry.getKey(), newPathsMap, entitiesControl));
+        List<Position> path = shortestPathToPlayer(entitiesControl, player, position);
+        return nextDirection(path, player, position);
+    }
+    
+    /**
+     * Finds the shortest path to the player
+     * @return List of positions on the path to the player
+     */
+    public List<Position> shortestPathToPlayer(EntitiesControl entitiesControl, CharacterEntity player, Position position){
+        Map<Position, List<Position>> mainPathsMap = new HashMap<>();
+        mainPathsMap.put(position, new ArrayList<>());
+        while(!mainPathsMap.containsKey(player.getPosition())) {
+            Map<Position, List<Position>> newPaths = new HashMap<>();
+            newPaths.putAll(mainPathsMap);
+            for(Position entry: mainPathsMap.keySet()) {
+                newPaths.putAll(dijkstra(entry, newPaths, entitiesControl));
             }
-            pathsMap.putAll(newPathsMap);
+            mainPathsMap.putAll(newPaths);
         }
+        List<Position> shortestPathToPlayer = mainPathsMap.get(player.getPosition());
+        return shortestPathToPlayer;
+    }
 
-        shortestPath = pathsMap.get(player.getPosition());
-        // Not sure about this next line, I did it in order to fix a bug where the next position was the player's position
+    /**
+     * Expands the search to the next list of cardinally adjacent positions
+     */
+    public Map<Position, List<Position>> dijkstra(Position currentPosition, Map<Position, List<Position>> pathsMap, EntitiesControl entitiesControl) {
+        List<Position> currentPrevPositions = pathsMap.get(currentPosition);
+        for (Position newPosition:currentPosition.getCardinallyAdjacentPositions()){
+            if(!EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(newPosition))) {
+                List<Position> newPrevPositions = new ArrayList<>();
+                for(Position prevPosition: currentPrevPositions) {
+                    newPrevPositions.add(prevPosition);
+                }
+                newPrevPositions.add(currentPosition);
+                if (!pathsMap.containsKey(newPosition)){
+                    pathsMap.put(newPosition, newPrevPositions);
+                }
+                else if (newPrevPositions.size() < pathsMap.get(newPosition).size()){
+                    pathsMap.put(newPosition, newPrevPositions);
+                }
+            }
+        }
+        return pathsMap;
+    }
+
+    public Direction nextDirection(List<Position> path, CharacterEntity player, Position position){
         Position next = player.getPosition();
-        if (shortestPath.size() > 1) {
-            next = shortestPath.get(1);
+        if (path.size() > 1) {
+            next = path.get(1);
         }
         if(next.equals(position.translateBy(Direction.UP))) {
             return Direction.UP;
@@ -61,43 +90,13 @@ public class FollowPlayer implements IMovingBehaviour{
             return Direction.NONE;
         }
     }
-    
-    /**
-     * Expands the search to the next list of cardinally adjacent positions
-     */
-    public Map<Position, List<Position>> dijkstra(Position position, Map<Position, List<Position>> pathsMap, EntitiesControl entitiesControl) {
-        List<Position> currentPrevPositions = pathsMap.get(position);
-        for (Position pos:position.getCardinallyAdjacentPositions()){
-            if(!EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(pos))) {
-                List<Position> newPrevPositions = new ArrayList<>();
-                for(Position prevPosition: currentPrevPositions) {
-                    newPrevPositions.add(prevPosition);
-                }
-                newPrevPositions.add(position);
-                if (!pathsMap.containsKey(pos)){
-                    pathsMap.put(pos, newPrevPositions);
-                }
-                else if (newPrevPositions.size() < pathsMap.get(pos).size()){
-                    pathsMap.put(pos, newPrevPositions);
-                }
-            }
-        }
-        return pathsMap;
-    }
 
     public boolean playerIsReachable(CharacterEntity player, EntitiesControl entitiesControl){
-        Position upFromPlayer = player.getPosition().translateBy(Direction.UP);
-        Position downFromPlayer = player.getPosition().translateBy(Direction.DOWN);
-        Position leftFromPlayer = player.getPosition().translateBy(Direction.LEFT);
-        Position rightFromPlayer = player.getPosition().translateBy(Direction.RIGHT);
-
-        if(EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(upFromPlayer)) &&
-           EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(downFromPlayer)) &&
-           EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(leftFromPlayer)) &&
-           EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(rightFromPlayer))      
-        ) {
-           return false; 
+        for (Position pos: player.getPosition().getCardinallyAdjacentPositions()) {
+            if (!EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(pos))) {
+                return true;
+            }
         }
-        return true;
+        return false;
     }
 }

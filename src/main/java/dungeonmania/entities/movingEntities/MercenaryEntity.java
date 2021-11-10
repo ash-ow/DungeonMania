@@ -119,10 +119,6 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
             setPosition(player.getPreviousPosition());
         } else if (!player.isInvisible()){
             this.move(moveBehaviour.getBehaviourDirection(entitiesControl, player, position));
-            // if (!this.isInSamePositionAs(player)) {
-            //     Position newPos = findPath(this.position, player.getPosition(), entitiesControl).get(1);
-            //     this.setPosition(newPos);
-            // }
             if (this.isInSamePositionAs(player)) {
                 contactWithPlayer(entitiesControl, player);
             }

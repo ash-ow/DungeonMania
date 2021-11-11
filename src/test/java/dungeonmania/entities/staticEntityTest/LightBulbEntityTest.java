@@ -13,11 +13,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.IEntityTests;
+import dungeonmania.entities.Logic;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.staticEntities.LightBulbEntity;
 import dungeonmania.util.Direction;
+import dungeonmania.util.Position;
 
-public class LightBulbEntityTest {
+public class LightBulbEntityTest implements IEntityTests {
     @Test
     public void TestLightBulb_Any() {
         String lightBulbLogic = "";
@@ -93,7 +97,6 @@ public class LightBulbEntityTest {
     //     activeResults.put("xor", false);
     //     activeResults.put("not", false);
     //     activeResults.put("co_and", true);
-        
     //     assertTestCasesFor(lightBulbLogic, activeResults);
     // }
 
@@ -186,5 +189,12 @@ public class LightBulbEntityTest {
         JsonArray entitiesJson = new Gson().fromJson(entities, JsonObject.class).get("entities").getAsJsonArray();
         JsonObject goalsJson = new Gson().fromJson(goals, JsonObject.class).get("goal-condition").getAsJsonObject();
         return new Dungeon(entitiesJson, goalsJson, "Standard", "", "");
+    }
+
+    @Test
+    @Override
+    public void TestEntityResponseInfo() {
+        LightBulbEntity bulb = new LightBulbEntity(Logic.ANY);
+        assertEntityResponseInfoEquals(bulb, "light_bulb_off-0-0-0", EntityTypes.LIGHT_BULB_OFF, new Position(0,0,0), false);
     }
 }

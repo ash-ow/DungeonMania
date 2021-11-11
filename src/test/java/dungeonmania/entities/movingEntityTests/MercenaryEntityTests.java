@@ -135,7 +135,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
     }
     
     @Test
-    public void TestMercenaryBribeTreasure() {
+    public void TestBribeMercenaryWithTreasure() {
         CharacterEntity player = new CharacterEntity(0, 5);
         MercenaryEntity mercenary = new MercenaryEntity(0, 4);
         TreasureEntity treasure = new TreasureEntity();
@@ -153,7 +153,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
     }
 
     @Test
-    public void TestMercenaryBribeStone() {
+    public void TestBribeMercenaryWithStone() {
         CharacterEntity player = new CharacterEntity(0, 5);
         MercenaryEntity mercenary = new MercenaryEntity(0, 4);
         SunStoneEntity sun_stone = new SunStoneEntity();

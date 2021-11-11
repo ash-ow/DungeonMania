@@ -48,12 +48,23 @@ public class DoorEntity extends Entity implements IBlocker {
             .orElse(null);
     }
 
-    private boolean getStoneFromInventory(CharacterEntity player) {
+    private SunStoneEntity getStoneFromInventory(CharacterEntity player) {
+        return player
+            .getInventory()
+            .stream()
+            .filter(e -> e.getType().equals(EntityTypes.SUN_STONE))
+            .map(SunStoneEntity.class::cast)
+            .findFirst()
+            .orElse(null);
+    }
+
+    /*private boolean getStoneFromInventory(CharacterEntity player) {
         return player
             .getInventory()
             .stream()
             .anyMatch(e -> e.getType().equals(EntityTypes.SUN_STONE));
     }
+    */
 
     private void tryUnlockWithKey(KeyEntity key, CharacterEntity player) {
         if (key != null) {
@@ -81,8 +92,7 @@ public class DoorEntity extends Entity implements IBlocker {
                 this.key = getKeyFromInventory(player, this.keyNumber);
                 this.tryUnlockWithKey(key, player);
             }
-            else if (player.containedInInventory(EntityTypes.SUN_STONE))
-            {
+            else if (player.containedInInventory(EntityTypes.SUN_STONE)){
                 this.sun_stone = getStoneFromInventory(player);
                 this.tryUnlockWithStone(sun_stone, player); 
             }

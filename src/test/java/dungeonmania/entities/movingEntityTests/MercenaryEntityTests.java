@@ -301,4 +301,20 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         dungeon.tick(Direction.DOWN);
         assertEquals(merc.getPosition(), new Position(1, 3));
     }
+
+    @Test
+    public void TestPlayerIsInSwamp() {
+        ArrayList<IEntity> entities = new ArrayList<>();
+
+        // mercenary will try to move down to follow the player, and must go through the swamp tile as that will be the shortest path
+        MercenaryEntity merc = new MercenaryEntity();
+        entities.add(merc);
+        SwampEntity swamp = new SwampEntity(0, 1);
+        entities.add(swamp);
+        CharacterEntity player = new CharacterEntity(0, 1);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+
+        dungeon.tick(Direction.NONE);
+        assertFalse(entities.contains(merc));
+    }
 }

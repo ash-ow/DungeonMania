@@ -7,9 +7,9 @@ import dungeonmania.response.models.*;
 import dungeonmania.util.Position;
 
 public abstract class Entity implements IEntity {
-    protected transient Position position;
-    protected transient String id;
-    protected transient EntityTypes type;
+    protected Position position;
+    protected String id;
+    protected EntityTypes type;
     
     /**
      * Entity constructor

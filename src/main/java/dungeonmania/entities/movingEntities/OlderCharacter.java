@@ -46,6 +46,7 @@ public class OlderCharacter extends CharacterEntity implements IAutoMovingEntity
                     super.useItem(itemID, entitiesControl);
                 } catch (InvalidActionException e) {
                     entitiesControl.removeEntity(this);
+                    throw new InvalidActionException("You broke the space time continuum");
                 }
             } else {
                 super.move(dir, entitiesControl);
@@ -57,9 +58,16 @@ public class OlderCharacter extends CharacterEntity implements IAutoMovingEntity
         }
     }
 
+    /**
+     * This class is auto moving but never changes its move behaviour
+     */
     @Override
     public void setMoveBehaviour(IMovingBehaviour newBehaviour) {}
 
+    /**
+     * Picks up all the collectable under entity feet when it is spawned in
+     * @param entitiesControl
+     */
     public void pickupAllCollectables(EntitiesControl entitiesControl) {
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(this.position);
         List<CollectableEntity> collectables = EntitiesControl.getEntitiesOfType(targetEntities, CollectableEntity.class);

@@ -1,10 +1,7 @@
 package dungeonmania.dungeon;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import javax.xml.stream.events.StartDocument;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -15,15 +12,8 @@ import dungeonmania.dungeon.goals.Goals;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractableEntity;
-import dungeonmania.entities.collectableEntities.KeyEntity;
-import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.OlderCharacter;
-import dungeonmania.entities.staticEntities.DoorEntity;
-import dungeonmania.entities.staticEntities.PortalEntity;
-import dungeonmania.entities.staticEntities.TimeTravelPortal;
-import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
@@ -118,8 +108,6 @@ public class Dungeon {
             DungeonEntityJsonObject dungeonEntityJsonInfo = new DungeonEntityJsonObject(entityObj);            
             if (dungeonEntityJsonInfo.getType().equals(EntityTypes.PLAYER)) {
                 this.player = new CharacterEntity(dungeonEntityJsonInfo.getX(), dungeonEntityJsonInfo.getY(), this.gameMode);
-            } else if (dungeonEntityJsonInfo.getType().equals(EntityTypes.OLDER_PLAYER)) {
-                this.entitiesControl.createNewEntityOnMap(new OlderCharacter(dungeonEntityJsonInfo, gameMode, ticks)); // TODO fix the older character to initialize with correct ticks
             } else {
                 this.entitiesControl.createEntity(dungeonEntityJsonInfo, this.gameMode);
             }
@@ -257,6 +245,10 @@ public class Dungeon {
         JsonObject finalObject = new JsonObject();              
         JsonArray entities = saveEntities();       
         entities.add(player.buildJson());
+        IEntity olderChar = entitiesControl.getFirstEntityOfType(OlderCharacter.class);
+        if (olderChar != null) {
+            entities.add(olderChar.buildJson());
+        }
         finalObject.add("entities", entities);
         finalObject.add("goal-condition", initalGoals);
         finalObject.addProperty("dungeonName", dungeonName);
@@ -287,13 +279,7 @@ public class Dungeon {
     }
 
     public DungeonResponse timeTravel(int ticksRewind) {
-        int index = gameStates.size() - ticksRewind - 1;
-        int start;
-        if (index < 0) {
-            start = 0;
-        } else {
-            start = index;
-        }
+        int start = Math.max(0, gameStates.size() - ticksRewind - 1);
         this.entitiesControl = new EntitiesControl();
         JsonObject obj = gameStates.get(start);
         initializeEntities(obj.getAsJsonArray("entities"));

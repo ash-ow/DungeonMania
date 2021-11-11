@@ -34,10 +34,7 @@ public class TimeTurnerTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestUseCollectable() {
-        CharacterEntity player = new CharacterEntity(0, 0);
-        TimeTurnerEntity timeTurner = new TimeTurnerEntity(0,0);
-        timeTurner.used(player);
-        assertTrue(player.IsTimeTravelling());
+        // Time Turner never used
     }
 
 }

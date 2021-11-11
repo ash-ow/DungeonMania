@@ -48,24 +48,13 @@ public class DoorEntity extends Entity implements IBlocker {
             .orElse(null);
     }
 
-    private SunStoneEntity getStoneFromInventory(CharacterEntity player) {
-        return player
-            .getInventory()
-            .stream()
-            .filter(e -> e.getType().equals(EntityTypes.SUN_STONE))
-            .map(SunStoneEntity.class::cast)
-            .findFirst()
-            .orElse(null);
-    }
-
-    /*private boolean getStoneFromInventory(CharacterEntity player) {
+    private boolean getStoneFromInventory(CharacterEntity player) {
         return player
             .getInventory()
             .stream()
             .anyMatch(e -> e.getType().equals(EntityTypes.SUN_STONE));
     }
-    */
-
+    
     private void tryUnlockWithKey(KeyEntity key, CharacterEntity player) {
         if (key != null) {
             key.used(player);
@@ -74,10 +63,8 @@ public class DoorEntity extends Entity implements IBlocker {
     }
 
     private void tryUnlockWithStone(SunStoneEntity sun_stone, CharacterEntity player) {
-        if (sun_stone != null) {
             this.isLocked = false;
         }
-    }
 
     @Override
     public boolean isBlocking() {
@@ -88,12 +75,12 @@ public class DoorEntity extends Entity implements IBlocker {
     public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
         if (ent instanceof CharacterEntity) {
             CharacterEntity player = (CharacterEntity) ent;
+            boolean stoneInInventory = getStoneFromInventory(player);
             if (player.containedInInventory(EntityTypes.KEY)){
                 this.key = getKeyFromInventory(player, this.keyNumber);
                 this.tryUnlockWithKey(key, player);
             }
-            else if (player.containedInInventory(EntityTypes.SUN_STONE)){
-                this.sun_stone = getStoneFromInventory(player);
+            else if (stoneInInventory){
                 this.tryUnlockWithStone(sun_stone, player); 
             }
         }

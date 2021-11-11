@@ -10,12 +10,16 @@ import dungeonmania.util.Position;
 
 public class WireEntity extends Entity {
 
-    public WireEntity(int x, int y, EntityTypes type) {
-        super(x, y, type);
+    public WireEntity() {
+        this(0, 0);
+    }
+
+    public WireEntity(int x, int y) {
+        super(x, y, EntityTypes.WIRE);
     }
 
 	public WireEntity(DungeonEntityJsonObject jsonInfo) {
-        this(jsonInfo.getX(), jsonInfo.getY(), EntityTypes.WIRE);
+        this(jsonInfo.getX(), jsonInfo.getY());
 	}
 
     /**
@@ -33,5 +37,4 @@ public class WireEntity extends Entity {
         // if Switch (which must happen eventually) then return the switch
         return new ArrayList<SwitchEntity>();
     }
-
 }

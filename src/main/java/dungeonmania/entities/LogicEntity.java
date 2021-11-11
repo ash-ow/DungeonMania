@@ -4,6 +4,7 @@ import java.util.List;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.staticEntities.SwitchEntity;
+import dungeonmania.entities.staticEntities.WireEntity;
 
 public abstract class LogicEntity extends Entity implements ITicker {
 
@@ -16,9 +17,7 @@ public abstract class LogicEntity extends Entity implements ITicker {
 
     @Override
     public void tick(EntitiesControl entitiesControl) {
-        List<IEntity> adjacentEntities = entitiesControl.getAllAdjacentEntities(this.getPosition());
-        List<SwitchEntity> adjacentSwitches = EntitiesControl.getEntitiesOfType(adjacentEntities, SwitchEntity.class);
-        
+        List<SwitchEntity> adjacentSwitches = getAdjacentSwitches(entitiesControl);
         if (getLogicFromSwitches(adjacentSwitches)) {
             this.activate();
         } else {
@@ -26,6 +25,16 @@ public abstract class LogicEntity extends Entity implements ITicker {
         }
     }
     
+    public List<SwitchEntity> getAdjacentSwitches(EntitiesControl entitiesControl) {
+        List<IEntity> adjacentEntities = entitiesControl.getAllAdjacentEntities(this.getPosition());
+        List<WireEntity> adjacentWires = EntitiesControl.getEntitiesOfType(adjacentEntities, WireEntity.class);
+        List<SwitchEntity> adjacentSwitches = EntitiesControl.getEntitiesOfType(adjacentEntities, SwitchEntity.class);
+        for (WireEntity wire: adjacentWires) {
+            adjacentSwitches.addAll(wire.followWire(this.position));
+        }
+        return adjacentSwitches;
+    }
+
     protected abstract void activate();
     protected abstract void deactivate();
 

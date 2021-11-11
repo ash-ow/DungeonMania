@@ -17,6 +17,7 @@ public interface ITicker {
      * @return                 true if there are adjacent switches which are active and false otherwise
      */
     public default boolean containsActiveSwitch(List<IEntity> entities) {
+        // TODO get this out of here when you make the Bomb a LogicEntity
         return EntitiesControl
         .getEntitiesOfType(entities, SwitchEntity.class)
         .stream()

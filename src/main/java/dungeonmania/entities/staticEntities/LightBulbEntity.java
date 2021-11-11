@@ -1,11 +1,11 @@
 package dungeonmania.entities.staticEntities;
 
-
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.Logic;
 import dungeonmania.entities.LogicEntity;
+import dungeonmania.util.DungeonEntityJsonObject;
 
 public class LightBulbEntity extends LogicEntity {
     public LightBulbEntity(Logic logic) {
@@ -14,6 +14,11 @@ public class LightBulbEntity extends LogicEntity {
     
     public LightBulbEntity(int x, int y, Logic logic) {
         super(x, y, logic, EntityTypes.LIGHT_BULB_OFF);
+    }
+
+    public LightBulbEntity(DungeonEntityJsonObject info) {
+        // TODO get rid of this when you get rid of DungeonEntityJsonObject class
+        this(info.entityObj);
     }
 
     public LightBulbEntity(JsonObject info) {

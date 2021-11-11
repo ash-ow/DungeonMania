@@ -162,13 +162,13 @@ public class LightBulbEntityTest {
         */
         
         if (!logic.isBlank()) {
-            logic = ",\"logic\": \"" + logic;
+            logic = ",\"logic\": \"" + logic + "\"";
         }
         String entities = "{\"entities\": [" +
                 "{\"x\": 1,\"y\": 0,\"type\": \"switch\"}," + // S 0
 
                 "{\"x\": 0,\"y\": 1,\"type\": \"switch\"}," + // S 1
-                "{\"x\": 1,\"y\": 1,\"type\": \"light_bulb_off\"" + logic + "\"}," + // B 2
+                "{\"x\": 1,\"y\": 1,\"type\": \"light_bulb_off\"" + logic + "}," + // B 2
                 "{\"x\": 2,\"y\": 1,\"type\": \"switch\"}," + // S 3
 
                 "{\"x\": 1,\"y\": 2,\"type\": \"switch\"}," + // S 4

@@ -26,9 +26,11 @@ public enum Logic {
     }
 
     public static Logic getLogicFromJsonObject(JsonObject jsonObject) {
-        // try {
+        try {
             return Logic.getLogic(jsonObject.get("logic").toString());
-        // } catch (Exception e) {return ANY;} // TODO change to catch exception where key doesnt exist
+        } catch (NullPointerException e) {
+            return ANY;
+        }
     }
 
     @Override

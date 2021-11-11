@@ -58,6 +58,7 @@ public class HydraEntityTests implements IMovingEntityTest, IBattlingEntityTest 
     @Override
     @Test
     public void TestDeath() {
+        // This also test anduril effectiveness, Hydra will die if character carries Anduril
         CharacterEntity character = new CharacterEntity();
         HydraEntity hydra = new HydraEntity();
         AndurilEntity anduril = new AndurilEntity();

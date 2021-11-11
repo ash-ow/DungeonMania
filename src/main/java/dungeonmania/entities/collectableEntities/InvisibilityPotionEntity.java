@@ -17,7 +17,6 @@ public class InvisibilityPotionEntity extends CollectableEntity {
      * Invisibility Potion constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public InvisibilityPotionEntity(int x, int y) {
         super(x, y, EntityTypes.INVISIBILITY_POTION);

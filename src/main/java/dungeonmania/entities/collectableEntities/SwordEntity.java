@@ -19,7 +19,6 @@ public class SwordEntity extends CollectableEntity implements IWeaponEntity {
      * Sword constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public SwordEntity(int x, int y) {
         super(x, y, EntityTypes.SWORD);

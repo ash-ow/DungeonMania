@@ -33,16 +33,16 @@ public abstract class LogicEntity extends Entity implements ITicker {
         switch (this.logic) {
             case ANY:
                 return switches.stream().anyMatch(SwitchEntity::isActive);
-            // case AND:
-            //     break;
-            // case OR:
-            //     break;
-            // case XOR:
-            //     break;
-            // case NOT:
-            //     break;
+            case AND:
+                return switches.stream().allMatch(SwitchEntity::isActive);
+            case OR:
+                return switches.stream().anyMatch(SwitchEntity::isActive);
+            case XOR:
+                return switches.stream().filter(SwitchEntity::isActive).count() == 1;
+            case NOT:
+                return switches.stream().noneMatch(SwitchEntity::isActive);
             // case CO_AND:
-            //     break;
+            //     return switches.stream().anyMatch(SwitchEntity::isActive);
             default:
                 return false;
         }

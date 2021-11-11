@@ -17,9 +17,9 @@ public enum Logic {
     }
 
     public static Logic getLogic(String logic) {
-        for (Logic entityType : Logic.values()) { 
-            if (logic.equals(entityType.toString())) {
-                return entityType;
+        for (Logic l : Logic.values()) { 
+            if (logic.equals(l.toString())) {
+                return l;
             }
         }
         return null;
@@ -27,7 +27,7 @@ public enum Logic {
 
     public static Logic getLogicFromJsonObject(JsonObject jsonObject) {
         try {
-            return Logic.getLogic(jsonObject.get("logic").toString());
+            return Logic.getLogic(jsonObject.get("logic").toString().replace("\"", ""));
         } catch (NullPointerException e) {
             return ANY;
         }

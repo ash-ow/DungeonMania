@@ -110,8 +110,13 @@ public class LightBulbEntityTest {
     }
 
     private void assertBulbActivity(Boolean isActiveExpected, LightBulbEntity bulb, String lightBulbLogic, String testCaseLogic) {
-        String not = isActiveExpected ? "" : "not ";
-        assertEquals(isActiveExpected, bulb.isActive(), lightBulbLogic + " light bulb should " + not + "be active on \"" + testCaseLogic + "\" case");
+        System.out.println(
+            "Logic = \"" + lightBulbLogic + "\"" + " | " +
+            "Test Case = \"" + testCaseLogic + "\"" + " | " +
+            "Expected = \"" + isActiveExpected + "\"" + " | " +
+            "Actual = \"" + bulb.isActive() + "\""
+        );
+        assertEquals(isActiveExpected, bulb.isActive());
     }
 
     private void getCase(String testCaseLogic, Dungeon dungeon) {

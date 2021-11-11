@@ -17,7 +17,6 @@ public class InvincibilityPotionEntity extends CollectableEntity {
      * Invincibility Potion constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public InvincibilityPotionEntity(int x, int y) {
         super(x, y, EntityTypes.INVINCIBILITY_POTION);

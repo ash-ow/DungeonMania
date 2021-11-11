@@ -307,6 +307,14 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
                     } 
                 }
                 break;
+            case MIDNIGHT_ARMOUR:
+                MidnightArmourEntity midnightArmour = new MidnightArmourEntity();
+                if (midnightArmour.isBuildable(this.inventory)) {
+                    this.addEntityToInventory(midnightArmour);
+                    removeBuildMaterials(EntityTypes.SUN_STONE, 1);
+                    removeBuildMaterials(EntityTypes.ARMOUR, 1);
+                }
+                break;
             default:
                 throw new InvalidActionException(itemToBuild.toString());
         }

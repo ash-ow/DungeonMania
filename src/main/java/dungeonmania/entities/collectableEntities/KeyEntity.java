@@ -21,7 +21,6 @@ public class KeyEntity extends CollectableEntity {
      * Key constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map
      * @param keyNumber denotes which door the key should open 
      */
     public KeyEntity(int x, int y, int keyNumber) {

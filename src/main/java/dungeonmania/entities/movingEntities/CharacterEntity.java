@@ -44,7 +44,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * Character constructor
      * @param x     x-coordinate on the map
      * @param y     y-coordinate on the map
-     * @param layer layer on the map 
      */
     public CharacterEntity(int x, int y) {
         this(x, y, GameModeType.STANDARD);
@@ -54,7 +53,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * Character constructor
      * @param x          x-coordinate on the map
      * @param y          y-coordinate on the map
-     * @param layer      layer on the map
      * @param gameMode   denotes the difficulty settings of the game 
      */
     public CharacterEntity(int x, int y, GameModeType gameMode) {
@@ -299,6 +297,14 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
                     } else if (this.containedInInventory(EntityTypes.ARROW)) {
                         removeBuildMaterials(EntityTypes.ARROW, 1);
                     } 
+                }
+                break;
+            case MIDNIGHT_ARMOUR:
+                MidnightArmourEntity midnightArmour = new MidnightArmourEntity();
+                if (midnightArmour.isBuildable(this.inventory)) {
+                    this.addEntityToInventory(midnightArmour);
+                    removeBuildMaterials(EntityTypes.SUN_STONE, 1);
+                    removeBuildMaterials(EntityTypes.ARMOUR, 1);
                 }
                 break;
             default:

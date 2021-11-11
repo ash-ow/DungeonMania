@@ -12,7 +12,6 @@ public abstract class Entity implements IEntity {
      * Entity constructor
      * @param x      x-coordinate on the map
      * @param y      y-coordinate on the map
-     * @param layer  layer on the map
      * @param type   type of entity 
      */
     protected Entity(int x, int y, EntityTypes type) {

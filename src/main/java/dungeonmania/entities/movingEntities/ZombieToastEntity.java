@@ -27,7 +27,6 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
      * Zombie Toast constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public ZombieToastEntity(int x, int y) {
         super(x, y, EntityTypes.ZOMBIE_TOAST);
@@ -52,7 +51,6 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
      * Zombie Toast constructor
      * @param x                        x-coordinate on the map
      * @param y                        y-coordinate on the map
-     * @param layer                    layer on the map 
      * @param ArmourEntityProbability  determines the proability that an armour will be dropped
      * @param seed                     used to calculate probability
      */

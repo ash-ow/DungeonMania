@@ -75,7 +75,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         entitiesControl.addEntity(wall);
         entitiesControl.addEntity(wall2);
         mercenary.move(entitiesControl, player);
-        assertEquals(new Position(5, 5), mercenary.getPosition());
+        assertEquals(new Position(5, 6), mercenary.getPosition());
     }
 
     @Override
@@ -210,5 +210,61 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         mercenary.dropEntities(player, 1f);
         List<CollectableEntity> inventory = player.getInventory();
         assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
+    }
+
+    @Test
+    public void TestBestMove() {
+        EntitiesControl entitiesControl = new EntitiesControl();
+        CharacterEntity player = new CharacterEntity(11, 7);
+        MercenaryEntity mercenary = new MercenaryEntity(11, 5);
+        WallEntity wall1 = new WallEntity(11, 6);
+        WallEntity wall2 = new WallEntity(12, 6);
+        WallEntity wall3 = new WallEntity(10, 6);
+        WallEntity wall4 = new WallEntity(10, 5);
+        WallEntity wall5 = new WallEntity(10, 4);
+        WallEntity wall6 = new WallEntity(10, 3);
+        
+        entitiesControl.addEntity(player);
+        entitiesControl.addEntity(mercenary);
+        entitiesControl.addEntity(wall1);
+        entitiesControl.addEntity(wall2);
+        entitiesControl.addEntity(wall3);
+        entitiesControl.addEntity(wall4);
+        entitiesControl.addEntity(wall5);
+        entitiesControl.addEntity(wall6);
+
+        
+        player.move(Direction.LEFT);
+        mercenary.move(entitiesControl, player);
+        assertEquals(new Position(12, 5), mercenary.getPosition());
+
+        player.move(Direction.LEFT);
+        mercenary.move(entitiesControl, player);
+        assertEquals(new Position(13, 5), mercenary.getPosition());
+
+        player.move(Direction.UP);
+        mercenary.move(entitiesControl, player);
+        assertEquals(new Position(13, 6), mercenary.getPosition());
+    }
+
+    @Test
+    public void TestNoBestMove() {
+        EntitiesControl entitiesControl = new EntitiesControl();
+        CharacterEntity player = new CharacterEntity(11, 7);
+        MercenaryEntity mercenary = new MercenaryEntity(11, 5);
+        WallEntity wall1 = new WallEntity(11, 6);
+        WallEntity wall2 = new WallEntity(11, 8);
+        WallEntity wall3 = new WallEntity(10, 7);
+        WallEntity wall4 = new WallEntity(12, 7);
+        
+        entitiesControl.addEntity(player);
+        entitiesControl.addEntity(mercenary);
+        entitiesControl.addEntity(wall1);
+        entitiesControl.addEntity(wall2);
+        entitiesControl.addEntity(wall3);
+        entitiesControl.addEntity(wall4);
+
+        mercenary.move(entitiesControl, player);
+        assertEquals(new Position(11, 5), mercenary.getPosition());
     }
 }

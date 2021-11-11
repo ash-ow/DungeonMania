@@ -16,6 +16,7 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractableEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
+import dungeonmania.entities.collectableEntities.ITreasure;
 import dungeonmania.entities.collectableEntities.SunStoneEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.FollowPlayer;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
@@ -134,7 +135,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     public boolean interactWith(CharacterEntity player) throws InvalidActionException {
         IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);
         IEntity sunStoneFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), SunStoneEntity.class);
-        if (treasureFound == null && sunStoneFound == null ) {
+        if (treasureFound == null && sunStoneFound == null) {
             throw new InvalidActionException("Player has no treasure/sunstone");
         }
         if (!isInRange(player)) {

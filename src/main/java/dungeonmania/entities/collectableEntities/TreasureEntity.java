@@ -1,6 +1,5 @@
 package dungeonmania.entities.collectableEntities;
 
-import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.util.DungeonEntityJsonObject;
 
@@ -18,10 +17,15 @@ public class TreasureEntity extends CollectableEntity {
      * @param y y-coordinate on the map
      */
     public TreasureEntity(int x, int y) {
-        super(x, y, EntityTypes.TREASURE);
+        this(x, y, EntityTypes.TREASURE);
     }
 
     public TreasureEntity(DungeonEntityJsonObject info) {
         this(info.getX(), info.getY());
     }
+
+    public TreasureEntity(int x, int y, EntityTypes type) {
+        super(x, y, type);
+    }
+
 }

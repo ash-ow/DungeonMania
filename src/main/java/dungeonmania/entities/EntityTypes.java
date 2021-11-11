@@ -17,6 +17,7 @@ public enum EntityTypes {
     ZOMBIE_TOAST("zombie_toast"),    
     MERCENARY("mercenary"),
     ASSASSIN("assassin"),
+    HYDRA("hydra"),
     
     // Collectable Entities
     TREASURE("treasure"),    

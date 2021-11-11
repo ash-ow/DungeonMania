@@ -43,7 +43,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         MercenaryEntity mercenary = new MercenaryEntity(0, 0, 0);
         ArrayList<IEntity> entities = new ArrayList<IEntity>();
         entities.add(mercenary);
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         for (int i = 0; i < 30; i++) {
             dungeon.tick(Direction.DOWN);
         }
@@ -139,7 +139,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(mercenary);        
         player.addEntityToInventory(treasure); 
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         dungeon.interact(mercenary.getId());
         assertTrue(mercenary.isBribed());
         dungeon.tick(Direction.UP);
@@ -169,7 +169,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
     public void doesntRunAway() {
         EntitiesControl entitiesControl = new EntitiesControl();
         InvincibilityPotionEntity potion = new InvincibilityPotionEntity();       
-        CharacterEntity player = new CharacterEntity(5, 0, 0, "Hard");
+        CharacterEntity player = new CharacterEntity(5, 0, 0, "hard");
         MercenaryEntity mercenary = new MercenaryEntity(0, 0, 0);
         entitiesControl.addEntity(mercenary);
         entitiesControl.addEntity(potion);

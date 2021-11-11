@@ -20,7 +20,7 @@ public class EntitiesControlTests {
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spawner);
 
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         assertEquals(0, dungeon.getAllEntitiesOfType(ZombieToastEntity.class).size());
 
         for (int i = 0; i < 20; i++) {

@@ -32,7 +32,7 @@ public class DestroyGoalTests implements IGoalTests {
         SpiderEntity spider = new SpiderEntity(0, 2, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spider);
-        Dungeon dungeon = new Dungeon(entities, "Standard", player, j);
+        Dungeon dungeon = new Dungeon(entities, "standard", player, j);
         assertEquals(":mercenary", dungeon.getGoals());
         dungeon.entitiesControl.removeEntity(spider);
         assertEquals("", dungeon.getGoals());

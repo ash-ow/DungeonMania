@@ -14,14 +14,14 @@ public class DungeonManiaControllerTests {
     @Test
     public void testCreateBoulders() {
         DungeonManiaController dungeonManiaController = new DungeonManiaController();
-        DungeonResponse d1 = dungeonManiaController.newGame("boulders", "Standard");
+        DungeonResponse d1 = dungeonManiaController.newGame("boulders", "standard");
         dungeonManiaController.tick(null, Direction.DOWN);
     }
 
     @Test
     public void testCreateAdvance() {
         DungeonManiaController dungeonManiaController = new DungeonManiaController();
-        DungeonResponse d1 = dungeonManiaController.newGame("advanced", "Standard");
+        DungeonResponse d1 = dungeonManiaController.newGame("advanced", "standard");
         dungeonManiaController.tick(null, Direction.DOWN);
     }
 
@@ -36,14 +36,14 @@ public class DungeonManiaControllerTests {
     public void testNewGameWrongName() {
         DungeonManiaController dungeonManiaController = new DungeonManiaController();
         assertThrows(IllegalArgumentException.class, 
-        () -> dungeonManiaController.newGame("fly", "Hard"), "dungeonName is not a dungeon that exists");
+        () -> dungeonManiaController.newGame("fly", "hard"), "dungeonName is not a dungeon that exists");
     }
 
     @Test
     public void testLoadGameWrongId() {
         DungeonManiaController dungeonManiaController = new DungeonManiaController();
 
-        dungeonManiaController.newGame("testExeptions", "Hard");
+        dungeonManiaController.newGame("testExeptions", "hard");
         dungeonManiaController.saveGame("test");
 
         assertThrows(IllegalArgumentException.class, 
@@ -54,7 +54,7 @@ public class DungeonManiaControllerTests {
     public void testBuildWrongId() {
         DungeonManiaController dungeonManiaController = new DungeonManiaController();
 
-        dungeonManiaController.newGame("testExeptions", "Hard");
+        dungeonManiaController.newGame("testExeptions", "hard");
         dungeonManiaController.saveGame("test");
 
         assertThrows(IllegalArgumentException.class, 
@@ -65,7 +65,7 @@ public class DungeonManiaControllerTests {
     public void testIllegalArgumentExceptionFail2() {
         DungeonManiaController dungeonManiaController = new DungeonManiaController();
 
-        dungeonManiaController.newGame("testExeptions", "Hard");
+        dungeonManiaController.newGame("testExeptions", "hard");
         dungeonManiaController.tick(null, Direction.DOWN);
 
         assertThrows(IllegalArgumentException.class, 
@@ -75,13 +75,13 @@ public class DungeonManiaControllerTests {
     @Test
     public void testIllegalArgumentExceptionPass() {
         DungeonManiaController dungeonManiaController = new DungeonManiaController();
-        assertDoesNotThrow(() -> dungeonManiaController.newGame("maze", "Hard"));
+        assertDoesNotThrow(() -> dungeonManiaController.newGame("maze", "hard"));
     }
 
     @Test
     public void testInvalidActionExceptionFail() {
         DungeonManiaController dungeonManiaController = new DungeonManiaController();
-        dungeonManiaController.newGame("testExeptions", "Standard");
+        dungeonManiaController.newGame("testExeptions", "standard");
         dungeonManiaController.tick(null, Direction.DOWN);
         assertThrows(InvalidActionException.class,
         () -> dungeonManiaController.tick("health_potion", Direction.DOWN));
@@ -92,7 +92,7 @@ public class DungeonManiaControllerTests {
     @Test
     public void testInvalidActionExceptionPass() {
         DungeonManiaController dungeonManiaController = new DungeonManiaController();
-        dungeonManiaController.newGame("testExeptions", "Standard");
+        dungeonManiaController.newGame("testExeptions", "standard");
         dungeonManiaController.tick(null, Direction.DOWN);
         assertDoesNotThrow(() -> dungeonManiaController.tick("0", Direction.DOWN));
         assertDoesNotThrow(() -> dungeonManiaController.build("bow"));

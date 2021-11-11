@@ -42,7 +42,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param layer layer on the map 
      */
     public CharacterEntity(int x, int y, int layer) {
-        this(x, y, layer, "Standard");
+        this(x, y, layer, "standard");
     }
     
     /**

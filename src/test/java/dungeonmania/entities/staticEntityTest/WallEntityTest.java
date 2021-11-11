@@ -38,7 +38,7 @@ public class WallEntityTest implements IEntityTests, IBlockerTest {
         WallEntity wall = new WallEntity(0, 1, 0);
         entities.add(wall);
 
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         dungeon.tick(Direction.DOWN);
         assertEquals(player.getPosition(), new Position(0, 0));
     }

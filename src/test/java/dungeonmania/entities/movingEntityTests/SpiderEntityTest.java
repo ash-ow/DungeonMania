@@ -88,7 +88,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         entities.add(wall2);
         entities.add(wall3);
 
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         dungeon.tick(Direction.UP);
         assertEquals(new Position(0, 3), spider.getPosition());
         dungeon.tick(Direction.UP);

@@ -29,9 +29,9 @@ public class EntitiesControl {
     private Position playerStartPosition = new Position(0, 0);
     static {
         difficulty = new HashMap<>();
-        difficulty.put("Hard", 20.0/15.0);
-        difficulty.put("Peaceful", 15.0/20.0);
-        difficulty.put("Standard", 1.0);
+        difficulty.put("hard", 20.0/15.0);
+        difficulty.put("peaceful", 15.0/20.0);
+        difficulty.put("standard", 1.0);
     }
     public final static List<EntityTypes> usableItems;
     static {

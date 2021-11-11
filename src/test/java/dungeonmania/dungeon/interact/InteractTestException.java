@@ -26,7 +26,7 @@ public class InteractTestException {
         SpiderEntity spider = new SpiderEntity(0, 4, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spider);        
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         assertThrows(IllegalArgumentException.class, () -> {dungeon.interact("random-id");});
     }
 
@@ -36,7 +36,7 @@ public class InteractTestException {
         SpiderEntity spider = new SpiderEntity(0, 4, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spider);        
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         assertThrows(IllegalArgumentException.class, () -> {dungeon.interact(spider.getId());});
     }
 
@@ -46,7 +46,7 @@ public class InteractTestException {
         MercenaryEntity mercenary = new MercenaryEntity(0, 4, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(mercenary);        
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         assertThrows(InvalidActionException.class, () -> {dungeon.interact(mercenary.getId());});
     }
 
@@ -57,7 +57,7 @@ public class InteractTestException {
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(mercenary);        
         player.addEntityToInventory(new TreasureEntity()); 
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         assertThrows(InvalidActionException.class, () -> {dungeon.interact(mercenary.getId());});
     }
 
@@ -69,7 +69,7 @@ public class InteractTestException {
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(mercenary);        
         player.addEntityToInventory(treasure); 
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         assertDoesNotThrow(() -> {dungeon.interact(mercenary.getId());});
         assertTrue(mercenary.isBribed());
         assertFalse(player.getInventory().contains(treasure));
@@ -82,7 +82,7 @@ public class InteractTestException {
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spawner);        
         player.addEntityToInventory(new SwordEntity());
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         assertThrows(InvalidActionException.class, () -> {dungeon.interact(spawner.getId());});
     }
 
@@ -92,7 +92,7 @@ public class InteractTestException {
         ZombieToastSpawnerEntity spawner = new ZombieToastSpawnerEntity(0, 4, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spawner);        
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         assertThrows(InvalidActionException.class, () -> {dungeon.interact(spawner.getId());});
     }
 
@@ -103,7 +103,7 @@ public class InteractTestException {
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spawner);    
         player.addEntityToInventory(new SwordEntity());    
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         assertDoesNotThrow(() -> {dungeon.interact(spawner.getId());});
     }
 }

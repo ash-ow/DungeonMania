@@ -54,7 +54,7 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         entities.add(wall);
         String jsonGoals = "{ \"goal\": \"exit\"}";
         JsonObject j = new Gson().fromJson(jsonGoals, JsonObject.class);
-        Dungeon dungeon = new Dungeon(entities, "Standard", player, j);
+        Dungeon dungeon = new Dungeon(entities, "standard", player, j);
         assertEquals(player.getPosition(), new Position(0, 4));
         dungeon.tick(Direction.UP);
         assertEquals(player.getPosition(), new Position(0, 4));

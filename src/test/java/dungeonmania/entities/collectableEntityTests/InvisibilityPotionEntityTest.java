@@ -99,7 +99,7 @@ public class  InvisibilityPotionEntityTest implements ICollectableEntityTest {
         ArrayList<IEntity> entities = new ArrayList<>();
         InvisibilityPotionEntity invisibility_potion = new InvisibilityPotionEntity(0,1,0);
         CharacterEntity player = new CharacterEntity(0, 0, 0);
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         entities.add(invisibility_potion);
         
         dungeon.tick(Direction.DOWN);

@@ -52,10 +52,11 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse newGame(String dungeonName, String gameMode) throws IllegalArgumentException {
+        String gameModeUsed = gameMode.toLowerCase();
         if (!dungeons().contains(dungeonName)) {
             throw new IllegalArgumentException("dungeonName does not exist");
         }
-        if (!getGameModes().contains(gameMode)) {
+        if (!getGameModes().contains(gameModeUsed)) {
             throw new IllegalArgumentException("invalid gameMode");
         }
         try {
@@ -63,8 +64,7 @@ public class DungeonManiaController {
             JsonObject jsonObject = new Gson().fromJson(dungeonJson, JsonObject.class);
             String id = UUID.randomUUID().toString(); 
             JsonObject goalCondition = jsonObject.getAsJsonObject("goal-condition");
-            this.dungeon = new Dungeon(jsonObject.get("entities").getAsJsonArray(), goalCondition , gameMode, id, dungeonName);           
-            
+            this.dungeon = new Dungeon(jsonObject.get("entities").getAsJsonArray(), goalCondition , gameModeUsed, id, dungeonName);           
         } catch (IOException e) {
         }
         return dungeon.getInfo();
@@ -80,7 +80,7 @@ public class DungeonManiaController {
             throw new IllegalArgumentException("game doesn't exist");
         }
         try {
-            Reader reader = Files.newBufferedReader(Paths.get(name + ".json"));
+            Reader reader = Files.newBufferedReader(Paths.get("savedGames/" + name + ".json"));
             JsonObject jsonObject = new Gson().fromJson(reader, JsonObject.class);
             String id = UUID.randomUUID().toString(); 
             JsonObject goalCondition = jsonObject.getAsJsonObject("goal-condition");

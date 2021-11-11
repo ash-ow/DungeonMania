@@ -49,7 +49,7 @@ public class HealthPotionEntityTest implements ICollectableEntityTest {
         CharacterEntity player = new CharacterEntity(0, 0, 0);
         HealthPotionEntity health_potion = new HealthPotionEntity(0,1,0);
         entities.add(health_potion);
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         
         dungeon.tick(Direction.DOWN);
         assertItemInInventory("health_potion-0-1-0", player, dungeon.entitiesControl);
@@ -91,7 +91,7 @@ public class HealthPotionEntityTest implements ICollectableEntityTest {
         entities.add(spider);
         entities.add(invisibility_potion);
 
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         
         player.setHealth(40);
         invisibility_potion.used(player);

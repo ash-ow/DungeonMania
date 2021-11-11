@@ -110,7 +110,7 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         String goals = "{\"goal-condition\": {\"goal\": \"exit\"}}";
         JsonArray entitiesJson = new Gson().fromJson(entities, JsonObject.class).get("entities").getAsJsonArray();
         JsonObject goalsJson = new Gson().fromJson(goals, JsonObject.class).get("goal-condition").getAsJsonObject();
-        return new Dungeon(entitiesJson, goalsJson, "Standard", "", "");
+        return new Dungeon(entitiesJson, goalsJson, "standard", "", "");
     }
 
     @Override

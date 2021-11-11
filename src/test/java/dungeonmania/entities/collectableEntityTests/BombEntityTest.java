@@ -38,7 +38,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
         CharacterEntity player = new CharacterEntity(0, 0, 0);
         BombEntity bomb = new BombEntity(0, 1, 0);
         entities.add(bomb);
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
 
         dungeon.tick(Direction.DOWN);
         assertItemInInventory("bomb-0-1-0", player, dungeon.entitiesControl);
@@ -149,7 +149,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
         String goals = "{\"goal-condition\": {\"goal\": \"exit\"}}";
         JsonArray entitiesJson = new Gson().fromJson(entities, JsonObject.class).get("entities").getAsJsonArray();
         JsonObject goalsJson = new Gson().fromJson(goals, JsonObject.class).get("goal-condition").getAsJsonObject();
-        return new Dungeon(entitiesJson, goalsJson, "Standard", "", "");
+        return new Dungeon(entitiesJson, goalsJson, "standard", "", "");
     }
 
     // endregion
@@ -161,7 +161,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
         CharacterEntity player = new CharacterEntity(0, 0, 0);
         BombEntity bomb = new BombEntity(0, 1, 0);
         entities.add(bomb);
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
 
         dungeon.tick(Direction.DOWN);
         assertItemInInventory("bomb-0-1-0", player, dungeon.entitiesControl);

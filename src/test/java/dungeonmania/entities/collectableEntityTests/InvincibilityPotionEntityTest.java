@@ -45,7 +45,7 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
         CharacterEntity player = new CharacterEntity(0, 0, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(invincibility_potion);
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         
         dungeon.tick(Direction.DOWN);
         assertItemInInventory("invincibility_potion-0-1-0", player, dungeon.entitiesControl);
@@ -80,7 +80,7 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
         ArrayList<IEntity> entities = new ArrayList<>();
         InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0,1,0);
         CharacterEntity player = new CharacterEntity(0,0,0);
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
         entities.add(invincibility_potion);
         
         dungeon.tick(Direction.DOWN);

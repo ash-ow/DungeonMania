@@ -21,6 +21,7 @@ import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
+import dungeonmania.entities.staticEntities.SwampEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -246,5 +247,58 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
 
         mercenary.move(entitiesControl, player);
         assertEquals(new Position(11, 5), mercenary.getPosition());
+    }
+
+    @Test
+    public void TestBestMoveThroughSwamp() {
+        ArrayList<IEntity> entities = new ArrayList<>();
+
+        // mercenary will try to move down to follow the player, and must go through the swamp tile as that will be the shortest path
+        MercenaryEntity merc = new MercenaryEntity();
+        entities.add(merc);
+        SwampEntity swamp = new SwampEntity(0, 1);
+        entities.add(swamp);
+        WallEntity wall1 = new WallEntity(1,1);
+        entities.add(wall1);
+        WallEntity wall2 = new WallEntity(2,1);
+        entities.add(wall2);
+        CharacterEntity player = new CharacterEntity(0, 3);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+
+        // mercenary moves down into swamp and is stuck for 3 ticks
+        dungeon.tick(Direction.DOWN);
+        assertEquals(merc.getPosition(), new Position(0, 1));
+        dungeon.tick(Direction.DOWN);
+        assertEquals(merc.getPosition(), new Position(0, 1));
+        dungeon.tick(Direction.DOWN);
+        assertEquals(merc.getPosition(), new Position(0, 1));
+        
+        // mercenary is finally able to move down to follow the player
+        dungeon.tick(Direction.DOWN);
+        assertEquals(merc.getPosition(), new Position(0, 2));
+    }
+
+    @Test
+    public void TestBestMoveAroundSwamp() {
+        ArrayList<IEntity> entities = new ArrayList<>();
+
+        // mercenary will move around the swamp tiles as that will be the shortest path
+        MercenaryEntity merc = new MercenaryEntity();
+        entities.add(merc);
+        SwampEntity swamp1 = new SwampEntity(0, 1);
+        entities.add(swamp1);
+        SwampEntity swamp2 = new SwampEntity(0, 2);
+        entities.add(swamp2);
+        CharacterEntity player = new CharacterEntity(0, 3);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+
+        dungeon.tick(Direction.DOWN);
+        assertEquals(merc.getPosition(), new Position(1, 0));
+        dungeon.tick(Direction.DOWN);
+        assertEquals(merc.getPosition(), new Position(1, 1));
+        dungeon.tick(Direction.DOWN);
+        assertEquals(merc.getPosition(), new Position(1, 2));
+        dungeon.tick(Direction.DOWN);
+        assertEquals(merc.getPosition(), new Position(1, 3));
     }
 }

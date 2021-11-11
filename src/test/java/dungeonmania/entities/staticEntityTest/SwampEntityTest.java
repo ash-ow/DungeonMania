@@ -15,6 +15,7 @@ import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.staticEntities.SwampEntity;
+import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -48,14 +49,16 @@ public class SwampEntityTest implements IEntityTests {
     }
 
     @Test
-    public void TestMercenaryBlocked() {
+    public void TestMercenarySlowed() {
         ArrayList<IEntity> entities = new ArrayList<>();
 
-        // mercenary will try to move down to follow the player
+        // mercenary will try to move down to follow the player, and must go through the swamp tile as that will be the shortest path
         MercenaryEntity merc = new MercenaryEntity();
         entities.add(merc);
         SwampEntity swamp = new SwampEntity(0, 1);
         entities.add(swamp);
+        WallEntity wall = new WallEntity(1,1);
+        entities.add(wall);
         CharacterEntity player = new CharacterEntity(0, 3);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
 

@@ -25,7 +25,7 @@ public class SwampEntity extends Entity implements ITicker {
     }
 
     /** The maximum number of ticks a non-player entity must remain in the swamp */
-    int ticksRequiredToPass = 3;
+    public int ticksRequiredToPass = 3;
     /** 
      * @key the entity
      * @value the number of ticks they must still remain in the swamp

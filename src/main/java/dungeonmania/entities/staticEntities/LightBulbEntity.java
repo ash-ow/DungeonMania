@@ -1,35 +1,37 @@
 package dungeonmania.entities.staticEntities;
 
-import java.util.List;
 
-import dungeonmania.dungeon.EntitiesControl;
-import dungeonmania.entities.Entity;
+import com.google.gson.JsonObject;
+
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.IEntity;
-import dungeonmania.entities.ITicker;
-import dungeonmania.util.DungeonEntityJsonObject;
+import dungeonmania.entities.Logic;
+import dungeonmania.entities.LogicEntity;
 
-public class LightBulbEntity extends Entity implements ITicker {
-    public LightBulbEntity() {
-        this(0, 0);
+public class LightBulbEntity extends LogicEntity {
+    public LightBulbEntity(Logic logic) {
+        this(0, 0, logic);
     }
     
-    public LightBulbEntity(int x, int y) {
-        super(x, y, EntityTypes.LIGHT_BULB_OFF);
+    public LightBulbEntity(int x, int y, Logic logic) {
+        super(x, y, logic, EntityTypes.LIGHT_BULB_OFF);
     }
 
-    public LightBulbEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public LightBulbEntity(JsonObject info) {
+        this(
+            info.get("x").getAsInt(),
+            info.get("y").getAsInt(),
+            Logic.getLogicFromJsonObject(info)
+        );
     }
 
     @Override
-    public void tick(EntitiesControl entitiesControl) {
-        List<IEntity> adjacentEntities = entitiesControl.getAllAdjacentEntities(this.getPosition());
-        if (containsActiveSwitch(adjacentEntities)) {
-            this.type = EntityTypes.LIGHT_BULB_ON;
-        } else {
-            this.type = EntityTypes.LIGHT_BULB_OFF;
-        }
+    protected void activate() {
+        this.type = EntityTypes.LIGHT_BULB_ON;
+    }
+
+    @Override
+    protected void deactivate() {
+        this.type = EntityTypes.LIGHT_BULB_OFF;
     }
 
     public boolean isActive() {

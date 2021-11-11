@@ -8,7 +8,9 @@ import java.util.Map;
 import javax.sound.sampled.BooleanControl;
 
 import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.staticEntities.SwampEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -60,9 +62,11 @@ public class FollowPlayer implements IMovingBehaviour{
                 newPrevPositions.add(currentPosition);
                 if (!pathsMap.containsKey(newPosition)){
                     pathsMap.put(newPosition, newPrevPositions);
-                }
-                else if (newPrevPositions.size() < pathsMap.get(newPosition).size()){
-                    pathsMap.put(newPosition, newPrevPositions);
+                } else {
+                    int newPathLength = newPrevPositions.size() + pathIncreasedBySwampTiles(entitiesControl, newPrevPositions);
+                    if (newPathLength < pathsMap.get(newPosition).size()){
+                        pathsMap.put(newPosition, newPrevPositions);
+                    }
                 }
             }
         }
@@ -98,5 +102,17 @@ public class FollowPlayer implements IMovingBehaviour{
             }
         }
         return false;
+    }
+
+    public int pathIncreasedBySwampTiles(EntitiesControl entitiesControl, List<Position> newPrevPositions){
+        SwampEntity potentialSwampEntity = new SwampEntity();
+        int movementFactor = potentialSwampEntity.getMovementFactor();
+        int numSwampTiles = 0;
+        for (Position pos: newPrevPositions) {
+            if(entitiesControl.positionContainsEntityType(pos, SwampEntity.class)) {
+                numSwampTiles += 1;
+            }
+        }
+        return numSwampTiles*movementFactor;    
     }
 }

@@ -25,7 +25,12 @@ public class SwampEntity extends Entity implements ITicker {
     }
 
     /** The maximum number of ticks a non-player entity must remain in the swamp */
-    public int ticksRequiredToPass = 3;
+    int movementFactor = 3;
+
+    public int getMovementFactor(){
+        return this.movementFactor;
+    }
+
     /** 
      * @key the entity
      * @value the number of ticks they must still remain in the swamp
@@ -42,7 +47,7 @@ public class SwampEntity extends Entity implements ITicker {
     void addNewEntitiesToEntitiesTryingToPass(List<IEntity> stuckEntities) {
         for (IEntity entity : stuckEntities) {
             if (!this.entitiesTryingToPass.containsKey(entity) && entity != this) {
-                this.entitiesTryingToPass.put(entity, this.ticksRequiredToPass);
+                this.entitiesTryingToPass.put(entity, this.movementFactor);
             }
         }
     }

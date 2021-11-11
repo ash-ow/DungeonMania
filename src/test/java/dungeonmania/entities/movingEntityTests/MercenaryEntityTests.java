@@ -280,41 +280,39 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
 
     @Test
     public void TestBestMoveAroundSwamp() {
-        ArrayList<IEntity> entities = new ArrayList<>();
-
+        EntitiesControl entities = new EntitiesControl();
         // mercenary will move around the swamp tiles as that will be the shortest path
         MercenaryEntity merc = new MercenaryEntity();
-        entities.add(merc);
+        entities.addEntity(merc);
         SwampEntity swamp1 = new SwampEntity(0, 1);
-        entities.add(swamp1);
+        entities.addEntity(swamp1);
         SwampEntity swamp2 = new SwampEntity(0, 2);
-        entities.add(swamp2);
+        entities.addEntity(swamp2);
         CharacterEntity player = new CharacterEntity(0, 3);
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
 
-        dungeon.tick(Direction.DOWN);
+        merc.move(entities, player);
         assertEquals(merc.getPosition(), new Position(1, 0));
-        dungeon.tick(Direction.DOWN);
+        merc.move(entities, player);
         assertEquals(merc.getPosition(), new Position(1, 1));
-        dungeon.tick(Direction.DOWN);
+        merc.move(entities, player);
         assertEquals(merc.getPosition(), new Position(1, 2));
-        dungeon.tick(Direction.DOWN);
+        merc.move(entities, player);
         assertEquals(merc.getPosition(), new Position(1, 3));
     }
 
     @Test
     public void TestPlayerIsInSwamp() {
-        ArrayList<IEntity> entities = new ArrayList<>();
+        EntitiesControl entities = new EntitiesControl();
 
-        // mercenary will try to move down to follow the player, and must go through the swamp tile as that will be the shortest path
+        // mercenary move down into the swamp tile, as that will be where the player is
         MercenaryEntity merc = new MercenaryEntity();
-        entities.add(merc);
+        entities.addEntity(merc);
         SwampEntity swamp = new SwampEntity(0, 1);
-        entities.add(swamp);
+        entities.addEntity(swamp);
         CharacterEntity player = new CharacterEntity(0, 1);
-        Dungeon dungeon = new Dungeon(entities, "Standard", player);
-
-        dungeon.tick(Direction.NONE);
+        merc.move(entities, player);
+        
+        // Mercenary should be in the same position as the player, however, in this case, the mercenary should not be in the list of entities as they would have battled
         assertFalse(entities.contains(merc));
     }
 }

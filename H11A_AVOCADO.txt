@@ -1,0 +1,888 @@
+Test 1-1
+
+GamemodesTest > 1-1 Testing peaceful mode causes player to take no damage FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.GamemodesTest.testPeacefulNoDamage(GamemodesTest.java:20)
+FAILURE
+DONE
+Test 1-2
+
+GamemodesTest > 1-2 Testing zombies spawn every 15 ticks in hard mode FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.GamemodesTest.testHardZombieSpawning(GamemodesTest.java:33)
+FAILURE
+DONE
+Test 1-3
+
+GamemodesTest > 1-3 Test invincibility potions don't work in hard mode FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.GamemodesTest.testHardInvincibility(GamemodesTest.java:68)
+FAILURE
+DONE
+Test 2-1
+
+ZombieTest > 2-1 Testing movement of zombies FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ZombieTest.testZombieMovement(ZombieTest.java:22)
+FAILURE
+DONE
+Test 2-2
+
+ZombieTest > 2-2 Testing zombies cannot move through boulders and walls FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ZombieTest.testZombieNotMovingThroughBlockingEntities(ZombieTest.java:50)
+FAILURE
+DONE
+Test 2-3
+
+ZombieTest > 1-3 Testing zombies spawn with armour intermittently (at least once every 200 ticks) FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ZombieTest.testZombiesHaveArmour(ZombieTest.java:67)
+FAILURE
+DONE
+Test 2-4
+
+ZombieTest > ZombieSpawnerTest > Testing zombie spawners spawn zombies every 20 ticks FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ZombieTest$ZombieSpawnerTest.testZombieSpawning(ZombieTest.java:92)
+FAILURE
+DONE
+Test 2-5
+
+ZombieTest > ZombieSpawnerTest > Testing destroying zombie spawners FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ZombieTest$ZombieSpawnerTest.testZombieSpawnerDestruction(ZombieTest.java:127)
+FAILURE
+DONE
+Test 3-1
+
+MercenaryTest > 3-1 Test mercenary spawning FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.MercenaryTest.testMercenarySpawning(MercenaryTest.java:24)
+FAILURE
+DONE
+Test 3-2
+
+MercenaryTest > 3-2 Testing mercenaries cannot move through boulders and walls FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.MercenaryTest.testMercenaryNotMovingThroughBlockingEntities(MercenaryTest.java:48)
+FAILURE
+DONE
+Test 3-3
+
+MercenaryTest > Testing bribing a mercenary ensures there is no battle FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.MercenaryTest.testMercenaryBribing(MercenaryTest.java:65)
+FAILURE
+DONE
+Test 3-4
+
+MercenaryTest > Testing mercenaries spawn with armour FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.MercenaryTest.testMercenarySpawningWithArmour(MercenaryTest.java:93)
+FAILURE
+DONE
+Test 4-1
+
+CollectablesTest > 4-1 Testing picking up all types of collectables FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.CollectablesTest.testCollectablePickup(CollectablesTest.java:24)
+FAILURE
+DONE
+Test 4-2
+
+CollectablesTest > 4-2 Test picking up a key puts the key in the inventory FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.CollectablesTest.testKeyInInventory(CollectablesTest.java:44)
+FAILURE
+DONE
+Test 4-3
+
+CollectablesTest > 4-3 Test invisibility potions ensure battles do not occur FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.CollectablesTest.testInvisibilityPotion(CollectablesTest.java:68)
+FAILURE
+DONE
+Test 4-4
+
+CollectablesTest > 4-4 Test invincibility potions cause enemies to run away FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.CollectablesTest.testInvincibilityPotion(CollectablesTest.java:97)
+FAILURE
+DONE
+Test 5-1
+
+PortalsTest > 5-1 Test portals work both ways FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.PortalsTest.testTeleportationBothWays(PortalsTest.java:29)
+FAILURE
+DONE
+Test 5-2
+
+PortalsTest > 5-2 Test player cannot teleport into a wall FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.PortalsTest.testCannotTeleportIntoWall(PortalsTest.java:59)
+FAILURE
+DONE
+Test 6-1
+
+SpiderTest > 6-1 Test basic movement of spiders FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.SpiderTest.testSpiderBasicMovement(SpiderTest.java:32)
+FAILURE
+DONE
+Test 6-2
+
+SpiderTest > 6-2 Test spiders can traverse through walls FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.SpiderTest.testSpiderTraverseWall(SpiderTest.java:69)
+FAILURE
+DONE
+Test 6-3
+
+SpiderTest > 6-3 Test spiders can traverse through switches FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.SpiderTest.testSpiderTraverseSwitch(SpiderTest.java:84)
+FAILURE
+DONE
+Test 6-4
+
+SpiderTest > 6-4 Test spiders can move through closed doors FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.SpiderTest.testSpiderCanMoveThroughClosedDoor(SpiderTest.java:132)
+FAILURE
+DONE
+Test 6-5
+
+SpiderTest > 6-5 Test spiders cannot move through boulders FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.SpiderTest.testSpiderBoulderInPath(SpiderTest.java:169)
+FAILURE
+DONE
+Test 6-6
+
+SpiderTest > 6-6 Test spider spawning reaches a mmaximum amount of spiders spawned FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.SpiderTest.testSpiderMaxAmount(SpiderTest.java:209)
+FAILURE
+DONE
+Test 7-1
+
+BasicGoalsTest > 7-1 Test achieving a basic exit goal FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BasicGoalsTest.testExitGoal(BasicGoalsTest.java:29)
+FAILURE
+DONE
+Test 7-2
+
+BasicGoalsTest > 7-2 Test a map with an enemies goal, but with no enemies is automatically achieved FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BasicGoalsTest.testEnemyGoalNoEnemies(BasicGoalsTest.java:47)
+FAILURE
+DONE
+Test 7-3
+
+BasicGoalsTest > 7-3 Testing achieving an enemies goal with a single spider on the map FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BasicGoalsTest.testEnemyGoalSpider(BasicGoalsTest.java:64)
+FAILURE
+DONE
+Test 7-4
+
+BasicGoalsTest > 7-4 Test a map with a switch goal, but no switch is automatically achieved FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BasicGoalsTest.testSwitchGoalNoSwitch(BasicGoalsTest.java:85)
+FAILURE
+DONE
+Test 7-5
+
+BasicGoalsTest > 7-5 Test achieving a switch goal where there is one switch FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BasicGoalsTest.testSwitchGoalOneSwitch(BasicGoalsTest.java:99)
+FAILURE
+DONE
+Test 7-6
+
+BasicGoalsTest > 7-6 Test achieving a switch goal where there are two switches FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BasicGoalsTest.testSwitchGoalTwoSwitches(BasicGoalsTest.java:121)
+FAILURE
+DONE
+Test 7-7
+
+BasicGoalsTest > Test a map with a treasure goal, but no treasure is automatically achieved FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BasicGoalsTest.testTreasureGoalNoTreasure(BasicGoalsTest.java:150)
+FAILURE
+DONE
+Test 7-8
+
+BasicGoalsTest > Test a achieving a treasure goal with one treasure on the map FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BasicGoalsTest.testTreasureGoalOneTreasure(BasicGoalsTest.java:164)
+FAILURE
+DONE
+Test 7-9
+
+BasicGoalsTest > Testing a treasure goal with two treasure on the map FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BasicGoalsTest.testTreasureGoalCollectTwoTreasure(BasicGoalsTest.java:185)
+FAILURE
+DONE
+Test 8-1
+
+MovementTest > 8-1 Test the player can move down FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.MovementTest.testMovement(MovementTest.java:25)
+        at dungeonmania.controllerTest.MovementTest.testMovementDown(MovementTest.java:37)
+FAILURE
+DONE
+Test 8-2
+
+MovementTest > 8-2 Test the player can move up FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.MovementTest.testMovement(MovementTest.java:25)
+        at dungeonmania.controllerTest.MovementTest.testMovementUp(MovementTest.java:44)
+FAILURE
+DONE
+Test 8-3
+
+MovementTest > 8-3 Test the player can move left FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.MovementTest.testMovement(MovementTest.java:25)
+        at dungeonmania.controllerTest.MovementTest.testMovementLeft(MovementTest.java:51)
+FAILURE
+DONE
+Test 8-4
+
+MovementTest > 8-4 Test the player can move right FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.MovementTest.testMovement(MovementTest.java:25)
+        at dungeonmania.controllerTest.MovementTest.testMovementRight(MovementTest.java:58)
+FAILURE
+DONE
+Test 9-1
+
+BuildablesTest > 9-1 Test building a bow FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BuildablesTest.testBuildBow(BuildablesTest.java:33)
+FAILURE
+DONE
+Test 9-2
+
+BuildablesTest > 9-2 Test building a shield with a key FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BuildablesTest.testBuildShieldWithKey(BuildablesTest.java:64)
+FAILURE
+DONE
+Test 9-3
+
+BuildablesTest > 9-3 Test building a shield with treasure FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BuildablesTest.testBuildShieldWithTreasure(BuildablesTest.java:95)
+FAILURE
+DONE
+Test 10-1
+
+BombsTest > 10-1 Test picking up a bomb removes the bomb from the map FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BombsTest.testBombPickUpRemoveFromMap(BombsTest.java:34)
+FAILURE
+DONE
+Test 10-2
+
+BombsTest > 10-2 Test picking up a bomb adds the bomb to the inventory FAILED
+    java.lang.IllegalArgumentException: invalid gameMode
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:59)
+        at dungeonmania.controllerTest.BombsTest.testBombPickUpAddToInventory(BombsTest.java:49)
+FAILURE
+DONE
+Test 10-3
+
+BombsTest > 10-3 Test placing a bomb removes it from the inventory FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BombsTest.testBombRemoveFromInventory(BombsTest.java:64)
+FAILURE
+DONE
+Test 10-4
+
+BombsTest > 10-4 Test placing a bomb places it on the map at the character's location FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BombsTest.testBombPlaceOnMap(BombsTest.java:85)
+FAILURE
+DONE
+Test 10-5
+
+BombsTest > Test placing a bomb on a map cardinally adjacent to an active switch causes the bomb to detonate, removing surrounding entites except for the player FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BombsTest.testBombPlaceMapCardinallyAdjacentActiveSwitch(BombsTest.java:108)
+FAILURE
+DONE
+Test 10-6
+
+BombsTest > 10-6 Test placing a bomb diagonally adjacent to an active switch does not detonate the bomb FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BombsTest.testBombPlaceMapDiagonallyAdjacentActiveSwitch(BombsTest.java:145)
+FAILURE
+DONE
+Test 10-7
+
+BombsTest > 10-7 Test placing a bomb cardinally adjacent to an inactive switch does not cause the bomb to explode FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BombsTest.testBombPlaceMapCardinallyAdjacentInactiveSwitch(BombsTest.java:181)
+FAILURE
+DONE
+Test 10-8
+
+BombsTest > 10-8 Test placing a bomb diagonally adjacent to an inactive switch does not cause the bomb to explode FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BombsTest.testBombPlaceMapDiagonallyAdjacentInactiveSwitch(BombsTest.java:208)
+FAILURE
+DONE
+Test 11-1
+
+BouldersTest > 11-1 Test pushing a boulder FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BouldersTest.testPushBoulder(BouldersTest.java:28)
+FAILURE
+DONE
+Test 11-2
+
+BouldersTest > 11-2 Test pushing a boulder into a wall FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BouldersTest.testPushBoulderIntoWall(BouldersTest.java:40)
+FAILURE
+DONE
+Test 11-3
+
+BouldersTest > 11-3 Test the player is unable to push two boulders FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BouldersTest.testPushTwoBoulders(BouldersTest.java:53)
+FAILURE
+DONE
+Test 12-1
+
+SaveLoadTest > 12-1 Test saving and loading a simple maze map FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.SaveLoadTest.testMazeSave(SaveLoadTest.java:20)
+FAILURE
+DONE
+Test 12-2
+
+SaveLoadTest > 12-2 Test saving and loading a map with boulders and switches FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.SaveLoadTest.testBouldersSave(SaveLoadTest.java:38)
+FAILURE
+DONE
+Test 12-3
+
+SaveLoadTest > 12-3 Test saving and loading a map with enemies and collectables FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.SaveLoadTest.testAdvancedSave(SaveLoadTest.java:57)
+FAILURE
+DONE
+Test 12-4
+
+SaveLoadTest > 12-4 Test saving on a map containing all types of entities FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.SaveLoadTest.testSaveAllEntities(SaveLoadTest.java:75)
+FAILURE
+DONE
+Test 13-1
+
+DoorsKeysTest > 13-1 Test player cannot walk through a closed door FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.DoorsKeysTest.testPlayerCannotWalkThroughClosedDoor(DoorsKeysTest.java:32)
+FAILURE
+DONE
+Test 13-2
+
+DoorsKeysTest > 13-2 Test player can pick up a key and add to inventory FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.DoorsKeysTest.testPickUpKey(DoorsKeysTest.java:50)
+FAILURE
+DONE
+Test 13-3
+
+DoorsKeysTest > 13-3 Test player can use a key to open a door FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.DoorsKeysTest.testUseKey(DoorsKeysTest.java:64)
+FAILURE
+DONE
+Test 13-4
+
+DoorsKeysTest > 13-4 Test the player cannot walk through an open door FAILED
+    java.lang.IllegalArgumentException: invalid gameMode
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:59)
+        at dungeonmania.controllerTest.DoorsKeysTest.testPlayerCanWalkThroughOpenDoor(DoorsKeysTest.java:83)
+FAILURE
+DONE
+Test 13-5
+
+DoorsKeysTest > 13-5 Test player cannot pickup two keys FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.DoorsKeysTest.testPlayerCannotPickup2Keys(DoorsKeysTest.java:102)
+FAILURE
+DONE
+Test 13-6
+
+DoorsKeysTest > 13-6 Test player can pick up a second key after using the first FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.DoorsKeysTest.testCanPickupSecondKeyAfterUsingFirst(DoorsKeysTest.java:120)
+FAILURE
+DONE
+Test 13-7
+
+DoorsKeysTest > 13-7 Test player cannot open a door with the wrong key FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.DoorsKeysTest.testPlayerCannotOpenDoorwithWrongKey(DoorsKeysTest.java:142)
+FAILURE
+DONE
+Test 14-1
+
+InterfaceTest > 14-1 Testing newGame interface method, normal operation FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.InterfaceTest.testNewGameInterfaceNormalOperation(InterfaceTest.java:22)
+FAILURE
+DONE
+Test 14-2
+SUCCESS
+DONE
+Test 14-3
+SUCCESS
+DONE
+Test 14-4
+
+InterfaceTest > TickInterfaceTest > 14-4 Testing tick interface method, normal operation FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.InterfaceTest$TickInterfaceTest.testTickInterfaceNormalOperation(InterfaceTest.java:61)
+FAILURE
+DONE
+Test 14-5
+
+InterfaceTest > TickInterfaceTest > 14-5 Testing tick with an invalid ite FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.InterfaceTest$TickInterfaceTest.testTickInterfaceInvalidItem(InterfaceTest.java:75)
+FAILURE
+DONE
+Test 14-6
+
+InterfaceTest > TickInterfaceTest > 14-6 Testing tick with an item that is not in the player's inventory FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.InterfaceTest$TickInterfaceTest.testTickInterfaceItemNotInInventory(InterfaceTest.java:87)
+FAILURE
+DONE
+Test 15-1
+
+ComplexGoalsTest > 15-1 Testing a map with EXIT and ENEMIES goal FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ComplexGoalsTest.testExitAndEnemyGoal(ComplexGoalsTest.java:35)
+FAILURE
+DONE
+Test 15-2
+
+ComplexGoalsTest > 15-2 Testing a map with EXIT and SWITCH goal FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ComplexGoalsTest.testExitAndSwitchGoal(ComplexGoalsTest.java:50)
+FAILURE
+DONE
+Test 15-3
+
+ComplexGoalsTest > 15-3 Testing a map with EXIT and TREASURE FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ComplexGoalsTest.testExitAndTreasureGoal(ComplexGoalsTest.java:65)
+FAILURE
+DONE
+Test 15-4
+
+ComplexGoalsTest > 15-4 Testing that the exit goal must be achieved last in EXIT and TREASURE FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ComplexGoalsTest.testExitAndTreasureOrderGoal(ComplexGoalsTest.java:81)
+FAILURE
+DONE
+Test 15-5
+
+ComplexGoalsTest > 15-5 Test a map with ENEMIES and SWITCH goal FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ComplexGoalsTest.testEnemiesAndSwitchGoal(ComplexGoalsTest.java:103)
+FAILURE
+DONE
+Test 15-6
+
+ComplexGoalsTest > 15-6 Test a map with ENEMIES and TREASURE goal FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ComplexGoalsTest.testEnemiesAndTreasureGoal(ComplexGoalsTest.java:115)
+FAILURE
+DONE
+Test 15-7
+
+ComplexGoalsTest > 15-7 Test a map with SWITCH and TREASURE goal FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ComplexGoalsTest.testSwitchAndTreasureGoal(ComplexGoalsTest.java:131)
+FAILURE
+DONE
+Test 15-8
+
+ComplexGoalsTest > 15-8 Testing a map with ENEMIES or EXIT goal FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ComplexGoalsTest.testExitOrEnemyGoal(ComplexGoalsTest.java:153)
+FAILURE
+DONE
+Test 15-9
+
+ComplexGoalsTest > 15-9 Testing a map with EXIT or SWITCH goal FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ComplexGoalsTest.testExitOrSwitchGoal(ComplexGoalsTest.java:164)
+FAILURE
+DONE
+Test 15-10
+
+ComplexGoalsTest > 15-10 Testing a map with EXIT or TREASURE goal FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ComplexGoalsTest.testExitOrTreasureGoal(ComplexGoalsTest.java:175)
+FAILURE
+DONE
+Test 15-11
+
+ComplexGoalsTest > 15-11 Testing a map with ENEMIES or SWITCH goal FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ComplexGoalsTest.testEnemiesOrSwitchGoal(ComplexGoalsTest.java:187)
+FAILURE
+DONE
+Test 15-12
+
+ComplexGoalsTest > 15-12 Testing a map with ENEMIES or TREASURE goal FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ComplexGoalsTest.testEnemiesOrTreasureGoal(ComplexGoalsTest.java:199)
+FAILURE
+DONE
+Test 15-13
+
+ComplexGoalsTest > 15-13 Testing a map with SWTICH or TREASURE goal FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ComplexGoalsTest.testSwitchOrTreasureGoal(ComplexGoalsTest.java:211)
+FAILURE
+DONE
+Test 15-14
+
+ComplexGoalsTest > 15-14 Testing a map with EXIT or TREASURE or SWITCH goal FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ComplexGoalsTest.testEnemiesOrExitOrTreasureOrSwitchGoal(ComplexGoalsTest.java:230)
+FAILURE
+DONE
+Test 15-15
+
+ComplexGoalsTest > 15-15 Testing a map with ENEMIES and EXIT and TREASURE and SWITCH goal FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ComplexGoalsTest.testEnemiesAndExitAndTreasureAndSwitchGoal(ComplexGoalsTest.java:241)
+FAILURE
+DONE
+Test 15-16
+
+ComplexGoalsTest > 15-16 Testing a map with ENEMEIS AND (TREASURE OR SWITCH) goal FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.ComplexGoalsTest.testExitAndEnemiesAndTreasureOrSwitchGoal(ComplexGoalsTest.java:261)
+FAILURE
+DONE
+Test 16-1
+
+BattleTest > 16-1 Test player battles spider and player or zombie dies FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BattleTest.testPlayerOrSpiderDiesWhenBattle(BattleTest.java:30)
+FAILURE
+DONE
+Test 16-2
+
+BattleTest > 16-2 Test player battles zombie and player or zombie dies FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BattleTest.testPlayerOrZombieDiesWhenBattle(BattleTest.java:52)
+FAILURE
+DONE
+Test 16-3
+
+BattleTest > 16-3 Test player battles mercenary and player or mercenary dies FAILED
+    java.lang.NullPointerException
+        at dungeonmania.entities.movingEntities.CharacterEntity.<init>(CharacterEntity.java:59)
+        at dungeonmania.dungeon.Dungeon.<init>(Dungeon.java:66)
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:66)
+        at dungeonmania.controllerTest.BattleTest.testPlayerOrMercenaryDiesWhenBattle(BattleTest.java:75)
+FAILURE
+DONE
+Test 16-4
+
+BattleTest > 16-4 Test player wins a battle against a spider with an invinicibility potion FAILED
+    java.lang.IllegalArgumentException: invalid gameMode
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:59)
+        at dungeonmania.controllerTest.BattleTest.testPlayerWinsSpiderBattleWithInvincibilityPotion(BattleTest.java:100)
+FAILURE
+DONE
+Test 16-5
+
+BattleTest > 16-5 Test player wins a battle against a zombie with an invincibility potion FAILED
+    java.lang.IllegalArgumentException: invalid gameMode
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:59)
+        at dungeonmania.controllerTest.BattleTest.testPlayerWinsZombieBattleWithInvincibilityPotion(BattleTest.java:125)
+FAILURE
+DONE
+Test 16-6
+
+BattleTest > 16-6 Test a player wins a battle against a mercenary with an invincibility potion FAILED
+    java.lang.IllegalArgumentException: invalid gameMode
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:59)
+        at dungeonmania.controllerTest.BattleTest.testPlayerWinsMercenaryBattleWithInvincibilityPotion(BattleTest.java:148)
+FAILURE
+DONE
+Test 16-7
+
+BattleTest > 16-7 Test the player dies after battling 30 enemies consecutively FAILED
+    java.lang.IllegalArgumentException: invalid gameMode
+        at dungeonmania.DungeonManiaController.newGame(DungeonManiaController.java:59)
+        at dungeonmania.controllerTest.BattleTest.testPlayerDiesAfterBattlingThirtyEnemiesConsecutively(BattleTest.java:173)
+FAILURE
+DONE

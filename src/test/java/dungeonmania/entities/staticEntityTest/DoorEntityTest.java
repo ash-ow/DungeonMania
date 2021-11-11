@@ -72,21 +72,16 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         assertNotNull(player.getInventoryItem("0"), "Inventory should contain sun_stone");
 
         dungeon.tick(Direction.DOWN);
-        assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should be able to move into the first door as they have sun_stone");
+        assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should be able to unlock and move into first door as they have sun_stone");
         assertNotNull(player.getInventoryItem("0"), "Unlocking door should not consume sun_stone");
         
         dungeon.tick(Direction.DOWN);
-        assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to move into the second door as they have sun_stone");
+        assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to unlock and move into second door as they have sun_stone");
         assertNotNull(player.getInventoryItem("0"), "Unlocking door should not consume sun_stone");
 
         dungeon.tick(Direction.DOWN);
-        assertEquals(new Position(0, 4, 0), player.getPosition(), "Player should be able to move into the third door as they have sun_stone");
+        assertEquals(new Position(0, 4, 0), player.getPosition(), "Player should be able to unlock and move into third door as they have sun_stone");
         assertNotNull(player.getInventoryItem("0"), "Unlocking door should not consume sun_stone");
-
-        dungeon.tick(Direction.UP);
-        dungeon.tick(Direction.UP);
-        dungeon.tick(Direction.DOWN);
-        assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to move in and out of unlocked door");
     }
 
     @Test
@@ -106,21 +101,19 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         assertNotNull(player.getInventoryItem("1"), "Inventory should contain sun stone");
 
         dungeon.tick(Direction.DOWN);
-        assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to move into the first door using the key");
+        assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to unlock and move into the first door using the key");
         assertNull(player.getInventoryItem("0"), "Unlocking door should consume key 1");
         assertNotNull(player.getInventoryItem("1"), "Unlocking door should not consume sun_stone");
 
         dungeon.tick(Direction.DOWN);
-        assertEquals(new Position(0, 4, 0), player.getPosition(), "Player should be able to move into the third door as they have sun_stone");
+        assertEquals(new Position(0, 4, 0), player.getPosition(), "Player should be able to unlock and move into the second door as they have sun_stone");
         assertNotNull(player.getInventoryItem("1"), "Unlocking door should not consume sun_stone");
 
         dungeon.tick(Direction.UP);
         dungeon.tick(Direction.UP);
         dungeon.tick(Direction.DOWN);
-        assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to move in and out of unlocked door");
+        assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to move in and out of unlocked doors");
     }
-
-        
 
     @Test
     public void TestCreateDoor() {
@@ -142,7 +135,6 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
                 () -> assertEquals(door.getKeyNumber(), key_correct.getKeyNumber()),
                 () -> assertNotEquals(door.getKeyNumber(), key_dummy.getKeyNumber())
             );
-
     }
 
     private Dungeon getDungeonWithDoorTestData() {
@@ -181,9 +173,9 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
             0
         0   P
         1   S1 - Sun Stone
-        2   D1 - door 1; unlock
-        3   D2 - door 2; can unlock
-        4   D3 - door 3; can unlock
+        2   D1 - door 1; unlock by sun stone
+        3   D2 - door 2; unlock by sun stone
+        4   D3 - door 3; unlock by sun stone
         6   Exit
         
         */
@@ -208,9 +200,9 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
             0
         0   P
         1   K1 - Key 1;
-        2   S1 - sun_stone
+        2   S1 - sun_stone;
         3   D1 - door 1; key will be used 
-        4   D2 - door 2; sun_stone use 
+        4   D2 - door 2; sun_stone will be used 
         6   Exit
         
         */

@@ -48,31 +48,25 @@ public class DoorEntity extends Entity implements IBlocker {
             .orElse(null);
     }
 
-    private SunStoneEntity getStoneFromInventory(CharacterEntity player) {
+    private boolean getStoneFromInventory(CharacterEntity player) {
         return player
             .getInventory()
             .stream()
-            .filter(e -> e.getType().equals(EntityTypes.SUN_STONE))
-            .map(SunStoneEntity.class::cast)
-            .findFirst()
-            .orElse(null);
+            .anyMatch(e -> e.getType().equals(EntityTypes.SUN_STONE));
     }
 
-    private void unlockWith(KeyEntity key, CharacterEntity player) {
+    private void tryUnlockWithKey(KeyEntity key, CharacterEntity player) {
         if (key != null) {
             key.used(player);
             this.isLocked = false;
         }
     }
 
-    //SunStone unlock doors
-    private void stoneUnlock(SunStoneEntity sun_stone, CharacterEntity player) {
+    private void tryUnlockWithStone(SunStoneEntity sun_stone, CharacterEntity player) {
         if (sun_stone != null) {
             this.isLocked = false;
         }
     }
-
-
 
     @Override
     public boolean isBlocking() {
@@ -85,12 +79,12 @@ public class DoorEntity extends Entity implements IBlocker {
             CharacterEntity player = (CharacterEntity) ent;
             if (player.containedInInventory(EntityTypes.KEY)){
                 this.key = getKeyFromInventory(player, this.keyNumber);
-                this.unlockWith(key, player);
+                this.tryUnlockWithKey(key, player);
             }
             else if (player.containedInInventory(EntityTypes.SUN_STONE))
             {
                 this.sun_stone = getStoneFromInventory(player);
-                this.stoneUnlock(sun_stone, player); 
+                this.tryUnlockWithStone(sun_stone, player); 
             }
         }
         return !this.isLocked;

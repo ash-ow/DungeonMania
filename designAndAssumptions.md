@@ -190,6 +190,7 @@ The state pattern is used in SpiderEntity to determine the direction of the spid
 - player can equip shield and armour at the same time
 
 **sunstone:**
-- Sunstone will not be removed when bribing mercenary or assassin
+- Our implementation of Sun Stone being used "interchangeably with treasure" means it can be used in all instances i.e. collecting treasure goal,      building sheilds and bribing assassins/mercenaries. 
+- Sunstone will not be removed when bribing mercenary or assassin. It is only removed from inventory when used as a building material. 
 - SunStone will unlock all doors but if player has a key, the player will use the key first
 

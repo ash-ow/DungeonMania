@@ -35,7 +35,7 @@ public class AssassinEntityTests extends MercenaryEntityTests {
     }
 
     @Test
-    //Test if assassin bribed by sun_stone & also item not removed
+    //Test if assassin bribed by sun_stone & check that item is not removed
     public void testBribeSunStone() {
         CharacterEntity player = new CharacterEntity(0, 5);
         AssassinEntity assassin = new AssassinEntity(0, 4);

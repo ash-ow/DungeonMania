@@ -8,8 +8,10 @@ public enum EntityTypes {
     BOULDER("boulder"),
     SWITCH("switch"),
     DOOR("door"),
+    UNLOCKED_DOOR("unlocked_door"),
     PORTAL("portal"),
     ZOMBIE_TOAST_SPAWNER("zombie_toast_spawner"),
+    TIME_TRAVEL_PORTAL("time_travelling_portal"),
     SWAMP("swamp"),
     LIGHT_BULB_ON("light_bulb_on"),
     LIGHT_BULB_OFF("light_bulb_off"),
@@ -22,19 +24,20 @@ public enum EntityTypes {
     ASSASSIN("assassin"),
     
     // Collectable Entities
-    TREASURE("treasure"),
-    KEY("key"),
-    HEALTH_POTION("health_potion"),
-    INVINCIBILITY_POTION("invincibility_potion"),
-    INVISIBILITY_POTION("invisibility_potion"),
-    WOOD("wood"),
-    ARROW("arrow"),
-    BOMB("bomb"),
-    SWORD("sword"),
-    ANDURIL("anduril"),
-    ARMOUR("armour"),
-    ONE_RING("one_ring"),
-    SUN_STONE("sun_stone"),
+    TREASURE("treasure"),    
+    KEY("key"),    
+    HEALTH_POTION("health_potion"),    
+    INVINCIBILITY_POTION("invincibility_potion"),    
+    INVISIBILITY_POTION("invisibility_potion"),    
+    WOOD("wood"),    
+    ARROW("arrow"),    
+    BOMB("bomb"),    
+    SWORD("sword"),    
+    ANDURIL("anduril"),    
+    ARMOUR("armour"),    
+    ONE_RING("one_ring"),  
+    TIME_TURNER("time_turner"), 
+    SUN_STONE("sun_stone"),    
     
     // IBuildableEntity
     SHIELD("shield"),
@@ -43,7 +46,8 @@ public enum EntityTypes {
     MIDNIGHT_ARMOUR("midnight_armour"),
     
     // Player
-    PLAYER("player")
+    PLAYER("player"),
+    OLDER_PLAYER("older_player")
     
     ;
 

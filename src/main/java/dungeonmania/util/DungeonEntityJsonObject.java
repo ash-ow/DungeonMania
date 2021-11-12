@@ -1,5 +1,6 @@
 package dungeonmania.util;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.EntityTypes;

@@ -1,5 +1,7 @@
 package dungeonmania.entities.collectableEntities;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.util.DungeonEntityJsonObject;
@@ -33,4 +35,11 @@ public class KeyEntity extends CollectableEntity {
     public int getKeyNumber() {
         return keyNumber;
     } 
+
+    @Override
+    public JsonObject buildJson() {
+        JsonObject entityInfo = super.buildJson();
+        entityInfo.addProperty("key", this.keyNumber);
+        return entityInfo;
+    }
 }

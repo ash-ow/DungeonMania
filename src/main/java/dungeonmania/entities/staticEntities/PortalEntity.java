@@ -2,6 +2,8 @@ package dungeonmania.entities.staticEntities;
 
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
@@ -55,5 +57,12 @@ public class PortalEntity extends Entity implements IContactingEntity {
             }
         }
         return this.portalPair;
+    }
+
+    @Override
+    public JsonObject buildJson() {
+        JsonObject entityInfo = super.buildJson();
+        entityInfo.addProperty("colour", this.colour);
+        return entityInfo;
     }
 }

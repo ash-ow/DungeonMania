@@ -1,6 +1,7 @@
 package dungeonmania.entities.staticEntities;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,8 +45,8 @@ public class WireEntity extends Entity {
         for (WireEntity wire : adjacentWires) {
             adjacentSwitches.addAll(wire.followWireInternal(this.getPosition(), entitiesControl, checkedWires));
         }
-        return adjacentSwitches;
-
+        
+        return new ArrayList<SwitchEntity>(new HashSet<SwitchEntity>(adjacentSwitches));
     }
 
     private List<IEntity> getEntitiesThatHaveNotAlreadyBeenFollowed(EntitiesControl entitiesControl, List<WireEntity> checkedWires) {

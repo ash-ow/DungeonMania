@@ -41,9 +41,6 @@ public class WireEntityTest implements IEntityTests {
         List<SwitchEntity> adjacentSwitches = bulb.getAdjacentSwitches(dungeon.entitiesControl);
         List<String> actualIds = adjacentSwitches.stream().map(Entity::getId).collect(Collectors.toList());
         List<String> expectedIds = dungeon.entitiesControl.getAllEntitiesOfType(SwitchEntity.class).stream().map(Entity::getId).collect(Collectors.toList());
-
-        System.out.println(actualIds);
-        System.out.println(expectedIds);
         assertIterableEqualsAnyOrder(expectedIds, actualIds);
     }
     
@@ -82,4 +79,53 @@ public class WireEntityTest implements IEntityTests {
         JsonObject goalsJson = new Gson().fromJson(goals, JsonObject.class).get("goal-condition").getAsJsonObject();
         return new Dungeon(entitiesJson, goalsJson, "Standard", "", "");
     }
+    
+    @Test
+    public void TestFollowWireWithLoop() {
+        Dungeon dungeon = getDungeonWithWireTestDataWithLoop();
+        LightBulbEntity bulb = (LightBulbEntity) dungeon.entitiesControl.getEntityById("5");
+        List<SwitchEntity> adjacentSwitches = bulb.getAdjacentSwitches(dungeon.entitiesControl);
+        List<String> actualIds = adjacentSwitches.stream().map(Entity::getId).collect(Collectors.toList());
+        List<String> expectedIds = dungeon.entitiesControl.getAllEntitiesOfType(SwitchEntity.class).stream().map(Entity::getId).collect(Collectors.toList());
+        assertIterableEqualsAnyOrder(expectedIds, actualIds);
+    }
+
+    private Dungeon getDungeonWithWireTestDataWithLoop() {
+        /*
+           0  1  2  3  4  5 
+        0  .  S0 .  W1 W2 W3
+        1  S4 B5 W6 W7 S8 W9 
+        2  .  S0 P  W1 W2 W3 
+        3  .  .  .  .  S4  . 
+        */
+        
+        String entities = "{\"entities\": [" +
+                "{\"x\": 1,\"y\": 0,\"type\": \"switch\"}," + // S 0
+                "{\"x\": 3,\"y\": 0,\"type\": \"wire\"}," + // W 1
+                "{\"x\": 4,\"y\": 0,\"type\": \"wire\"}," + // W 2
+                "{\"x\": 5,\"y\": 0,\"type\": \"wire\"}," + // W 3
+
+                "{\"x\": 0,\"y\": 1,\"type\": \"switch\"}," + // S 4
+                "{\"x\": 1,\"y\": 1,\"type\": \"light_bulb_off\"}," + // B 5
+                "{\"x\": 2,\"y\": 1,\"type\": \"wire\"}," + // W 6
+                "{\"x\": 3,\"y\": 1,\"type\": \"wire\"}," + // W 7
+                "{\"x\": 4,\"y\": 1,\"type\": \"switch\"}," + // S 8
+                "{\"x\": 5,\"y\": 1,\"type\": \"wire\"}," + // W 9
+
+                "{\"x\": 1,\"y\": 2,\"type\": \"switch\"}," + // S 10
+                "{\"x\": 2,\"y\": 2,\"type\": \"player\"}," + // P
+                "{\"x\": 3,\"y\": 2,\"type\": \"wire\"}," + // W 11
+                "{\"x\": 4,\"y\": 2,\"type\": \"wire\"}," + // W 12
+                "{\"x\": 5,\"y\": 2,\"type\": \"wire\"}," + // W 13
+
+                "{\"x\": 4,\"y\": 3,\"type\": \"switch\"}" + // S 14
+
+                "]}";
+
+        String goals = "{\"goal-condition\": {\"goal\": \"exit\"}}";
+        JsonArray entitiesJson = new Gson().fromJson(entities, JsonObject.class).get("entities").getAsJsonArray();
+        JsonObject goalsJson = new Gson().fromJson(goals, JsonObject.class).get("goal-condition").getAsJsonObject();
+        return new Dungeon(entitiesJson, goalsJson, "Standard", "", "");
+    }
+
 }

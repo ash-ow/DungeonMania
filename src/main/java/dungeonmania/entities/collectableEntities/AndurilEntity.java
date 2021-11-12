@@ -2,6 +2,7 @@ package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.HydraEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
 import dungeonmania.entities.movingEntities.IBoss;
 import dungeonmania.util.DungeonEntityJsonObject;
@@ -25,11 +26,12 @@ public class AndurilEntity extends CollectableEntity implements IWeaponEntity {
     public float getDamage() {
         return 10;
     }
-
     
     @Override
     public float attack(IBattlingEntity enemy, CharacterEntity player) {
         if (IBoss.class.isInstance(enemy)) {
+            IBoss boss = (IBoss) enemy;
+            boss.deactivteSpecialAbility();
             return enemy.loseHealth(player.getHealth(), this.getDamage() * 3);
         } else {
             return enemy.loseHealth(player.getHealth(), this.getDamage());

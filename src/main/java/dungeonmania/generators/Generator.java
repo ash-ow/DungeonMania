@@ -33,7 +33,7 @@ public class Generator {
         playerStartPosition = startPosition;
         gameMode = mode;
         generateSpider(entities);
-        generateZombieToast(entities);
+        generateFromZombieToastSpawner(entities);
         generateMercenary(entities);
     }
 
@@ -78,14 +78,22 @@ public class Generator {
      * Generates zombie toast based on game mode
      * @param gameMode         difficulty of the game
      */
-    private static void generateZombieToast(EntitiesControl entities) {
+    private static void generateFromZombieToastSpawner(EntitiesControl entities) {
+        List<ZombieToastSpawnerEntity> spawnerEntities = entities.getEntitiesOfType(ZombieToastSpawnerEntity.class);
         if (tickCounter % (int) Math.ceil(20 / difficulty.get(gameMode)) == 0) {
-            List<ZombieToastSpawnerEntity> spawnerEntities = entities.getEntitiesOfType(ZombieToastSpawnerEntity.class);
             for (ZombieToastSpawnerEntity spawner : spawnerEntities) {
                 entities.createEntity(
                     spawner.getPosition().getX(), 
                     spawner.getPosition().getY(), 
                     EntityTypes.ZOMBIE_TOAST
+                );
+            }
+        } else if (tickCounter % 50 == 0 && gameMode.equals(GameModeType.HARD)) {
+            for (ZombieToastSpawnerEntity spawner : spawnerEntities) {
+                entities.createEntity(
+                    spawner.getPosition().getX(), 
+                    spawner.getPosition().getY(), 
+                    EntityTypes.HYDRA
                 );
             }
         }

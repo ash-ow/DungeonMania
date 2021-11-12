@@ -86,7 +86,7 @@ public class HydraEntity extends Entity implements IBoss, IAutoMovingEntity {
     }
 
     @Override
-    public void setMoveBehvaiour(IMovingBehaviour newBehaviour) {
+    public void setMoveBehaviour(IMovingBehaviour newBehaviour) {
         this.moveBehaviour = newBehaviour;
     }
 

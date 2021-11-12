@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.Logic;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.BowEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -45,7 +46,7 @@ public class BowEntityTest implements IBuildableEntityTests {
         BowEntity bow = new BowEntity();
         List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new ArrowsEntity());
-        inventory.add(new BombEntity());
+        inventory.add(new BombEntity(Logic.ANY));
         assertFalse(bow.isBuildable(inventory));
         
     }

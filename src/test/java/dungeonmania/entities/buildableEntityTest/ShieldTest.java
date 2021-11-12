@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.Logic;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.ShieldEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -80,7 +81,7 @@ public class ShieldTest implements IBuildableEntityTests {
         ShieldEntity shield = new ShieldEntity();
         List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new ArrowsEntity());
-        inventory.add(new BombEntity());
+        inventory.add(new BombEntity(Logic.ANY));
         assertFalse(shield.isBuildable(inventory));
         
     }

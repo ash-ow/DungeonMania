@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.Logic;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.SceptreEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -84,7 +85,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         SceptreEntity sceptre = new SceptreEntity();
         List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new ArrowsEntity());
-        inventory.add(new BombEntity());
+        inventory.add(new BombEntity(Logic.ANY));
         assertFalse(sceptre.isBuildable(inventory));
     }
 

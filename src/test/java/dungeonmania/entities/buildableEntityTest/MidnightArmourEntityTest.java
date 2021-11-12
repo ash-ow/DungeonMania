@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.Logic;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.MidnightArmourEntity;
 import dungeonmania.entities.movingEntities.AssassinEntity;
@@ -43,7 +44,7 @@ public class MidnightArmourEntityTest implements IBuildableEntityTests {
         MidnightArmourEntity midnightArmour = new MidnightArmourEntity();
         List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new ArrowsEntity());
-        inventory.add(new BombEntity());
+        inventory.add(new BombEntity(Logic.ANY));
         assertFalse(midnightArmour.isBuildable(inventory));
         
     }

@@ -19,7 +19,7 @@ public abstract class LogicEntity extends Entity implements ITicker {
     public void tick(EntitiesControl entitiesControl) {
         List<SwitchEntity> adjacentSwitches = getAdjacentSwitches(entitiesControl);
         if (getLogicFromSwitches(adjacentSwitches)) {
-            this.activate();
+            this.activate(entitiesControl);
         } else {
             this.deactivate();
         }
@@ -35,7 +35,7 @@ public abstract class LogicEntity extends Entity implements ITicker {
         return adjacentSwitches;
     }
 
-    protected abstract void activate();
+    protected abstract void activate(EntitiesControl entitiesControl);
     protected abstract void deactivate();
 
     public boolean getLogicFromSwitches(List<SwitchEntity> switches) {

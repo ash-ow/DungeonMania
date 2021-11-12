@@ -14,7 +14,7 @@ import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.dungeon.GameModeType;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.collectableEntities.CollectableEntity;
+import dungeonmania.entities.collectableEntities.ICollectable;
 import dungeonmania.entities.collectableEntities.InvincibilityPotionEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
@@ -188,7 +188,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         CharacterEntity player = new CharacterEntity();
         MercenaryEntity mercenary = new MercenaryEntity(0, 0);
         mercenary.dropEntities(player, 1f);
-        List<CollectableEntity> inventory = player.getInventory();
+        List<ICollectable> inventory = player.getInventory();
         assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
     }
 

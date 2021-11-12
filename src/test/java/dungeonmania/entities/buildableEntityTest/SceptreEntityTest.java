@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.Logic;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.SceptreEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -74,7 +75,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
     @Override
     public void TestIsNotBuildable_EmptyInventory() {
         SceptreEntity sceptre = new SceptreEntity();
-        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
+        List<ICollectable> inventory = new ArrayList<ICollectable>();
         assertFalse(sceptre.isBuildable(inventory));
     }
 
@@ -82,9 +83,9 @@ public class SceptreEntityTest implements IBuildableEntityTests {
     @Override
     public void TestIsNotBuildable_InventoryFullOfWrongItems() {
         SceptreEntity sceptre = new SceptreEntity();
-        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
+        List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new ArrowsEntity());
-        inventory.add(new BombEntity());
+        inventory.add(new BombEntity(Logic.ANY));
         assertFalse(sceptre.isBuildable(inventory));
     }
 
@@ -92,7 +93,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
     @Override
     public void TestIsNotBuildable_InsufficientCorrectItems() {
         SceptreEntity sceptre = new SceptreEntity();
-        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
+        List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new WoodEntity());
         inventory.add(new SunStoneEntity());
         assertFalse(sceptre.isBuildable(inventory));

@@ -21,6 +21,7 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.IInteractingEntityTest;
+import dungeonmania.entities.Logic;
 import dungeonmania.entities.collectableEntities.BombEntity;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -95,7 +96,7 @@ public class TimeTravelPortalTest implements IEntityTests, IInteractingEntityTes
     @Test
     public void TestUseObjectDoesntExist() {
         CharacterEntity player = new CharacterEntity(0, 0);
-        BombEntity bomb = new BombEntity(0, 3);
+        BombEntity bomb = new BombEntity(0, 3, Logic.ANY);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(bomb);
         Dungeon d = new Dungeon(entities, "Standard", player);
@@ -142,7 +143,7 @@ public class TimeTravelPortalTest implements IEntityTests, IInteractingEntityTes
     @Test
     public void TestBlock() {
         CharacterEntity player = new CharacterEntity(0, 0);
-        BombEntity bomb = new BombEntity(0, 1);
+        BombEntity bomb = new BombEntity(0, 1, Logic.ANY);
         TimeTravelPortalEntity portal = new TimeTravelPortalEntity(2, 2);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(bomb);

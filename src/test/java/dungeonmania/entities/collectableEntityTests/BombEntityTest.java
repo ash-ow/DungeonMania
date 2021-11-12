@@ -3,6 +3,7 @@ package dungeonmania.entities.collectableEntityTests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -18,8 +19,10 @@ import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlockerTest;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.Logic;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.movingEntities.*;
+import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -27,7 +30,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
     @Test
     @Override
     public void TestEntityResponseInfo() {
-        BombEntity bomb = new BombEntity(0, 0);
+        BombEntity bomb = new BombEntity(0, 0, Logic.ANY);
         assertEntityResponseInfoEquals(bomb, "bomb-0-0-0", EntityTypes.BOMB, new Position(0,0), false);
     }
 
@@ -36,7 +39,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
     public void TestUseCollectable() {
         ArrayList<IEntity> entities = new ArrayList<>();
         CharacterEntity player = new CharacterEntity(0, 0);
-        BombEntity bomb = new BombEntity(0, 1);
+        BombEntity bomb = new BombEntity(0, 1, Logic.ANY);
         entities.add(bomb);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
 
@@ -54,7 +57,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
     @Test
     @Override
     public void TestCollect() {
-        BombEntity bomb = new BombEntity(0, 0);
+        BombEntity bomb = new BombEntity(0, 0, Logic.ANY);
         assertEntityIsCollected(bomb);
     }
     
@@ -164,7 +167,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
     public void TestBlock() {
         ArrayList<IEntity> entities = new ArrayList<>();
         CharacterEntity player = new CharacterEntity(0, 0);
-        BombEntity bomb = new BombEntity(0, 1);
+        BombEntity bomb = new BombEntity(0, 1, Logic.ANY);
         entities.add(bomb);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
 
@@ -190,5 +193,10 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
     @Override
     public void TestUnblock() {
         // Bombs cannot be unblocked
+    }
+
+    @Test
+    public void TestBombCannotBeMadeWithNotLogic() {
+        assertThrows(InvalidActionException.class, () -> new BombEntity(Logic.NOT));
     }
 }

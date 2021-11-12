@@ -50,8 +50,8 @@ public abstract class LogicEntity extends Entity implements ITicker {
                 return switches.stream().filter(SwitchEntity::isActive).count() == 1;
             case NOT:
                 return switches.stream().noneMatch(SwitchEntity::isActive);
-            // case CO_AND:
-            //     return switches.stream().anyMatch(SwitchEntity::isActive);
+            case CO_AND:
+                return switches.stream().allMatch(SwitchEntity::isActiveThisRound);
             default:
                 return false;
         }

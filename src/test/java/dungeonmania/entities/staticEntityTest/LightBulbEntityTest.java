@@ -87,18 +87,18 @@ public class LightBulbEntityTest implements IEntityTests {
         assertTestCasesFor(lightBulbLogic, activeResults);
     }
     
-    // TODO implement co_and
-    // @Test
-    // public void TestLightBulb_CoAnd() {
-    //     String lightBulbLogic = "co_and";
-    //     Map<String, Boolean> activeResults = new HashMap<String, Boolean>();
-    //     activeResults.put("and", false);
-    //     activeResults.put("or", false);
-    //     activeResults.put("xor", false);
-    //     activeResults.put("not", false);
-    //     activeResults.put("co_and", true);
-    //     assertTestCasesFor(lightBulbLogic, activeResults);
-    // }
+    @Test
+    public void TestLightBulb_CoAnd() {
+        String lightBulbLogic = "co_and";
+        Map<String, Boolean> activeResults = new HashMap<String, Boolean>();
+        activeResults.put("and", false);
+        activeResults.put("or", false);
+        activeResults.put("xor", false);
+        activeResults.put("not", false);
+        activeResults.put("co_and", true);
+        
+        assertTestCasesFor(lightBulbLogic, activeResults);
+    }
 
     private void assertTestCasesFor(String lightBulbLogic, Map<String, Boolean> activeResults) {
         Assertions.assertAll( "Test case for light bulb logic = " + lightBulbLogic, () -> {

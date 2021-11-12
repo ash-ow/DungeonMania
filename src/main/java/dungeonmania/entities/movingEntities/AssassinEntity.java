@@ -56,4 +56,9 @@ public class AssassinEntity extends MercenaryEntity implements IBoss {
         return 5;
     }
 
+    @Override
+    public void deactivteSpecialAbility() {
+        // This boss does not have special ability
+    }
+
 }

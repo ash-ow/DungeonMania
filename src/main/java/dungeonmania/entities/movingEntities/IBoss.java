@@ -1,5 +1,5 @@
 package dungeonmania.entities.movingEntities;
 
-public interface IBoss {
-
+public interface IBoss extends IBattlingEntity {
+    public void deactivteSpecialAbility();
 }

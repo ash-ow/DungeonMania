@@ -29,7 +29,7 @@ public class KeyEntity extends CollectableEntity {
     }
 
     public KeyEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY(), info.getInfo().getAsInt());
+        this(info.getX(), info.getY(), info.getKey());
     }
 
     public int getKeyNumber() {

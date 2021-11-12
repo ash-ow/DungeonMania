@@ -3,6 +3,7 @@ package dungeonmania.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IContactingEntity;
@@ -74,10 +75,15 @@ public class EntitiesControl {
     }
 
     public List<ITicker> getAllTickingEntities() {
-        return this.entities.stream()
+        List<ITicker> tickers = this.entities.stream()
             .filter(ITicker.class::isInstance)
             .map(ITicker.class::cast)
             .collect(Collectors.toList());
+
+        // get the logic entities last because they depend on other tickers
+        Stream<ITicker> logicEntities = tickers.stream().filter(c -> c instanceof LogicEntity);
+        Stream<ITicker> otherEntities = tickers.stream().filter(c -> !(c instanceof LogicEntity));
+        return Stream.concat(otherEntities, logicEntities).collect(Collectors.toList());
     }
 
     /**

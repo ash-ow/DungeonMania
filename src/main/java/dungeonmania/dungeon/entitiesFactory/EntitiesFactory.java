@@ -38,7 +38,8 @@ public class EntitiesFactory extends EntitiesControl {
             case SWAMP:entities.createNewEntityOnMap(new SwampEntity(jsonInfo)); break;
             case SCEPTRE:entities.createNewEntityOnMap(new SceptreEntity(jsonInfo)); break;
             case SUN_STONE:entities.createNewEntityOnMap(new SunStoneEntity(jsonInfo)); break;
-            case ASSASSIN: entities.createNewEntityOnMap(new AssassinEntity(jsonInfo));
+            case ASSASSIN: entities.createNewEntityOnMap(new AssassinEntity(jsonInfo)); break;
+            case LIGHT_BULB_OFF: entities.createNewEntityOnMap(new LightBulbEntity(jsonInfo)); break;
         }
     }
 }

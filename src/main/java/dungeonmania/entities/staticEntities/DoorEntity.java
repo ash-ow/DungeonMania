@@ -29,7 +29,7 @@ public class DoorEntity extends Entity implements IBlocker {
     }
 
     public DoorEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY(), info.getInfo().getAsInt());
+        this(info.getX(), info.getY(), info.getKey());
     }
     
     public int getKeyNumber() {

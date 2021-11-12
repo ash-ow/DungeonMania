@@ -24,7 +24,7 @@ public class PortalEntity extends Entity implements IContactingEntity {
     }
 
     public PortalEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY(), info.getInfo().getAsString());
+        this(info.getX(), info.getY(), info.getColor());
     }
 
     public String getColour() {

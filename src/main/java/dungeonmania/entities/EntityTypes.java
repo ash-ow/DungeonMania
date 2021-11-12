@@ -13,10 +13,12 @@ public enum EntityTypes {
     ZOMBIE_TOAST_SPAWNER("zombie_toast_spawner"),
     TIME_TRAVEL_PORTAL("time_travelling_portal"),
     SWAMP("swamp"),
+    LIGHT_BULB_ON("light_bulb_on"),
+    LIGHT_BULB_OFF("light_bulb_off"),
 
     // Moving Entities
-    SPIDER("spider"),    
-    ZOMBIE_TOAST("zombie_toast"),    
+    SPIDER("spider"),
+    ZOMBIE_TOAST("zombie_toast"),
     MERCENARY("mercenary"),
     ASSASSIN("assassin"),
     
@@ -33,14 +35,13 @@ public enum EntityTypes {
     ANDURIL("anduril"),    
     ARMOUR("armour"),    
     ONE_RING("one_ring"),  
-    TIME_TURNER("time_turner"),
-  
+    TIME_TURNER("time_turner"), 
     SUN_STONE("sun_stone"),    
     
     // IBuildableEntity
-    SHIELD("shield"),    
-    BOW("bow"),    
-    SCEPTRE("sceptre"),    
+    SHIELD("shield"),
+    BOW("bow"),
+    SCEPTRE("sceptre"),
     MIDNIGHT_ARMOUR("midnight_armour"),
     
     // Player

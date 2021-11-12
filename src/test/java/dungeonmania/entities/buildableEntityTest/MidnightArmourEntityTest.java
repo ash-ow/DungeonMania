@@ -91,14 +91,14 @@ public class MidnightArmourEntityTest implements IBuildableEntityTests {
         assassin2.doBattle(player2);
 
         Assertions.assertAll(
-            () -> assertEquals(-130, assassin1.getHealth()),
-            () -> assertEquals(10, assassin2.getHealth()),
+            () -> assertEquals(-120, assassin1.getHealth()),
+            () -> assertEquals(20, assassin2.getHealth()),
             () -> assertTrue(assassin1.getHealth() < assassin2.getHealth(), "Assassin 1 should receive extra damage since Player 1 has midnight armour")
         );
 
         Assertions.assertAll(
-            () -> assertEquals(95.8, player1.getHealth(), 1),
-            () -> assertEquals(79, player2.getHealth()),
+            () -> assertEquals(92, player1.getHealth(), 1),
+            () -> assertEquals(60, player2.getHealth()),
             () -> assertTrue(player1.getHealth() > player2.getHealth(), "Player 1 should receive less damage since it has midnight armour")
         );
     }

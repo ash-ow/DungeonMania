@@ -202,7 +202,7 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         CharacterEntity player = new CharacterEntity();
         SpiderEntity spider = new SpiderEntity(0, 0);
         spider.dropEntities(player, 1f);
-        List<CollectableEntity> inventory = player.getInventory();
+        List<ICollectable> inventory = player.getInventory();
         assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
     }
 }

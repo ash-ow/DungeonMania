@@ -42,7 +42,7 @@ public class OneRingEntityTest implements ICollectableEntityTest {
         player.setHealth(0);
         player.isAlive();
         assertEquals(100, player.getHealth());
-        List<CollectableEntity> inventory = player.getInventory();
+        List<ICollectable> inventory = player.getInventory();
         assertNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
     }
 }

@@ -74,7 +74,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
     @Override
     public void TestIsNotBuildable_EmptyInventory() {
         SceptreEntity sceptre = new SceptreEntity();
-        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
+        List<ICollectable> inventory = new ArrayList<ICollectable>();
         assertFalse(sceptre.isBuildable(inventory));
     }
 
@@ -82,7 +82,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
     @Override
     public void TestIsNotBuildable_InventoryFullOfWrongItems() {
         SceptreEntity sceptre = new SceptreEntity();
-        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
+        List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new ArrowsEntity());
         inventory.add(new BombEntity());
         assertFalse(sceptre.isBuildable(inventory));
@@ -92,7 +92,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
     @Override
     public void TestIsNotBuildable_InsufficientCorrectItems() {
         SceptreEntity sceptre = new SceptreEntity();
-        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
+        List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new WoodEntity());
         inventory.add(new SunStoneEntity());
         assertFalse(sceptre.isBuildable(inventory));

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.collectableEntities.CollectableEntity;
+import dungeonmania.entities.collectableEntities.ICollectable;
 import dungeonmania.util.DungeonEntityJsonObject;
 
 public class SceptreEntity extends BuildableEntity {
@@ -49,7 +49,7 @@ public class SceptreEntity extends BuildableEntity {
      * @return true or false depnding on whether a sceptre is buildable
      */
     @Override
-    public boolean isBuildable(List<CollectableEntity> inventory) {
+    public boolean isBuildable(List<ICollectable> inventory) {
         boolean requiredSunStone = false;
         boolean requiredWood = false;
         boolean requiredArrows = false;

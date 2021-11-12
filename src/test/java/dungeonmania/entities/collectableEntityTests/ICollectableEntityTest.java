@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntityTests;
-import dungeonmania.entities.collectableEntities.CollectableEntity;
+import dungeonmania.entities.collectableEntities.ICollectable;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
 public interface ICollectableEntityTest extends IEntityTests {
@@ -27,7 +27,7 @@ public interface ICollectableEntityTest extends IEntityTests {
         }
     }
 
-    public default void assertEntityIsCollected(CollectableEntity entity) {
+    public default void assertEntityIsCollected(ICollectable entity) {
         CharacterEntity player = new CharacterEntity(0, 1);
         EntitiesControl entities = new EntitiesControl();
         
@@ -38,7 +38,7 @@ public interface ICollectableEntityTest extends IEntityTests {
         assertItemInInventory(entity.getId(), player, entities);
     }
 
-    public default void assertEntityIsUsedAndPlacedIfApplicable(CollectableEntity entity) {
+    public default void assertEntityIsUsedAndPlacedIfApplicable(ICollectable entity) {
         CharacterEntity player = new CharacterEntity(0, 1);
         EntitiesControl entities = new EntitiesControl();
         entities.addEntity(entity);

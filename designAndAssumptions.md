@@ -188,5 +188,12 @@ The state pattern is used in SpiderEntity to determine the direction of the spid
 - both armour and shield halves incoming damage
 - player can equip shield and armour at the same time
 
+### Extension
 
+**Logic Gates:**
+
+- Co_and is only true for one tick:
+    - doors remain unlocked forever
+    - bombs explode
+    - light bulbs flicker on and off after on tick
 

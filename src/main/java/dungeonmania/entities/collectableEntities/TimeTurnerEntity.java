@@ -1,7 +1,9 @@
 package dungeonmania.entities.collectableEntities;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class TimeTurnerEntity extends CollectableEntity{
     public TimeTurnerEntity() {
@@ -12,7 +14,7 @@ public class TimeTurnerEntity extends CollectableEntity{
         super(x, y, EntityTypes.TIME_TURNER);
     }
 
-    public TimeTurnerEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public TimeTurnerEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 }

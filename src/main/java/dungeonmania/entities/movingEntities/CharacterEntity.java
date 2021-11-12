@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.dungeon.GameModeType;
 import dungeonmania.entities.Entity;
@@ -20,7 +22,7 @@ import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 import dungeonmania.util.Position;
 import dungeonmania.entities.collectableEntities.*;
 
@@ -69,8 +71,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this.health = (int) Math.ceil(100 / Generator.difficulty.get(gameMode));
     }
 
-    public CharacterEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public CharacterEntity(JsonObject info, GameModeType gameMode) {
+        this(info.get("x").getAsInt(), info.get("y").getAsInt(), gameMode);
     }
 
     public EntityResponse getInfo() {

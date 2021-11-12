@@ -2,12 +2,13 @@ package dungeonmania.entities.movingEntities;
 
 import java.util.Random;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.entities.movingEntities.moveBehaviour.RandomMove;
-import dungeonmania.util.DungeonEntityJsonObject;
 import dungeonmania.util.RandomChance;
 
 public class HydraEntity extends Entity implements IBoss, IAutoMovingEntity {
@@ -24,8 +25,8 @@ public class HydraEntity extends Entity implements IBoss, IAutoMovingEntity {
         this.moveBehaviour = new RandomMove();
     }
 
-    public HydraEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public HydraEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 
     public HydraEntity() {

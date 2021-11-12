@@ -3,6 +3,8 @@ package dungeonmania.entities.movingEntities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.dungeon.GameModeType;
 import dungeonmania.dungeon.Instruction;
@@ -12,7 +14,7 @@ import dungeonmania.entities.collectableEntities.ICollectable;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class OlderCharacter extends CharacterEntity implements IAutoMovingEntity{
     private List<Instruction> ticks;
@@ -30,8 +32,8 @@ public class OlderCharacter extends CharacterEntity implements IAutoMovingEntity
         this.ticks = new ArrayList<>(ticks);
     }
 
-    public OlderCharacter(DungeonEntityJsonObject info, GameModeType gameMode, List<Instruction> ticks) {
-        this(info.getX(), info.getY(), gameMode, ticks);
+    public OlderCharacter(JsonObject info, GameModeType gameMode, List<Instruction> ticks) {
+        this(info.get("player-x").getAsInt(), info.get("player-y").getAsInt(), gameMode, ticks);
     }
 
     @Override

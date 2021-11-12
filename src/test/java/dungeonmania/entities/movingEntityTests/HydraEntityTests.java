@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
+import dungeonmania.entities.collectableEntities.ICollectable;
 import dungeonmania.entities.collectableEntities.AndurilEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -79,7 +80,7 @@ public class HydraEntityTests implements IMovingEntityTest, IBattlingEntityTest 
         CharacterEntity player = new CharacterEntity();
         HydraEntity hydra = new HydraEntity();
         hydra.dropEntities(player, 1f);
-        List<CollectableEntity> inventory = player.getInventory();
+        List<ICollectable> inventory = player.getInventory();
         assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
     }
 

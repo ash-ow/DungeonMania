@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 import dungeonmania.util.Position;
 import dungeonmania.dungeon.entitiesFactory.EntitiesFactory;
 import dungeonmania.entities.*;
@@ -160,8 +162,8 @@ public class EntitiesControl {
     // endregion
     
     
-    public void createEntity(DungeonEntityJsonObject jsonInfo, GameModeType gameMode) {
-        EntitiesFactory.generateEntity(jsonInfo, this, gameMode);
+    public void createEntity(JsonObject jsonInfo, GameModeType gameMode) {
+        EntitiesFactory.generateEntity(jsonInfo, this);
     }
     
     /**
@@ -171,10 +173,11 @@ public class EntitiesControl {
      * @param type      type of entity
      */
     public void createEntity(Integer x, Integer y, EntityTypes type) {
-        DungeonEntityJsonObject jsonElement = new DungeonEntityJsonObject();
-        jsonElement.setPosition(new Position(x, y));
-        jsonElement.setType(type);
-        EntitiesFactory.generateEntity(jsonElement, this, GameModeType.STANDARD);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("x", x);
+        jsonObject.addProperty("y", y);
+        jsonObject.addProperty("type", type.toString());
+        EntitiesFactory.generateEntity(jsonObject, this);
     }
 
     public Position getLargestCoordinate() {

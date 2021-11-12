@@ -22,7 +22,7 @@ import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 import dungeonmania.util.Position;
 
 import java.io.File;
@@ -110,11 +110,11 @@ public class Dungeon {
     public void initializeEntities(JsonArray entities) {
         for (JsonElement entityInfo : entities) {
             JsonObject entityObj = entityInfo.getAsJsonObject();
-            DungeonEntityJsonObject dungeonEntityJsonInfo = new DungeonEntityJsonObject(entityObj);            
-            if (dungeonEntityJsonInfo.getType().equals(EntityTypes.PLAYER)) {
-                this.player = new CharacterEntity(dungeonEntityJsonInfo.getX(), dungeonEntityJsonInfo.getY(), this.gameMode);
+            String type = entityObj.get("type").getAsString();           
+            if (type.equals(EntityTypes.PLAYER.toString())) {
+                this.player = new CharacterEntity(entityObj, this.gameMode);
             } else {
-                this.entitiesControl.createEntity(dungeonEntityJsonInfo, this.gameMode);
+                this.entitiesControl.createEntity(entityObj, this.gameMode);
             }
         }
     }
@@ -293,10 +293,7 @@ public class Dungeon {
         this.entitiesControl = new EntitiesControl();
         JsonObject obj = gameStates.get(start);
         initializeEntities(obj.getAsJsonArray("entities"));
-        OlderCharacter olderCharacter = 
-                new OlderCharacter(obj.get("player-x").getAsInt(), 
-                        obj.get("player-y").getAsInt(),
-                        gameMode, ticks.subList(start, ticks.size()));
+        OlderCharacter olderCharacter = new OlderCharacter(obj, gameMode, ticks.subList(start, ticks.size()));
         entitiesControl.createNewEntityOnMap(olderCharacter);
         olderCharacter.pickupAllCollectables(entitiesControl);
         return this.getInfo();

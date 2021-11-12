@@ -11,7 +11,7 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class DoorEntity extends Entity implements IBlocker {
     private int keyNumber;
@@ -28,8 +28,8 @@ public class DoorEntity extends Entity implements IBlocker {
         this.isLocked = true;
     }
 
-    public DoorEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY(), info.getKey());
+    public DoorEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt(), jsonInfo.get("key").getAsInt());
     }
     
     public int getKeyNumber() {

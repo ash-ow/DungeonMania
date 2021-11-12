@@ -1,17 +1,18 @@
 package dungeonmania.dungeon.entitiesFactory;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
-import dungeonmania.dungeon.GameModeType;
+import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.entities.movingEntities.*;
 import dungeonmania.entities.movingEntities.spiderEntity.*;
 import dungeonmania.entities.staticEntities.*;
-import dungeonmania.util.DungeonEntityJsonObject;
 
 public class EntitiesFactory extends EntitiesControl {
-    public static void generateEntity(DungeonEntityJsonObject jsonInfo, EntitiesControl entities, GameModeType gameMode) {
-        switch (jsonInfo.getType()){
+    public static void generateEntity(JsonObject jsonInfo, EntitiesControl entities) {
+        switch (EntityTypes.getEntityType(jsonInfo.get("type").getAsString())){
             case WALL: entities.createNewEntityOnMap(new WallEntity(jsonInfo)); break;
             case EXIT: entities.createNewEntityOnMap(new ExitEntity(jsonInfo)); break;
             case SWITCH: entities.createNewEntityOnMap(new SwitchEntity(jsonInfo)); break;
@@ -42,6 +43,7 @@ public class EntitiesFactory extends EntitiesControl {
             case HYDRA: entities.createNewEntityOnMap(new HydraEntity(jsonInfo)); break;   
             case LIGHT_BULB_OFF: entities.createNewEntityOnMap(new LightBulbEntity(jsonInfo)); break;
             case WIRE: entities.createNewEntityOnMap(new WireEntity(jsonInfo)); break;
+            case ANDURIL: entities.createNewEntityOnMap(new AndurilEntity(jsonInfo)); break;
         }
     }
 }

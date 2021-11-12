@@ -1,7 +1,9 @@
 package dungeonmania.entities.collectableEntities;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class WoodEntity extends CollectableEntity {
     /**
@@ -18,7 +20,7 @@ public class WoodEntity extends CollectableEntity {
         super(x, y, EntityTypes.WOOD);
     }
 
-    public WoodEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public WoodEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 }

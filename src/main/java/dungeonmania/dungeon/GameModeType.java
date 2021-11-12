@@ -24,12 +24,4 @@ public enum GameModeType {
     public String toString() {
         return this.type;
     }
-
-    public boolean equals(GameModeType type) {
-        if (type == this) {
-            return true;
-        }
-
-        return type.toString().equals(this.toString());
-    }
 }

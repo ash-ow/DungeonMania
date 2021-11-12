@@ -16,6 +16,8 @@ public enum EntityTypes {
     SPIDER("spider"),    
     ZOMBIE_TOAST("zombie_toast"),    
     MERCENARY("mercenary"),
+
+    // Boss Entities
     ASSASSIN("assassin"),
     HYDRA("hydra"),
     

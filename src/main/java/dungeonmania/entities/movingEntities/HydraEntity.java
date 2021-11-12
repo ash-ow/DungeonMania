@@ -1,5 +1,7 @@
 package dungeonmania.entities.movingEntities;
 
+import java.util.Random;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
@@ -16,6 +18,8 @@ public class HydraEntity extends Entity implements IBoss, IAutoMovingEntity {
 
     public HydraEntity(int x, int y) {
         super(x, y, EntityTypes.HYDRA);
+        Random rand = new Random();
+        this.seed = rand.nextInt();
         this.setHealth(30);
         this.moveBehaviour = new RandomMove();
     }
@@ -36,24 +40,24 @@ public class HydraEntity extends Entity implements IBoss, IAutoMovingEntity {
     @Override
     public float loseHealth(float enemyHealth, float enemyDamage) {
         float damage = ((enemyHealth * enemyDamage) / 5);
-        float lossHealthProbability = ((specialAbility) ? 0.5f : 1f);
-        if (RandomChance.getRandomBoolean(lossHealthProbability)) {
-            this.health -= damage;
-        } else {
-            this.health += damage;
-        }
+        growNewHead(damage);
         return damage;
     }
 
     public float loseHealth(float enemyHealth, float enemyDamage, int seed) {
+        this.seed = seed;
         float damage = ((enemyHealth * enemyDamage) / 5);
+        growNewHead(damage);
+        return damage;
+    }
+
+    private void growNewHead(float damage) {
         float lossHealthProbability = ((specialAbility) ? 0.5f : 1f);
-        if (RandomChance.getRandomBoolean(lossHealthProbability, seed)) {
+        if (RandomChance.getRandomBoolean(lossHealthProbability, this.seed)) {
             this.health -= damage;
         } else {
             this.health += damage;
         }
-        return damage;
     }
 
     @Override

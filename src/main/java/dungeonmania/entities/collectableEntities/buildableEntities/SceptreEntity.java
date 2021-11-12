@@ -51,7 +51,7 @@ public class SceptreEntity extends BuildableEntity {
      * @return true or false depnding on whether a sceptre is buildable
      */
     @Override
-    public boolean isBuildable(List<CollectableEntity> inventory) {
+    public boolean isBuildable(List<ICollectable> inventory) {
         boolean requiredSunStone = false;
         boolean requiredWood = false;
         boolean requiredArrows = false;

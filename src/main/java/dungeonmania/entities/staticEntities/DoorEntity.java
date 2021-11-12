@@ -9,7 +9,6 @@ import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
-import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 
 

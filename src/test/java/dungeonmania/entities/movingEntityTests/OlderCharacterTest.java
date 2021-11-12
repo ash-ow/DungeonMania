@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
@@ -53,19 +54,23 @@ public class OlderCharacterTest implements IEntityTests {
         entitiesControl.addEntity(boulder);
         entitiesControl.addEntity(olderCharacter);
         entitiesControl.moveAllMovingEntities(player);
-        assertFalse(entitiesControl.contains(bomb));
-        assertTrue(olderCharacter.getInventory().contains(bomb));
-        entitiesControl.moveAllMovingEntities(player);
-        assertEquals(olderCharacter.getPosition(), new Position(0, 2));
-        assertEquals(boulder.getPosition(), new Position(0, 3));
-        entitiesControl.moveAllMovingEntities(player);
-        assertTrue(entitiesControl.contains(bomb));
-        assertFalse(olderCharacter.getInventory().contains(bomb));
-        entitiesControl.moveAllMovingEntities(player);
-        assertEquals(olderCharacter.getPosition(), new Position(0, 3));
-        entitiesControl.moveAllMovingEntities(player);
-        assertEquals(olderCharacter.getPosition(), new Position(0, 3));
-        entitiesControl.moveAllMovingEntities(player);
-        assertFalse(entitiesControl.contains(olderCharacter));
+        Assertions.assertAll(
+            () -> assertFalse(entitiesControl.contains(bomb)),
+            () -> assertTrue(olderCharacter.getInventory().contains(bomb)),
+            () -> entitiesControl.moveAllMovingEntities(player),
+            () -> assertEquals(olderCharacter.getPosition(), new Position(0, 2)),
+            () -> assertEquals(olderCharacter.getPosition(), new Position(0, 2)),
+            () -> assertEquals(boulder.getPosition(), new Position(0, 3)),
+            () -> entitiesControl.moveAllMovingEntities(player),
+            () -> assertTrue(entitiesControl.contains(bomb)),
+            () -> entitiesControl.moveAllMovingEntities(player),
+            () -> assertFalse(olderCharacter.getInventory().contains(bomb)),
+            () -> entitiesControl.moveAllMovingEntities(player),
+            () -> assertEquals(olderCharacter.getPosition(), new Position(0, 3)),
+            () -> entitiesControl.moveAllMovingEntities(player),
+            () -> assertEquals(olderCharacter.getPosition(), new Position(0, 3)),
+            () -> entitiesControl.moveAllMovingEntities(player),
+            () -> assertFalse(entitiesControl.contains(olderCharacter))
+        );  
     }
 }

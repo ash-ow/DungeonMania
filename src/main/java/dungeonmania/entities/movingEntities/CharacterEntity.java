@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import javax.sound.midi.SysexMessage;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.dungeon.GameModeType;
 import dungeonmania.entities.Entity;
@@ -32,6 +34,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     private int invincibilityRemaining = 0;
     private int invisibilityRemaining = 0;
     private GameModeType gameMode;
+    private boolean isTimeTravelling = false;
 
     /**
      * Character constructor
@@ -49,6 +52,13 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this(x, y, GameModeType.STANDARD);
     }
     
+    public CharacterEntity(int x, int y, EntityTypes type, GameModeType gameMode) {
+        super(x, y, type);
+        this.previousPosition = new Position(x, y);
+        this.gameMode = gameMode;
+        this.health = (int) Math.ceil(100 / Generator.difficulty.get(gameMode));
+    }
+
     /**
      * Character constructor
      * @param x          x-coordinate on the map
@@ -56,7 +66,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param gameMode   denotes the difficulty settings of the game 
      */
     public CharacterEntity(int x, int y, GameModeType gameMode) {
-        super(x, y, EntityTypes.PLAYER);
+        this(x, y, EntityTypes.PLAYER, gameMode);      
         this.previousPosition = new Position(x, y);
         this.gameMode = gameMode;
         this.health = (int) Math.ceil(100 / Generator.difficulty.get(gameMode));
@@ -235,7 +245,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public void move(Direction direction, EntitiesControl entitiesControl) {
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
-        if ( !EntitiesControl.containsBlockingEntities(targetEntities) || canUnblock(targetEntities, direction, entitiesControl) ) {
+        if (!EntitiesControl.containsBlockingEntities(targetEntities) || canUnblock(targetEntities, direction, entitiesControl) ) {
             this.previousPosition = this.position;
             this.move(direction); 
             decrementPotionDurations();    
@@ -354,9 +364,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param targetEntities   list of entities to be interacted with
      * @param entitiesControl  list of all entities
      */
-    private void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
+    protected void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
         List<IContactingEntity> targetInteractable = entitiesControl.getInteractableEntitiesFrom(targetEntities);
         for (IContactingEntity entity : targetInteractable) {
+            System.out.println(entity.getId());
             entity.contactWithPlayer(entitiesControl, this);
         }
     }
@@ -412,5 +423,13 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     public Position getPreviousPosition() {
         return this.previousPosition;
+    }
+
+    public boolean IsTimeTravelling() {
+        return this.isTimeTravelling;
+    }
+    
+    public void setTimeTravelling(boolean timeTravel) {
+        this.isTimeTravelling = timeTravel;
     }
 }

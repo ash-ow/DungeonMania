@@ -1,5 +1,6 @@
 package dungeonmania.util;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.EntityTypes;
@@ -9,6 +10,7 @@ public class DungeonEntityJsonObject {
     EntityTypes type;
     Integer key;
     String color;
+    public JsonObject entityObj;
 
     public DungeonEntityJsonObject() {
         this.position = null;
@@ -18,6 +20,7 @@ public class DungeonEntityJsonObject {
     }
 
     public DungeonEntityJsonObject(JsonObject entityObj) {
+        this.entityObj = entityObj;
         Integer xAxis = entityObj.get("x").getAsInt();
         Integer yAxis = entityObj.get("y").getAsInt();
         this.position = new Position(xAxis, yAxis);

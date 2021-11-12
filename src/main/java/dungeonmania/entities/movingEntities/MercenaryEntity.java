@@ -157,7 +157,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     // endregion
     
     @Override
-    public void setMoveBehvaiour(IMovingBehaviour newBehaviour) {
+    public void setMoveBehaviour(IMovingBehaviour newBehaviour) {
         this.moveBehaviour = newBehaviour;        
     }
 

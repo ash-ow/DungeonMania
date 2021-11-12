@@ -95,7 +95,6 @@ public interface IBattlingEntity extends IContactingEntity {
     public default void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
         battle(entities, player);
     }
-
 }
 
     

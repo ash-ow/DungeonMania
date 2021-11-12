@@ -3,6 +3,7 @@ package dungeonmania.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IContactingEntity;
@@ -19,7 +20,6 @@ public class EntitiesControl {
     private List<IEntity> entities;
     private Integer tickCounter = 1;
     private Integer entityCounter = 0;
-    private Position playerStartPosition = new Position(0, 0);
     public final static List<EntityTypes> usableItems;
     static {
         usableItems = new ArrayList<>();
@@ -27,10 +27,6 @@ public class EntitiesControl {
         usableItems.add(EntityTypes.INVINCIBILITY_POTION);
         usableItems.add(EntityTypes.BOMB);
         usableItems.add(EntityTypes.INVISIBILITY_POTION);
-    }
-
-    public void setPlayerStartPosition(Position playerStartPosition) {
-        this.playerStartPosition = playerStartPosition;
     }
 
     public EntitiesControl() {
@@ -79,10 +75,15 @@ public class EntitiesControl {
     }
 
     public List<ITicker> getAllTickingEntities() {
-        return this.entities.stream()
+        List<ITicker> tickers = this.entities.stream()
             .filter(ITicker.class::isInstance)
             .map(ITicker.class::cast)
             .collect(Collectors.toList());
+
+        // get the logic entities last because they depend on other tickers
+        Stream<ITicker> logicEntities = tickers.stream().filter(c -> c instanceof LogicEntity);
+        Stream<ITicker> otherEntities = tickers.stream().filter(c -> !(c instanceof LogicEntity));
+        return Stream.concat(otherEntities, logicEntities).collect(Collectors.toList());
     }
 
     /**
@@ -103,7 +104,7 @@ public class EntitiesControl {
     public void runAwayAllMovingEntities(CharacterEntity player) {
         List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
         for (IAutoMovingEntity entity : movingEntities) {
-            entity.setMoveBehvaiour(new RunAway());
+            entity.setMoveBehaviour(new RunAway());
         }
     }
 
@@ -142,6 +143,10 @@ public class EntitiesControl {
 
     public static <T extends IEntity> IEntity getFirstEntityOfType(List<T> entityList, Class<?> cls) {
         return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findFirst().orElse(null);
+    }
+
+    public <T extends IEntity> IEntity getFirstEntityOfType(Class<?> cls) {
+        return getFirstEntityOfType(this.entities, cls);
     }
 
     public boolean positionContainsEntityType(Position position, Class<?> cls) {
@@ -189,8 +194,8 @@ public class EntitiesControl {
      * Generates enemies based on game mode
      * @param gameMode         difficulty of the game
      */
-    public void generateEnemyEntities(GameModeType gameMode) {
-        Generator.generateEnemyEntities(this, this.tickCounter, gameMode, this.playerStartPosition);
+    public void generateEnemyEntities(GameModeType gameMode, Position playerStartPosition) {
+        Generator.generateEnemyEntities(this, this.tickCounter, gameMode, playerStartPosition);
         tickCounter++;
     }
 

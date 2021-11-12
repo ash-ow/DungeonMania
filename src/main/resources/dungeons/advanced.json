@@ -404,6 +404,16 @@
         "type": "wall"
       },
       {
+        "x": 1,
+        "y": 11,
+        "type": "time_turner"
+      },
+      {
+        "x": 2,
+        "y": 11,
+        "type": "time_travelling_portal"
+      },
+      {
         "x": 3,
         "y": 11,
         "type": "wall"

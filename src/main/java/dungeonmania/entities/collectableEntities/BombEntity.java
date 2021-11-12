@@ -9,7 +9,6 @@ import dungeonmania.entities.IEntity;
 import dungeonmania.entities.ITicker;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
-import dungeonmania.entities.staticEntities.SwitchEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.DungeonEntityJsonObject;
 
@@ -84,7 +83,7 @@ public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
     private void explode(EntitiesControl entitiesControl) {
         List<IEntity> adjacentEntities = entitiesControl.getAllAdjacentEntities(this.getPosition());
         adjacentEntities.addAll(entitiesControl.getAllEntitiesFromPosition(this.getPosition()));
-        if (isAdjacentSwitchActive(adjacentEntities)) {
+        if (containsActiveSwitch(adjacentEntities)) {
             for (IEntity entity : adjacentEntities) {
                 explodeNonCharacterEntity(entity, entitiesControl);               
             }
@@ -100,18 +99,6 @@ public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
         if (!(entity instanceof CharacterEntity)) {
             entitiesControl.removeEntity(entity);
         }
-    }
-
-    /**
-     * Checks if adjacent switches are active
-     * @param adjacentEntities list of adjacent entities 
-     * @return                 true if there are adjacent switches which are active and false otherwise
-     */
-    private boolean isAdjacentSwitchActive(List<IEntity> adjacentEntities) {
-        return EntitiesControl
-        .getEntitiesOfType(adjacentEntities, SwitchEntity.class)
-        .stream()
-        .anyMatch(SwitchEntity::isActive);
     }
 
     @Override

@@ -114,12 +114,6 @@ public class LightBulbEntityTest implements IEntityTests {
     }
 
     private void assertBulbActivity(Boolean isActiveExpected, LightBulbEntity bulb, String lightBulbLogic, String testCaseLogic) {
-        System.out.println(
-            "Logic = \"" + lightBulbLogic + "\"" + " | " +
-            "Test Case = \"" + testCaseLogic + "\"" + " | " +
-            "Expected = \"" + isActiveExpected + "\"" + " | " +
-            "Actual = \"" + bulb.isActive() + "\""
-        );
         assertEquals(isActiveExpected, bulb.isActive());
     }
 

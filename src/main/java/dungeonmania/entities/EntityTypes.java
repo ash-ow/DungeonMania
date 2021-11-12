@@ -15,6 +15,7 @@ public enum EntityTypes {
     SWAMP("swamp"),
     LIGHT_BULB_ON("light_bulb_on"),
     LIGHT_BULB_OFF("light_bulb_off"),
+    WIRE("wire"),
 
     // Moving Entities
     SPIDER("spider"),

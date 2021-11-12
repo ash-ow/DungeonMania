@@ -1,6 +1,8 @@
 package dungeonmania.entities.staticEntityTest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.security.cert.CollectionCertStoreParameters;
 import java.util.Arrays;
@@ -29,26 +31,34 @@ public class WireEntityTest implements IEntityTests {
     @Test
     public void TestEntityResponseInfo() {
         WireEntity bulb = new WireEntity();
-        assertEntityResponseInfoEquals(bulb, "light_bulb_off-0-0-0", EntityTypes.WIRE, new Position(0,0,0), false);
+        assertEntityResponseInfoEquals(bulb, "wire-0-0-0", EntityTypes.WIRE, new Position(0,0,0), false);
     }
     
-    @Override
     @Test
     public void TestFollowWire() {
         Dungeon dungeon = getDungeonWithWireTestData();
         LightBulbEntity bulb = (LightBulbEntity) dungeon.entitiesControl.getEntityById("3");
         List<SwitchEntity> adjacentSwitches = bulb.getAdjacentSwitches(dungeon.entitiesControl);
         List<String> actualIds = adjacentSwitches.stream().map(Entity::getId).collect(Collectors.toList());
-        List<String> expectedIds = Arrays.asList("0","1","2","8","10");
-        assertIterableEquals(expectedIds, actualIds);
+        List<String> expectedIds = dungeon.entitiesControl.getAllEntitiesOfType(SwitchEntity.class).stream().map(Entity::getId).collect(Collectors.toList());
+
+        System.out.println(actualIds);
+        System.out.println(expectedIds);
+        assertIterableEqualsAnyOrder(expectedIds, actualIds);
     }
     
+    private void assertIterableEqualsAnyOrder(List<String> expectedIds, List<String> actualIds) {
+        assertEquals(expectedIds.size(), actualIds.size());
+        assertTrue(expectedIds.containsAll(actualIds));
+        assertTrue(actualIds.containsAll(expectedIds));
+    }
+
     private Dungeon getDungeonWithWireTestData() {
         /*
-           0 1 2 3 4 5
-        0  . S . . S .
-        1  S B W W W .
-        2  . S P . S .
+           0  1  2  3  4  5
+        0  .  S0 .  .  S1 .
+        1  S2 B3 W4 W5 W6 .
+        2  .  S7 P  .  S8  .
         */
         
         String entities = "{\"entities\": [" +
@@ -60,11 +70,10 @@ public class WireEntityTest implements IEntityTests {
                 "{\"x\": 2,\"y\": 1,\"type\": \"wire\"}," + // W 4
                 "{\"x\": 3,\"y\": 1,\"type\": \"wire\"}," + // W 5
                 "{\"x\": 4,\"y\": 1,\"type\": \"wire\"}," + // W 6
-                "{\"x\": 4,\"y\": 1,\"type\": \"wire\"}," + // W 7
 
-                "{\"x\": 1,\"y\": 2,\"type\": \"switch\"}," + // S 8
-                "{\"x\": 2,\"y\": 2,\"type\": \"player\"}" + // P 9
-                "{\"x\": 4,\"y\": 2,\"type\": \"switch\"}," + // S 10
+                "{\"x\": 1,\"y\": 2,\"type\": \"switch\"}," + // S 7
+                "{\"x\": 2,\"y\": 2,\"type\": \"player\"}," + // P
+                "{\"x\": 4,\"y\": 2,\"type\": \"switch\"}" + // S 8
 
                 "]}";
 

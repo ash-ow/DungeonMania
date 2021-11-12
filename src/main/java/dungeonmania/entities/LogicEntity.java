@@ -30,7 +30,7 @@ public abstract class LogicEntity extends Entity implements ITicker {
         List<WireEntity> adjacentWires = EntitiesControl.getEntitiesOfType(adjacentEntities, WireEntity.class);
         List<SwitchEntity> adjacentSwitches = EntitiesControl.getEntitiesOfType(adjacentEntities, SwitchEntity.class);
         for (WireEntity wire: adjacentWires) {
-            adjacentSwitches.addAll(wire.followWire(this.position));
+            adjacentSwitches.addAll(wire.followWire(this.position, entitiesControl));
         }
         return adjacentSwitches;
     }

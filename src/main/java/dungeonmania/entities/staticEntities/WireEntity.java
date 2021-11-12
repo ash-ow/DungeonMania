@@ -2,9 +2,12 @@ package dungeonmania.entities.staticEntities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.IEntity;
 import dungeonmania.util.DungeonEntityJsonObject;
 import dungeonmania.util.Position;
 
@@ -27,14 +30,30 @@ public class WireEntity extends Entity {
      * @param position from which the wire is being followed
      * @return a list of all the switches in contact with the wire
      */
-    public List<SwitchEntity> followWire(Position position) {
-        // TODO
-        // pass the position of the entity that is following the wire
-        // get a list of all cardinally adjacent entities
-        // filter them by instance of Wire or Switch entity
-        // loop through that list 
-        // if wire, the run followWire recursively
-        // if Switch (which must happen eventually) then return the switch
-        return new ArrayList<SwitchEntity>();
+    public List<SwitchEntity> followWire(Position position, EntitiesControl entitiesControl) {
+        List<WireEntity> checkedWires = new ArrayList<WireEntity>();
+        return this.followWireInternal(position, entitiesControl, checkedWires);
+    }
+
+    List<SwitchEntity> followWireInternal(Position position, EntitiesControl entitiesControl, List<WireEntity> checkedWires) {
+        List<IEntity> adjacentEntities = getEntitiesThatHaveNotAlreadyBeenFollowed(entitiesControl, checkedWires);
+        List<WireEntity> adjacentWires = EntitiesControl.getEntitiesOfType(adjacentEntities, WireEntity.class);
+        List<SwitchEntity> adjacentSwitches = EntitiesControl.getEntitiesOfType(adjacentEntities, SwitchEntity.class);
+        checkedWires.add(this);
+        
+        for (WireEntity wire : adjacentWires) {
+            adjacentSwitches.addAll(wire.followWireInternal(this.getPosition(), entitiesControl, checkedWires));
+        }
+        return adjacentSwitches;
+
+    }
+
+    private List<IEntity> getEntitiesThatHaveNotAlreadyBeenFollowed(EntitiesControl entitiesControl, List<WireEntity> checkedWires) {
+        return entitiesControl
+            .getAllAdjacentEntities(this.getPosition())
+            .stream()
+            .filter(e -> !e.getPosition().equals(position))
+            .filter(e -> !checkedWires.contains(e))
+            .collect(Collectors.toList());
     }
 }

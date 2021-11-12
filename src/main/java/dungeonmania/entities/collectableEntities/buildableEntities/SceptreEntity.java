@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
+import dungeonmania.entities.collectableEntities.ICollectable;
 
 
 public class SceptreEntity extends BuildableEntity {

@@ -3,6 +3,7 @@ package dungeonmania.entities.collectableEntityTests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import dungeonmania.entities.IEntity;
 import dungeonmania.entities.Logic;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.movingEntities.*;
+import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -191,5 +193,10 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
     @Override
     public void TestUnblock() {
         // Bombs cannot be unblocked
+    }
+
+    @Test
+    public void TestBombCannotBeMadeWithNotLogic() {
+        assertThrows(InvalidActionException.class, () -> new BombEntity(Logic.NOT));
     }
 }

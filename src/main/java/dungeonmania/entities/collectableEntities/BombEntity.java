@@ -12,6 +12,7 @@ import dungeonmania.entities.Logic;
 import dungeonmania.entities.LogicEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
+import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.util.Direction;
 import dungeonmania.util.DungeonEntityJsonObject;
 
@@ -25,6 +26,9 @@ public class BombEntity extends LogicEntity implements ICollectable, IBlocker {
     
     public BombEntity(int x, int y, Logic logic) {
         super(x, y, logic, EntityTypes.BOMB);
+        if (logic == Logic.NOT) {
+            throw new InvalidActionException("Bomb cannot be created with \"not\" logic");
+        }
     }
 
     public BombEntity(DungeonEntityJsonObject info) {

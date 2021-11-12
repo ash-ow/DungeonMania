@@ -1,11 +1,8 @@
 package dungeonmania.entities.staticEntityTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.security.cert.CollectionCertStoreParameters;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.staticEntities.LightBulbEntity;
 import dungeonmania.entities.staticEntities.SwitchEntity;

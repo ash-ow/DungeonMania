@@ -1,5 +1,7 @@
 package dungeonmania.entities.staticEntities;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
@@ -15,6 +17,15 @@ public class SwitchDoorEntity extends LogicEntity implements IBlocker{
 
     public SwitchDoorEntity(int x, int y, Logic logic) {
         super(x, y, logic, EntityTypes.SWITCH_DOOR);
+        this.isLocked = true;
+    }
+
+    public SwitchDoorEntity(JsonObject info) {
+        this(
+            info.get("x").getAsInt(),
+            info.get("y").getAsInt(),
+            Logic.getLogicFromJsonObject(info)
+        );
     }
 
     @Override

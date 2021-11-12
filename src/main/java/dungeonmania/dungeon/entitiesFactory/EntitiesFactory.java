@@ -44,7 +44,7 @@ public class EntitiesFactory extends EntitiesControl {
             case LIGHT_BULB_OFF: entities.createNewEntityOnMap(new LightBulbEntity(jsonInfo)); break;
             case WIRE: entities.createNewEntityOnMap(new WireEntity(jsonInfo)); break;
             case ANDURIL: entities.createNewEntityOnMap(new AndurilEntity(jsonInfo)); break;
-            case SWITCH_DOOR: entities.createNewEntityOnMap(new SwitchEntity(jsonInfo)); break;
+            case SWITCH_DOOR: entities.createNewEntityOnMap(new SwitchDoorEntity(jsonInfo)); break;
         }
     }
 }

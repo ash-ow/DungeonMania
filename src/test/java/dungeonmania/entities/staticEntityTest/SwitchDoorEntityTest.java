@@ -1,5 +1,6 @@
 package dungeonmania.entities.staticEntityTest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -10,11 +11,13 @@ import com.google.gson.JsonObject;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlockerTest;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.Logic;
 import dungeonmania.entities.movingEntities.BoulderEntity;
+import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.staticEntities.SwitchDoorEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
@@ -23,13 +26,18 @@ public class SwitchDoorEntityTest implements IEntityTests, IBlockerTest{
 
     @Override
     public void TestBlock() {
-        
+        CharacterEntity player = new CharacterEntity(1, 2);
+        SwitchDoorEntity switchDoorEntity = new SwitchDoorEntity(1, 1, Logic.ANY);
+        EntitiesControl entitiesControl = new EntitiesControl();
+        entitiesControl.addEntity(switchDoorEntity);
+        player.move(Direction.UP, entitiesControl);
+        assertEquals(player.getPosition(), new Position(1, 2));
     }
 
     @Override
     @Test
     public void TestUnblock() {
-        Dungeon dungeon = getDungeonWithSwitchDoorTestData("and");
+        Dungeon dungeon = getDungeonWithSwitchDoorTestData("co_and");
         SwitchDoorEntity switchDoorEntity = (SwitchDoorEntity) dungeon.entitiesControl.getFirstEntityOfType(SwitchDoorEntity.class);
         assertTrue(switchDoorEntity.isBlocking());
         dungeon.entitiesControl.createNewEntityOnMap(new BoulderEntity(1, 0));

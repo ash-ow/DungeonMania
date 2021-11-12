@@ -1,8 +1,10 @@
 package dungeonmania.entities.staticEntities;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class ExitEntity extends Entity {
     public ExitEntity() {
@@ -13,7 +15,7 @@ public class ExitEntity extends Entity {
         super(x, y, EntityTypes.EXIT);
     }
 
-    public ExitEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public ExitEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 }

@@ -1,8 +1,10 @@
 package dungeonmania.entities.collectableEntities;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class ArmourEntity extends CollectableEntity implements IDefensiveEntity {
     /**
@@ -22,8 +24,8 @@ public class ArmourEntity extends CollectableEntity implements IDefensiveEntity 
         this.durability = 4;
     }
     
-    public ArmourEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public ArmourEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
     
     /**

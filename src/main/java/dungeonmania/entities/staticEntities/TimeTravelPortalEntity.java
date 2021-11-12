@@ -1,11 +1,13 @@
 package dungeonmania.entities.staticEntities;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class TimeTravelPortalEntity extends Entity implements IContactingEntity {
     public TimeTravelPortalEntity() {
@@ -16,8 +18,8 @@ public class TimeTravelPortalEntity extends Entity implements IContactingEntity 
         super(x, y, EntityTypes.TIME_TRAVEL_PORTAL);
     }
 
-    public TimeTravelPortalEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public TimeTravelPortalEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 
     @Override

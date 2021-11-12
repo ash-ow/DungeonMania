@@ -3,9 +3,11 @@ package dungeonmania.entities.collectableEntities.buildableEntities;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class SceptreEntity extends BuildableEntity {
     
@@ -26,8 +28,8 @@ public class SceptreEntity extends BuildableEntity {
         this.durability = 2;
     }
 
-    public SceptreEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public SceptreEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
     
     

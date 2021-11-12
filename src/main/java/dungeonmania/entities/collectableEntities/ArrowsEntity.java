@@ -1,7 +1,9 @@
 package dungeonmania.entities.collectableEntities;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class ArrowsEntity extends CollectableEntity {
     /**
@@ -20,7 +22,7 @@ public class ArrowsEntity extends CollectableEntity {
         super(x, y, EntityTypes.ARROW);
     }
 
-    public ArrowsEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public ArrowsEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 }

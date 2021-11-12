@@ -5,11 +5,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 import dungeonmania.util.Position;
 
 public class WireEntity extends Entity {
@@ -22,8 +24,8 @@ public class WireEntity extends Entity {
         super(x, y, EntityTypes.WIRE);
     }
 
-	public WireEntity(DungeonEntityJsonObject jsonInfo) {
-        this(jsonInfo.getX(), jsonInfo.getY());
+	public WireEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
 	}
 
     /**

@@ -1,8 +1,10 @@
 package dungeonmania.entities.collectableEntities;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class HealthPotionEntity extends CollectableEntity {
     /**
@@ -21,8 +23,8 @@ public class HealthPotionEntity extends CollectableEntity {
         super(x, y, EntityTypes.HEALTH_POTION);
     }
 
-    public HealthPotionEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public HealthPotionEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 
     /**

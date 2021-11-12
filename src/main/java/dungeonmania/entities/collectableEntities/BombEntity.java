@@ -2,6 +2,8 @@ package dungeonmania.entities.collectableEntities;
 
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
@@ -10,7 +12,7 @@ import dungeonmania.entities.ITicker;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
     boolean isArmed = false;
@@ -31,8 +33,8 @@ public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
         super(x, y, EntityTypes.BOMB);
     }
 
-    public BombEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public BombEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
     
     /**

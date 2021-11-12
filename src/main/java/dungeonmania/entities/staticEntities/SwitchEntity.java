@@ -2,12 +2,14 @@ package dungeonmania.entities.staticEntities;
 
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.ITicker;
 import dungeonmania.entities.movingEntities.BoulderEntity;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class SwitchEntity extends Entity implements ITicker {
     private boolean active = false;
@@ -21,8 +23,8 @@ public class SwitchEntity extends Entity implements ITicker {
         super(x, y, EntityTypes.SWITCH);
     }
 
-    public SwitchEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public SwitchEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 
     @Override

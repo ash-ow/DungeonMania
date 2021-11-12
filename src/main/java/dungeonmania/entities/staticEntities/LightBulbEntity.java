@@ -2,6 +2,7 @@ package dungeonmania.entities.staticEntities;
 
 import com.google.gson.JsonObject;
 
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.Logic;
 import dungeonmania.entities.LogicEntity;
@@ -30,7 +31,7 @@ public class LightBulbEntity extends LogicEntity {
     }
 
     @Override
-    protected void activate() {
+    protected void activate(EntitiesControl entitiesControl) {
         this.type = EntityTypes.LIGHT_BULB_ON;
     }
 

@@ -2,37 +2,42 @@ package dungeonmania.entities.collectableEntities;
 
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.ITicker;
+import dungeonmania.entities.Logic;
+import dungeonmania.entities.LogicEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.DungeonEntityJsonObject;
 
-public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
+public class BombEntity extends LogicEntity implements ICollectable, IBlocker {
     boolean isArmed = false;
+    protected int durability = 1;
 
-    /**
-     * Bomb constructor
-     */
-    public BombEntity() {
-        this(0, 0);
+    public BombEntity(Logic logic) {
+        this(0, 0, logic);
     }
     
-    /**
-     * Bomb constructor
-     * @param x x-coordinate on the map
-     * @param y y-coordinate on the map
-     */
-    public BombEntity(int x, int y) {
-        super(x, y, EntityTypes.BOMB);
+    public BombEntity(int x, int y, Logic logic) {
+        super(x, y, logic, EntityTypes.BOMB);
     }
 
     public BombEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+        // TODO get rid of this when you get rid of DungeonEntityJsonObject class
+        this(info.entityObj);
+    }
+
+    public BombEntity(JsonObject info) {
+        this(
+            info.get("x").getAsInt(),
+            info.get("y").getAsInt(),
+            Logic.getLogicFromJsonObject(info)
+        );
     }
     
     /**
@@ -40,6 +45,16 @@ public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
      */
     public boolean isArmed() {
         return this.isArmed;
+    }
+
+    @Override
+    public int getDurability() {
+        return this.durability;
+    }
+
+    @Override
+    public void decrementDurability() {
+        this.durability--;
     }
     
     /**
@@ -66,19 +81,8 @@ public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
     }
 
     /**
-     * Explodes the bomb after tick is called
-     * @param entitiesControl list of entities which the bomb could affect
-     */
-    @Override
-    public void tick(EntitiesControl entitiesControl) {
-        if (this.isArmed) {
-            explode(entitiesControl);
-        }
-    }
-
-    /**
      * Explodes the bomb by removing entities
-     * @param entitiesControl list of entities which the bomb affects
+     * @param entitiesControl
      */
     private void explode(EntitiesControl entitiesControl) {
         List<IEntity> adjacentEntities = entitiesControl.getAllAdjacentEntities(this.getPosition());
@@ -92,8 +96,8 @@ public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
 
     /**
      * Removes entity if they aren't a character entity
-     * @param entitiesControl list of entities which the bomb affects
-     * @param entity          entity which is removed
+     * @param entitiesControl
+     * @param entity entity which is removed
      */
     private void explodeNonCharacterEntity(IEntity entity, EntitiesControl entitiesControl) {
         if (!(entity instanceof CharacterEntity)) {
@@ -118,4 +122,16 @@ public class BombEntity extends CollectableEntity implements ITicker, IBlocker {
         return false;
     }
 // endregion
+
+    @Override
+    protected void activate(EntitiesControl entitiesControl) {
+        if (this.isArmed) {
+            explode(entitiesControl);
+        }
+    }
+
+    @Override
+    protected void deactivate() {
+        // Bombs should do nothing when deactivated
+    }
 }

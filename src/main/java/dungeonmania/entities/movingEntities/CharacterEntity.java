@@ -163,7 +163,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         return this.inventory.stream().filter(cls::isInstance).collect(Collectors.toList());
     }
 
-    public void addEntityToInventory(CollectableEntity entity) {
+    public void addEntityToInventory(ICollectable entity) {
         inventory.add(entity);
     }
 

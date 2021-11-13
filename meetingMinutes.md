@@ -78,6 +78,20 @@ Complete UML
 Refactor code to reflect design decisions
 Finalise functionality and implementations
 
+# Teams Meeting #1 for MileStone 3  
+Date: 04/11/2021
+Platform: Microsoft Teams
+Attendees: Koonatai, Ashley, Ariel, Baktiar, Wilson
+Agenda: 
+- Reflect on Milestone 2 Check-in 
+- Assign Milestone 3 Roles
+- Clarify any issues with spec 
+Meeting Summary:
+-   TO Do's from MileStone 2 were placed on Trello board and were given top priorty
+-   MileStone 3 tasks were created on the Trello Board which broke down M3spec into smaller chunks
+-   Group members were given the freedom to choose which tasks they wished to do
+-   Clarification on sun-stone and time portals
+
 # Template
 Date: xx/xx/xxxx
 Attendess: xxx

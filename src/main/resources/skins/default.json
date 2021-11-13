@@ -42,6 +42,7 @@
         "armour": "images/tileset/items/armour.png",
         "unlocked_door": "images/tileset/walls/wooden/door_unlocked.png",
         "assassin": "images/tileset/entities/assassin.png",
+        "sun_stone": "images/tileset/entities/sun_stone.png",
         "hydra": "images/tileset/entities/hydra.png",
         "time_turner": "images/tileset/entities/time_turner.png",
         "time_travelling_portal": "images/tileset/entities/portal_04.png"

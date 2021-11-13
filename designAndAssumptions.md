@@ -95,6 +95,7 @@ The state pattern is used in SpiderEntity to determine the direction of the spid
 - To unblock, it sorts through all the keys in the player's inventory to find the correct one for the door in the player position
 - thus there is no need to implement dropping/re-collecting functionality, which is simpler and enhances user experience
 
+
 **portal:**
 
 - The portal is an IInteractingEntity
@@ -188,6 +189,10 @@ The state pattern is used in SpiderEntity to determine the direction of the spid
 - both armour and shield halves incoming damage
 - player can equip shield and armour at the same time
 
+**sunstone:**
+- Our implementation of Sun Stone being used "interchangeably with treasure" means it can be used in all instances i.e. collecting treasure goal,      building sheilds and bribing assassins/mercenaries. 
+- Sunstone will not be removed when bribing mercenary or assassin. It is only removed from inventory when used as a building material. 
+- SunStone will unlock all doors but if player has a key, the player will use the key first
 ### Extension
 
 **Logic Gates:**

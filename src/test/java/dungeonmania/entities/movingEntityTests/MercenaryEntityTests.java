@@ -18,6 +18,7 @@ import dungeonmania.entities.collectableEntities.ICollectable;
 import dungeonmania.entities.collectableEntities.InvincibilityPotionEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
+import dungeonmania.entities.collectableEntities.SunStoneEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
@@ -134,7 +135,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
     }
     
     @Test
-    public void mercenaryMovesOutofWay() {
+    public void TestBribeMercenaryWithTreasure() {
         CharacterEntity player = new CharacterEntity(0, 5);
         MercenaryEntity mercenary = new MercenaryEntity(0, 4);
         TreasureEntity treasure = new TreasureEntity();
@@ -149,6 +150,25 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         assertEquals(new Position(0, 5), mercenary.getPosition());
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 4), mercenary.getPosition());
+    }
+
+    @Test
+    public void TestBribeMercenaryWithStone() {
+        CharacterEntity player = new CharacterEntity(0, 5);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 4);
+        SunStoneEntity sun_stone = new SunStoneEntity();
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(mercenary);        
+        player.addEntityToInventory(sun_stone); 
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        dungeon.interact(mercenary.getId());
+        assertTrue(mercenary.isBribed());
+        dungeon.tick(Direction.UP);
+        assertTrue(dungeon.entitiesControl.contains(mercenary));
+        assertEquals(new Position(0, 5), mercenary.getPosition());
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 4), mercenary.getPosition());
+        assertNotNull(player.getInventoryItem(sun_stone.getId()), "Inventory should contain entity " + sun_stone.getId());
     }
 
     @Test

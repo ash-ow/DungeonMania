@@ -31,9 +31,11 @@ public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
      */
     @Override
     public void initialiseRequiredComponents() {
+
         this.requiredComponents.put(EntityTypes.WOOD, 2);
         this.requiredComponents.put(EntityTypes.TREASURE, 1);
         this.requiredComponents.put(EntityTypes.KEY, 1);
+        this.requiredComponents.put(EntityTypes.SUN_STONE, 1);
     }
     
     /**
@@ -46,6 +48,7 @@ public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
         boolean requiredWood = false;
         boolean requiredTreasure = false;
         boolean requiredKey = false;
+        boolean requiredStone = false;
         for (Map.Entry<EntityTypes, Integer> entry : requiredComponents.entrySet()) {
             EntityTypes component = entry.getKey();
             int quantity = entry.getValue();
@@ -60,6 +63,9 @@ public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
                     case KEY:
                         requiredKey = true;
                         break;
+                    case SUN_STONE:
+                        requiredStone = true;
+                        break;
                     default:
                         break;
                 }
@@ -67,9 +73,11 @@ public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
         }
         return (
             requiredWood &&
-            (requiredTreasure || requiredKey)
+            (requiredTreasure || requiredKey || requiredStone)
         );
     }
+
+
     
     @Override 
     public float reduceDamage(float damage, CharacterEntity player) {

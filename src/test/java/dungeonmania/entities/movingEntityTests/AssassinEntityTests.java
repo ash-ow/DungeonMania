@@ -3,6 +3,7 @@ package dungeonmania.entities.movingEntityTests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 
@@ -12,13 +13,14 @@ import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
+import dungeonmania.entities.collectableEntities.SunStoneEntity;
 import dungeonmania.entities.movingEntities.AssassinEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.exceptions.InvalidActionException;
 
 public class AssassinEntityTests extends MercenaryEntityTests {
     @Test
-    public void testBribe() {
+    public void testBribeTreasure() {
         CharacterEntity player = new CharacterEntity(0, 5);
         AssassinEntity assassin = new AssassinEntity(0, 4);
         TreasureEntity treasure = new TreasureEntity();
@@ -30,6 +32,23 @@ public class AssassinEntityTests extends MercenaryEntityTests {
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         dungeon.interact(assassin.getId());
         assertTrue(assassin.isBribed());
+    }
+
+    @Test
+    //Test if assassin bribed by sun_stone & check that item is not removed
+    public void testBribeSunStone() {
+        CharacterEntity player = new CharacterEntity(0, 5);
+        AssassinEntity assassin = new AssassinEntity(0, 4);
+        SunStoneEntity sun_stone = new SunStoneEntity();
+        OneRingEntity oneRing = new OneRingEntity();
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(assassin);        
+        player.addEntityToInventory(sun_stone); 
+        player.addEntityToInventory(oneRing);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        dungeon.interact(assassin.getId());
+        assertTrue(assassin.isBribed());
+        assertNotNull(player.getInventoryItem(sun_stone.getId()), "Inventory should contain entity " + sun_stone.getId());
     }
 
     @Test

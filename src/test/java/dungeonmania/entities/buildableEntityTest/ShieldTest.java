@@ -29,9 +29,10 @@ public class ShieldTest implements IBuildableEntityTests {
     @Test
     @Override
     public void TestIsBuildable() {
-        Assertions.assertAll( "Can build shield with treasure or key",
+        Assertions.assertAll( "Can build shield with treasure or key or sun stone",
             () -> assertCanBuildShieldWithTreasure(),
-            () -> assertCanBuildShieldWithKey()   
+            () -> assertCanBuildShieldWithKey(),
+            () -> assertCanBuildShieldWithSunStone()  
         );
     }
 
@@ -65,6 +66,22 @@ public class ShieldTest implements IBuildableEntityTests {
             assertEquals(EntityTypes.SHIELD.toString(), item.getType());
         }
         assertTrue(player.getInventory().size() == 1);
+    }
+
+    public void assertCanBuildShieldWithSunStone() {
+        CharacterEntity player = new CharacterEntity();
+        WoodEntity wood = new WoodEntity();
+        WoodEntity wood2 = new WoodEntity();
+        SunStoneEntity sun_stone = new SunStoneEntity();
+        player.addEntityToInventory(wood);
+        player.addEntityToInventory(wood2);
+        player.addEntityToInventory(sun_stone);
+        player.build(EntityTypes.SHIELD);
+        List<ItemResponse> inventory = player.getInventoryInfo();
+        for (ItemResponse item : inventory) {
+            assertEquals(EntityTypes.SHIELD.toString(), item.getType());
+        }
+        assertEquals(1, player.getInventory().size());
     }
 
     @Test

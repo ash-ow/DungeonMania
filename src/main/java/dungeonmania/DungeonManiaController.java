@@ -2,9 +2,11 @@ package dungeonmania;
 
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.exceptions.InvalidActionException;
+import dungeonmania.generators.DungeonGenerator;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.FileLoader;
+import dungeonmania.util.Position;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -19,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class DungeonManiaController {
-    private Dungeon dungeon;
+    public Dungeon dungeon;
 
     public DungeonManiaController() {
     }
@@ -124,5 +126,17 @@ public class DungeonManiaController {
         return dungeon.timeTravel(ticks);
     }
 
+    public DungeonResponse generateDungeon(int xStart, int yStart, int xEnd, int yEnd, String gameMode) throws IllegalArgumentException {
+        if (!getGameModes().contains(gameMode)) {
+            throw new IllegalArgumentException("invalid gameMode");
+        }
 
+        Position start = new Position(xStart, yStart);
+        Position end = new Position(xEnd, yEnd);
+
+        DungeonGenerator dungeonGenerator = new DungeonGenerator(start, end, gameMode);
+        this.dungeon = dungeonGenerator.GenerateDungeon();
+
+        return dungeon.getInfo();
+    }
 }

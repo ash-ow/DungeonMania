@@ -22,7 +22,7 @@ public class DoorEntity extends Entity implements IBlocker {
 
      /**
      * Door constructor
-     * @param keyNumber denotes the door id 
+     * @param keyNumber      denotes the door id 
      */
     public DoorEntity(int keyNumber) {
         this(0, 0, keyNumber);
@@ -30,9 +30,9 @@ public class DoorEntity extends Entity implements IBlocker {
     
     /**
      * Door constructor
-     * @param x x-coordinate on the map
-     * @param y y-coordinate on the map
-     * @param keyNumber denotes the door id which is unlockable by a key with corresponding keyNumber 
+     * @param x             x-coordinate on the map
+     * @param y             y-coordinate on the map
+     * @param keyNumber     denotes the door id which is unlockable by a key with corresponding keyNumber 
      */
     public DoorEntity(int x, int y, int keyNumber) {
         super(x, y, EntityTypes.DOOR);
@@ -66,7 +66,7 @@ public class DoorEntity extends Entity implements IBlocker {
 
     /**
      * Checks whether the player has a sun_stone in inventory and returns either TRUE or FALSE
-     * @param player       the player which should have sun_stone in inventory 
+     * @param player       the player has a sun_stone in inventory 
      */
     private boolean getStoneFromInventory(CharacterEntity player) {
         return player
@@ -95,6 +95,7 @@ public class DoorEntity extends Entity implements IBlocker {
      */
     private void tryUnlockWithStone(SunStoneEntity sun_stone, CharacterEntity player) {
             this.isLocked = false;
+            this.type = EntityTypes.UNLOCKED_DOOR;
         }
 
     @Override

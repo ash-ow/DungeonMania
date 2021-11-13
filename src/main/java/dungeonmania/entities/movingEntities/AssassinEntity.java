@@ -21,12 +21,18 @@ public class AssassinEntity extends MercenaryEntity implements IBoss {
         this(0, 0);
     }
 
+    
     public AssassinEntity(int x, int y) {
         super(x, y, EntityTypes.ASSASSIN);
         this.damage = 5;
         this.health = 80;
     }
     
+    /**
+     * Determines the interactions of the assassin with the player based on range and whether they have treasure/sunstone AND one ring
+     * @param player the player with which the assassin will interact with 
+     */
+    //TO DO: implement player.useItem(); reduce hardcoding of sun_stone with treasure
     @Override
     public boolean interactWith(CharacterEntity player) throws InvalidActionException {
         IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);

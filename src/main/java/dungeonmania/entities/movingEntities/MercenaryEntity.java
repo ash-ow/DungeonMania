@@ -133,10 +133,11 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      * Determines the interactions of the mercenary with the player based on range and whether they have treasure
      * @param player the player with which the mercenary will interact with 
      */
+    //TO DO: implement player.useItem()?; remove hardcoding of sunstone/treasure
     public boolean interactWith(CharacterEntity player) throws InvalidActionException {
         IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);
-        IEntity stoneFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), SunStoneEntity.class);
-        if (treasureFound == null && stoneFound == null) {
+        IEntity sunStoneFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), SunStoneEntity.class);
+        if (treasureFound == null && sunStoneFound == null) {
             throw new InvalidActionException("Player has no treasure");
         }
         if (!isInRange(player)) {
@@ -147,6 +148,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         this.isBribed = true;
         return removeAfterInteraction();    
     }
+    
 
     /**
      * Determines if the player is in range of the mercenary

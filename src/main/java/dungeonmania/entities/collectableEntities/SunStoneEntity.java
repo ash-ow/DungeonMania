@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public class SunStoneEntity extends TreasureEntity implements ITreasure {
+public class SunStoneEntity extends TreasureEntity{
 
     public SunStoneEntity() {
         this(0,0);
@@ -26,14 +26,11 @@ public class SunStoneEntity extends TreasureEntity implements ITreasure {
     
     /**
      * When sun_stone is used for bribing it is not removed from inventory and overrides the Treasure class implementation
-     * @param player CharacterEntity using the potion
+     * @param player CharacterEntity using the sun_stone
      */
     @Override
     public void used(CharacterEntity player) {
-        player.removeEntityFromInventory(this);
+    
     }  
-    
-
-    
 
 }

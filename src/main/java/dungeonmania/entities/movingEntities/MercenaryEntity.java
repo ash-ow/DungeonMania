@@ -10,6 +10,8 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Map.Entry;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
@@ -22,6 +24,7 @@ import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
+
 import dungeonmania.util.Position;
 
 public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity, IInteractableEntity {
@@ -47,8 +50,8 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         this(x, y, EntityTypes.MERCENARY);
     }
 
-    public MercenaryEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public MercenaryEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 
     public MercenaryEntity(int x, int y, EntityTypes type) {
@@ -132,13 +135,14 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      */
     public boolean interactWith(CharacterEntity player) throws InvalidActionException {
         IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);
-        if (treasureFound == null) {
-            throw new InvalidActionException("Player has no treasure/sunstone");
+        IEntity stoneFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), SunStoneEntity.class);
+        if (treasureFound == null && stoneFound == null) {
+            throw new InvalidActionException("Player has no treasure");
         }
         if (!isInRange(player)) {
             throw new InvalidActionException("Player is too far away");
         }
-        treasureFound.used(player);
+        player.removeEntityFromInventory(treasureFound);
         player.addTeammates(this);
         this.isBribed = true;
         return removeAfterInteraction();    
@@ -157,7 +161,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     // endregion
     
     @Override
-    public void setMoveBehvaiour(IMovingBehaviour newBehaviour) {
+    public void setMoveBehaviour(IMovingBehaviour newBehaviour) {
         this.moveBehaviour = newBehaviour;        
     }
 
@@ -167,3 +171,4 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     }
 
 }
+

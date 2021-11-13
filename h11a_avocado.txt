@@ -1,0 +1,390 @@
+Autotesting Result = 86.0/110, the final cap hasn't been defined yet but will be around 80-90
+Test 1-1
+
+GamemodesTest > 1-1 Testing peaceful mode causes player to take no damage FAILED
+    org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+        at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:40)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:35)
+        at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:179)
+        at dungeonmania.controllerTest.GamemodesTest.testPeacefulNoDamage(GamemodesTest.java:23)
+FAILURE
+DONE
+Test 1-2
+
+GamemodesTest > 1-2 Testing zombies spawn every 15 ticks in hard mode FAILED
+    org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+        at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:40)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:35)
+        at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:179)
+        at dungeonmania.controllerTest.GamemodesTest.testHardZombieSpawning(GamemodesTest.java:45)
+FAILURE
+DONE
+Test 1-3
+
+GamemodesTest > 1-3 Test invincibility potions don't work in hard mode FAILED
+    org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+        at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:40)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:35)
+        at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:179)
+        at dungeonmania.controllerTest.GamemodesTest.testHardInvincibility(GamemodesTest.java:80)
+FAILURE
+DONE
+Test 2-1
+SUCCESS
+DONE
+Test 2-2
+SUCCESS
+DONE
+Test 2-3
+SUCCESS
+DONE
+Test 2-4
+
+ZombieTest > ZombieSpawnerTest > Testing zombie spawners spawn zombies every 20 ticks FAILED
+    org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+        at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:40)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:35)
+        at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:179)
+        at dungeonmania.controllerTest.ZombieTest$ZombieSpawnerTest.testZombieSpawning(ZombieTest.java:104)
+FAILURE
+DONE
+Test 2-5
+SUCCESS
+DONE
+Test 3-1
+SUCCESS
+DONE
+Test 3-2
+SUCCESS
+DONE
+Test 3-3
+SUCCESS
+DONE
+Test 3-4
+
+MercenaryTest > Testing mercenaries spawn with armour FAILED
+    org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+        at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:40)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:35)
+        at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:179)
+        at dungeonmania.controllerTest.MercenaryTest.testMercenarySpawningWithArmour(MercenaryTest.java:108)
+FAILURE
+DONE
+Test 4-1
+SUCCESS
+DONE
+Test 4-2
+
+CollectablesTest > 4-2 Test picking up a key puts the key in the inventory FAILED
+    org.opentest4j.AssertionFailedError: expected: <1> but was: <2>
+        at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+        at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+        at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+        at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:527)
+        at dungeonmania.controllerTest.CollectablesTest.testKeyInInventory(CollectablesTest.java:55)
+FAILURE
+DONE
+Test 4-3
+SUCCESS
+DONE
+Test 4-4
+SUCCESS
+DONE
+Test 5-1
+
+PortalsTest > 5-1 Test portals work both ways FAILED
+    org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+        at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:40)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:35)
+        at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:179)
+        at dungeonmania.controllerTest.PortalsTest.testTeleportationBothWays(PortalsTest.java:51)
+FAILURE
+DONE
+Test 5-2
+SUCCESS
+DONE
+Test 6-1
+SUCCESS
+DONE
+Test 6-2
+SUCCESS
+DONE
+Test 6-3
+SUCCESS
+DONE
+Test 6-4
+SUCCESS
+DONE
+Test 6-5
+SUCCESS
+DONE
+Test 6-6
+SUCCESS
+DONE
+Test 7-1
+SUCCESS
+DONE
+Test 7-2
+SUCCESS
+DONE
+Test 7-3
+SUCCESS
+DONE
+Test 7-4
+SUCCESS
+DONE
+Test 7-5
+SUCCESS
+DONE
+Test 7-6
+SUCCESS
+DONE
+Test 7-7
+SUCCESS
+DONE
+Test 7-8
+SUCCESS
+DONE
+Test 7-9
+SUCCESS
+DONE
+Test 8-1
+SUCCESS
+DONE
+Test 8-2
+SUCCESS
+DONE
+Test 8-3
+
+MovementTest > 8-3 Test the player can move left FAILED
+    org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+        at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:40)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:35)
+        at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:179)
+        at dungeonmania.controllerTest.MovementTest.testMovement(MovementTest.java:30)
+        at dungeonmania.controllerTest.MovementTest.testMovementLeft(MovementTest.java:51)
+FAILURE
+DONE
+Test 8-4
+SUCCESS
+DONE
+Test 9-1
+SUCCESS
+DONE
+Test 9-2
+SUCCESS
+DONE
+Test 9-3
+SUCCESS
+DONE
+Test 10-1
+SUCCESS
+DONE
+Test 10-2
+SUCCESS
+DONE
+Test 10-3
+SUCCESS
+DONE
+Test 10-4
+SUCCESS
+DONE
+Test 10-5
+
+BombsTest > Test placing a bomb on a map cardinally adjacent to an active switch causes the bomb to detonate, removing surrounding entites except for the player FAILED
+    org.opentest4j.AssertionFailedError: expected: <1> but was: <2>
+        at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+        at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+        at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+        at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:527)
+        at dungeonmania.controllerTest.BombsTest.testBombPlaceMapCardinallyAdjacentActiveSwitch(BombsTest.java:132)
+FAILURE
+DONE
+Test 10-6
+SUCCESS
+DONE
+Test 10-7
+SUCCESS
+DONE
+Test 10-8
+SUCCESS
+DONE
+Test 11-1
+SUCCESS
+DONE
+Test 11-2
+SUCCESS
+DONE
+Test 11-3
+SUCCESS
+DONE
+Test 12-1
+
+SaveLoadTest > 12-1 Test saving and loading a simple maze map FAILED
+    org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+        at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:40)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:35)
+        at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:179)
+        at dungeonmania.controllerTest.SaveLoadTest.testMazeSave(SaveLoadTest.java:30)
+FAILURE
+DONE
+Test 12-2
+
+SaveLoadTest > 12-2 Test saving and loading a map with boulders and switches FAILED
+    org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+        at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:40)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:35)
+        at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:179)
+        at dungeonmania.controllerTest.SaveLoadTest.testBouldersSave(SaveLoadTest.java:49)
+FAILURE
+DONE
+Test 12-3
+
+SaveLoadTest > 12-3 Test saving and loading a map with enemies and collectables FAILED
+    org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+        at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:40)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:35)
+        at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:179)
+        at dungeonmania.controllerTest.SaveLoadTest.testAdvancedSave(SaveLoadTest.java:67)
+FAILURE
+DONE
+Test 12-4
+
+SaveLoadTest > 12-4 Test saving on a map containing all types of entities FAILED
+    org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+        at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:40)
+        at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:35)
+        at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:179)
+        at dungeonmania.controllerTest.SaveLoadTest.testSaveAllEntities(SaveLoadTest.java:85)
+FAILURE
+DONE
+Test 13-1
+SUCCESS
+DONE
+Test 13-2
+SUCCESS
+DONE
+Test 13-3
+SUCCESS
+DONE
+Test 13-4
+SUCCESS
+DONE
+Test 13-5
+
+DoorsKeysTest > 13-5 Test player cannot pickup two keys FAILED
+    org.opentest4j.AssertionFailedError: expected: <1> but was: <2>
+        at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+        at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+        at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+        at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:527)
+        at dungeonmania.controllerTest.DoorsKeysTest.testPlayerCannotPickup2Keys(DoorsKeysTest.java:111)
+FAILURE
+DONE
+Test 13-6
+SUCCESS
+DONE
+Test 13-7
+SUCCESS
+DONE
+Test 14-1
+SUCCESS
+DONE
+Test 14-2
+SUCCESS
+DONE
+Test 14-3
+SUCCESS
+DONE
+Test 14-4
+SUCCESS
+DONE
+Test 14-5
+SUCCESS
+DONE
+Test 14-6
+SUCCESS
+DONE
+Test 15-1
+SUCCESS
+DONE
+Test 15-2
+SUCCESS
+DONE
+Test 15-3
+SUCCESS
+DONE
+Test 15-4
+SUCCESS
+DONE
+Test 15-5
+SUCCESS
+DONE
+Test 15-6
+SUCCESS
+DONE
+Test 15-7
+SUCCESS
+DONE
+Test 15-8
+SUCCESS
+DONE
+Test 15-9
+SUCCESS
+DONE
+Test 15-10
+SUCCESS
+DONE
+Test 15-11
+SUCCESS
+DONE
+Test 15-12
+SUCCESS
+DONE
+Test 15-13
+SUCCESS
+DONE
+Test 15-14
+SUCCESS
+DONE
+Test 15-15
+SUCCESS
+DONE
+Test 15-16
+SUCCESS
+DONE
+Test 16-1
+SUCCESS
+DONE
+Test 16-2
+SUCCESS
+DONE
+Test 16-3
+SUCCESS
+DONE
+Test 16-4
+SUCCESS
+DONE
+Test 16-5
+SUCCESS
+DONE
+Test 16-6
+SUCCESS
+DONE
+Test 16-7
+SUCCESS
+DONE

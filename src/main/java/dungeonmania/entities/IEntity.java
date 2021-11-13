@@ -1,5 +1,7 @@
 package dungeonmania.entities;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.response.models.*;
 import dungeonmania.util.Position;
 
@@ -11,4 +13,5 @@ public interface IEntity {
     public void setPosition(Position position);
 	public boolean isInSamePositionAs(IEntity ent);
     public void setId(String string);
+    public JsonObject buildJson();
 }

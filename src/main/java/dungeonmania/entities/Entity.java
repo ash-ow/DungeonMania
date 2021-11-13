@@ -1,5 +1,8 @@
 package dungeonmania.entities;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import dungeonmania.response.models.*;
 import dungeonmania.util.Position;
 
@@ -12,7 +15,6 @@ public abstract class Entity implements IEntity {
      * Entity constructor
      * @param x      x-coordinate on the map
      * @param y      y-coordinate on the map
-     * @param layer  layer on the map
      * @param type   type of entity 
      */
     protected Entity(int x, int y, EntityTypes type) {
@@ -23,6 +25,14 @@ public abstract class Entity implements IEntity {
 
     public EntityResponse getInfo() {
         return new EntityResponse(id, type, position, false);
+    }
+
+    public JsonObject buildJson() {
+        JsonObject entityInfo = new JsonObject();
+        entityInfo.addProperty("x", this.position.getX());
+        entityInfo.addProperty("y", this.position.getY());
+        entityInfo.addProperty("type", type.toString());
+        return entityInfo;
     }
 
     public String getId() {

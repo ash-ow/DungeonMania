@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.Logic;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.SceptreEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -37,10 +38,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         player.addEntityToInventory(new KeyEntity(1));
         player.addEntityToInventory(new SunStoneEntity());
         player.build(EntityTypes.SCEPTRE);
-        
-        List<EntityTypes> expectedInventory = Arrays.asList(EntityTypes.SCEPTRE);
-        List<EntityTypes> actualInventory = player.getInventory().stream().map(item -> item.getType()).collect(Collectors.toList());
-        assertIterableEquals(expectedInventory, actualInventory);
+        assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.SCEPTRE), player);
     }
 
     public void assertCanBuildSceptreWithWoodTreasureSunStone() {
@@ -49,10 +47,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         player.addEntityToInventory(new TreasureEntity());
         player.addEntityToInventory(new SunStoneEntity());
         player.build(EntityTypes.SCEPTRE);
-        
-        List<EntityTypes> expectedInventory = Arrays.asList(EntityTypes.SCEPTRE);
-        List<EntityTypes> actualInventory = player.getInventory().stream().map(item -> item.getType()).collect(Collectors.toList());
-        assertIterableEquals(expectedInventory, actualInventory);
+        assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.SCEPTRE), player);
     }
 
     public void assertCanBuildSceptreWith2ArrowsTreasureSunStone() {
@@ -62,10 +57,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         player.addEntityToInventory(new TreasureEntity());
         player.addEntityToInventory(new SunStoneEntity());
         player.build(EntityTypes.SCEPTRE);
-        
-        List<EntityTypes> expectedInventory = Arrays.asList(EntityTypes.SCEPTRE);
-        List<EntityTypes> actualInventory = player.getInventory().stream().map(item -> item.getType()).collect(Collectors.toList());
-        assertIterableEquals(expectedInventory, actualInventory);
+        assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.SCEPTRE), player);
     }
 
     public void assertCanBuildSceptreWith2ArrowsKeySunStone() {
@@ -75,10 +67,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         player.addEntityToInventory(new KeyEntity(1));
         player.addEntityToInventory(new SunStoneEntity());
         player.build(EntityTypes.SCEPTRE);
-        
-        List<EntityTypes> expectedInventory = Arrays.asList(EntityTypes.SCEPTRE);
-        List<EntityTypes> actualInventory = player.getInventory().stream().map(item -> item.getType()).collect(Collectors.toList());
-        assertIterableEquals(expectedInventory, actualInventory);
+        assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.SCEPTRE), player);
     }
 // endregion
     
@@ -86,7 +75,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
     @Override
     public void TestIsNotBuildable_EmptyInventory() {
         SceptreEntity sceptre = new SceptreEntity();
-        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
+        List<ICollectable> inventory = new ArrayList<ICollectable>();
         assertFalse(sceptre.isBuildable(inventory));
     }
 
@@ -94,18 +83,17 @@ public class SceptreEntityTest implements IBuildableEntityTests {
     @Override
     public void TestIsNotBuildable_InventoryFullOfWrongItems() {
         SceptreEntity sceptre = new SceptreEntity();
-        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
+        List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new ArrowsEntity());
-        inventory.add(new BombEntity());
+        inventory.add(new BombEntity(Logic.ANY));
         assertFalse(sceptre.isBuildable(inventory));
-        
     }
 
     @Test
     @Override
     public void TestIsNotBuildable_InsufficientCorrectItems() {
         SceptreEntity sceptre = new SceptreEntity();
-        List<CollectableEntity> inventory = new ArrayList<CollectableEntity>();
+        List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new WoodEntity());
         inventory.add(new SunStoneEntity());
         assertFalse(sceptre.isBuildable(inventory));
@@ -147,9 +135,6 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         player.addEntityToInventory(new TreasureEntity());
         player.addEntityToInventory(new SunStoneEntity());
         player.build(EntityTypes.SCEPTRE);
-        
-        List<EntityTypes> expectedInventory = Arrays.asList(EntityTypes.ARROW, EntityTypes.ARROW, EntityTypes.KEY, EntityTypes.SCEPTRE);
-        List<EntityTypes> actualInventory = player.getInventory().stream().map(item -> item.getType()).collect(Collectors.toList());
-        assertIterableEquals(expectedInventory, actualInventory);
+        assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.ARROW, EntityTypes.ARROW, EntityTypes.KEY, EntityTypes.SCEPTRE), player);
     }
 }

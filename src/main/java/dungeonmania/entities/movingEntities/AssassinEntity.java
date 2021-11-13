@@ -1,17 +1,19 @@
 package dungeonmania.entities.movingEntities;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.exceptions.InvalidActionException;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class AssassinEntity extends MercenaryEntity implements IBoss {
 
-    public AssassinEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public AssassinEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 
     public AssassinEntity() {
@@ -52,6 +54,11 @@ public class AssassinEntity extends MercenaryEntity implements IBoss {
     @Override
     public float getDamage() {
         return 5;
+    }
+
+    @Override
+    public void deactivteSpecialAbility() {
+        // This boss does not have special ability
     }
 
 }

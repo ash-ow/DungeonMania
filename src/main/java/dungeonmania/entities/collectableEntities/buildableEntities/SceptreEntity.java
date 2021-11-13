@@ -3,9 +3,12 @@ package dungeonmania.entities.collectableEntities.buildableEntities;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
-import dungeonmania.util.DungeonEntityJsonObject;
+import dungeonmania.entities.collectableEntities.ICollectable;
+
 
 public class SceptreEntity extends BuildableEntity {
     
@@ -26,8 +29,8 @@ public class SceptreEntity extends BuildableEntity {
         this.durability = 2;
     }
 
-    public SceptreEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public SceptreEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
     
     
@@ -49,7 +52,7 @@ public class SceptreEntity extends BuildableEntity {
      * @return true or false depnding on whether a sceptre is buildable
      */
     @Override
-    public boolean isBuildable(List<CollectableEntity> inventory) {
+    public boolean isBuildable(List<ICollectable> inventory) {
         boolean requiredSunStone = false;
         boolean requiredWood = false;
         boolean requiredArrows = false;

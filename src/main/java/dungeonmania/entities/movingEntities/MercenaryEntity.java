@@ -10,6 +10,8 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Map.Entry;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
@@ -21,7 +23,7 @@ import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 import dungeonmania.util.Position;
 
 public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity, IInteractableEntity {
@@ -42,14 +44,13 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      * Mercenary constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public MercenaryEntity(int x, int y) {
         this(x, y, EntityTypes.MERCENARY);
     }
 
-    public MercenaryEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public MercenaryEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 
     public MercenaryEntity(int x, int y, EntityTypes type) {
@@ -158,7 +159,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     // endregion
     
     @Override
-    public void setMoveBehvaiour(IMovingBehaviour newBehaviour) {
+    public void setMoveBehaviour(IMovingBehaviour newBehaviour) {
         this.moveBehaviour = newBehaviour;        
     }
 

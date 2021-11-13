@@ -3,6 +3,8 @@ package dungeonmania.entities.staticEntities;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
@@ -15,7 +17,7 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class ZombieToastSpawnerEntity extends Entity implements IBlocker, IInteractableEntity {
     public ZombieToastSpawnerEntity() {
@@ -26,8 +28,8 @@ public class ZombieToastSpawnerEntity extends Entity implements IBlocker, IInter
         super(x, y, EntityTypes.ZOMBIE_TOAST_SPAWNER);
     }
 
-    public ZombieToastSpawnerEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public ZombieToastSpawnerEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 
     @Override

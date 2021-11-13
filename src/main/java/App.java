@@ -86,6 +86,10 @@ public class App {
             return callUsingSessionAndArgument(request, (dmc) -> dmc.newGame(request.queryParams("dungeonName"), request.queryParams("gameMode")));
         }, gson::toJson);
 
+        Spark.post("/api/game/rewind/", "application/json", (request, response) -> {
+            return callUsingSessionAndArgument(request, (dmc) -> dmc.rewind(Integer.parseInt(request.queryParams("ticks"))));
+        }, gson::toJson);
+
         Spark.post("api/game/save/", "application/json", (request, response) -> {
             return callUsingSessionAndArgument(request, (dmc) -> dmc.saveGame(request.queryParams("name")));
         }, gson::toJson);

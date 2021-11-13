@@ -17,7 +17,7 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.collectableEntities.ArrowsEntity;
-import dungeonmania.entities.collectableEntities.CollectableEntity;
+import dungeonmania.entities.collectableEntities.ICollectable;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 import dungeonmania.entities.collectableEntities.WoodEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -107,8 +107,8 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         player.addEntityToInventory(arrow2);
         player.addEntityToInventory(arrow3);
         player.build(EntityTypes.BOW);
-        List<CollectableEntity> inventory = player.getInventory();
-        for (CollectableEntity item : inventory) {
+        List<ICollectable> inventory = player.getInventory();
+        for (ICollectable item : inventory) {
             assertEquals(item.getType(), EntityTypes.BOW);
         }
         assertEquals(1, player.getInventory().size());

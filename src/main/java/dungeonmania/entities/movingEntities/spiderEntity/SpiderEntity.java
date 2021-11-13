@@ -1,5 +1,7 @@
 package dungeonmania.entities.movingEntities.spiderEntity;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
@@ -7,7 +9,7 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IAutoMovingEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 import dungeonmania.util.Position;
 
 
@@ -28,7 +30,6 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
      * Spider constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public SpiderEntity(int x, int y) {
         super(x, y, EntityTypes.SPIDER);
@@ -36,8 +37,8 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
         firstPosition = this.position;
     }
 
-    public SpiderEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public SpiderEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 
 // region Moving
@@ -108,7 +109,7 @@ public class SpiderEntity extends Entity implements IBattlingEntity, IAutoMoving
 //endregion
 
     @Override
-    public void setMoveBehvaiour(IMovingBehaviour newBehaviour) {
+    public void setMoveBehaviour(IMovingBehaviour newBehaviour) {
         this.moveBehaviour = newBehaviour;        
     }
 }

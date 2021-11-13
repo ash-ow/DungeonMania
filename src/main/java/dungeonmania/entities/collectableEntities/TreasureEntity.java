@@ -1,8 +1,10 @@
 package dungeonmania.entities.collectableEntities;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class TreasureEntity extends CollectableEntity {
     /**
@@ -16,13 +18,12 @@ public class TreasureEntity extends CollectableEntity {
      * Treasure constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public TreasureEntity(int x, int y) {
         super(x, y, EntityTypes.TREASURE);
     }
 
-    public TreasureEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public TreasureEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 }

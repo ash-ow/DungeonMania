@@ -3,6 +3,8 @@ package dungeonmania.entities.movingEntities;
 import java.util.List;
 import java.util.Random;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
@@ -12,7 +14,7 @@ import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.entities.movingEntities.moveBehaviour.RandomMove;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
 
@@ -27,7 +29,6 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
      * Zombie Toast constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public ZombieToastEntity(int x, int y) {
         super(x, y, EntityTypes.ZOMBIE_TOAST);
@@ -37,8 +38,8 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         this.moveBehaviour = new RandomMove();
     }
 
-    public ZombieToastEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public ZombieToastEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
     
     /**
@@ -52,7 +53,6 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
      * Zombie Toast constructor
      * @param x                        x-coordinate on the map
      * @param y                        y-coordinate on the map
-     * @param layer                    layer on the map 
      * @param ArmourEntityProbability  determines the proability that an armour will be dropped
      * @param seed                     used to calculate probability
      */
@@ -142,7 +142,7 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
     }
 
     @Override
-    public void setMoveBehvaiour(IMovingBehaviour newBehaviour) {
+    public void setMoveBehaviour(IMovingBehaviour newBehaviour) {
         this.moveBehaviour = newBehaviour;        
     }
 

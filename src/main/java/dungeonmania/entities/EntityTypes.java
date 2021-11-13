@@ -8,15 +8,23 @@ public enum EntityTypes {
     BOULDER("boulder"),
     SWITCH("switch"),
     DOOR("door"),
+    UNLOCKED_DOOR("unlocked_door"),
     PORTAL("portal"),
     ZOMBIE_TOAST_SPAWNER("zombie_toast_spawner"),
+    TIME_TRAVEL_PORTAL("time_travelling_portal"),
     SWAMP("swamp"),
+    LIGHT_BULB_ON("light_bulb_on"),
+    LIGHT_BULB_OFF("light_bulb_off"),
+    WIRE("wire"),
 
     // Moving Entities
-    SPIDER("spider"),    
-    ZOMBIE_TOAST("zombie_toast"),    
+    SPIDER("spider"),
+    ZOMBIE_TOAST("zombie_toast"),
     MERCENARY("mercenary"),
+
+    // Boss Entities
     ASSASSIN("assassin"),
+    HYDRA("hydra"),
     
     // Collectable Entities
     TREASURE("treasure"),    
@@ -30,16 +38,19 @@ public enum EntityTypes {
     SWORD("sword"),    
     ANDURIL("anduril"),    
     ARMOUR("armour"),    
-    ONE_RING("one_ring"),    
+    ONE_RING("one_ring"),  
+    TIME_TURNER("time_turner"), 
     SUN_STONE("sun_stone"),    
     
     // IBuildableEntity
-    SHIELD("shield"),    
-    BOW("bow"),    
-    SCEPTRE("sceptre"),    
-
+    SHIELD("shield"),
+    BOW("bow"),
+    SCEPTRE("sceptre"),
+    MIDNIGHT_ARMOUR("midnight_armour"),
+    
     // Player
-    PLAYER("player")
+    PLAYER("player"),
+    OLDER_PLAYER("older_player")
     
     ;
 

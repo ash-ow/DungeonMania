@@ -7,13 +7,13 @@ import java.util.HashMap;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
+import dungeonmania.entities.collectableEntities.ICollectable;
 
 public abstract class BuildableEntity extends CollectableEntity {
     /**
      * Constructor for buildable entities
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map
      * @param type type of entity 
      */
     protected BuildableEntity(int x, int y, EntityTypes type) {
@@ -27,7 +27,7 @@ public abstract class BuildableEntity extends CollectableEntity {
      * @return true or false depnding on whether the item is buildable
      */
     protected Map<EntityTypes, Integer> requiredComponents = new HashMap<EntityTypes, Integer>();
-    public boolean isBuildable(List<CollectableEntity> inventory) {
+    public boolean isBuildable(List<ICollectable> inventory) {
         for (Map.Entry<EntityTypes, Integer> entry : requiredComponents.entrySet()) {
             EntityTypes component = entry.getKey();
             int quantity = entry.getValue();
@@ -44,7 +44,7 @@ public abstract class BuildableEntity extends CollectableEntity {
      * @param component component which is being searched for
      * @return the number of components
      */
-    protected int numberOfComponentItemsInInventory(List<CollectableEntity> inventory, EntityTypes component) {
+    protected int numberOfComponentItemsInInventory(List<ICollectable> inventory, EntityTypes component) {
         return inventory
             .stream()
             .filter(ent -> ent.getType() == component)
@@ -53,7 +53,7 @@ public abstract class BuildableEntity extends CollectableEntity {
     }
 
     /**
-     * Initialises required components to build a bow
+     * Initialises required components to build
      */
     protected abstract void initialiseRequiredComponents();
 }

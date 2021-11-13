@@ -5,7 +5,7 @@ import java.util.Map;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.collectableEntities.CollectableEntity;
+import dungeonmania.entities.collectableEntities.ICollectable;
 import dungeonmania.entities.collectableEntities.IDefensiveEntity;
 
 public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
@@ -20,7 +20,6 @@ public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
      * Shield constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public ShieldEntity(int x, int y) {
         super(x, y, EntityTypes.SHIELD);
@@ -28,7 +27,7 @@ public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
     }
     
     /**
-     * Initialises required components to build a bow
+     * Initialises required components to build a shield
      */
     @Override
     public void initialiseRequiredComponents() {
@@ -43,7 +42,7 @@ public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
      * @return true or false depnding on whether a shield is buildable
      */
     @Override
-    public boolean isBuildable(List<CollectableEntity> inventory) {
+    public boolean isBuildable(List<ICollectable> inventory) {
         boolean requiredWood = false;
         boolean requiredTreasure = false;
         boolean requiredKey = false;

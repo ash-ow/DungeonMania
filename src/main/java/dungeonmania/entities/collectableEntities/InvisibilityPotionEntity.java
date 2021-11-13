@@ -1,9 +1,11 @@
 package dungeonmania.entities.collectableEntities;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class InvisibilityPotionEntity extends CollectableEntity {
     /**
@@ -17,14 +19,13 @@ public class InvisibilityPotionEntity extends CollectableEntity {
      * Invisibility Potion constructor
      * @param x x-coordinate on the map
      * @param y y-coordinate on the map
-     * @param layer layer on the map 
      */
     public InvisibilityPotionEntity(int x, int y) {
         super(x, y, EntityTypes.INVISIBILITY_POTION);
     }
 
-    public InvisibilityPotionEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public InvisibilityPotionEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 
     /**

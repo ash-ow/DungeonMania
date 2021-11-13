@@ -1,5 +1,7 @@
 package dungeonmania.entities.staticEntities;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
@@ -10,7 +12,7 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class DoorEntity extends Entity implements IBlocker {
     private int keyNumber;
@@ -38,8 +40,8 @@ public class DoorEntity extends Entity implements IBlocker {
         this.isLocked = true;
     }
 
-    public DoorEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY(), info.getKey());
+    public DoorEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt(), jsonInfo.get("key").getAsInt());
     }
     
     public int getKeyNumber() {
@@ -82,6 +84,7 @@ public class DoorEntity extends Entity implements IBlocker {
         if (key != null) {
             key.used(player);
             this.isLocked = false;
+            this.type = EntityTypes.UNLOCKED_DOOR;
         }
     }
 
@@ -122,11 +125,9 @@ public class DoorEntity extends Entity implements IBlocker {
     }
 
     @Override
-    public EntityResponse getInfo() {
-        if (isLocked) {
-            return new EntityResponse(id, type, position, false);
-        } else {
-            return new EntityResponse(id, "unlocked_door", position, false);
-        }
+    public JsonObject buildJson() {
+        JsonObject entityInfo = super.buildJson();
+        entityInfo.addProperty("key", this.keyNumber);
+        return entityInfo;
     }
 }

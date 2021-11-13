@@ -1,8 +1,10 @@
 package dungeonmania.entities.collectableEntities;
 
-import dungeonmania.entities.EntityTypes;
+import com.google.gson.JsonObject;
 
-import dungeonmania.util.DungeonEntityJsonObject;
+import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.movingEntities.CharacterEntity;
+
 public class SunStoneEntity extends TreasureEntity implements ITreasure {
 
     public SunStoneEntity() {
@@ -18,10 +20,18 @@ public class SunStoneEntity extends TreasureEntity implements ITreasure {
         super(x, y, EntityTypes.SUN_STONE);
     }
 
-    public SunStoneEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public SunStoneEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
     
+    /**
+     * When sun_stone is used for bribing it is not removed from inventory and overrides the Treasure class implementation
+     * @param player CharacterEntity using the potion
+     */
+    @Override
+    public void used(CharacterEntity player) {
+        player.removeEntityFromInventory(this);
+    }  
     
 
     

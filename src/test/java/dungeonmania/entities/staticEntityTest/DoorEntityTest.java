@@ -41,7 +41,6 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         Dungeon dungeon = getDungeonWithDoorTestData();
         CharacterEntity player = (CharacterEntity)dungeon.getPlayer();
         assertNotNull(player, "Dungeon should contain the player");
-
         dungeon.tick(Direction.DOWN);
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should move into key's position");
@@ -52,7 +51,7 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to move into the first door as they have key #1");
         assertNotNull(player.getInventoryItem("0"), "Unlocking door should not consume key 3");
         assertNull(player.getInventoryItem("1"), "Unlocking door should consume key 1");
-        
+       
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should NOT be able to move into the second door as they lack key #1");
 

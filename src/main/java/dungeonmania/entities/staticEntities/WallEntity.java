@@ -1,12 +1,14 @@
 package dungeonmania.entities.staticEntities;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.movingEntities.IMovingEntity;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class WallEntity extends Entity implements IBlocker {
 
@@ -18,8 +20,8 @@ public class WallEntity extends Entity implements IBlocker {
         super(x, y, EntityTypes.WALL);
     }
 
-    public WallEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public WallEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 
     @Override

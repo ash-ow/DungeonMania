@@ -1,7 +1,9 @@
 package dungeonmania.entities.collectableEntities;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class SwordEntity extends CollectableEntity implements IWeaponEntity {
     /**
@@ -11,8 +13,8 @@ public class SwordEntity extends CollectableEntity implements IWeaponEntity {
         this(0, 0);
     }
     
-    public SwordEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public SwordEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 
     /**

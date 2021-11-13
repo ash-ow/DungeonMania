@@ -4,12 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.ITicker;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class SwampEntity extends Entity implements ITicker {
     public SwampEntity() {
@@ -20,8 +22,8 @@ public class SwampEntity extends Entity implements ITicker {
         super(x, y, EntityTypes.SWAMP);
     }
 
-    public SwampEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public SwampEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
 
     /** The maximum number of ticks a non-player entity must remain in the swamp */

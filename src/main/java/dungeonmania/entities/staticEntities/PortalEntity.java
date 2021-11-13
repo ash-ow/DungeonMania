@@ -2,12 +2,14 @@ package dungeonmania.entities.staticEntities;
 
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 
 public class PortalEntity extends Entity implements IContactingEntity {
     String colour;
@@ -21,8 +23,8 @@ public class PortalEntity extends Entity implements IContactingEntity {
         this.colour = colour;
     }
 
-    public PortalEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY(), info.getColor());
+    public PortalEntity(JsonObject jsonInfo) {
+        this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt(), jsonInfo.get("colour").getAsString());
     }
 
     public String getColour() {
@@ -55,5 +57,12 @@ public class PortalEntity extends Entity implements IContactingEntity {
             }
         }
         return this.portalPair;
+    }
+
+    @Override
+    public JsonObject buildJson() {
+        JsonObject entityInfo = super.buildJson();
+        entityInfo.addProperty("colour", this.colour);
+        return entityInfo;
     }
 }

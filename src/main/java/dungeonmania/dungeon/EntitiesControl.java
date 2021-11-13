@@ -3,11 +3,14 @@ package dungeonmania.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import com.google.gson.JsonObject;
 
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 import dungeonmania.util.Position;
 import dungeonmania.dungeon.entitiesFactory.EntitiesFactory;
 import dungeonmania.entities.*;
@@ -19,7 +22,6 @@ public class EntitiesControl {
     private List<IEntity> entities;
     private Integer tickCounter = 1;
     private Integer entityCounter = 0;
-    private Position playerStartPosition = new Position(0, 0);
     public final static List<EntityTypes> usableItems;
     static {
         usableItems = new ArrayList<>();
@@ -27,10 +29,6 @@ public class EntitiesControl {
         usableItems.add(EntityTypes.INVINCIBILITY_POTION);
         usableItems.add(EntityTypes.BOMB);
         usableItems.add(EntityTypes.INVISIBILITY_POTION);
-    }
-
-    public void setPlayerStartPosition(Position playerStartPosition) {
-        this.playerStartPosition = playerStartPosition;
     }
 
     public EntitiesControl() {
@@ -79,10 +77,15 @@ public class EntitiesControl {
     }
 
     public List<ITicker> getAllTickingEntities() {
-        return this.entities.stream()
+        List<ITicker> tickers = this.entities.stream()
             .filter(ITicker.class::isInstance)
             .map(ITicker.class::cast)
             .collect(Collectors.toList());
+
+        // get the logic entities last because they depend on other tickers
+        Stream<ITicker> logicEntities = tickers.stream().filter(c -> c instanceof LogicEntity);
+        Stream<ITicker> otherEntities = tickers.stream().filter(c -> !(c instanceof LogicEntity));
+        return Stream.concat(otherEntities, logicEntities).collect(Collectors.toList());
     }
 
     /**
@@ -103,7 +106,7 @@ public class EntitiesControl {
     public void runAwayAllMovingEntities(CharacterEntity player) {
         List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
         for (IAutoMovingEntity entity : movingEntities) {
-            entity.setMoveBehvaiour(new RunAway());
+            entity.setMoveBehaviour(new RunAway());
         }
     }
 
@@ -144,6 +147,10 @@ public class EntitiesControl {
         return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findFirst().orElse(null);
     }
 
+    public <T extends IEntity> IEntity getFirstEntityOfType(Class<?> cls) {
+        return getFirstEntityOfType(this.entities, cls);
+    }
+
     public boolean positionContainsEntityType(Position position, Class<?> cls) {
         List<IEntity> entityList =  this.getAllEntitiesFromPosition(position);
         
@@ -155,8 +162,8 @@ public class EntitiesControl {
     // endregion
     
     
-    public void createEntity(DungeonEntityJsonObject jsonInfo, GameModeType gameMode) {
-        EntitiesFactory.generateEntity(jsonInfo, this, gameMode);
+    public void createEntity(JsonObject jsonInfo, GameModeType gameMode) {
+        EntitiesFactory.generateEntity(jsonInfo, this);
     }
     
     /**
@@ -166,10 +173,11 @@ public class EntitiesControl {
      * @param type      type of entity
      */
     public void createEntity(Integer x, Integer y, EntityTypes type) {
-        DungeonEntityJsonObject jsonElement = new DungeonEntityJsonObject();
-        jsonElement.setPosition(new Position(x, y));
-        jsonElement.setType(type);
-        EntitiesFactory.generateEntity(jsonElement, this, GameModeType.STANDARD);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("x", x);
+        jsonObject.addProperty("y", y);
+        jsonObject.addProperty("type", type.toString());
+        EntitiesFactory.generateEntity(jsonObject, this);
     }
 
     public Position getLargestCoordinate() {
@@ -189,8 +197,8 @@ public class EntitiesControl {
      * Generates enemies based on game mode
      * @param gameMode         difficulty of the game
      */
-    public void generateEnemyEntities(GameModeType gameMode) {
-        Generator.generateEnemyEntities(this, this.tickCounter, gameMode, this.playerStartPosition);
+    public void generateEnemyEntities(GameModeType gameMode, Position playerStartPosition) {
+        Generator.generateEnemyEntities(this, this.tickCounter, gameMode, playerStartPosition);
         tickCounter++;
     }
 

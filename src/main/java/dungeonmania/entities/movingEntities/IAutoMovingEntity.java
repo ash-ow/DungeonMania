@@ -16,5 +16,5 @@ public interface IAutoMovingEntity extends IMovingEntity{
      * Determines the move behaviour of the automovingentity
      * @param newBehaviour     input of behaviour
      */
-    public void setMoveBehvaiour(IMovingBehaviour newBehaviour);
+    public void setMoveBehaviour(IMovingBehaviour newBehaviour);
 }

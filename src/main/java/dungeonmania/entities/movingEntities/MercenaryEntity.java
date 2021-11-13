@@ -16,14 +16,12 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractableEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
-import dungeonmania.entities.collectableEntities.ITreasure;
 import dungeonmania.entities.collectableEntities.SunStoneEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.FollowPlayer;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonObject;
 import dungeonmania.util.Position;
 
 public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity, IInteractableEntity {
@@ -134,14 +132,13 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      */
     public boolean interactWith(CharacterEntity player) throws InvalidActionException {
         IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);
-        IEntity sunStoneFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), SunStoneEntity.class);
-        if (treasureFound == null && sunStoneFound == null) {
+        if (treasureFound == null) {
             throw new InvalidActionException("Player has no treasure/sunstone");
         }
         if (!isInRange(player)) {
             throw new InvalidActionException("Player is too far away");
         }
-        player.removeEntityFromInventory(treasureFound);
+        treasureFound.used(player);
         player.addTeammates(this);
         this.isBribed = true;
         return removeAfterInteraction();    

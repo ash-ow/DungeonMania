@@ -2,8 +2,10 @@ package dungeonmania.entities.movingEntities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
+
+import com.google.gson.JsonObject;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.dungeon.GameModeType;
@@ -12,7 +14,6 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.IDefensiveEntity;
 import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.exceptions.InvalidActionException;
@@ -21,17 +22,18 @@ import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
-import dungeonmania.util.DungeonEntityJsonObject;
+
 import dungeonmania.util.Position;
 import dungeonmania.entities.collectableEntities.*;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
-    private List<CollectableEntity> inventory = new ArrayList<>();
+    private List<ICollectable> inventory = new ArrayList<>();
     private Position previousPosition;
     public List<IBattlingEntity> teammates = new ArrayList<>();
     private int invincibilityRemaining = 0;
     private int invisibilityRemaining = 0;
     private GameModeType gameMode;
+    private boolean isTimeTravelling = false;
 
     /**
      * Character constructor
@@ -49,6 +51,13 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this(x, y, GameModeType.STANDARD);
     }
     
+    public CharacterEntity(int x, int y, EntityTypes type, GameModeType gameMode) {
+        super(x, y, type);
+        this.previousPosition = new Position(x, y);
+        this.gameMode = gameMode;
+        this.health = (int) Math.ceil(100 / Generator.difficulty.get(gameMode));
+    }
+
     /**
      * Character constructor
      * @param x          x-coordinate on the map
@@ -56,14 +65,14 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param gameMode   denotes the difficulty settings of the game 
      */
     public CharacterEntity(int x, int y, GameModeType gameMode) {
-        super(x, y, EntityTypes.PLAYER);
+        this(x, y, EntityTypes.PLAYER, gameMode);      
         this.previousPosition = new Position(x, y);
         this.gameMode = gameMode;
         this.health = (int) Math.ceil(100 / Generator.difficulty.get(gameMode));
     }
 
-    public CharacterEntity(DungeonEntityJsonObject info) {
-        this(info.getX(), info.getY());
+    public CharacterEntity(JsonObject info, GameModeType gameMode) {
+        this(info.get("x").getAsInt(), info.get("y").getAsInt(), gameMode);
     }
 
     public EntityResponse getInfo() {
@@ -104,7 +113,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         float damage = 0;
         if (!this.isInvincible()) {
             damage = ((enemyHealth * enemyDamage) / 10);
-            for (CollectableEntity item : getItemsFromInventory(IDefensiveEntity.class)) {
+            for (ICollectable item : getItemsFromInventory(IDefensiveEntity.class)) {
                 IDefensiveEntity defender = (IDefensiveEntity)item;
                 damage = defender.reduceDamage(damage, this);
             }
@@ -149,15 +158,15 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
 //region Inventory
 
-    List<CollectableEntity> getItemsFromInventory(Class<?> cls) {
+    List<ICollectable> getItemsFromInventory(Class<?> cls) {
         return this.inventory.stream().filter(cls::isInstance).collect(Collectors.toList());
     }
 
-    public void addEntityToInventory(CollectableEntity entity) {
+    public void addEntityToInventory(ICollectable entity) {
         inventory.add(entity);
     }
 
-    public List<CollectableEntity> getInventory() {
+    public List<ICollectable> getInventory() {
         return this.inventory;
     }
 
@@ -167,7 +176,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     public List<ItemResponse> getInventoryInfo() {
         List<ItemResponse> info = new ArrayList<ItemResponse>();
-        for (CollectableEntity entity : inventory) {
+        for (ICollectable entity : inventory) {
             info.add(new ItemResponse(entity.getId(), entity.getType()));
         }
         return info;
@@ -178,7 +187,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param type the type of item being searched for
      */
     public boolean containedInInventory(EntityTypes type) {
-        for (CollectableEntity entity: inventory) {
+        for (ICollectable entity: inventory) {
             if(entity.getType().equals(type)) {
                 return true;
             }
@@ -190,8 +199,8 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * Finds the first instance of an item type in the inventory
      * @param type the type of item being searched for
      */
-    public CollectableEntity findFirstInInventory(EntityTypes type) {
-        for (CollectableEntity entity: inventory) {
+    public ICollectable findFirstInInventory(EntityTypes type) {
+        for (ICollectable entity: inventory) {
             if(entity.getType().equals(type)) {
                 return entity;
             }
@@ -235,7 +244,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public void move(Direction direction, EntitiesControl entitiesControl) {
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
-        if ( !EntitiesControl.containsBlockingEntities(targetEntities) || canUnblock(targetEntities, direction, entitiesControl) ) {
+        if (!EntitiesControl.containsBlockingEntities(targetEntities) || canUnblock(targetEntities, direction, entitiesControl) ) {
             this.previousPosition = this.position;
             this.move(direction); 
             decrementPotionDurations();    
@@ -319,16 +328,16 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      */
     public void removeBuildMaterials(EntityTypes type, int amount) {
         int removed = 0;
-        List<CollectableEntity> toRemove = new ArrayList<>();
+        List<ICollectable> toRemove = new ArrayList<>();
         while(removed < amount) {
-            for(CollectableEntity material : this.inventory) {
+            for(ICollectable material : this.inventory) {
                 if (material.getType().equals(type)){
                     toRemove.add(material);
                     removed++;
                 }
             }
         }
-        for (CollectableEntity material : toRemove) {
+        for (ICollectable material : toRemove) {
             removeEntityFromInventory(material);
         }
     }
@@ -356,9 +365,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param targetEntities   list of entities to be interacted with
      * @param entitiesControl  list of all entities
      */
-    private void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
+    protected void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
         List<IContactingEntity> targetInteractable = entitiesControl.getInteractableEntitiesFrom(targetEntities);
         for (IContactingEntity entity : targetInteractable) {
+            System.out.println(entity.getId());
             entity.contactWithPlayer(entitiesControl, this);
         }
     }
@@ -391,7 +401,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         } else if (!EntitiesControl.usableItems.contains(entity.getType())) {
             throw new IllegalArgumentException();
         }
-        for (CollectableEntity item : this.inventory) {
+        for (ICollectable item : this.inventory) {
             if (item.getId().equals(itemID)) {
                 this.useItemCore(item, entitiesControl);
                 return;
@@ -404,7 +414,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param item             Item to be used
      * @param entitiesControl  list of all entities
      */
-    private void useItemCore(CollectableEntity item, EntitiesControl entitiesControl) {
+    private void useItemCore(ICollectable item, EntitiesControl entitiesControl) {
         item.used(this);
         if (item.isPlacedAfterUsing()) {
             item.setPosition(this.getPosition());
@@ -414,5 +424,13 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     public Position getPreviousPosition() {
         return this.previousPosition;
+    }
+
+    public boolean IsTimeTravelling() {
+        return this.isTimeTravelling;
+    }
+    
+    public void setTimeTravelling(boolean timeTravel) {
+        this.isTimeTravelling = timeTravel;
     }
 }

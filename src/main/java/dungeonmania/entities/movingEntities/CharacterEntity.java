@@ -14,6 +14,7 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.ITicker;
 import dungeonmania.entities.collectableEntities.IDefensiveEntity;
 import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.exceptions.InvalidActionException;
@@ -34,6 +35,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     private int invisibilityRemaining = 0;
     private GameModeType gameMode;
     private boolean isTimeTravelling = false;
+    public List<ITicker> activeAffectingItems;
 
     /**
      * Character constructor
@@ -328,10 +330,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      */
     private void useItemCore(ICollectable item, EntitiesControl entitiesControl) {
         item.used(this);
-        if (item instanceof IAffectingEntity) {
-            IAffectingEntity affectingEntity = (IAffectingEntity) item;
-            affectingEntity.activateAffects(entitiesControl, this);
-        }
         if (item.isPlacedAfterUsing()) {
             item.setPosition(this.getPosition());
             entitiesControl.addEntity(item);

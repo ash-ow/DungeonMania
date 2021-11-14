@@ -22,7 +22,6 @@ public class HydraEntity extends Entity implements IBoss, IAutoMovingEntity {
         Random rand = new Random();
         this.seed = rand.nextInt();
         this.setHealth(30);
-        this.moveBehaviour = new RandomMove();
     }
 
     public HydraEntity(JsonObject jsonInfo) {
@@ -79,6 +78,9 @@ public class HydraEntity extends Entity implements IBoss, IAutoMovingEntity {
 
     @Override
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {
+        if (this.moveBehaviour == null) {
+            this.moveBehaviour = new RandomMove();
+        }
         this.move(moveBehaviour.getBehaviourDirection(entitiesControl, player, position));      
         if (this.isInSamePositionAs(player)) {
             contactWithPlayer(entitiesControl, player);

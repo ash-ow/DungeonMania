@@ -37,13 +37,7 @@ public class DungeonGenerator {
         RandomizedPrims();
 
         ArrayList<IEntity> entities = new ArrayList<>();
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                if (!maze[x][y]) {
-                    entities.add(new WallEntity(x, y));
-                }
-            }
-        }
+        generateWalls(entities);
 
         CharacterEntity player = new CharacterEntity(start.getX(), start.getY());
         entities.add(new ExitEntity(end.getX(), end.getY()));
@@ -65,14 +59,7 @@ public class DungeonGenerator {
 
             List<Position> neighbours = new ArrayList<>();
             getAdjPostionsWithCondition(neighbours, next, empty);
-
-            if (neighbours.size() > 0) {
-                Position neighbour = neighbours.get(rand.nextInt(neighbours.size()));
-                Position between = getInBetween(next, neighbour);
-                maze[next.getX()][next.getY()] = empty;
-                maze[between.getX()][between.getY()] = empty;
-                maze[neighbour.getX()][neighbour.getY()] = empty;
-            }
+            generatePath(neighbours, next);
 
             getAdjPostionsWithCondition(options, next, wall);
         }
@@ -80,35 +67,54 @@ public class DungeonGenerator {
         if (maze[end.getX()][end.getY()] == wall) {
             maze[end.getX()][end.getY()] = empty;
 
-            List<Position> neighbours = new ArrayList<>();
-            List<Position> PossibleNeighbours = end.getCardinallyAdjacentPositionsWithRange(1);
+            List<Position> endNeighbours = new ArrayList<>();
+            List<Position> possibleNeighbours = end.getCardinallyAdjacentPositionsWithRange(1);
             boolean allWalls = true;
-            for(Position position : PossibleNeighbours) {
-                if (checkBoundary(position)){
-                    neighbours.add(position);
+            for(Position position : possibleNeighbours) {
+                if (checkNotBoundary(position)){
+                    endNeighbours.add(position);
                     if (maze[position.getX()][position.getY()] == empty) {
                         allWalls = false;
                     }
                 }
             }
-            if (allWalls && (neighbours.size() != 0)) {
-                Position neighbour = neighbours.get(rand.nextInt(neighbours.size()));
+            if (allWalls && (endNeighbours.size() != 0)) {
+                Position neighbour = endNeighbours.get(rand.nextInt(endNeighbours.size()));
                 maze[neighbour.getX()][neighbour.getY()] = empty;
             }
         }
+    }
 
+    private void generatePath(List<Position> neighbours, Position next) {
+        if (neighbours.size() > 0) {
+            Position neighbour = neighbours.get(rand.nextInt(neighbours.size()));
+            Position between = getInBetween(next, neighbour);
+            maze[next.getX()][next.getY()] = empty;
+            maze[between.getX()][between.getY()] = empty;
+            maze[neighbour.getX()][neighbour.getY()] = empty;
+        }
+    }
+
+    private void generateWalls(ArrayList<IEntity> entities) {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (!maze[x][y]) {
+                    entities.add(new WallEntity(x, y));
+                }
+            }
+        }
     }
 
     private void getAdjPostionsWithCondition(List<Position> list, Position currentPosition, Boolean condition) {
         List<Position> adjPositions = currentPosition.getCardinallyAdjacentPositionsWithRange(2);
         for(Position position : adjPositions) {
-            if (checkBoundary(position) && (maze[position.getX()][position.getY()] == condition)) {
+            if (checkNotBoundary(position) && (maze[position.getX()][position.getY()] == condition)) {
                 list.add(position);
             }
         }
     }
 
-    private boolean checkBoundary(Position position) {
+    private boolean checkNotBoundary(Position position) {
         if (position.getX() >= (width - 1)  || position.getX() <= 0) {
             return false;
         } else if (position.getY() >= (height - 1) || position.getY() <= 0) {

@@ -14,7 +14,7 @@ import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
 import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
 
-public class Generator {
+public class EnemyEntityGenerator {
     private static Random rand = new Random();
     private static Integer tickCounter;
     private static GameModeType gameMode;

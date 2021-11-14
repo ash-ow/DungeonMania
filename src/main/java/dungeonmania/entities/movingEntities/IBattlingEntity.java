@@ -26,6 +26,7 @@ public interface IBattlingEntity extends IContactingEntity {
         ) {
             doBattle(player);
         }
+        entitiesControl.moveMercenariesAfterAttack(player);
     }
 
     /**

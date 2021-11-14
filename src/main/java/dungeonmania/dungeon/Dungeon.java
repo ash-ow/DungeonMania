@@ -28,9 +28,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Dungeon {
-    /**
-     *
-     */
     private static final String ENTITIES_STRING = "entities";
     public EntitiesControl entitiesControl;
     private GameModeType gameMode;

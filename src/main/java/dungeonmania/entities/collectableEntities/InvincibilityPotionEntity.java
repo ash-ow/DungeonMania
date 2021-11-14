@@ -2,11 +2,17 @@ package dungeonmania.entities.collectableEntities;
 
 import com.google.gson.JsonObject;
 
+import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.dungeon.GameModeType;
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.ITicker;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
 
 
-public class InvincibilityPotionEntity extends CollectableEntity {
+public class InvincibilityPotionEntity extends CollectableEntity implements IAffectingEntity {
+    CharacterEntity player;
+    
     /**
      * Invincibility potion constructor
      */
@@ -21,6 +27,7 @@ public class InvincibilityPotionEntity extends CollectableEntity {
      */
     public InvincibilityPotionEntity(int x, int y) {
         super(x, y, EntityTypes.INVINCIBILITY_POTION);
+        this.durability = 0;
     }
 
     public InvincibilityPotionEntity(JsonObject jsonInfo) {
@@ -33,7 +40,21 @@ public class InvincibilityPotionEntity extends CollectableEntity {
      */
     @Override
     public void used(CharacterEntity player) {
-       player.setInvincibilityRemaining(10);
-       player.getInventoryItems().remove(this);
-    } 
+        if (!player.getGameMode().equals(GameModeType.HARD)){
+            player.addActiveItem(this);
+            this.durability = 10;
+        }
+        player.getInventory().getItems().remove(this);
+    }
+
+    @Override
+    public boolean effect(EntitiesControl entitiesControl) {
+        this.decrementDurability();
+        if (this.durability == 0) {
+            entitiesControl.setMovingEntitiesBehaviour(null);
+            return true;
+        }
+        entitiesControl.setMovingEntitiesBehaviour(new RunAway());
+        return false;
+    }
 }

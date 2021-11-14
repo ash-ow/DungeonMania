@@ -1,12 +1,20 @@
 package dungeonmania.entities.collectableEntities;
 
+import java.util.List;
+
 import com.google.gson.JsonObject;
 
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.ITicker;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.MercenaryEntity;
+import dungeonmania.entities.movingEntities.moveBehaviour.Freeze;
 
 
-public class InvisibilityPotionEntity extends CollectableEntity {
+public class InvisibilityPotionEntity extends CollectableEntity implements IAffectingEntity {
+    CharacterEntity player;
+
     /**
      * Invisibility potion constructor
      */
@@ -33,7 +41,23 @@ public class InvisibilityPotionEntity extends CollectableEntity {
      */
     @Override
     public void used(CharacterEntity player) {
-        player.setInvisiblilityRemaining(10);
-        player.getInventoryItems().remove(this);
+
+        player.getInventory().getItems().remove(this);
+        player.addActiveItem(this);
+        this.durability = 10;
+    }
+
+    @Override
+    public boolean effect(EntitiesControl entitiesControl) {
+        this.decrementDurability();
+        if (this.durability == 0) {
+            entitiesControl.setMovingEntitiesBehaviour(null);
+            return true;
+        }
+        List<MercenaryEntity> mercenaries = entitiesControl.getAllEntitiesOfType(MercenaryEntity.class);
+        for (MercenaryEntity mercenary : mercenaries) {
+            mercenary.setMoveBehaviour(new Freeze());
+        }
+        return false;
     }
 }

@@ -106,6 +106,9 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      */
     @Override
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {
+        if (this.moveBehaviour == null) {
+            this.moveBehaviour = new FollowPlayer();
+        }
         if (isBribed) {
             setPosition(player.getPreviousPosition());
         } else if (!player.isInvisible()){

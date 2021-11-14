@@ -14,6 +14,7 @@ import dungeonmania.util.Position;
 import dungeonmania.dungeon.entitiesFactory.EntitiesFactory;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
+import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
 import dungeonmania.generators.EnemyEntityGenerator;
 
@@ -115,17 +116,13 @@ public class EntitiesControl {
         }
     }
 
-    /**
-     * Moves all moving entities away based on player
-     * @param player    player entity which is used to determine move behaviour
-     */
-    public void runAwayAllMovingEntities(CharacterEntity player) {
+    public void setMovingEntitiesBehaviour(IMovingBehaviour behaviour) {
         List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
         for (IAutoMovingEntity entity : movingEntities) {
-            entity.setMoveBehaviour(new RunAway());
+            entity.setMoveBehaviour(behaviour);
         }
     }
-
+ 
 // region Filter
     public List<IAutoMovingEntity> getAllAutoMovingEntities() {
         return EntitiesControl.getEntitiesOfType(this.entities, IAutoMovingEntity.class);

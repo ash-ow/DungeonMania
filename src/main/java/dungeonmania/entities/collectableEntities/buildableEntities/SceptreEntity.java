@@ -8,14 +8,13 @@ import com.google.gson.JsonObject;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.ITicker;
-import dungeonmania.entities.collectableEntities.CollectableEntity;
-import dungeonmania.entities.collectableEntities.ICollectable;
+import dungeonmania.entities.collectableEntities.IAffectingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.Inventory;
 
 
-public class SceptreEntity extends BuildableEntity implements ITicker {
+public class SceptreEntity extends BuildableEntity implements IAffectingEntity {
     private CharacterEntity owner;
 
     /**
@@ -98,15 +97,17 @@ public class SceptreEntity extends BuildableEntity implements ITicker {
     }
 
     @Override
-    public void tick(EntitiesControl entitiesControl) {
+    public boolean effect(EntitiesControl entitiesControl) {
         decrementDurability();
         if (this.durability == 0) {
             List<MercenaryEntity> mercenaries = entitiesControl.getAllEntitiesOfType(MercenaryEntity.class);
             mercenaries.stream().forEach(m -> m.betray(owner));
+            return true;
         } else if (this.durability > 0) {
             List<MercenaryEntity> mercenaries = entitiesControl.getAllEntitiesOfType(MercenaryEntity.class);
             mercenaries.stream().forEach(m -> m.bribe(owner));
         }
+        return false;
     }
 
     @Override

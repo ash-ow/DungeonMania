@@ -1,9 +1,9 @@
 package dungeonmania.entities.movingEntities;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 import com.google.gson.JsonObject;
 
@@ -31,11 +31,9 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     private Inventory inventory = new Inventory();
     private Position previousPosition;
     public List<IBattlingEntity> teammates = new ArrayList<>();
-    private int invincibilityRemaining = 0;
-    private int invisibilityRemaining = 0;
     private GameModeType gameMode;
     private boolean isTimeTravelling = false;
-    private List<ITicker> activeItems = new ArrayList<>();
+    private List<IAffectingEntity> activeItems = new ArrayList<>();
 
     /**
      * Character constructor
@@ -192,27 +190,13 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 //endregion
 
 //Player Potion Effects region 
-    /**
-     * Determines whether the character is still invincible based on remaining ticks, and game mode
-     * @return true if still invincible
-     */
-    public boolean isInvincible() {
-        if (gameMode.equals(GameModeType.HARD)) {
-            return false;
-        }
-        return this.invincibilityRemaining > 0;
-    }
-
-    public void setInvincibilityRemaining(int invincibilityRemaining) {
-        this.invincibilityRemaining = invincibilityRemaining;
-    }
 
     public boolean isInvisible() {
-        return this.invisibilityRemaining > 0;
+        return activeItems.stream().anyMatch(c -> c instanceof InvisibilityPotionEntity);
     }
     
-    public void setInvisiblilityRemaining(int invisibilityRemaining) {
-        this.invisibilityRemaining = invisibilityRemaining;
+    public boolean isInvincible() {
+        return activeItems.stream().anyMatch(c -> c instanceof InvincibilityPotionEntity);
     }
 
 //endregion
@@ -228,16 +212,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
         if (!EntitiesControl.containsBlockingEntities(targetEntities) || canUnblock(targetEntities, direction, entitiesControl) ) {
             this.previousPosition = this.position;
-            this.move(direction); 
-            decrementPotionDurations();    
+            this.move(direction);     
             interactWithAll(targetEntities, entitiesControl);
         }
         this.tickActiveItems(entitiesControl);
-    }
-
-    private void decrementPotionDurations() {
-        this.invisibilityRemaining--;
-        this.invincibilityRemaining--;
     }
 //endregion
 
@@ -366,10 +344,16 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     private void tickActiveItems(EntitiesControl entitiesControl) {
-        this.activeItems.stream().forEach(a -> a.tick(entitiesControl));
+        for (Iterator<IAffectingEntity> iter = this.activeItems.iterator(); iter.hasNext(); ) {
+            IAffectingEntity element = iter.next();
+            boolean remove = element.effect(entitiesControl);
+            if (remove) {
+                iter.remove();
+            }
+        }
     }
 
-    public void addActiveItem(ITicker item) {
+    public void addActiveItem(IAffectingEntity item) {
         this.activeItems.add(item);
     }
 
@@ -379,6 +363,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     public boolean IsTimeTravelling() {
         return this.isTimeTravelling;
+    }
+
+    public GameModeType getGameMode() {
+        return gameMode;
     }
     
     public void setTimeTravelling(boolean timeTravel) {

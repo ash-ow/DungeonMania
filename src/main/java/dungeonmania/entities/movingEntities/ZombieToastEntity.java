@@ -32,7 +32,6 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         if (RandomChance.getRandomBoolean(armourEntityProbability)) {
             equipped = new ArmourEntity();
         }
-        this.moveBehaviour = new RandomMove();
     }
 
     public ZombieToastEntity(JsonObject jsonInfo) {
@@ -71,6 +70,9 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
      */
     @Override
     public void move(EntitiesControl entitiesControl, CharacterEntity player) {
+        if (this.moveBehaviour == null) {
+            this.moveBehaviour = new RandomMove();
+        }
         this.move(moveBehaviour.getBehaviourDirection(entitiesControl, player, position));      
         if (this.isInSamePositionAs(player)) {
             contactWithPlayer(entitiesControl, player);

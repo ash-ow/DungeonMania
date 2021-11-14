@@ -3,6 +3,7 @@ package dungeonmania.entities.collectableEntityTests;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.ArrayList;
 
@@ -15,6 +16,7 @@ import dungeonmania.entities.collectableEntities.InvincibilityPotionEntity;
 import dungeonmania.entities.movingEntities.spiderEntity.*;
 import dungeonmania.util.Direction;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.EntityTypes;
 
 public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
@@ -100,4 +102,18 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
         assertItemNotInInventory("invincibility_potion-0-1-0", player, dungeon.entitiesControl, false);
     }
 
+    @Test
+    public void runAway(){
+        ArrayList<IEntity> entities = new ArrayList<>();
+        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0, 1);
+        MercenaryEntity merc = new MercenaryEntity(5, 5);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        player.getInventory().addItem(invincibility_potion);
+        entities.add(merc);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+
+        dungeon.tick(invincibility_potion.getId());
+
+        assertNotEquals(new Position(5, 5), (merc.getPosition()));
+    }
 }

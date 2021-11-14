@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.ICollectable;
+import dungeonmania.entities.collectableEntities.KeyEntity;
 
 public class Inventory {
     List<ICollectable> items;
@@ -24,6 +25,16 @@ public class Inventory {
 	}
     
     public void addItem(ICollectable item) {
+        if(item.getType().equals(EntityTypes.KEY)){
+            KeyEntity key = (KeyEntity) item;
+            if (!checkKeyState()){
+                key.setkeyPickedUp(true);
+                setHasKey(true);
+            }
+            else{
+                return ;
+            }    
+        }
         this.items.add(item);
     }
 
@@ -87,4 +98,20 @@ public class Inventory {
         }
     }
 // endregion
+
+/**
+     * Checks if the Key has been picked up in the KeyEntity class
+     * keyPickedUp resets to false after key is used  
+     */
+    public boolean checkKeyState(){
+        for(ICollectable k: items){
+            if(k.getType().equals(EntityTypes.KEY)){
+                KeyEntity key = (KeyEntity) k;
+                if (key.keyPickedUp()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

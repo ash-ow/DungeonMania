@@ -20,6 +20,7 @@ import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.generators.EnemyEntityGenerator;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
+import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
@@ -36,6 +37,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     private GameModeType gameMode;
     private boolean isTimeTravelling = false;
     private List<ITicker> activeItems = new ArrayList<>();
+    private boolean hasKey = false;
 
     /**
      * Character constructor
@@ -384,6 +386,25 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public void setTimeTravelling(boolean timeTravel) {
         this.isTimeTravelling = timeTravel;
     }
+//RegionKeys
+//region Keys
 
+    /**
+     * Checks whether the character has a key. 
+     */
+    public boolean getHasKey() {
+        return hasKey;
+    }
+
+    /**
+     * If a character has a key, boolean is set true
+     * @param hasKey     identifier for Character having key  
+     */
+    public void setHasKey(boolean hasKey) {
+        this.hasKey = hasKey;
+    }
+
+    
+//endRegion
 
 }

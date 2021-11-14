@@ -4,13 +4,7 @@ import com.google.gson.JsonObject;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.dungeon.EntitiesControl;
-import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.IBlocker;
-import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.movingEntities.IMovingEntity;
-import dungeonmania.exceptions.InvalidActionException;
-import dungeonmania.util.Direction;
 
 
 public class KeyEntity extends CollectableEntity {
@@ -18,7 +12,6 @@ public class KeyEntity extends CollectableEntity {
     protected int durability = 1;
     boolean keyPickedUp = false;
     
-
     /**
      * Key constructor
      * @param keyNumber denotes which door the key should open
@@ -67,7 +60,7 @@ public class KeyEntity extends CollectableEntity {
     @Override
     public void used(CharacterEntity player){
         this.setkeyPickedUp(false);
-        player.removeEntityFromInventory(this);
+        player.getInventoryItems().remove(this);
     }
 
     /**
@@ -78,7 +71,7 @@ public class KeyEntity extends CollectableEntity {
     @Override    
     public void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
         if (!this.keyPickedUp) {
-            player.addEntityToInventory(this);
+            player.getInventoryItems().add(this);
             entities.removeEntity(this);
         }
     }

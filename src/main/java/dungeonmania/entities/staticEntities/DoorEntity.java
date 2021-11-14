@@ -85,9 +85,7 @@ public class DoorEntity extends Entity implements IBlocker {
     }
 
     /**
-     * Unlocks the door as sun_stone is in inventory 
-     *  @param sun_stone    Sun Stone Entity 
-     *  @param player       the player which should have sun_stone in inventory 
+     * Unlocks the door as sun_stone is in inventory  
      */
     private void tryUnlockWithStone() {
         this.isLocked = false;

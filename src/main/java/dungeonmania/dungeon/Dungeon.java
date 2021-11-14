@@ -128,6 +128,7 @@ public class Dungeon {
         }
         entitiesControl.moveAllMovingEntities(player);
         entitiesControl.tick();
+        entitiesControl.checkLogicEntities();
         entitiesControl.generateEnemyEntities(this.gameMode, this.playerStartPosition);
         gameStates.add(timeTravelSave());
         ticks.add(new Instruction(direction));

@@ -15,6 +15,7 @@ import dungeonmania.entities.collectableEntities.InvincibilityPotionEntity;
 import dungeonmania.entities.movingEntities.spiderEntity.*;
 import dungeonmania.util.Direction;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.EntityTypes;
 
 public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
@@ -53,7 +54,7 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
 
         dungeon.tick("invincibility_potion-0-1-0");
         invincibility_potion.used(player);
-        assertTrue(player.invincible);
+        assertTrue(player.isInvincible());
     }
 
     @Test
@@ -89,15 +90,29 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
 
         invincibility_potion.used(player);
         assertItemNotInInventory("invincibility_potion-0-1-0", player, dungeon.entitiesControl, false);
-        assertTrue(player.invincible);
+        assertTrue(player.isInvincible());
             
         // Player moves down 10 times
         for (int i = 0; i < 10;i++) {
             dungeon.tick(Direction.DOWN);
         }
         
-        assertFalse(player.invincible);
+        assertFalse(player.isInvincible());
         assertItemNotInInventory("invincibility_potion-0-1-0", player, dungeon.entitiesControl, false);
     }
 
+    @Test
+    public void runAway(){
+        ArrayList<IEntity> entities = new ArrayList<>();
+        InvincibilityPotionEntity invincibility_potion = new InvincibilityPotionEntity(0, 1);
+        MercenaryEntity merc = new MercenaryEntity(5, 5);
+        CharacterEntity player = new CharacterEntity(0, 0);
+        player.getInventory().addItem(invincibility_potion);
+        entities.add(merc);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+
+        dungeon.tick(invincibility_potion.getId());
+
+        assertEquals(new Position(5, 5), (merc.getPosition()));
+    }
 }

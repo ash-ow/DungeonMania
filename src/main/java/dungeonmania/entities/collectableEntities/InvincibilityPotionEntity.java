@@ -10,7 +10,7 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
 
 
-public class InvincibilityPotionEntity extends CollectableEntity implements ITicker {
+public class InvincibilityPotionEntity extends CollectableEntity implements IAffectingEntity {
     CharacterEntity player;
     
     /**
@@ -48,12 +48,13 @@ public class InvincibilityPotionEntity extends CollectableEntity implements ITic
     }
 
     @Override
-    public void tick(EntitiesControl entitiesControl) {
+    public boolean effect(EntitiesControl entitiesControl) {
+        this.decrementDurability();
         if (this.durability == 0) {
             entitiesControl.setMovingEntitiesBehaviour(null);
-            player.removeActiveItem(this);
+            return true;
         }
         entitiesControl.setMovingEntitiesBehaviour(new RunAway());
-        this.decrementDurability();
+        return false;
     }
 }

@@ -1,9 +1,9 @@
 package dungeonmania.entities.movingEntities;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 import com.google.gson.JsonObject;
 
@@ -31,11 +31,9 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     private Inventory inventory = new Inventory();
     private Position previousPosition;
     public List<IBattlingEntity> teammates = new ArrayList<>();
-    public boolean invincible;
-    private int invisibilityRemaining = 0;
     private GameModeType gameMode;
     private boolean isTimeTravelling = false;
-    private List<ITicker> activeItems = new ArrayList<>();
+    private List<IAffectingEntity> activeItems = new ArrayList<>();
 
     /**
      * Character constructor
@@ -114,7 +112,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     @Override
     public float loseHealth(float enemyHealth, float enemyDamage) {
         float damage = 0;
-        if (!this.invincible) {
+        if (!this.isInvincible()) {
             damage = ((enemyHealth * enemyDamage) / 10);
             for (ICollectable item : this.inventory.getItemsFromInventoryOfType(IDefensiveEntity.class)) {
                 IDefensiveEntity defender = (IDefensiveEntity)item;
@@ -194,11 +192,11 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 //Player Potion Effects region 
 
     public boolean isInvisible() {
-        return this.invisibilityRemaining > 0;
+        return activeItems.stream().anyMatch(c -> c instanceof InvisibilityPotionEntity);
     }
     
-    public void setInvisiblilityRemaining(int invisibilityRemaining) {
-        this.invisibilityRemaining = invisibilityRemaining;
+    public boolean isInvincible() {
+        return activeItems.stream().anyMatch(c -> c instanceof InvincibilityPotionEntity);
     }
 
 //endregion
@@ -346,15 +344,17 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     private void tickActiveItems(EntitiesControl entitiesControl) {
-        this.activeItems.stream().forEach(a -> a.tick(entitiesControl));
+        for (Iterator<IAffectingEntity> iter = this.activeItems.iterator(); iter.hasNext(); ) {
+            IAffectingEntity element = iter.next();
+            boolean remove = element.effect(entitiesControl);
+            if (remove) {
+                iter.remove();
+            }
+        }
     }
 
-    public void addActiveItem(ITicker item) {
+    public void addActiveItem(IAffectingEntity item) {
         this.activeItems.add(item);
-    }
-
-    public void removeActiveItem(ITicker item) {
-        this.activeItems.remove(item);
     }
 
     public Position getPreviousPosition() {

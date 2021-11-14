@@ -12,7 +12,7 @@ import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.Freeze;
 
 
-public class InvisibilityPotionEntity extends CollectableEntity implements ITicker {
+public class InvisibilityPotionEntity extends CollectableEntity implements IAffectingEntity {
     CharacterEntity player;
 
     /**
@@ -48,15 +48,16 @@ public class InvisibilityPotionEntity extends CollectableEntity implements ITick
     }
 
     @Override
-    public void tick(EntitiesControl entitiesControl) {
+    public boolean effect(EntitiesControl entitiesControl) {
+        this.decrementDurability();
         if (this.durability == 0) {
-            player.removeActiveItem(this);
             entitiesControl.setMovingEntitiesBehaviour(null);
+            return true;
         }
         List<MercenaryEntity> mercenaries = entitiesControl.getAllEntitiesOfType(MercenaryEntity.class);
         for (MercenaryEntity mercenary : mercenaries) {
             mercenary.setMoveBehaviour(new Freeze());
         }
-        this.decrementDurability();
+        return false;
     }
 }

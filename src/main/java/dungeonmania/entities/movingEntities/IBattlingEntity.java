@@ -48,7 +48,7 @@ public interface IBattlingEntity extends IContactingEntity {
      * @param player the player which is battling
      */
     default void doBattle(CharacterEntity player) {
-        if (player.invincible){
+        if (player.isInvincible()){
             this.setHealth(0);
         }
         else {

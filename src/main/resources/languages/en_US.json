@@ -8,7 +8,8 @@
             "new_game": "Start New Game",
             "load_game": "Load Game",
             "quit_game": "Quit Game",
-            "credits": "Credits"
+            "credits": "Credits",
+            "generate_game": "Generate Maze"
         },
         "game_mode": "Game Mode",
         "on_exit": {

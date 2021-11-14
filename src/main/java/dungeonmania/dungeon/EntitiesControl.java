@@ -16,7 +16,7 @@ import dungeonmania.dungeon.entitiesFactory.EntitiesFactory;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
 import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
-import dungeonmania.generators.Generator;
+import dungeonmania.generators.EnemyEntityGenerator;
 
 public class EntitiesControl {
     private List<IEntity> entities;
@@ -202,7 +202,7 @@ public class EntitiesControl {
      * @param gameMode         difficulty of the game
      */
     public void generateEnemyEntities(GameModeType gameMode, Position playerStartPosition) {
-        Generator.generateEnemyEntities(this, this.tickCounter, gameMode, playerStartPosition);
+        EnemyEntityGenerator.generateEnemyEntities(this, this.tickCounter, gameMode, playerStartPosition);
         tickCounter++;
     }
 
@@ -238,5 +238,12 @@ public class EntitiesControl {
             .filter(entity -> entity.getId().equals(id))
             .findFirst()
             .orElse(null);
+    }
+
+    public void moveMercenariesAfterAttack(CharacterEntity player) {
+        List<MercenaryEntity> movingEntities = getAllEntitiesOfType(MercenaryEntity.class);
+        for (MercenaryEntity merc : movingEntities) {
+            merc.move(this, player);
+        }
     }
 }

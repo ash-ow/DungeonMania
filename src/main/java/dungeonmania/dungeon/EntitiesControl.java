@@ -3,7 +3,6 @@ package dungeonmania.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.google.gson.JsonObject;
 
@@ -169,11 +168,7 @@ public class EntitiesControl {
 
     public <T extends IEntity> boolean positionContainsEntityType(Position position, Class<T> cls) {
         List<IEntity> entityList =  this.getAllEntitiesFromPosition(position);
-        
-        if (getFirstEntityOfType(entityList, cls) != null) {
-            return true;
-        }
-        return false;
+        return getFirstEntityOfType(entityList, cls) != null;
     }
     // endregion
     
@@ -197,7 +192,8 @@ public class EntitiesControl {
     }
 
     public Position getLargestCoordinate() {
-        int x = 1, y = 1;
+        int x = 1;
+        int y = 1;
         for (IEntity entity : entities) {
             if (entity.getPosition().getX() > x) {
                 x = entity.getPosition().getX();

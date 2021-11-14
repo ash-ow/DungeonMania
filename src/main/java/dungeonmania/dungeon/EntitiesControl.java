@@ -235,4 +235,11 @@ public class EntitiesControl {
             .findFirst()
             .orElse(null);
     }
+
+    public void moveMercenariesAfterAttack(CharacterEntity player) {
+        List<MercenaryEntity> movingEntities = getAllEntitiesOfType(MercenaryEntity.class);
+        for (MercenaryEntity merc : movingEntities) {
+            merc.move(this, player);
+        }
+    }
 }

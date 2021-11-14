@@ -1,5 +1,7 @@
 package dungeonmania.entities.collectableEntityTests;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.entities.EntityTypes;
@@ -25,6 +27,6 @@ public class ArrowsEntityTest implements ICollectableEntityTest {
 
     @Override
     public void TestUseCollectable() {
-        // arrows never used
+        assertTrue(true, "arrows never used");
     }
 }

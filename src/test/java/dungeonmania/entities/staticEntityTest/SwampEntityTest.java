@@ -4,12 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.IBlockerTest;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
 import dungeonmania.entities.movingEntities.CharacterEntity;

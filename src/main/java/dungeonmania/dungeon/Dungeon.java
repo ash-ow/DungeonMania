@@ -14,11 +14,7 @@ import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractableEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.OlderCharacter;
-import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
-import dungeonmania.entities.staticEntities.DoorEntity;
-import dungeonmania.entities.staticEntities.PortalEntity;
-import dungeonmania.entities.staticEntities.ZombieToastSpawnerEntity;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.response.models.*;
 import dungeonmania.util.Direction;
@@ -32,6 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Dungeon {
+    private static final String ENTITIES_STRING = "entities";
     public EntitiesControl entitiesControl;
     private GameModeType gameMode;
     private String id;
@@ -71,7 +68,7 @@ public class Dungeon {
      * @param gameMode            difficulty of the dungeon
      * @param player              player inside the dungeon
      */
-    public Dungeon(ArrayList<IEntity> entities, String gameMode, CharacterEntity player) {
+    public Dungeon(List<IEntity> entities, String gameMode, CharacterEntity player) {
         this.entitiesControl = new EntitiesControl();
         this.entitiesControl.setEntities(entities);
         this.gameMode = GameModeType.getGameModeType(gameMode);
@@ -87,7 +84,7 @@ public class Dungeon {
      * @param player              player inside the dungeon
      * @param goalConditions      goal conditions for the dungeon
      */
-    public Dungeon(ArrayList<IEntity> entities, String gameMode, CharacterEntity player, JsonObject goalConditions) {
+    public Dungeon(List<IEntity> entities, String gameMode, CharacterEntity player, JsonObject goalConditions) {
         this.entitiesControl = new EntitiesControl();
         this.entitiesControl.setEntities(entities);
         this.gameMode = GameModeType.getGameModeType(gameMode);
@@ -114,7 +111,7 @@ public class Dungeon {
             if (type.equals(EntityTypes.PLAYER.toString())) {
                 this.player = new CharacterEntity(entityObj, this.gameMode);
             } else {
-                this.entitiesControl.createEntity(entityObj, this.gameMode);
+                this.entitiesControl.createEntity(entityObj);
             }
         }
     }
@@ -242,7 +239,7 @@ public class Dungeon {
     public JsonObject timeTravelSave() {
         JsonObject finalObject = new JsonObject();              
         JsonArray entities = saveEntities();
-        finalObject.add("entities", entities);
+        finalObject.add(ENTITIES_STRING, entities);
         finalObject.addProperty("player-x", player.getPosition().getX());
         finalObject.addProperty("player-y", player.getPosition().getY());
         return finalObject;
@@ -259,7 +256,7 @@ public class Dungeon {
         if (olderChar != null) {
             entities.add(olderChar.buildJson());
         }
-        finalObject.add("entities", entities);
+        finalObject.add(ENTITIES_STRING, entities);
         finalObject.add("goal-condition", initalGoals);
         finalObject.addProperty("dungeonName", dungeonName);
         finalObject.addProperty("gameMode", gameMode.toString());
@@ -272,7 +269,6 @@ public class Dungeon {
             if (!entity.getType().equals(EntityTypes.OLDER_PLAYER)) {
                 entities.add(entity.buildJson());
             }
-            // TODO find way to add back older player in the normal save game
         }
         for (IEntity entity: player.getInventory()) {
             entities.add(getJsonVersion(player.getPosition().getX(), player.getPosition().getY(), entity.getType().toString()));
@@ -292,7 +288,7 @@ public class Dungeon {
         int start = Math.max(0, gameStates.size() - ticksRewind - 1);
         this.entitiesControl = new EntitiesControl();
         JsonObject obj = gameStates.get(start);
-        initializeEntities(obj.getAsJsonArray("entities"));
+        initializeEntities(obj.getAsJsonArray(ENTITIES_STRING));
         OlderCharacter olderCharacter = new OlderCharacter(obj, gameMode, ticks.subList(start, ticks.size()));
         entitiesControl.createNewEntityOnMap(olderCharacter);
         olderCharacter.pickupAllCollectables(entitiesControl);

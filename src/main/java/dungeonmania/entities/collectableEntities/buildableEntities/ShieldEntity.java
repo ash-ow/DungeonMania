@@ -2,8 +2,10 @@ package dungeonmania.entities.collectableEntities.buildableEntities;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.collectableEntities.ICollectable;
 import dungeonmania.entities.collectableEntities.IDefensiveEntity;
@@ -84,5 +86,19 @@ public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
         this.used(player);
         damage = damage/2;
         return damage;
+    }
+
+    @Override
+    public void build(List<ICollectable> inventory) {
+        inventory.add(this);
+        
+        removeBuildMaterials(inventory, EntityTypes.WOOD, 2);
+        if(inventory.stream().map(IEntity::getType).collect(Collectors.toList()).contains(EntityTypes.TREASURE)) {
+            removeBuildMaterials(inventory, EntityTypes.TREASURE, 1);
+        } else if (inventory.stream().map(IEntity::getType).collect(Collectors.toList()).contains(EntityTypes.KEY)) {
+            removeBuildMaterials(inventory, EntityTypes.KEY, 1);
+        } else if (inventory.stream().map(IEntity::getType).collect(Collectors.toList()).contains(EntityTypes.SUN_STONE)) {
+            removeBuildMaterials(inventory, EntityTypes.SUN_STONE, 1);
+        }
     }
 }

@@ -11,30 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.parallel.ResourceLock;
 
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.staticEntities.ExitEntity;
 import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.exceptions.InvalidActionException;
-import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class DungeonManiaControllerTests {
-    @Test
-    public void testCreateBoulders() {
-        DungeonManiaController dungeonManiaController = new DungeonManiaController();
-        DungeonResponse d1 = dungeonManiaController.newGame("boulders", "Standard");
-        dungeonManiaController.tick(null, Direction.DOWN);
-    }
-
-    @Test
-    public void testCreateAdvance() {
-        DungeonManiaController dungeonManiaController = new DungeonManiaController();
-        DungeonResponse d1 = dungeonManiaController.newGame("advanced", "Standard");
-        dungeonManiaController.tick(null, Direction.DOWN);
-    }
 
     @Test
     public void testNewGameWrongMode() {

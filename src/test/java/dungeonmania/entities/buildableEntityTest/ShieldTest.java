@@ -3,8 +3,6 @@ package dungeonmania.entities.buildableEntityTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.IEntity;
 import dungeonmania.entities.Logic;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.ShieldEntity;
@@ -65,7 +62,7 @@ public class ShieldTest implements IBuildableEntityTests {
         for (ItemResponse item : inventory) {
             assertEquals(EntityTypes.SHIELD.toString(), item.getType());
         }
-        assertTrue(player.getInventory().size() == 1);
+        assertEquals(1, player.getInventory().size());
     }
 
     public void assertCanBuildShieldWithSunStone() {

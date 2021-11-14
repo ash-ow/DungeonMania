@@ -5,8 +5,6 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
-import dungeonmania.entities.IInteractingEntityTest;
-import dungeonmania.entities.collectableEntities.CollectableEntity;
 import dungeonmania.entities.collectableEntities.ICollectable;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.BoulderEntity;
@@ -26,21 +24,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTest, IEntityTests, IBattlingEntityTest {
-    @Override
-    @Test
-    public void TestInteraction() {
-        SpiderEntity spider = new SpiderEntity();
-        CharacterEntity character = new CharacterEntity(0, 1);
-
-        character.move(Direction.UP);
-        assertEquals(spider.getPosition(), character.getPosition());
-        
-        // TODO This is only testing the stub in the SpiderEntity class - not the actual interaction between the two
-        spider.contactWithPlayer(new EntitiesControl(), character); // TODO I think this should be run automatically when positions are equal
-        assertEquals(new Position(0,0), character.getPosition());
-    }
-
+public class SpiderEntityTest implements IMovingEntityTest, IEntityTests, IBattlingEntityTest {
     @Override
     @Test
     public void TestMove() {
@@ -194,7 +178,6 @@ public class SpiderEntityTest implements IInteractingEntityTest, IMovingEntityTe
         entitiesControl.addEntity(spider);
         spider.battle(entitiesControl, character);
         assertFalse(entitiesControl.contains(spider));
-        // TODO add assertions for spider death
     }
 
     @Test

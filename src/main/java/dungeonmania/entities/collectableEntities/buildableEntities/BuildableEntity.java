@@ -3,6 +3,7 @@ package dungeonmania.entities.collectableEntities.buildableEntities;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import dungeonmania.entities.EntityTypes;
@@ -56,4 +57,33 @@ public abstract class BuildableEntity extends CollectableEntity {
      * Initialises required components to build
      */
     protected abstract void initialiseRequiredComponents();
+
+    /**
+     * Builds the BuildableEntity
+     */
+    public abstract void build(List<ICollectable> inventory);
+
+    
+
+    /**
+     * Removes build materials based on their type, and the amount of materials which need to be removed
+     * @param inventory to remove from
+     * @param type of entity to be removed
+     * @param amount of material that needs to be removed for each type
+     */
+    public void removeBuildMaterials(List<ICollectable> inventory, EntityTypes type, int amount) {
+        int removed = 0;
+        List<ICollectable> toRemove = new ArrayList<>();
+        while(removed < amount) {
+            for(ICollectable material : inventory) {
+                if (material.getType().equals(type)){
+                    toRemove.add(material);
+                    removed++;
+                }
+            }
+        }
+        for (ICollectable material : toRemove) {
+            inventory.remove(material);
+        }
+    }
 }

@@ -1,5 +1,7 @@
 package dungeonmania.entities.collectableEntityTests;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.util.Position;
@@ -30,6 +32,6 @@ public class KeyEntityTest implements ICollectableEntityTest {
 
     @Override
     public void TestUseCollectable() {
-        // TODO Auto-generated method stub
+        assertTrue(true, "keys are never used outside the DoorEntity context");
     }
 }

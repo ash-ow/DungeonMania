@@ -186,11 +186,27 @@ public class EntitiesControl {
             if (entity.getPosition().getX() > x) {
                 x = entity.getPosition().getX();
             }
-            if (entity.getPosition().getX() > y) {
-                y = entity.getPosition().getX();
+            if (entity.getPosition().getY() > y) {
+                y = entity.getPosition().getY();
             }
         }
         return new Position(x, y);
+    }
+
+    public Position getLargestPosition() {
+        int x = 1, y = 1;
+        for (IEntity entity : entities) {
+            if (entity.getPosition().getX() > x) {
+                x = entity.getPosition().getX();
+            }
+            if (entity.getPosition().getY() > y) {
+                y = entity.getPosition().getY();
+            }
+        }
+        if (x > y) {
+            return new Position(x,x);
+        }
+        return new Position(y,y);
     }
 
     /**

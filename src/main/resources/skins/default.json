@@ -44,6 +44,7 @@
         "assassin": "images/tileset/entities/assassin.png",
         "hydra": "images/tileset/entities/hydra.png",
         "time_turner": "images/tileset/entities/time_turner.png",
-        "time_travelling_portal": "images/tileset/entities/portal_04.png"
+        "time_travelling_portal": "images/tileset/entities/portal_04.png",
+        "swamp": "images/tileset/entities/swamp_tile.png"
     }
 }

@@ -104,6 +104,26 @@
         "type": "player"
       },
       {
+        "x": 1,
+        "y": 2,
+        "type": "swamp"
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "type": "swamp"
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "type": "swamp"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "type": "swamp"
+      },
+      {
         "x": 6,
         "y": 1,
         "type": "sword"

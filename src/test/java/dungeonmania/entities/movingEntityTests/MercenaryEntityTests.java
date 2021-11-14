@@ -35,6 +35,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         CharacterEntity player = new CharacterEntity(5, 0);
         MercenaryEntity mercenary = new MercenaryEntity(0, 0);
         entitiesControl.addEntity(mercenary);
+        entitiesControl.addEntity(player);
         mercenary.move(entitiesControl, player);
         assertEquals(new Position(1, 0), mercenary.getPosition());
     }
@@ -45,6 +46,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         MercenaryEntity mercenary = new MercenaryEntity(0, 0);
         ArrayList<IEntity> entities = new ArrayList<IEntity>();
         entities.add(mercenary);
+        entities.add(player);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         for (int i = 0; i < 30; i++) {
             dungeon.tick(Direction.DOWN);
@@ -60,6 +62,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         EntitiesControl entitiesControl = new EntitiesControl();
         entitiesControl.addEntity(mercenary);
         entitiesControl.addEntity(wall);
+        entitiesControl.addEntity(player);
         mercenary.move(entitiesControl, player);
         assertEquals(new Position(5, 4), mercenary.getPosition());
     }
@@ -72,6 +75,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         WallEntity wall2 = new WallEntity(5, 4);
         EntitiesControl entitiesControl = new EntitiesControl();
         entitiesControl.addEntity(mercenary);
+        entitiesControl.addEntity(player);
         entitiesControl.addEntity(wall);
         entitiesControl.addEntity(wall2);
         mercenary.move(entitiesControl, player);
@@ -158,6 +162,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         CharacterEntity player = new CharacterEntity(5, 0);
         MercenaryEntity mercenary = new MercenaryEntity(0, 0);
         entitiesControl.addEntity(mercenary);
+        entitiesControl.addEntity(player);
         mercenary.move(entitiesControl, player);
         mercenary.move(entitiesControl, player);
         assertEquals(new Position(2, 0), mercenary.getPosition());
@@ -175,6 +180,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         CharacterEntity player = new CharacterEntity(5, 0, GameModeType.HARD);
         MercenaryEntity mercenary = new MercenaryEntity(0, 0);
         entitiesControl.addEntity(mercenary);
+        entitiesControl.addEntity(player);
         entitiesControl.addEntity(potion);
         potion.contactWithPlayer(entitiesControl, player);
         player.useItem(potion.getId(), entitiesControl);
@@ -290,6 +296,8 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         entities.add(swamp2);
         SwampEntity swamp3 = new SwampEntity(0, 3);
         entities.add(swamp3);
+        SwampEntity swamp4 = new SwampEntity(0, 5);
+        entities.add(swamp4);
         CharacterEntity player = new CharacterEntity(0, 4);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
 

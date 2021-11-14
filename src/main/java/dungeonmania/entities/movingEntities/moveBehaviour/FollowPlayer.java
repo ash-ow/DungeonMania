@@ -39,11 +39,8 @@ public class FollowPlayer implements IMovingBehaviour{
         Map<Position, List<Position>> mainPathsMap = new HashMap<>();
         mainPathsMap.put(position, new ArrayList<>());
         this.positionsChecked.add(position);
-
-        //Position largestPos = entitiesControl.getLargestCoordinate();
-        Position largestPos = new Position(20,20);
-
-        while(!this.positionsChecked.contains(largestPos)) {
+        
+        while(!pathFindConditions(entitiesControl, player.getPosition(), mainPathsMap)){
             Map<Position, List<Position>> newPaths = new HashMap<>();
             newPaths.putAll(mainPathsMap);
             for(Position entry: mainPathsMap.keySet()) {
@@ -62,7 +59,7 @@ public class FollowPlayer implements IMovingBehaviour{
         List<Position> currentPrevPositions = pathsMap.get(currentPosition);
         for (Position newPosition:currentPosition.getCardinallyAdjacentPositions()){
             this.positionsChecked.add(newPosition);
-            if(positionIsValid(entitiesControl, newPosition)){
+            if(positionIsValid(entitiesControl, newPosition,pathsMap)){
                 List<Position> newPrevPositions = new ArrayList<>();
                 for(Position prevPosition: currentPrevPositions) {
                     newPrevPositions.add(prevPosition);
@@ -70,7 +67,7 @@ public class FollowPlayer implements IMovingBehaviour{
                 newPrevPositions.add(currentPosition);
                 if (!pathsMap.containsKey(newPosition)){
                     pathsMap.put(newPosition, newPrevPositions);
-                } else if (pathsMap.containsKey(newPosition)){
+                } else {
                     int newPathLength = numRequiredMoves(entitiesControl, newPrevPositions);
                     int oldPathLength = numRequiredMoves(entitiesControl, pathsMap.get(newPosition));
                     if (newPathLength < oldPathLength){
@@ -113,10 +110,12 @@ public class FollowPlayer implements IMovingBehaviour{
         return false;
     }
 
-    public boolean positionIsValid(EntitiesControl entitiesControl, Position newPosition){
+    public boolean positionIsValid(EntitiesControl entitiesControl, Position newPosition,Map<Position, List<Position>> pathsMap){
         if(!EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(newPosition))) {
             if(newPosition.getX() >= 0 && newPosition.getY() >= 0) {
-                return true;
+                //if (pathsMap.containsKey(newPosition) && pathsMap.get(newPosition).size() <= minDist) {
+                    return true;
+                //}
             }
         }
         return false;
@@ -134,5 +133,20 @@ public class FollowPlayer implements IMovingBehaviour{
             }
         }
         return numRequiredMoves;    
+    }
+
+    public boolean pathFindConditions(EntitiesControl entitiesControl, Position playerPosition, Map<Position, List<Position>> pathsMap){
+        Position largestPos = entitiesControl.getLargestPosition();
+        Position smallestPos = new Position(0, 0);
+        if(!this.positionsChecked.contains(largestPos)){
+            return false;
+        }
+        if(!this.positionsChecked.contains(smallestPos)){
+            return false;
+        }
+        if(!pathsMap.containsKey(playerPosition)){
+            return false;
+        }
+        return true;
     }
 }

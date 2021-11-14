@@ -9,7 +9,7 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
-public class RandomMove implements IMovingBehaviour{
+public class RandomMove implements IMovingBehaviour {
     Random rand = new Random();
 
     public RandomMove(int seed) {
@@ -23,7 +23,6 @@ public class RandomMove implements IMovingBehaviour{
     @Override
     public Direction getBehaviourDirection(EntitiesControl entitiesControl, CharacterEntity player, Position position) {
         Direction direction = Direction.getRandomDirection(new Random(rand.nextInt()));
-        // TODO this is the same as the players - could we abstract this to IMovingEntity or something?
         Position target = position.translateBy(direction);
         List<IEntity> targetEntities = entitiesControl.getAllEntitiesFromPosition(target);
         if ( !EntitiesControl.containsBlockingEntities(targetEntities) ) {

@@ -17,7 +17,7 @@ public interface IBuildableEntityTests extends ICollectableEntityTest {
     public void TestIsNotBuildable_InsufficientCorrectItems();
 
     public default void assertInventoryTypesAsExpected(List<EntityTypes> expectedInventory, CharacterEntity player) {
-        List<EntityTypes> actualInventory = player.getInventory().stream().map(item -> item.getType()).collect(Collectors.toList());
+        List<EntityTypes> actualInventory = player.getInventoryItems().stream().map(item -> item.getType()).collect(Collectors.toList());
         assertIterableEquals(expectedInventory, actualInventory);
     }
 }

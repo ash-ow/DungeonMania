@@ -2,20 +2,25 @@ package dungeonmania.entities.buildableEntityTest;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.IEntity;
 import dungeonmania.entities.Logic;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.SceptreEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.MercenaryEntity;
+import dungeonmania.util.Direction;
+import dungeonmania.entities.movingEntities.Inventory;
 import dungeonmania.util.Position;
 
 public class SceptreEntityTest implements IBuildableEntityTests {
@@ -34,38 +39,38 @@ public class SceptreEntityTest implements IBuildableEntityTests {
 
     public void assertCanBuildSceptreWithWoodKeySunstone() {
         CharacterEntity player = new CharacterEntity();
-        player.addEntityToInventory(new WoodEntity());
-        player.addEntityToInventory(new KeyEntity(1));
-        player.addEntityToInventory(new SunStoneEntity());
+        player.getInventoryItems().add(new WoodEntity());
+        player.getInventoryItems().add(new KeyEntity(1));
+        player.getInventoryItems().add(new SunStoneEntity());
         player.build(EntityTypes.SCEPTRE);
         assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.SCEPTRE), player);
     }
 
     public void assertCanBuildSceptreWithWoodTreasureSunStone() {
         CharacterEntity player = new CharacterEntity();
-        player.addEntityToInventory(new WoodEntity());
-        player.addEntityToInventory(new TreasureEntity());
-        player.addEntityToInventory(new SunStoneEntity());
+        player.getInventoryItems().add(new WoodEntity());
+        player.getInventoryItems().add(new TreasureEntity());
+        player.getInventoryItems().add(new SunStoneEntity());
         player.build(EntityTypes.SCEPTRE);
         assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.SCEPTRE), player);
     }
 
     public void assertCanBuildSceptreWith2ArrowsTreasureSunStone() {
         CharacterEntity player = new CharacterEntity();
-        player.addEntityToInventory(new ArrowsEntity());
-        player.addEntityToInventory(new ArrowsEntity());
-        player.addEntityToInventory(new TreasureEntity());
-        player.addEntityToInventory(new SunStoneEntity());
+        player.getInventoryItems().add(new ArrowsEntity());
+        player.getInventoryItems().add(new ArrowsEntity());
+        player.getInventoryItems().add(new TreasureEntity());
+        player.getInventoryItems().add(new SunStoneEntity());
         player.build(EntityTypes.SCEPTRE);
         assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.SCEPTRE), player);
     }
 
     public void assertCanBuildSceptreWith2ArrowsKeySunStone() {
         CharacterEntity player = new CharacterEntity();
-        player.addEntityToInventory(new ArrowsEntity());
-        player.addEntityToInventory(new ArrowsEntity());
-        player.addEntityToInventory(new KeyEntity(1));
-        player.addEntityToInventory(new SunStoneEntity());
+        player.getInventoryItems().add(new ArrowsEntity());
+        player.getInventoryItems().add(new ArrowsEntity());
+        player.getInventoryItems().add(new KeyEntity(1));
+        player.getInventoryItems().add(new SunStoneEntity());
         player.build(EntityTypes.SCEPTRE);
         assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.SCEPTRE), player);
     }
@@ -76,7 +81,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
     public void TestIsNotBuildable_EmptyInventory() {
         SceptreEntity sceptre = new SceptreEntity();
         List<ICollectable> inventory = new ArrayList<ICollectable>();
-        assertFalse(sceptre.isBuildable(inventory));
+        assertFalse(sceptre.isBuildable(new Inventory(inventory)));
     }
 
     @Test
@@ -86,7 +91,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new ArrowsEntity());
         inventory.add(new BombEntity(Logic.ANY));
-        assertFalse(sceptre.isBuildable(inventory));
+        assertFalse(sceptre.isBuildable(new Inventory(inventory)));
     }
 
     @Test
@@ -96,7 +101,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new WoodEntity());
         inventory.add(new SunStoneEntity());
-        assertFalse(sceptre.isBuildable(inventory));
+        assertFalse(sceptre.isBuildable(new Inventory(inventory)));
     }
 
     @Override
@@ -116,7 +121,19 @@ public class SceptreEntityTest implements IBuildableEntityTests {
     @Test
     @Override
     public void TestUseCollectable() {
-        //  TODO A character with a sceptre does not need to bribe mercenaries or assassins to become allies, as they can use the sceptre to control their minds. The effects only last for 10 ticks.
+        CharacterEntity player = new CharacterEntity(0, 0);
+        SceptreEntity sceptre = new SceptreEntity();
+        player.getInventoryItems().add(sceptre);
+        ArrayList<IEntity> entities = new ArrayList<>();
+        MercenaryEntity mercenary = new MercenaryEntity(0, 1);
+        entities.add(mercenary);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
+        dungeon.tick(sceptre.getId());
+        assertTrue(mercenary.isBribed());
+        for (int i = 0; i < 10; i++) {
+            dungeon.tick(Direction.NONE);
+        }
+        assertFalse(mercenary.isBribed());
     }
 
     @Test
@@ -128,12 +145,12 @@ public class SceptreEntityTest implements IBuildableEntityTests {
     @Override
     public void TestOnlyUsesResourcesFromOneRecipe() {
         CharacterEntity player = new CharacterEntity();
-        player.addEntityToInventory(new ArrowsEntity());
-        player.addEntityToInventory(new ArrowsEntity());
-        player.addEntityToInventory(new WoodEntity());
-        player.addEntityToInventory(new KeyEntity(1));
-        player.addEntityToInventory(new TreasureEntity());
-        player.addEntityToInventory(new SunStoneEntity());
+        player.getInventoryItems().add(new ArrowsEntity());
+        player.getInventoryItems().add(new ArrowsEntity());
+        player.getInventoryItems().add(new WoodEntity());
+        player.getInventoryItems().add(new KeyEntity(1));
+        player.getInventoryItems().add(new TreasureEntity());
+        player.getInventoryItems().add(new SunStoneEntity());
         player.build(EntityTypes.SCEPTRE);
         assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.ARROW, EntityTypes.ARROW, EntityTypes.KEY, EntityTypes.SCEPTRE), player);
     }

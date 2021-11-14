@@ -2,7 +2,6 @@ package dungeonmania.entities.movingEntities;
 
 import com.google.gson.JsonObject;
 
-import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
@@ -34,29 +33,27 @@ public class AssassinEntity extends MercenaryEntity implements IBoss {
      */
     //TO DO: implement player.useItem(); reduce hardcoding of sun_stone with treasure
     @Override
-    public boolean interactWith(CharacterEntity player) throws InvalidActionException {
-        IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);
-        IEntity oneRingFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), OneRingEntity.class);
-        IEntity sunStoneFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), SunStoneEntity.class);
+    public void interactWith(CharacterEntity player) throws InvalidActionException {
+        TreasureEntity treasureFound = (TreasureEntity) player.getInventory().getFirstItemOfType(TreasureEntity.class);
+        IEntity oneRingFound = player.getInventory().getFirstItemOfType(OneRingEntity.class);
         if (oneRingFound == null) {
             throw new InvalidActionException("Player has no one ring");
         }
-        if (treasureFound == null && sunStoneFound == null) {
+        if (treasureFound == null) {
            throw new InvalidActionException("Player has no treasure");
         }
         if (!isInRange(player)) {
             throw new InvalidActionException("Player is too far away");
         }
-        player.removeEntityFromInventory(treasureFound);
-        player.removeEntityFromInventory(oneRingFound);
+        treasureFound.used(player);
+        player.getInventoryItems().remove(oneRingFound);
         player.addTeammates(this);
         this.isBribed = true;   
-        return removeAfterInteraction();   
     }
 
     @Override
     public boolean removeAfterInteraction() {
-        return true;
+        return false;
     }
 
     @Override

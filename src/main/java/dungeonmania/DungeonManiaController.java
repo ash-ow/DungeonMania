@@ -2,9 +2,11 @@ package dungeonmania;
 
 import dungeonmania.dungeon.Dungeon;
 import dungeonmania.exceptions.InvalidActionException;
+import dungeonmania.generators.DungeonGenerator;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.util.Direction;
 import dungeonmania.util.FileLoader;
+import dungeonmania.util.Position;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -19,10 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class DungeonManiaController {
-    private Dungeon dungeon;
-
-    public DungeonManiaController() {
-    }
+    public Dungeon dungeon;
 
     public String getSkin() {
         return "default";
@@ -33,7 +32,7 @@ public class DungeonManiaController {
     }
 
     public List<String> getGameModes() {
-        return Arrays.asList("Standard", "Peaceful", "Hard");
+        return Arrays.asList("standard", "peaceful", "hard");
     }
 
     /**
@@ -53,7 +52,7 @@ public class DungeonManiaController {
         if (!dungeons().contains(dungeonName)) {
             throw new IllegalArgumentException("dungeonName does not exist");
         }
-        if (!getGameModes().contains(gameMode)) {
+        if (!getGameModes().contains(gameMode.toLowerCase())) {
             throw new IllegalArgumentException("invalid gameMode");
         }
         try {
@@ -63,6 +62,7 @@ public class DungeonManiaController {
             JsonObject goalCondition = jsonObject.getAsJsonObject("goal-condition");
             this.dungeon = new Dungeon(jsonObject.get("entities").getAsJsonArray(), goalCondition , gameMode, id, dungeonName);           
         } catch (IOException e) {
+            // swallow IOException
         }
         return dungeon.getInfo();
     }
@@ -85,6 +85,7 @@ public class DungeonManiaController {
             String dungeonName = jsonObject.get("dungeonName").getAsString();
             this.dungeon = new Dungeon(jsonObject.get("entities").getAsJsonArray(), goalCondition , gameMode, id, dungeonName);                  
         } catch (IOException e) {
+            // swallow IOException
         }
         dungeon.tick(Direction.NONE);
         return dungeon.getInfo();
@@ -112,7 +113,6 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse build(String buildable) throws IllegalArgumentException, InvalidActionException {
-        // TODO refactor this
         if (!buildable.equals("bow") && !buildable.equals("shield") && !buildable.equals("sceptre") && !buildable.equals("midnight_armour")) {
             throw new IllegalArgumentException();
         }
@@ -124,5 +124,17 @@ public class DungeonManiaController {
         return dungeon.timeTravel(ticks);
     }
 
+    public DungeonResponse generateDungeon(int xStart, int yStart, int xEnd, int yEnd, String gameMode) throws IllegalArgumentException {
+        if (!getGameModes().contains(gameMode.toLowerCase())) {
+            throw new IllegalArgumentException("invalid gameMode");
+        }
 
+        Position start = new Position(xStart, yStart);
+        Position end = new Position(xEnd, yEnd);
+
+        DungeonGenerator dungeonGenerator = new DungeonGenerator(start, end, gameMode);
+        this.dungeon = dungeonGenerator.GenerateDungeon();
+
+        return dungeon.getInfo();
+    }
 }

@@ -1,15 +1,5 @@
 package dungeonmania.entities.movingEntities;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Map.Entry;
-
 import com.google.gson.JsonObject;
 
 import dungeonmania.dungeon.EntitiesControl;
@@ -28,7 +18,6 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity, IInteractableEntity {
-
     protected float health;
     protected float damage;
     protected boolean isBribed;
@@ -88,9 +77,9 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
 
     @Override
     public float loseHealth(float enemyHealth, float enemyDamage) {
-        float damage = ((enemyHealth * enemyDamage) / 5);
-        this.health -= damage;
-        return damage;
+        float damageReceived = ((enemyHealth * enemyDamage) / 5);
+        this.health -= damageReceived;
+        return damageReceived;
     }
 
     @Override
@@ -126,27 +115,23 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
             }
         } else {
             this.move(Direction.NONE);
-        } 
+        }
     }
 
     /**
      * Determines the interactions of the mercenary with the player based on range and whether they have treasure
      * @param player the player with which the mercenary will interact with 
      */
-    //TO DO: implement player.useItem()?; remove hardcoding of sunstone/treasure
-    public boolean interactWith(CharacterEntity player) throws InvalidActionException {
-        IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);
-        IEntity sunStoneFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), SunStoneEntity.class);
-        if (treasureFound == null && sunStoneFound == null) {
+    public void interactWith(CharacterEntity player) throws InvalidActionException {
+        TreasureEntity treasureFound = player.getInventory().getFirstItemOfType(TreasureEntity.class);
+        if (treasureFound == null) {
             throw new InvalidActionException("Player has no treasure");
         }
         if (!isInRange(player)) {
             throw new InvalidActionException("Player is too far away");
         }
-        player.removeEntityFromInventory(treasureFound);
-        player.addTeammates(this);
-        this.isBribed = true;
-        return removeAfterInteraction();    
+        treasureFound.used(player);
+        this.bribe(player);
     }
     
 
@@ -172,5 +157,14 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         return false;
     }
 
+    public void bribe(CharacterEntity player) {
+        this.isBribed = true;
+        player.addTeammates(this);
+    }
+
+    public void betray(CharacterEntity player) {
+        this.isBribed = false;
+        player.removeTeammates(this);
+    }
 }
 

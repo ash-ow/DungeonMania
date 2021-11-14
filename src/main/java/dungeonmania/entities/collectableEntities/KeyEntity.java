@@ -2,7 +2,6 @@ package dungeonmania.entities.collectableEntities;
 
 import com.google.gson.JsonObject;
 
-import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;

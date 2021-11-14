@@ -1,9 +1,7 @@
 package dungeonmania.dungeon;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;

@@ -2,7 +2,6 @@ package dungeonmania.entities.collectableEntities;
 
 import com.google.gson.JsonObject;
 
-import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
@@ -35,6 +34,6 @@ public class InvisibilityPotionEntity extends CollectableEntity {
     @Override
     public void used(CharacterEntity player) {
         player.setInvisiblilityRemaining(10);
-        player.removeEntityFromInventory(this);
+        player.getInventoryItems().remove(this);
     }
 }

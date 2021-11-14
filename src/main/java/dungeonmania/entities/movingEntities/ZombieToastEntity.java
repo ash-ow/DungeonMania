@@ -1,6 +1,5 @@
 package dungeonmania.entities.movingEntities;
 
-import java.util.List;
 import java.util.Random;
 
 import com.google.gson.JsonObject;
@@ -8,12 +7,10 @@ import com.google.gson.JsonObject;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.ArmourEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.entities.movingEntities.moveBehaviour.RandomMove;
-import dungeonmania.util.Direction;
 
 import dungeonmania.util.Position;
 import dungeonmania.util.RandomChance;
@@ -32,7 +29,7 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
      */
     public ZombieToastEntity(int x, int y) {
         super(x, y, EntityTypes.ZOMBIE_TOAST);
-        if (RandomChance.getRandomBoolean((float) armourEntityProbability)) {
+        if (RandomChance.getRandomBoolean(armourEntityProbability)) {
             equipped = new ArmourEntity();
         }
         this.moveBehaviour = new RandomMove();
@@ -53,15 +50,15 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
      * Zombie Toast constructor
      * @param x                        x-coordinate on the map
      * @param y                        y-coordinate on the map
-     * @param ArmourEntityProbability  determines the proability that an armour will be dropped
+     * @param armourEntityProbability  determines the proability that an armour will be dropped
      * @param seed                     used to calculate probability
      */
-    public ZombieToastEntity(int x, int y, float ArmourEntityProbability, int seed) {
+    public ZombieToastEntity(int x, int y, float armourEntityProbability, int seed) {
         this(x, y);
         this.seed = seed;
         rand = new Random(seed);
-        this.armourEntityProbability = ArmourEntityProbability;
-        if (RandomChance.getRandomBoolean((float) armourEntityProbability)) {
+        this.armourEntityProbability = armourEntityProbability;
+        if (RandomChance.getRandomBoolean(armourEntityProbability)) {
             equipped = new ArmourEntity();
         }
         this.moveBehaviour = new RandomMove(seed);
@@ -117,10 +114,10 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
     public void dropEntities(CharacterEntity player) {
         OneRingEntity ring = new OneRingEntity();
         if (RandomChance.getRandomBoolean(ring.getDropChance())) {
-            player.addEntityToInventory(ring);
+            player.getInventoryItems().add(ring);
         }
         if (equipped != null) {
-            player.addEntityToInventory(equipped);
+            player.getInventoryItems().add(equipped);
         }
     }
 
@@ -134,10 +131,10 @@ public class ZombieToastEntity extends Entity implements IBattlingEntity, IAutoM
         OneRingEntity ring = new OneRingEntity();
         ArmourEntity armour = new ArmourEntity();
         if (RandomChance.getRandomBoolean(probability)) {
-            player.addEntityToInventory(ring);
+            player.getInventoryItems().add(ring);
         }
         if (equipped != null) {
-            player.addEntityToInventory(armour);
+            player.getInventoryItems().add(armour);
         }
     }
 

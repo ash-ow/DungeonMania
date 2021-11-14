@@ -1,5 +1,7 @@
 package dungeonmania.entities.collectableEntityTests;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +53,7 @@ public class KeyEntityTest implements ICollectableEntityTest {
         entities.add(key);
         key.used(player);
         assertFalse(key.keyPickedUp(), "No Key has been picked up");
-        assertNull(player.getInventoryItem(key.getId()), "Inventory should not contain entity " + key.getId());
+        assertNull(player.getInventory().getInventoryItemById(key.getId()), "Inventory should not contain entity " + key.getId());
     }
 
     @Test 
@@ -66,19 +68,18 @@ public class KeyEntityTest implements ICollectableEntityTest {
         assertEquals(new Position(0, 1, 0), player.getPosition());
         assertEquals(new Position(0, 1, 0), key.getPosition());
         assertItemInInventory("key-0-1-0", player, dungeon.entitiesControl);
-        assertNotNull(player.getInventoryItem(key.getId()), "Inventory should contain entity " + key.getId());
+        assertNotNull(player.getInventory().getInventoryItemById(key.getId()), "Inventory should contain entity " + key.getId());
     }
 
     @Test 
     public void TestKeyPickedUp() {
         KeyEntity key = new KeyEntity(0, 0, 0);
         CharacterEntity player = new CharacterEntity(0, 0);
-        player.addEntityToInventory(key);
+        player.getInventoryItems().add(key);
         List<ItemResponse> inventory = player.getInventoryInfo();
         for (ItemResponse item : inventory) {
             assertEquals(EntityTypes.KEY.toString(), item.getType());
         }
-        assertEquals(1, player.getInventory().size());
         assertTrue(key.keyPickedUp(), "A key has been picked up");
     }
 
@@ -97,11 +98,11 @@ public class KeyEntityTest implements ICollectableEntityTest {
         // Make Player pick up the first Key. Check that the Player now has a key.
         d1.tick(Direction.DOWN);
         assertTrue(key1.keyPickedUp(), "Key 1 should be in inventory");
-        assertNotNull(player.getInventoryItem(key1.getId()), "Inventory should contain entity " + key1.getId());
+        assertNotNull(player.getInventory().getInventoryItemById(key1.getId()), "Inventory should contain entity " + key1.getId());
         //Player should not be able to pick up a second key
         d1.tick(Direction.DOWN);
         assertFalse(key2.keyPickedUp(), "Key 2 should not be in inventory");
-        assertNull(player.getInventoryItem(key2.getId()), "Inventory should not contain entity " + key2.getId());
+        assertNull(player.getInventory().getInventoryItemById(key2.getId()), "Inventory should not contain entity " + key2.getId());
     }
     
     @Test 
@@ -116,16 +117,16 @@ public class KeyEntityTest implements ICollectableEntityTest {
         // Make Player pick up the first Key. Check that the Player now has a key.
         d1.tick(Direction.DOWN);
         assertTrue(key1.keyPickedUp(), "Key 1 should be in inventory");
-        assertNotNull(player.getInventoryItem(key1.getId()), "Inventory should contain entity " + key1.getId());
+        assertNotNull(player.getInventory().getInventoryItemById(key1.getId()), "Inventory should contain entity " + key1.getId());
         //Player uses first key 
         key1.used(player);
         assertFalse(key1.keyPickedUp(), "No Key has been picked up");
-        assertNull(player.getInventoryItem(key1.getId()), "Inventory should not contain entity " + key1.getId());
+        assertNull(player.getInventory().getInventoryItemById(key1.getId()), "Inventory should not contain entity " + key1.getId());
         //Player can move to second key 
         d1.tick(Direction.DOWN);
         assertEquals(new Position(0, 2, 0), player.getPosition());
         assertEquals(new Position(0, 2, 0), key2.getPosition());
         assertTrue(key2.keyPickedUp(), "Key 2 should be in inventory");
-        assertNotNull(player.getInventoryItem(key2.getId()), "Inventory should contain entity " + key2.getId());
+        assertNotNull(player.getInventory().getInventoryItemById(key2.getId()), "Inventory should contain entity " + key2.getId());
     }   
 }

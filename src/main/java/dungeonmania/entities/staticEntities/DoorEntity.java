@@ -7,18 +7,14 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.collectableEntities.KeyEntity;
-import dungeonmania.entities.collectableEntities.SunStoneEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
-import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 
 
 public class DoorEntity extends Entity implements IBlocker {
     private int keyNumber;
     private boolean isLocked;
-    private KeyEntity key;
-    private SunStoneEntity sun_stone;
 
      /**
      * Door constructor
@@ -55,7 +51,7 @@ public class DoorEntity extends Entity implements IBlocker {
      */
     private KeyEntity getKeyFromInventory(CharacterEntity player, int keyNumber) {
         return player
-            .getInventory()
+            .getInventoryItems()
             .stream()
             .filter(e -> e.getType().equals(EntityTypes.KEY))
             .map(KeyEntity.class::cast)
@@ -70,7 +66,7 @@ public class DoorEntity extends Entity implements IBlocker {
      */
     private boolean getStoneFromInventory(CharacterEntity player) {
         return player
-            .getInventory()
+            .getInventoryItems()
             .stream()
             .anyMatch(e -> e.getType().equals(EntityTypes.SUN_STONE));
     }
@@ -93,10 +89,10 @@ public class DoorEntity extends Entity implements IBlocker {
      *  @param sun_stone    Sun Stone Entity 
      *  @param player       the player which should have sun_stone in inventory 
      */
-    private void tryUnlockWithStone(SunStoneEntity sun_stone, CharacterEntity player) {
-            this.isLocked = false;
-            this.type = EntityTypes.UNLOCKED_DOOR;
-        }
+    private void tryUnlockWithStone() {
+        this.isLocked = false;
+        this.type = EntityTypes.UNLOCKED_DOOR;
+    }
 
     @Override
     public boolean isBlocking() {
@@ -114,12 +110,12 @@ public class DoorEntity extends Entity implements IBlocker {
         if (ent instanceof CharacterEntity) {
             CharacterEntity player = (CharacterEntity) ent;
             boolean stoneInInventory = getStoneFromInventory(player);
-            if (player.containedInInventory(EntityTypes.KEY)){
-                this.key = getKeyFromInventory(player, this.keyNumber);
+            if (player.getInventory().containsItemOfType(EntityTypes.KEY)){
+                KeyEntity key = getKeyFromInventory(player, this.keyNumber);
                 this.tryUnlockWithKey(key, player);
             }
             else if (stoneInInventory){
-                this.tryUnlockWithStone(sun_stone, player); 
+                this.tryUnlockWithStone(); 
             }
         }
         return !this.isLocked;

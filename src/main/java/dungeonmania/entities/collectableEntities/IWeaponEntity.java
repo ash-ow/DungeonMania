@@ -3,7 +3,7 @@ package dungeonmania.entities.collectableEntities;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
 
-public interface IWeaponEntity {
+public interface IWeaponEntity extends ICollectable {
     /**
      * Reduces enemy health based on players health and damage
      * @param enemy   enemy which is losing health

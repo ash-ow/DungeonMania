@@ -2,7 +2,6 @@ package dungeonmania.entities.movingEntities.moveBehaviour;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.movingEntities.CharacterEntity;

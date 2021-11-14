@@ -7,10 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.Test;
-
 import dungeonmania.dungeon.Dungeon;
-import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 import dungeonmania.entities.IEntity;

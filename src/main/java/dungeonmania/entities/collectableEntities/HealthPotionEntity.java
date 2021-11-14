@@ -34,6 +34,6 @@ public class HealthPotionEntity extends CollectableEntity {
     @Override
     public void used(CharacterEntity player) {
         player.setHealth(100);
-        player.removeEntityFromInventory(this);
+        player.getInventoryItems().remove(this);
     }   
 }

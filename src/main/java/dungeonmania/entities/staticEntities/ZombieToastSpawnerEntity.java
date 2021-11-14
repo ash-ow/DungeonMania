@@ -41,7 +41,7 @@ public class ZombieToastSpawnerEntity extends Entity implements IBlocker, IInter
     }
 
     
-    public boolean interactWith(CharacterEntity player) throws InvalidActionException {
+    public void interactWith(CharacterEntity player) throws InvalidActionException {
         List<IWeaponEntity> weaponsFound = player.getInventory().getItemsFromInventoryOfType(IWeaponEntity.class);
         if (weaponsFound.isEmpty()) {
             throw new InvalidActionException("Has No Weapons");
@@ -49,7 +49,6 @@ public class ZombieToastSpawnerEntity extends Entity implements IBlocker, IInter
         if (!isPlayerAdjacent(player)) {
             throw new InvalidActionException("Too far away");
         }
-        return removeAfterInteraction();
     }
     
     public boolean isPlayerAdjacent(CharacterEntity player) {
@@ -63,6 +62,6 @@ public class ZombieToastSpawnerEntity extends Entity implements IBlocker, IInter
 
     @Override
     public boolean removeAfterInteraction() {
-        return false;
+        return true;
     }
 }

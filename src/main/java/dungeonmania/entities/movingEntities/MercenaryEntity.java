@@ -18,7 +18,6 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity, IInteractableEntity {
-
     protected float health;
     protected float damage;
     protected boolean isBribed;
@@ -116,27 +115,23 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
             }
         } else {
             this.move(Direction.NONE);
-        } 
+        }
     }
 
     /**
      * Determines the interactions of the mercenary with the player based on range and whether they have treasure
      * @param player the player with which the mercenary will interact with 
      */
-    //TO DO: implement player.useItem()?; remove hardcoding of sunstone/treasure
-    public boolean interactWith(CharacterEntity player) throws InvalidActionException {
-        IEntity treasureFound = player.getInventory().getFirstItemOfType(TreasureEntity.class);
-        IEntity sunStoneFound = player.getInventory().getFirstItemOfType(SunStoneEntity.class);
-        if (treasureFound == null && sunStoneFound == null) {
+    public void interactWith(CharacterEntity player) throws InvalidActionException {
+        TreasureEntity treasureFound = player.getInventory().getFirstItemOfType(TreasureEntity.class);
+        if (treasureFound == null) {
             throw new InvalidActionException("Player has no treasure");
         }
         if (!isInRange(player)) {
             throw new InvalidActionException("Player is too far away");
         }
-        player.getInventoryItems().remove(treasureFound);
-        player.addTeammates(this);
-        this.isBribed = true;
-        return removeAfterInteraction();    
+        treasureFound.used(player);
+        this.bribe(player);
     }
     
 
@@ -162,5 +157,14 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         return false;
     }
 
+    public void bribe(CharacterEntity player) {
+        this.isBribed = true;
+        player.addTeammates(this);
+    }
+
+    public void betray(CharacterEntity player) {
+        this.isBribed = false;
+        player.removeTeammates(this);
+    }
 }
 

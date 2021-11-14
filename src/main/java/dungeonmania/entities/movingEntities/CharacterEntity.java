@@ -14,6 +14,7 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
 import dungeonmania.entities.IContactingEntity;
 import dungeonmania.entities.IEntity;
+import dungeonmania.entities.ITicker;
 import dungeonmania.entities.collectableEntities.IDefensiveEntity;
 import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.exceptions.InvalidActionException;
@@ -34,6 +35,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     private int invisibilityRemaining = 0;
     private GameModeType gameMode;
     private boolean isTimeTravelling = false;
+    private List<ITicker> activeItems = new ArrayList<>();
 
     /**
      * Character constructor
@@ -128,7 +130,15 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param teamMemeber a battling entity which will be added to the list of team mates   
      */
     public void addTeammates(IBattlingEntity teamMember) {
-        teammates.add(teamMember);
+        if (!teammates.contains(teamMember)) {
+            teammates.add(teamMember);
+        }
+    }
+
+    public void removeTeammates(IBattlingEntity teamMember) {
+        if (teammates.contains(teamMember)) {
+            teammates.remove(teamMember);
+        }
     }
 
     /**
@@ -222,6 +232,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
             decrementPotionDurations();    
             interactWithAll(targetEntities, entitiesControl);
         }
+        this.tickActiveItems(entitiesControl);
     }
 
     private void decrementPotionDurations() {
@@ -300,7 +311,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     protected void interactWithAll(List<IEntity> targetEntities, EntitiesControl entitiesControl) {
         List<IContactingEntity> targetInteractable = entitiesControl.getInteractableEntitiesFrom(targetEntities);
         for (IContactingEntity entity : targetInteractable) {
-            System.out.println(entity.getId());
             entity.contactWithPlayer(entitiesControl, this);
         }
     }
@@ -336,9 +346,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         for (ICollectable item : this.getInventoryItems()){
             if (item.getId().equals(itemID)) {
                 this.useItemCore(item, entitiesControl);
-                return;
+                break;
             }
         }
+        this.tickActiveItems(entitiesControl);
     }
 
     /**
@@ -354,6 +365,14 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         }
     }
 
+    private void tickActiveItems(EntitiesControl entitiesControl) {
+        this.activeItems.stream().forEach(a -> a.tick(entitiesControl));
+    }
+
+    public void addActiveItem(ITicker item) {
+        this.activeItems.add(item);
+    }
+
     public Position getPreviousPosition() {
         return this.previousPosition;
     }
@@ -365,4 +384,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public void setTimeTravelling(boolean timeTravel) {
         this.isTimeTravelling = timeTravel;
     }
+
+
 }

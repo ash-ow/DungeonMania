@@ -33,29 +33,27 @@ public class AssassinEntity extends MercenaryEntity implements IBoss {
      */
     //TO DO: implement player.useItem(); reduce hardcoding of sun_stone with treasure
     @Override
-    public boolean interactWith(CharacterEntity player) throws InvalidActionException {
-        IEntity treasureFound = player.getInventory().getFirstItemOfType(TreasureEntity.class);
+    public void interactWith(CharacterEntity player) throws InvalidActionException {
+        TreasureEntity treasureFound = (TreasureEntity) player.getInventory().getFirstItemOfType(TreasureEntity.class);
         IEntity oneRingFound = player.getInventory().getFirstItemOfType(OneRingEntity.class);
-        IEntity sunStoneFound = player.getInventory().getFirstItemOfType(SunStoneEntity.class);
         if (oneRingFound == null) {
             throw new InvalidActionException("Player has no one ring");
         }
-        if (treasureFound == null && sunStoneFound == null) {
+        if (treasureFound == null) {
            throw new InvalidActionException("Player has no treasure");
         }
         if (!isInRange(player)) {
             throw new InvalidActionException("Player is too far away");
         }
-        player.getInventoryItems().remove(treasureFound);
+        treasureFound.used(player);
         player.getInventoryItems().remove(oneRingFound);
         player.addTeammates(this);
         this.isBribed = true;   
-        return removeAfterInteraction();   
     }
 
     @Override
     public boolean removeAfterInteraction() {
-        return true;
+        return false;
     }
 
     @Override

@@ -9,6 +9,7 @@ public enum EntityTypes {
     SWITCH("switch"),
     DOOR("door"),
     UNLOCKED_DOOR("unlocked_door"),
+    SWITCH_DOOR("switch_door"),
     PORTAL("portal"),
     ZOMBIE_TOAST_SPAWNER("zombie_toast_spawner"),
     TIME_TRAVEL_PORTAL("time_travelling_portal"),

@@ -348,4 +348,22 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         dungeon.tick(Direction.NONE);
         assertFalse(entities.contains(merc));
     }
+
+    @Test
+    public void TestAdvanced() {
+        ArrayList<IEntity> entities = new ArrayList<>();
+
+        MercenaryEntity merc = new MercenaryEntity(3,5);
+        entities.add(merc);
+        CharacterEntity player = new CharacterEntity(1, 1);
+        WallEntity wall = new WallEntity(80,80);
+        entities.add(wall);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        
+        dungeon.tick(Direction.DOWN);
+        assertEquals(merc.getPosition(), new Position(1, 0));
+        dungeon.tick(Direction.DOWN);
+        assertEquals(merc.getPosition(), new Position(2, 0));
+        dungeon.tick(Direction.DOWN);
+    }
 }

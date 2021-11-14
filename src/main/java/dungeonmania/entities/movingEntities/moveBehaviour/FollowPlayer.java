@@ -38,9 +38,8 @@ public class FollowPlayer implements IMovingBehaviour{
     public List<Position> shortestPathToPlayer(EntitiesControl entitiesControl, CharacterEntity player, Position position){
         Map<Position, List<Position>> mainPathsMap = new HashMap<>();
         mainPathsMap.put(position, new ArrayList<>());
-        this.positionsChecked.add(position);
-        
-        while(!pathFindConditions(entitiesControl, player.getPosition(), mainPathsMap)){
+        positionsChecked.add(position);        
+        while(!pathFindConditions(entitiesControl, player, mainPathsMap)){
             Map<Position, List<Position>> newPaths = new HashMap<>();
             newPaths.putAll(mainPathsMap);
             for(Position entry: mainPathsMap.keySet()) {
@@ -113,9 +112,7 @@ public class FollowPlayer implements IMovingBehaviour{
     public boolean positionIsValid(EntitiesControl entitiesControl, Position newPosition,Map<Position, List<Position>> pathsMap){
         if(!EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(newPosition))) {
             if(newPosition.getX() >= 0 && newPosition.getY() >= 0) {
-                //if (pathsMap.containsKey(newPosition) && pathsMap.get(newPosition).size() <= minDist) {
-                    return true;
-                //}
+                return true;
             }
         }
         return false;
@@ -135,7 +132,7 @@ public class FollowPlayer implements IMovingBehaviour{
         return numRequiredMoves;    
     }
 
-    public boolean pathFindConditions(EntitiesControl entitiesControl, Position playerPosition, Map<Position, List<Position>> pathsMap){
+    public boolean pathFindConditions(EntitiesControl entitiesControl, CharacterEntity player, Map<Position, List<Position>> pathsMap){
         Position largestPos = entitiesControl.getLargestPosition();
         Position smallestPos = new Position(0, 0);
         if(!this.positionsChecked.contains(largestPos)){
@@ -144,7 +141,7 @@ public class FollowPlayer implements IMovingBehaviour{
         if(!this.positionsChecked.contains(smallestPos)){
             return false;
         }
-        if(!pathsMap.containsKey(playerPosition)){
+        if(!pathsMap.containsKey(player.getPosition())){
             return false;
         }
         return true;

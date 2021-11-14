@@ -3,6 +3,7 @@ package dungeonmania.entities.collectableEntities;
 import com.google.gson.JsonObject;
 
 import dungeonmania.dungeon.EntitiesControl;
+import dungeonmania.dungeon.GameModeType;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
@@ -39,7 +40,13 @@ public class InvisibilityPotionEntity extends CollectableEntity implements IAffe
     }
 
     @Override
-    public void activateAffects(EntitiesControl entities) {
+    public void activateAffects(EntitiesControl entities, CharacterEntity player) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void tick(EntitiesControl entities) {
         // TODO Auto-generated method stub
         
     }

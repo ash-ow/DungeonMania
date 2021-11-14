@@ -103,7 +103,7 @@ public class EntitiesControl {
      * Moves all moving entities away based on player
      * @param player    player entity which is used to determine move behaviour
      */
-    public void runAwayAllMovingEntities(CharacterEntity player) {
+    public void runAwayAllMovingEntities() {
         List<IAutoMovingEntity> movingEntities = getAllAutoMovingEntities();
         for (IAutoMovingEntity entity : movingEntities) {
             entity.setMoveBehaviour(new RunAway());

@@ -53,7 +53,7 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
 
         dungeon.tick("invincibility_potion-0-1-0");
         invincibility_potion.used(player);
-        assertTrue(player.isInvincible());
+        assertTrue(player.invincible);
     }
 
     @Test
@@ -89,14 +89,14 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
 
         invincibility_potion.used(player);
         assertItemNotInInventory("invincibility_potion-0-1-0", player, dungeon.entitiesControl, false);
-        assertTrue(player.isInvincible());
+        assertTrue(player.invincible);
             
         // Player moves down 10 times
         for (int i = 0; i < 10;i++) {
             dungeon.tick(Direction.DOWN);
         }
         
-        assertFalse(player.isInvincible());
+        assertFalse(player.invincible);
         assertItemNotInInventory("invincibility_potion-0-1-0", player, dungeon.entitiesControl, false);
     }
 

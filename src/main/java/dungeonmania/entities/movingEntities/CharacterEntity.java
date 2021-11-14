@@ -30,7 +30,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     private List<ICollectable> inventory = new ArrayList<>();
     private Position previousPosition;
     public List<IBattlingEntity> teammates = new ArrayList<>();
-    private int invincibilityRemaining = 0;
+    public boolean invincible;
     private int invisibilityRemaining = 0;
     private GameModeType gameMode;
     private boolean isTimeTravelling = false;
@@ -111,7 +111,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     @Override
     public float loseHealth(float enemyHealth, float enemyDamage) {
         float damage = 0;
-        if (!this.isInvincible()) {
+        if (!this.invincible) {
             damage = ((enemyHealth * enemyDamage) / 10);
             for (ICollectable item : getItemsFromInventory(IDefensiveEntity.class)) {
                 IDefensiveEntity defender = (IDefensiveEntity)item;
@@ -210,20 +210,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 //endregion
 
 //Player Potion Effects region 
-    /**
-     * Determines whether the character is still invincible based on remaining ticks, and game mode
-     * @return true if still invincible
-     */
-    public boolean isInvincible() {
-        if (gameMode.toString().equals("Hard")) {
-            return false;
-        }
-        return this.invincibilityRemaining > 0;
-    }
-
-    public void setInvincibilityRemaining(int invincibilityRemaining) {
-        this.invincibilityRemaining = invincibilityRemaining;
-    }
 
     public boolean isInvisible() {
         return this.invisibilityRemaining > 0;
@@ -247,14 +233,16 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         if (!EntitiesControl.containsBlockingEntities(targetEntities) || canUnblock(targetEntities, direction, entitiesControl) ) {
             this.previousPosition = this.position;
             this.move(direction); 
-            decrementPotionDurations();    
+            decrementAffectsDurations(entitiesControl);    
             interactWithAll(targetEntities, entitiesControl);
         }
     }
 
-    private void decrementPotionDurations() {
+    private void decrementAffectsDurations(EntitiesControl entities) {
+        for (IAffectingEntity affectingEntity : EntitiesControl.getEntitiesOfType(inventory, IAffectingEntity.class)) {
+            affectingEntity.tick(entities);
+        }
         this.invisibilityRemaining--;
-        this.invincibilityRemaining--;
     }
 //endregion
 
@@ -416,6 +404,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      */
     private void useItemCore(ICollectable item, EntitiesControl entitiesControl) {
         item.used(this);
+        if (item instanceof IAffectingEntity) {
+            IAffectingEntity affectingEntity = (IAffectingEntity) item;
+            affectingEntity.activateAffects(entitiesControl, this);
+        }
         if (item.isPlacedAfterUsing()) {
             item.setPosition(this.getPosition());
             entitiesControl.addEntity(item);
@@ -428,6 +420,10 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     public boolean IsTimeTravelling() {
         return this.isTimeTravelling;
+    }
+
+    public GameModeType getGameMode() {
+        return gameMode;
     }
     
     public void setTimeTravelling(boolean timeTravel) {

@@ -16,6 +16,7 @@ import dungeonmania.entities.Logic;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.BowEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.Inventory;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.util.Position;
 
@@ -28,7 +29,7 @@ public class BowEntityTest implements IBuildableEntityTests {
         inventory.add(new ArrowsEntity());
         inventory.add(new ArrowsEntity());
         inventory.add(new ArrowsEntity());
-        assertTrue(bow.isBuildable(inventory));
+        assertTrue(bow.isBuildable(new Inventory(inventory)));
     }
 
     @Test
@@ -36,7 +37,7 @@ public class BowEntityTest implements IBuildableEntityTests {
     public void TestIsNotBuildable_EmptyInventory() {
         BowEntity bow = new BowEntity();
         List<ICollectable> inventory = new ArrayList<ICollectable>();
-        assertFalse(bow.isBuildable(inventory));
+        assertFalse(bow.isBuildable(new Inventory(inventory)));
     }
 
     @Test
@@ -46,7 +47,7 @@ public class BowEntityTest implements IBuildableEntityTests {
         List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new ArrowsEntity());
         inventory.add(new BombEntity(Logic.ANY));
-        assertFalse(bow.isBuildable(inventory));
+        assertFalse(bow.isBuildable(new Inventory(inventory)));
         
     }
 
@@ -58,7 +59,7 @@ public class BowEntityTest implements IBuildableEntityTests {
         inventory.add(new WoodEntity());
         inventory.add(new ArrowsEntity());
         inventory.add(new ArrowsEntity());
-        assertFalse(bow.isBuildable(inventory));
+        assertFalse(bow.isBuildable(new Inventory(inventory)));
         
     }
 
@@ -94,7 +95,7 @@ public class BowEntityTest implements IBuildableEntityTests {
 
         bow.used(player);
 
-        assertNull(player.getInventoryItem(bow.getId()), "Inventory should not contain entity " + bow.getId());
+        assertNull(player.getInventory().getInventoryItemById(bow.getId()), "Inventory should not contain entity " + bow.getId());
 
     }
 

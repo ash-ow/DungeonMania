@@ -5,7 +5,6 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IEntityTests;
-import dungeonmania.entities.collectableEntities.ICollectable;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.BoulderEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -186,7 +185,6 @@ public class SpiderEntityTest implements IMovingEntityTest, IEntityTests, IBattl
         CharacterEntity player = new CharacterEntity();
         SpiderEntity spider = new SpiderEntity(0, 0);
         spider.dropEntities(player, 1f);
-        List<ICollectable> inventory = player.getInventory();
-        assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
+        assertNotNull(player.getInventory().getFirstItemOfType(OneRingEntity.class));
     }
 }

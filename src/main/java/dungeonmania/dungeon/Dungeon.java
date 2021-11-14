@@ -271,7 +271,7 @@ public class Dungeon {
                 entities.add(entity.buildJson());
             }
         }
-        for (IEntity entity: player.getInventory()) {
+        for (IEntity entity: player.getInventoryItems()) {
             entities.add(getJsonVersion(player.getPosition().getX(), player.getPosition().getY(), entity.getType().toString()));
         }
         return entities;

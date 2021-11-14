@@ -1,13 +1,11 @@
 package dungeonmania.entities.staticEntities;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractableEntity;
 import dungeonmania.entities.collectableEntities.IWeaponEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -44,8 +42,7 @@ public class ZombieToastSpawnerEntity extends Entity implements IBlocker, IInter
 
     
     public boolean interactWith(CharacterEntity player) throws InvalidActionException {
-        List <IEntity> inveEntities = player.getInventory().stream().map(IEntity.class::cast).collect(Collectors.toList());
-        List<IWeaponEntity> weaponsFound = EntitiesControl.getEntitiesOfType(inveEntities, IWeaponEntity.class);
+        List<IWeaponEntity> weaponsFound = player.getInventory().getItemsFromInventoryOfType(IWeaponEntity.class);
         if (weaponsFound.isEmpty()) {
             throw new InvalidActionException("Has No Weapons");
         }

@@ -1,14 +1,11 @@
 package dungeonmania.entities.collectableEntities.buildableEntities;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.CollectableEntity;
-import dungeonmania.entities.collectableEntities.ICollectable;
+import dungeonmania.entities.movingEntities.Inventory;
 
 public abstract class BuildableEntity extends CollectableEntity {
     /**
@@ -24,33 +21,19 @@ public abstract class BuildableEntity extends CollectableEntity {
     
     /**
      * Checks if a buildable entity is buildable
-     * @param inventory items in inventory are compared against required comonents
+     * @param items items in inventory are compared against required comonents
      * @return true or false depnding on whether the item is buildable
      */
     protected Map<EntityTypes, Integer> requiredComponents = new HashMap<EntityTypes, Integer>();
-    public boolean isBuildable(List<ICollectable> inventory) {
+    public boolean isBuildable(Inventory inventory) {
         for (Map.Entry<EntityTypes, Integer> entry : requiredComponents.entrySet()) {
             EntityTypes component = entry.getKey();
             int quantity = entry.getValue();
-            if (numberOfComponentItemsInInventory(inventory, component) < quantity) {
+            if (inventory.numberOfComponentItemsInInventory(component) < quantity) {
                 return false;
             }
         }
         return true;
-    }
-
-    /**
-     * Finds the number of a certain component in the inventory
-     * @param inventory inventory which is checked
-     * @param component component which is being searched for
-     * @return the number of components
-     */
-    protected int numberOfComponentItemsInInventory(List<ICollectable> inventory, EntityTypes component) {
-        return inventory
-            .stream()
-            .filter(ent -> ent.getType() == component)
-            .collect(Collectors.toList())
-            .size();
     }
 
     /**
@@ -61,29 +44,5 @@ public abstract class BuildableEntity extends CollectableEntity {
     /**
      * Builds the BuildableEntity
      */
-    public abstract void build(List<ICollectable> inventory);
-
-    
-
-    /**
-     * Removes build materials based on their type, and the amount of materials which need to be removed
-     * @param inventory to remove from
-     * @param type of entity to be removed
-     * @param amount of material that needs to be removed for each type
-     */
-    public void removeBuildMaterials(List<ICollectable> inventory, EntityTypes type, int amount) {
-        int removed = 0;
-        List<ICollectable> toRemove = new ArrayList<>();
-        while(removed < amount) {
-            for(ICollectable material : inventory) {
-                if (material.getType().equals(type)){
-                    toRemove.add(material);
-                    removed++;
-                }
-            }
-        }
-        for (ICollectable material : toRemove) {
-            inventory.remove(material);
-        }
-    }
+    public abstract void build(Inventory inventory);
 }

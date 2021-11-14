@@ -34,6 +34,6 @@ public class InvisibilityPotionEntity extends CollectableEntity {
     @Override
     public void used(CharacterEntity player) {
         player.setInvisiblilityRemaining(10);
-        player.removeEntityFromInventory(this);
+        player.getInventoryItems().remove(this);
     }
 }

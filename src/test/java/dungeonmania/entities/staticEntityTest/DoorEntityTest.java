@@ -44,13 +44,13 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         dungeon.tick(Direction.DOWN);
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should move into key's position");
-        assertNotNull(player.getInventoryItem("0"), "Inventory should contain key 1");
-        assertNotNull(player.getInventoryItem("1"), "Inventory should contain key 2");
+        assertNotNull(player.getInventory().getInventoryItemById("0"), "Inventory should contain key 1");
+        assertNotNull(player.getInventory().getInventoryItemById("1"), "Inventory should contain key 2");
 
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to move into the first door as they have key #1");
-        assertNotNull(player.getInventoryItem("0"), "Unlocking door should not consume key 3");
-        assertNull(player.getInventoryItem("1"), "Unlocking door should consume key 1");
+        assertNotNull(player.getInventory().getInventoryItemById("0"), "Unlocking door should not consume key 3");
+        assertNull(player.getInventory().getInventoryItemById("1"), "Unlocking door should consume key 1");
        
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should NOT be able to move into the second door as they lack key #1");
@@ -68,19 +68,19 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
 
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 1, 0), player.getPosition(), "Player should move into sun_stone's position");
-        assertNotNull(player.getInventoryItem("0"), "Inventory should contain sun_stone");
+        assertNotNull(player.getInventory().getInventoryItemById("0"), "Inventory should contain sun_stone");
 
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should be able to unlock and move into first door as they have sun_stone");
-        assertNotNull(player.getInventoryItem("0"), "Unlocking door should not consume sun_stone");
+        assertNotNull(player.getInventory().getInventoryItemById("0"), "Unlocking door should not consume sun_stone");
         
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to unlock and move into second door as they have sun_stone");
-        assertNotNull(player.getInventoryItem("0"), "Unlocking door should not consume sun_stone");
+        assertNotNull(player.getInventory().getInventoryItemById("0"), "Unlocking door should not consume sun_stone");
 
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 4, 0), player.getPosition(), "Player should be able to unlock and move into third door as they have sun_stone");
-        assertNotNull(player.getInventoryItem("0"), "Unlocking door should not consume sun_stone");
+        assertNotNull(player.getInventory().getInventoryItemById("0"), "Unlocking door should not consume sun_stone");
     }
 
     @Override
@@ -92,21 +92,21 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
 
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 1, 0), player.getPosition(), "Player should collect key 1");
-        assertNotNull(player.getInventoryItem("0"), "Inventory should contain key 1");
+        assertNotNull(player.getInventory().getInventoryItemById("0"), "Inventory should contain key 1");
 
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should collect sun stone");
-        assertNotNull(player.getInventoryItem("0"), "Inventory should contain key 1");
-        assertNotNull(player.getInventoryItem("1"), "Inventory should contain sun stone");
+        assertNotNull(player.getInventory().getInventoryItemById("0"), "Inventory should contain key 1");
+        assertNotNull(player.getInventory().getInventoryItemById("1"), "Inventory should contain sun stone");
 
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to unlock and move into the first door using the key");
-        assertNull(player.getInventoryItem("0"), "Unlocking door should consume key 1");
-        assertNotNull(player.getInventoryItem("1"), "Unlocking door should not consume sun_stone");
+        assertNull(player.getInventory().getInventoryItemById("0"), "Unlocking door should consume key 1");
+        assertNotNull(player.getInventory().getInventoryItemById("1"), "Unlocking door should not consume sun_stone");
 
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 4, 0), player.getPosition(), "Player should be able to unlock and move into the second door as they have sun_stone");
-        assertNotNull(player.getInventoryItem("1"), "Unlocking door should not consume sun_stone");
+        assertNotNull(player.getInventory().getInventoryItemById("1"), "Unlocking door should not consume sun_stone");
 
         dungeon.tick(Direction.UP);
         dungeon.tick(Direction.UP);

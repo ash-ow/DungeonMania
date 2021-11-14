@@ -87,12 +87,12 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
 
     @Test
     public void TestInventory() {
-        CharacterEntity character = new CharacterEntity();
+        CharacterEntity player = new CharacterEntity();
         WoodEntity wood = new WoodEntity();
-        character.addEntityToInventory(wood);
-        assertEquals(1, character.getInventory().size());
-        character.removeEntityFromInventory(wood);
-        assertEquals(0, character.getInventory().size());
+        player.getInventoryItems().add(wood);
+        assertEquals(1, player.getInventoryItems().size());
+        player.getInventoryItems().remove(wood);
+        assertEquals(0, player.getInventoryItems().size());
     }
 
     @Test
@@ -102,16 +102,16 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         ArrowsEntity arrow1 = new ArrowsEntity();
         ArrowsEntity arrow2 = new ArrowsEntity();
         ArrowsEntity arrow3 = new ArrowsEntity();
-        player.addEntityToInventory(wood);
-        player.addEntityToInventory(arrow1);
-        player.addEntityToInventory(arrow2);
-        player.addEntityToInventory(arrow3);
+        player.getInventoryItems().add(wood);
+        player.getInventoryItems().add(arrow1);
+        player.getInventoryItems().add(arrow2);
+        player.getInventoryItems().add(arrow3);
         player.build(EntityTypes.BOW);
-        List<ICollectable> inventory = player.getInventory();
+        List<ICollectable> inventory = player.getInventoryItems();
         for (ICollectable item : inventory) {
             assertEquals(item.getType(), EntityTypes.BOW);
         }
-        assertEquals(1, player.getInventory().size());
+        assertEquals(1, player.getInventoryItems().size());
     }
 
     @Override
@@ -142,7 +142,7 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
         CharacterEntity player = new CharacterEntity(0, 5);
         MercenaryEntity mercenary = new MercenaryEntity(0, 4);
         TreasureEntity treasure = new TreasureEntity();       
-        player.addEntityToInventory(treasure); 
+        player.getInventoryItems().add(treasure); 
         mercenary.interactWith(player);
         assertTrue(player.teammates.contains(mercenary));
         ZombieToastEntity zombie = new ZombieToastEntity();

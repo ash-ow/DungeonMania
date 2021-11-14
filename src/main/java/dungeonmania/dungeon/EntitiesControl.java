@@ -231,6 +231,17 @@ public class EntitiesControl {
         return adjacentEntities;
     }
 
+    public List<IEntity> getBombAdjacent(Position position) {
+        List<IEntity> adjacentEntities = new ArrayList<IEntity>();
+        for (IEntity ent : this.entities) {
+            Position entPosition = ent.getPosition();
+            if (position.getAdjacentPositions().contains(entPosition)) {
+                adjacentEntities.add(ent);
+            }
+        }
+        return adjacentEntities;
+    }
+
     public boolean contains(Entity entity) {
         return this.entities.stream().anyMatch(ent -> ent.equals(entity));
     }

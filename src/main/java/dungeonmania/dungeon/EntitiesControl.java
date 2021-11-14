@@ -81,15 +81,27 @@ public class EntitiesControl {
     }
 
     public List<ITicker> getAllTickingEntities() {
-        List<ITicker> tickers = this.entities.stream()
+        return this.entities.stream()
             .filter(ITicker.class::isInstance)
             .map(ITicker.class::cast)
             .collect(Collectors.toList());
+    }
 
-        // get the logic entities last because they depend on other tickers
-        Stream<ITicker> logicEntities = tickers.stream().filter(c -> c instanceof LogicEntity);
-        Stream<ITicker> otherEntities = tickers.stream().filter(c -> !(c instanceof LogicEntity));
-        return Stream.concat(otherEntities, logicEntities).collect(Collectors.toList());
+    /**
+     * Activates all logic entities based on their switches
+     */
+    public void checkLogicEntities() {
+        List<LogicEntity> logicEnt = getAllLogicEntities();
+        for (LogicEntity le : logicEnt) {
+            le.checkLogic(this);
+        }
+    }
+
+    public List<LogicEntity> getAllLogicEntities() {
+        return this.entities.stream()
+            .filter(LogicEntity.class::isInstance)
+            .map(LogicEntity.class::cast)
+            .collect(Collectors.toList());
     }
 
     /**

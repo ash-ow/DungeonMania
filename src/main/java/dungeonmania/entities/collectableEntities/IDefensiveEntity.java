@@ -2,7 +2,7 @@ package dungeonmania.entities.collectableEntities;
 
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
-public interface IDefensiveEntity {
+public interface IDefensiveEntity extends ICollectable {
     /**
      * Reduces input damage for the player
      * @param damage input damage for the player

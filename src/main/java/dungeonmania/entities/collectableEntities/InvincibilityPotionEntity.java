@@ -34,6 +34,6 @@ public class InvincibilityPotionEntity extends CollectableEntity {
     @Override
     public void used(CharacterEntity player) {
        player.setInvincibilityRemaining(10);
-       player.removeEntityFromInventory(this);
+       player.getInventoryItems().remove(this);
     } 
 }

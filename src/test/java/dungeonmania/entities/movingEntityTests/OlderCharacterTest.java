@@ -56,7 +56,7 @@ public class OlderCharacterTest implements IEntityTests {
         entitiesControl.moveAllMovingEntities(player);
         Assertions.assertAll(
             () -> assertFalse(entitiesControl.contains(bomb)),
-            () -> assertTrue(olderCharacter.getInventory().contains(bomb)),
+            () -> assertTrue(olderCharacter.getInventoryItems().contains(bomb)),
             () -> entitiesControl.moveAllMovingEntities(player),
             () -> assertEquals(olderCharacter.getPosition(), new Position(0, 2)),
             () -> assertEquals(olderCharacter.getPosition(), new Position(0, 2)),
@@ -64,7 +64,7 @@ public class OlderCharacterTest implements IEntityTests {
             () -> entitiesControl.moveAllMovingEntities(player),
             () -> assertTrue(entitiesControl.contains(bomb)),
             () -> entitiesControl.moveAllMovingEntities(player),
-            () -> assertFalse(olderCharacter.getInventory().contains(bomb)),
+            () -> assertFalse(olderCharacter.getInventoryItems().contains(bomb)),
             () -> entitiesControl.moveAllMovingEntities(player),
             () -> assertEquals(olderCharacter.getPosition(), new Position(0, 3)),
             () -> entitiesControl.moveAllMovingEntities(player),

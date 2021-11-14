@@ -63,7 +63,7 @@ public class BombEntity extends LogicEntity implements ICollectable, IBlocker {
     @Override
     public void used(CharacterEntity player){
         this.isArmed = true;
-        player.removeEntityFromInventory(this);
+        player.getInventoryItems().remove(this);
     }
 
     /**
@@ -74,7 +74,7 @@ public class BombEntity extends LogicEntity implements ICollectable, IBlocker {
     @Override    
     public void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
         if (!this.isArmed) {
-            player.addEntityToInventory(this);
+            player.getInventoryItems().add(this);
             entities.removeEntity(this);
         }
     }

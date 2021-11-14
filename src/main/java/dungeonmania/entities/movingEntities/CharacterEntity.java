@@ -27,7 +27,7 @@ import dungeonmania.util.Position;
 import dungeonmania.entities.collectableEntities.*;
 
 public class CharacterEntity extends Entity implements IMovingEntity, IBattlingEntity {
-    private List<ICollectable> inventory = new ArrayList<>();
+    private Inventory inventory = new Inventory();
     private Position previousPosition;
     public List<IBattlingEntity> teammates = new ArrayList<>();
     private int invincibilityRemaining = 0;
@@ -114,7 +114,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         float damage = 0;
         if (!this.isInvincible()) {
             damage = ((enemyHealth * enemyDamage) / 10);
-            for (ICollectable item : getItemsFromInventory(IDefensiveEntity.class)) {
+            for (ICollectable item : this.inventory.getItemsFromInventoryOfType(IDefensiveEntity.class)) {
                 IDefensiveEntity defender = (IDefensiveEntity)item;
                 damage = defender.reduceDamage(damage, this);
             }
@@ -132,20 +132,12 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     /**
-     * Finds an item in the inventory based on its id
-     * @param itemID Item identifier
-     */
-    public IEntity getInventoryItem(String itemID) {
-        return inventory.stream().filter(item -> item.getId().equals(itemID)).findFirst().orElse(null);
-    }
-
-    /**
      * Checks whether the character is alive. If they are not, and they have a ring, they will use the ring
      */
     @Override
     public boolean isAlive() {
         if (this.getHealth() <= 0) {
-            OneRingEntity ring = (OneRingEntity) EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class);
+            OneRingEntity ring = this.inventory.getFirstItemOfType(OneRingEntity.class);
             if (ring != null) {
                 ring.used(this);
                 return true;
@@ -159,25 +151,17 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
 //region Inventory
 
-    List<ICollectable> getItemsFromInventory(Class<?> cls) {
-        return this.inventory.stream().filter(cls::isInstance).collect(Collectors.toList());
-    }
-
-    public void addEntityToInventory(ICollectable entity) {
-        inventory.add(entity);
-    }
-
-    public List<ICollectable> getInventory() {
+    public Inventory getInventory() {
         return this.inventory;
     }
 
-    public void removeEntityFromInventory(IEntity entity) {
-        inventory.remove(entity);
+    public List<ICollectable> getInventoryItems() {
+        return this.inventory.getItems();
     }
 
     public List<ItemResponse> getInventoryInfo() {
         List<ItemResponse> info = new ArrayList<ItemResponse>();
-        for (ICollectable entity : inventory) {
+        for (ICollectable entity : this.getInventoryItems()) {
             info.add(new ItemResponse(entity.getId(), entity.getType()));
         }
         return info;
@@ -188,7 +172,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param type the type of item being searched for
      */
     public ICollectable findFirstInInventory(EntityTypes type) {
-        for (ICollectable entity: inventory) {
+        for (ICollectable entity: this.getInventoryItems()) {
             if(entity.getType().equals(type)) {
                 return entity;
             }
@@ -343,13 +327,13 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param entitiesControl  list of all entities
      */
     public void useItem(String itemID, EntitiesControl entitiesControl) {
-        IEntity entity = EntitiesControl.getEntityById(this.inventory, itemID);
+        IEntity entity = this.getInventory().getInventoryItemById(itemID);
         if (entity == null) {
             throw new InvalidActionException(itemID + "not in inventory");
         } else if (!EntitiesControl.usableItems.contains(entity.getType())) {
             throw new IllegalArgumentException();
         }
-        for (ICollectable item : this.inventory) {
+        for (ICollectable item : this.getInventoryItems()){
             if (item.getId().equals(itemID)) {
                 this.useItemCore(item, entitiesControl);
                 return;

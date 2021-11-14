@@ -44,7 +44,7 @@ public class AndurilEntityTest implements ICollectableEntityTest {
         ZombieToastEntity zombie = new ZombieToastEntity();
         CharacterEntity player = new CharacterEntity();
         AndurilEntity anduril = new AndurilEntity();
-        player.addEntityToInventory(anduril);
+        player.getInventoryItems().add(anduril);
         
         assertEquals(200, anduril.attack(zombie, player));
     }
@@ -54,7 +54,7 @@ public class AndurilEntityTest implements ICollectableEntityTest {
         AssassinEntity assassin = new AssassinEntity();
         CharacterEntity player = new CharacterEntity();
         AndurilEntity anduril = new AndurilEntity();
-        player.addEntityToInventory(anduril);
+        player.getInventoryItems().add(anduril);
         
         assertEquals(600, anduril.attack(assassin, player));
     }

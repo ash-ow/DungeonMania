@@ -12,7 +12,7 @@ public interface ICollectable extends IContactingEntity {
      */
     @Override
     public default void contactWithPlayer(EntitiesControl entities, CharacterEntity player) {
-        player.addEntityToInventory(this);
+        player.getInventoryItems().add(this);
         entities.removeEntity(this);
     }
 
@@ -22,7 +22,7 @@ public interface ICollectable extends IContactingEntity {
     public default void used(CharacterEntity player) {
         this.decrementDurability();
         if (this.getDurability() <= 0) {
-            player.removeEntityFromInventory(this);
+            player.getInventoryItems().remove(this);
         }
     }
 

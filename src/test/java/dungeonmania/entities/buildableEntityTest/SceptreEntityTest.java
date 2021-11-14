@@ -13,6 +13,7 @@ import dungeonmania.entities.Logic;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.SceptreEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.Inventory;
 import dungeonmania.util.Position;
 
 public class SceptreEntityTest implements IBuildableEntityTests {
@@ -31,38 +32,38 @@ public class SceptreEntityTest implements IBuildableEntityTests {
 
     public void assertCanBuildSceptreWithWoodKeySunstone() {
         CharacterEntity player = new CharacterEntity();
-        player.addEntityToInventory(new WoodEntity());
-        player.addEntityToInventory(new KeyEntity(1));
-        player.addEntityToInventory(new SunStoneEntity());
+        player.getInventoryItems().add(new WoodEntity());
+        player.getInventoryItems().add(new KeyEntity(1));
+        player.getInventoryItems().add(new SunStoneEntity());
         player.build(EntityTypes.SCEPTRE);
         assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.SCEPTRE), player);
     }
 
     public void assertCanBuildSceptreWithWoodTreasureSunStone() {
         CharacterEntity player = new CharacterEntity();
-        player.addEntityToInventory(new WoodEntity());
-        player.addEntityToInventory(new TreasureEntity());
-        player.addEntityToInventory(new SunStoneEntity());
+        player.getInventoryItems().add(new WoodEntity());
+        player.getInventoryItems().add(new TreasureEntity());
+        player.getInventoryItems().add(new SunStoneEntity());
         player.build(EntityTypes.SCEPTRE);
         assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.SCEPTRE), player);
     }
 
     public void assertCanBuildSceptreWith2ArrowsTreasureSunStone() {
         CharacterEntity player = new CharacterEntity();
-        player.addEntityToInventory(new ArrowsEntity());
-        player.addEntityToInventory(new ArrowsEntity());
-        player.addEntityToInventory(new TreasureEntity());
-        player.addEntityToInventory(new SunStoneEntity());
+        player.getInventoryItems().add(new ArrowsEntity());
+        player.getInventoryItems().add(new ArrowsEntity());
+        player.getInventoryItems().add(new TreasureEntity());
+        player.getInventoryItems().add(new SunStoneEntity());
         player.build(EntityTypes.SCEPTRE);
         assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.SCEPTRE), player);
     }
 
     public void assertCanBuildSceptreWith2ArrowsKeySunStone() {
         CharacterEntity player = new CharacterEntity();
-        player.addEntityToInventory(new ArrowsEntity());
-        player.addEntityToInventory(new ArrowsEntity());
-        player.addEntityToInventory(new KeyEntity(1));
-        player.addEntityToInventory(new SunStoneEntity());
+        player.getInventoryItems().add(new ArrowsEntity());
+        player.getInventoryItems().add(new ArrowsEntity());
+        player.getInventoryItems().add(new KeyEntity(1));
+        player.getInventoryItems().add(new SunStoneEntity());
         player.build(EntityTypes.SCEPTRE);
         assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.SCEPTRE), player);
     }
@@ -73,7 +74,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
     public void TestIsNotBuildable_EmptyInventory() {
         SceptreEntity sceptre = new SceptreEntity();
         List<ICollectable> inventory = new ArrayList<ICollectable>();
-        assertFalse(sceptre.isBuildable(inventory));
+        assertFalse(sceptre.isBuildable(new Inventory(inventory)));
     }
 
     @Test
@@ -83,7 +84,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new ArrowsEntity());
         inventory.add(new BombEntity(Logic.ANY));
-        assertFalse(sceptre.isBuildable(inventory));
+        assertFalse(sceptre.isBuildable(new Inventory(inventory)));
     }
 
     @Test
@@ -93,7 +94,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new WoodEntity());
         inventory.add(new SunStoneEntity());
-        assertFalse(sceptre.isBuildable(inventory));
+        assertFalse(sceptre.isBuildable(new Inventory(inventory)));
     }
 
     @Override
@@ -125,12 +126,12 @@ public class SceptreEntityTest implements IBuildableEntityTests {
     @Override
     public void TestOnlyUsesResourcesFromOneRecipe() {
         CharacterEntity player = new CharacterEntity();
-        player.addEntityToInventory(new ArrowsEntity());
-        player.addEntityToInventory(new ArrowsEntity());
-        player.addEntityToInventory(new WoodEntity());
-        player.addEntityToInventory(new KeyEntity(1));
-        player.addEntityToInventory(new TreasureEntity());
-        player.addEntityToInventory(new SunStoneEntity());
+        player.getInventoryItems().add(new ArrowsEntity());
+        player.getInventoryItems().add(new ArrowsEntity());
+        player.getInventoryItems().add(new WoodEntity());
+        player.getInventoryItems().add(new KeyEntity(1));
+        player.getInventoryItems().add(new TreasureEntity());
+        player.getInventoryItems().add(new SunStoneEntity());
         player.build(EntityTypes.SCEPTRE);
         assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.ARROW, EntityTypes.ARROW, EntityTypes.KEY, EntityTypes.SCEPTRE), player);
     }

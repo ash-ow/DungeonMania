@@ -125,15 +125,15 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      */
     //TO DO: implement player.useItem()?; remove hardcoding of sunstone/treasure
     public boolean interactWith(CharacterEntity player) throws InvalidActionException {
-        IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);
-        IEntity sunStoneFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), SunStoneEntity.class);
+        IEntity treasureFound = player.getInventory().getFirstItemOfType(TreasureEntity.class);
+        IEntity sunStoneFound = player.getInventory().getFirstItemOfType(SunStoneEntity.class);
         if (treasureFound == null && sunStoneFound == null) {
             throw new InvalidActionException("Player has no treasure");
         }
         if (!isInRange(player)) {
             throw new InvalidActionException("Player is too far away");
         }
-        player.removeEntityFromInventory(treasureFound);
+        player.getInventoryItems().remove(treasureFound);
         player.addTeammates(this);
         this.isBribed = true;
         return removeAfterInteraction();    

@@ -29,8 +29,8 @@ public class AssassinEntityTests extends MercenaryEntityTests {
         OneRingEntity oneRing = new OneRingEntity();
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(assassin);        
-        player.addEntityToInventory(treasure); 
-        player.addEntityToInventory(oneRing);
+        player.getInventoryItems().add(treasure); 
+        player.getInventoryItems().add(oneRing);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         dungeon.interact(assassin.getId());
         assertTrue(assassin.isBribed());
@@ -45,12 +45,12 @@ public class AssassinEntityTests extends MercenaryEntityTests {
         OneRingEntity oneRing = new OneRingEntity();
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(assassin);        
-        player.addEntityToInventory(sun_stone); 
-        player.addEntityToInventory(oneRing);
+        player.getInventoryItems().add(sun_stone); 
+        player.getInventoryItems().add(oneRing);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         dungeon.interact(assassin.getId());
         assertTrue(assassin.isBribed());
-        assertNotNull(player.getInventoryItem(sun_stone.getId()), "Inventory should contain entity " + sun_stone.getId());
+        assertNotNull(player.getInventory().getInventoryItemById(sun_stone.getId()), "Inventory should contain entity " + sun_stone.getId());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class AssassinEntityTests extends MercenaryEntityTests {
         TreasureEntity treasure = new TreasureEntity();
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(assassin);        
-        player.addEntityToInventory(treasure); 
+        player.getInventoryItems().add(treasure); 
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         assertThrows(InvalidActionException.class, () -> dungeon.interact(assassin.getId()));
     }

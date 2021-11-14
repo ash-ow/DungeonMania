@@ -1,13 +1,10 @@
 package dungeonmania.entities.collectableEntities.buildableEntities;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.IEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.collectableEntities.ICollectable;
+import dungeonmania.entities.movingEntities.Inventory;
 import dungeonmania.entities.collectableEntities.IDefensiveEntity;
 
 public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
@@ -46,7 +43,7 @@ public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
      * @return true or false depnding on whether a shield is buildable
      */
     @Override
-    public boolean isBuildable(List<ICollectable> inventory) {
+    public boolean isBuildable(Inventory inventory) {
         boolean requiredWood = false;
         boolean requiredTreasure = false;
         boolean requiredKey = false;
@@ -54,7 +51,7 @@ public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
         for (Map.Entry<EntityTypes, Integer> entry : requiredComponents.entrySet()) {
             EntityTypes component = entry.getKey();
             int quantity = entry.getValue();
-            if (numberOfComponentItemsInInventory(inventory, component) >= quantity) {
+            if (inventory.numberOfComponentItemsInInventory(component) >= quantity) {
                 switch (component) {
                     case WOOD:
                         requiredWood = true;
@@ -89,16 +86,16 @@ public class ShieldEntity extends BuildableEntity implements IDefensiveEntity {
     }
 
     @Override
-    public void build(List<ICollectable> inventory) {
-        inventory.add(this);
+    public void build(Inventory inventory) {
+        inventory.addItem(this);
         
-        removeBuildMaterials(inventory, EntityTypes.WOOD, 2);
-        if(inventory.stream().map(IEntity::getType).collect(Collectors.toList()).contains(EntityTypes.TREASURE)) {
-            removeBuildMaterials(inventory, EntityTypes.TREASURE, 1);
-        } else if (inventory.stream().map(IEntity::getType).collect(Collectors.toList()).contains(EntityTypes.KEY)) {
-            removeBuildMaterials(inventory, EntityTypes.KEY, 1);
-        } else if (inventory.stream().map(IEntity::getType).collect(Collectors.toList()).contains(EntityTypes.SUN_STONE)) {
-            removeBuildMaterials(inventory, EntityTypes.SUN_STONE, 1);
+        inventory.removeBuildMaterials(EntityTypes.WOOD, 2);
+        if(inventory.containsItemOfType(EntityTypes.TREASURE)) {
+            inventory.removeBuildMaterials(EntityTypes.TREASURE, 1);
+        } else if (inventory.containsItemOfType(EntityTypes.KEY)) {
+            inventory.removeBuildMaterials(EntityTypes.KEY, 1);
+        } else if (inventory.containsItemOfType(EntityTypes.SUN_STONE)) {
+            inventory.removeBuildMaterials(EntityTypes.SUN_STONE, 1);
         }
     }
 }

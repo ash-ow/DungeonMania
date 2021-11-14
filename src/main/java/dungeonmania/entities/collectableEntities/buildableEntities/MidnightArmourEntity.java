@@ -1,10 +1,8 @@
 package dungeonmania.entities.collectableEntities.buildableEntities;
 
-import java.util.List;
-
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.collectableEntities.ICollectable;
+import dungeonmania.entities.movingEntities.Inventory;
 import dungeonmania.entities.collectableEntities.IDefensiveEntity;
 import dungeonmania.entities.collectableEntities.IWeaponEntity;
 
@@ -48,9 +46,9 @@ public class MidnightArmourEntity extends BuildableEntity implements IDefensiveE
     }
 
     @Override
-    public void build(List<ICollectable> inventory) {
-        inventory.add(this);
-        removeBuildMaterials(inventory, EntityTypes.SUN_STONE, 1);
-        removeBuildMaterials(inventory, EntityTypes.ARMOUR, 1);
+    public void build(Inventory inventory) {
+        inventory.addItem(this);
+        inventory.removeBuildMaterials(EntityTypes.SUN_STONE, 1);
+        inventory.removeBuildMaterials(EntityTypes.ARMOUR, 1);
     }
 }

@@ -26,7 +26,7 @@ public class CollectingGoalTests implements IGoalTests {
         entities.add(treasure);
         Dungeon dungeon = new Dungeon(entities, "Standard", player, j);
         dungeon.tick(Direction.DOWN);
-        assertEquals(player.getInventory().size(), 1);
+        assertEquals(1, player.getInventoryItems().size());
         assertEquals("", dungeon.getGoals());
     }
 
@@ -40,7 +40,7 @@ public class CollectingGoalTests implements IGoalTests {
         entities.add(sun_stone);
         Dungeon dungeon = new Dungeon(entities, "Standard", player, j);
         dungeon.tick(Direction.DOWN);
-        assertEquals(player.getInventory().size(), 1);
+        assertEquals(1, player.getInventoryItems().size());
         assertEquals("", dungeon.getGoals());
     }
 

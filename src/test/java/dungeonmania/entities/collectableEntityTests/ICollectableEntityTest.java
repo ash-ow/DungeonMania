@@ -14,12 +14,12 @@ public interface ICollectableEntityTest extends IEntityTests {
     public void TestUseCollectable();
 
     public default void assertItemInInventory(String id, CharacterEntity player, EntitiesControl entitiesControl) {
-        assertNotNull(player.getInventoryItem(id), "Inventory should contain entity " + id);
+        assertNotNull(player.getInventory().getInventoryItemById(id), "Inventory should contain entity " + id);
         assertNull(entitiesControl.getEntityById(id), "EntitiesControl should not contain entity " + id);
     }
     
     public default void assertItemNotInInventory(String id, CharacterEntity player, EntitiesControl entitiesControl, boolean shouldBePlacedInMap) {
-        assertNull(player.getInventoryItem(id), "Inventory should not contain entity " + id);
+        assertNull(player.getInventory().getInventoryItemById(id), "Inventory should not contain entity " + id);
         if (shouldBePlacedInMap) {
             assertNotNull(entitiesControl.getEntityById(id), "EntitiesControl should contain entity " + id);
         } else {

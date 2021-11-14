@@ -45,7 +45,7 @@ public class SwordEntityTest implements ICollectableEntityTest {
         sword.used(player);
         sword.used(player);
 
-        assertNull(player.getInventoryItem(sword.getId()), "Inventory should not contain entity " + sword.getId());
+        assertNull(player.getInventory().getInventoryItemById(sword.getId()), "Inventory should not contain entity " + sword.getId());
     }
 
     @Test

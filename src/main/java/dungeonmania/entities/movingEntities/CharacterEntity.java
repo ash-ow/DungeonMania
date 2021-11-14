@@ -126,7 +126,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     /**
      * Adds team mate to the list of teammates
-     * @param teamMemeber a battling entity which will be added to the list of team mates   
+     * @param teamMember a battling entity which will be added to the list of team mates   
      */
     public void addTeammates(IBattlingEntity teamMember) {
         teammates.add(teamMember);
@@ -158,54 +158,63 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     
 //endregion
 
+//regionKey
+
+    /**
+     * Checks whether the character has a key. 
+     */
     public boolean getHasKey() {
         return hasKey;
     }
 
+    /**
+     * If a character has a key, boolean is set true
+     * @param hasKey     identifier for Character having key  
+     */
     public void setHasKey(boolean hasKey) {
         this.hasKey = hasKey;
     }
 
-    public boolean checkKeyState()
-    {
-        for(ICollectable k: inventory)
-        {
-            if(k.getType().equals(EntityTypes.KEY))
-            {
+    /**
+     * Checks if the Key has been picked up in the KeyEntity class
+     * keyPickedUp resets to false after key is used  
+     */
+    public boolean checkKeyState(){
+        for(ICollectable k: inventory){
+            if(k.getType().equals(EntityTypes.KEY)){
                 KeyEntity key = (KeyEntity) k;
-                if (key.keyPickedUp())
-                {
+                if (key.keyPickedUp()){
                     return true;
                 }
-
             }
         }
         return false;
     }
+//endRegion
+
 //region Inventory
 
     List<ICollectable> getItemsFromInventory(Class<?> cls) {
         return this.inventory.stream().filter(cls::isInstance).collect(Collectors.toList());
     }
-
+    
+    /**
+     * Adds ICollectable Entities to the inventory
+     * In the case of keys, it checks if player already has a key
+     * @param entity    entity to be added to inventory
+     */
     public void addEntityToInventory(ICollectable entity) {
-        if(entity.getType().equals(EntityTypes.KEY))
-        {
-
+        if(entity.getType().equals(EntityTypes.KEY)){
             KeyEntity key = (KeyEntity) entity;
-            if (!checkKeyState())
-            {
+            if (!checkKeyState()){
                 key.setkeyPickedUp(true);
                 this.setHasKey(true);
-            }else{
-                return ;
             }
-            
+            else{
+                return ;
+            }    
         }
-
-       
             inventory.add(entity);
-        
     }
 
     public List<ICollectable> getInventory() {

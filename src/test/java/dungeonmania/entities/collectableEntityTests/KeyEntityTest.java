@@ -68,7 +68,7 @@ public class KeyEntityTest implements ICollectableEntityTest {
         assertItemInInventory("key-0-1-0", player, dungeon.entitiesControl);
         assertNotNull(player.getInventoryItem(key.getId()), "Inventory should contain entity " + key.getId());
     }
-    
+
     @Test 
     public void TestKeyPickedUp() {
         KeyEntity key = new KeyEntity(0, 0, 0);
@@ -98,17 +98,14 @@ public class KeyEntityTest implements ICollectableEntityTest {
         d1.tick(Direction.DOWN);
         assertTrue(key1.keyPickedUp(), "Key 1 should be in inventory");
         assertNotNull(player.getInventoryItem(key1.getId()), "Inventory should contain entity " + key1.getId());
-        //Player should not be able to move down and pick up a second key i.e player cannot move into second key
+        //Player should not be able to pick up a second key
         d1.tick(Direction.DOWN);
         assertFalse(key2.keyPickedUp(), "Key 2 should not be in inventory");
         assertNull(player.getInventoryItem(key2.getId()), "Inventory should not contain entity " + key2.getId());
-        //assertEquals(new Position(0, 1, 0), player.getPosition());
-        //assertEquals(new Position(0, 2, 0), key2.getPosition());
     }
-
     
     @Test 
-    public void TestUnblock(){
+    public void TestSecondKeyAfterFirstKeyUse(){
         CharacterEntity player = new CharacterEntity(0, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
         KeyEntity key1 = new KeyEntity(0, 1, 1);

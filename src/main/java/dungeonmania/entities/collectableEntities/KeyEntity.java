@@ -14,7 +14,7 @@ import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.util.Direction;
 
 
-public class KeyEntity extends CollectableEntity implements IBlocker {
+public class KeyEntity extends CollectableEntity {
     private int keyNumber;
     protected int durability = 1;
     boolean keyPickedUp = false;
@@ -84,35 +84,8 @@ public class KeyEntity extends CollectableEntity implements IBlocker {
         }
     }
 
-    @Override
-    public boolean isBlocking() {
-        return this.keyPickedUp;
-    }
-
-    private boolean checkKeyInInventory(CharacterEntity player) {
-        return player
-            .getInventory()
-            .stream()
-            .anyMatch(e -> e.getType().equals(EntityTypes.KEY));
-    }
-
     public void setkeyPickedUp(boolean isPicked) {
         this.keyPickedUp = isPicked;
-    }
-
-    //if keypicked is teu
-    @Override
-    public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
-        if (ent instanceof CharacterEntity) {
-            CharacterEntity player = (CharacterEntity) ent;
-            boolean KeyInInventory = checkKeyInInventory(player);
-                if (KeyInInventory){
-                    return true;
-                    //this.keyPickedUp = true;
-                }
-            }
-        //return this.keyPickedUp = false;
-        return false;
     }
     
     @Override

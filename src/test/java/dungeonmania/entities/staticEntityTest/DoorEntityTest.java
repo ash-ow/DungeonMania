@@ -42,25 +42,22 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         CharacterEntity player = (CharacterEntity)dungeon.getPlayer();
         assertNotNull(player, "Dungeon should contain the player");
         
-        //dungeon.tick(Direction.DOWN);
-        //assertEquals(new Position(0, 1, 0), player.getPosition(), "Player should move into key's position");
-        //assertNotNull(player.getInventoryItem("0"), "Inventory should contain key 1");
-        //dungeon.tick(Direction.DOWN);
-        //assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should be able to move into the first door as they have key #1");
-        //assertNull(player.getInventoryItem("0"), "Unlocking door should consume key 1");
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 1, 0), player.getPosition(), "Player should move into key's position");
+        assertNotNull(player.getInventoryItem("0"), "Inventory should contain key 1");
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should be able to move into the first door as they have key #1");
+        assertNull(player.getInventoryItem("0"), "Unlocking door should consume key 1");
        
-        //dungeon.tick(Direction.DOWN);
-        //assertNotNull(player.getInventoryItem("0"), "Inventory should contain key 2");
-        //dungeon.tick(Direction.DOWN);
-        //assertEquals(new Position(0, 4, 0), player.getPosition(), "Player should move into door 2 as it picks up key2");
-        //assertNull(player.getInventoryItem("0"), "Unlocking door should consume key 2");
+        dungeon.tick(Direction.DOWN);
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 4, 0), player.getPosition(), "Player should move into door 2 as it picks up key2");
+        assertNull(player.getInventoryItem("1"), "Unlocking door should consume key 2");
 
-        //dungeon.tick(Direction.DOWN);
-        //assertNotNull(player.getInventoryItem("0"), "Inventory should contain key 3");
-        //assertEquals(new Position(0, 5, 0), player.getPosition(), "Player can move pick up key 3");
-        //dungeon.tick(Direction.DOWN);
-        //assertEquals(new Position(0, 5, 0), player.getPosition(), "Player should not be able to move into Door 4 as it doesnt have correct key");
-    
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 5, 0), player.getPosition(), "Player can move pick up key 3");
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 5, 0), player.getPosition(), "Player should not be able to move into Door 4 as it doesnt have correct key");
     }
     
     @Test
@@ -121,23 +118,24 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
     public void TestCreateDoor() {
         Dungeon dungeon = getDungeonWithDoorTestData();
 
-        KeyEntity key_dummy = (KeyEntity) dungeon.entitiesControl.getEntityById("0");
-        KeyEntity key_correct = (KeyEntity) dungeon.entitiesControl.getEntityById("1");
-        DoorEntity door = (DoorEntity) dungeon.entitiesControl.getEntityById("2");
+        KeyEntity key_correct = (KeyEntity) dungeon.entitiesControl.getEntityById("0");
+        DoorEntity door = (DoorEntity) dungeon.entitiesControl.getEntityById("1");
+        KeyEntity key_incorrect = (KeyEntity) dungeon.entitiesControl.getEntityById("2");
 
         Assertions.assertAll(
                 () -> assertNotNull(door, "Door should exist"),
                 () -> assertNotNull(key_correct, "Key should exist"),
-                () -> assertNotNull(key_dummy, "Key should exist"),
+                () -> assertNotNull(key_incorrect, "Key should exist"),
 
                 () -> assertEquals(1, door.getKeyNumber()),
                 () -> assertEquals(1, key_correct.getKeyNumber()),
-                () -> assertEquals(3, key_dummy.getKeyNumber()),
+                () -> assertEquals(2, key_incorrect.getKeyNumber()),
 
                 () -> assertEquals(door.getKeyNumber(), key_correct.getKeyNumber()),
-                () -> assertNotEquals(door.getKeyNumber(), key_dummy.getKeyNumber())
+                () -> assertNotEquals(door.getKeyNumber(), key_incorrect.getKeyNumber())
             );
     }
+
 
     private Dungeon getDungeonWithDoorTestData() {
         /*
@@ -147,16 +145,16 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         0   P
         1   K1 - unlocks door 1
         2   D1 - can unlock
-        3   K2 - can unlock door 2
+        3   K2 - unlocks door 2
         4   D2 - can unlock
-        5   K3 - key 3; cannot be used on door 4
+        5   K3 - key 3; key_dummy
         6   D4 - door 4, cannot unlock 
         7   Exit
         
         */
         String entities = "{\"entities\": [" +
             "{\"x\": 0,\"y\": 0,\"type\": \"player\"}," +
-            "{\"x\": 0,\"y\": 1,\"type\": \"key\",\"key\": 1," +
+            "{\"x\": 0,\"y\": 1,\"type\": \"key\",\"key\": 1}," +
             "{\"x\": 0,\"y\": 2,\"type\": \"door\",\"key\": 1}," +
             "{\"x\": 0,\"y\": 3,\"type\": \"key\",\"key\": 2}," +
             "{\"x\": 0,\"y\": 4,\"type\": \"door\",\"key\": 2}," +

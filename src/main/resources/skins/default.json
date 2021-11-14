@@ -49,6 +49,7 @@
         "time_travelling_portal": "images/tileset/entities/portal_04.png",
         "wire": "images/tileset/entities/wire.png",
         "light_bulb_on": "images/tileset/entities/lightbulb.png",
-        "light_bulb_off": "images/tileset/entities/light-bulb-off.png"
+        "light_bulb_off": "images/tileset/entities/light-bulb-off.png",
+        "swamp": "src/main/resources/images/tileset/entities/swamp_tile.png"
     }
 }

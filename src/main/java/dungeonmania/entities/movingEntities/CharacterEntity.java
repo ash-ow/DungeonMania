@@ -17,7 +17,7 @@ import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.IDefensiveEntity;
 import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.exceptions.InvalidActionException;
-import dungeonmania.generators.Generator;
+import dungeonmania.generators.EnemyEntityGenerator;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
@@ -55,7 +55,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         super(x, y, type);
         this.previousPosition = new Position(x, y);
         this.gameMode = gameMode;
-        this.health = (int) Math.ceil(100 / Generator.difficulty.get(gameMode));
+        this.health = (int) Math.ceil(100 / EnemyEntityGenerator.difficulty.get(gameMode));
     }
 
     /**
@@ -68,7 +68,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this(x, y, EntityTypes.PLAYER, gameMode);      
         this.previousPosition = new Position(x, y);
         this.gameMode = gameMode;
-        this.health = (int) Math.ceil(100 / Generator.difficulty.get(gameMode));
+        this.health = (int) Math.ceil(100 / EnemyEntityGenerator.difficulty.get(gameMode));
     }
 
     public CharacterEntity(JsonObject info, GameModeType gameMode) {
@@ -100,7 +100,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
 
     @Override
     public float getDamage() {
-        return (float) (3 / Generator.difficulty.get(this.gameMode));
+        return (float) (3 / EnemyEntityGenerator.difficulty.get(this.gameMode));
     }
 
     /**

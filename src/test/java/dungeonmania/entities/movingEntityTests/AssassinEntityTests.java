@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
@@ -17,6 +18,7 @@ import dungeonmania.entities.collectableEntities.SunStoneEntity;
 import dungeonmania.entities.movingEntities.AssassinEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.exceptions.InvalidActionException;
+import dungeonmania.util.Position;
 
 public class AssassinEntityTests extends MercenaryEntityTests {
     @Test
@@ -76,5 +78,17 @@ public class AssassinEntityTests extends MercenaryEntityTests {
 
         assertEquals(60, character.getHealth());
         assertEquals(20.0, assassin.getHealth());
+    }
+
+    @Test
+    public void moveAgainAfterAttack() {
+        EntitiesControl entitiesControl = new EntitiesControl();
+        AssassinEntity assassin = new AssassinEntity();
+        entitiesControl.addEntity(assassin);
+        CharacterEntity player = new CharacterEntity(0, 5);
+        entitiesControl.addEntity(player);
+
+        entitiesControl.moveMercenariesAfterAttack(player);
+        assertEquals(new Position(0, 1), assassin.getPosition());
     }
 }

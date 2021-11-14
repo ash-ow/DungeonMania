@@ -17,7 +17,7 @@ import dungeonmania.util.Direction;
 public class KeyEntity extends CollectableEntity implements IBlocker {
     private int keyNumber;
     protected int durability = 1;
-    private boolean keyPickedUp;
+    boolean keyPickedUp = false;
 
     /**
      * Key constructor
@@ -46,11 +46,28 @@ public class KeyEntity extends CollectableEntity implements IBlocker {
         return keyNumber;
     } 
 
+    public boolean keyPickedUp() {
+        return this.keyPickedUp;
+    }
+
     @Override
-    public JsonObject buildJson() {
-        JsonObject entityInfo = super.buildJson();
-        entityInfo.addProperty("key", this.keyNumber);
-        return entityInfo;
+    public int getDurability() {
+        return this.durability;
+    }
+
+    @Override
+    public void decrementDurability() {
+        this.durability--;
+    }
+
+    /**
+    * When key is used to unlock a door, remove it from inventory
+    * @param player the characterEntity who is using the key
+    */
+    @Override
+    public void used(CharacterEntity player){
+        this.keyPickedUp = false;
+        player.removeEntityFromInventory(this);
     }
 
     /**
@@ -71,10 +88,29 @@ public class KeyEntity extends CollectableEntity implements IBlocker {
         return this.keyPickedUp;
     }
 
+    private boolean checkKeyInInventory(CharacterEntity player) {
+        return player
+            .getInventory()
+            .stream()
+            .anyMatch(e -> e.getType().equals(EntityTypes.KEY));
+    }
+
     @Override
     public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
+        if (ent instanceof CharacterEntity) {
+            CharacterEntity player = (CharacterEntity) ent;
+            boolean KeyInInventory = checkKeyInInventory(player);
+                if (KeyInInventory){
+                    this.keyPickedUp = true;
+                }
+            }
         return !this.keyPickedUp;
-      
     }
-    
+
+    @Override
+    public JsonObject buildJson() {
+        JsonObject entityInfo = super.buildJson();
+        entityInfo.addProperty("key", this.keyNumber);
+        return entityInfo;
+    }
 }

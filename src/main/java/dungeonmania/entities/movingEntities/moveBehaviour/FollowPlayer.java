@@ -36,7 +36,8 @@ public class FollowPlayer implements IMovingBehaviour{
     public List<Position> shortestPathToPlayer(EntitiesControl entitiesControl, CharacterEntity player, Position position){
         Map<Position, List<Position>> mainPathsMap = new HashMap<>();
         mainPathsMap.put(position, new ArrayList<>());
-        while(!mainPathsMap.containsKey(player.getPosition())) {
+        Position largestPos = new Position(1000, 1000);
+        while(!mainPathsMap.containsKey(largestPos) && !mainPathsMap.containsKey(player.getPosition())) {
             Map<Position, List<Position>> newPaths = new HashMap<>();
             newPaths.putAll(mainPathsMap);
             for(Position entry: mainPathsMap.keySet()) {
@@ -63,9 +64,10 @@ public class FollowPlayer implements IMovingBehaviour{
                 if (!pathsMap.containsKey(newPosition)){
                     pathsMap.put(newPosition, newPrevPositions);
                 } else {
-                    int newPathLength = newPrevPositions.size() + pathIncreasedBySwampTiles(entitiesControl, newPrevPositions);
-                    if (newPathLength < pathsMap.get(newPosition).size()){
-                        pathsMap.put(newPosition, newPrevPositions);
+                    int newPathLength = numRequiredMoves(entitiesControl, newPrevPositions);
+                    int oldPathLength = numRequiredMoves(entitiesControl, pathsMap.get(newPosition));
+                    if (newPathLength < oldPathLength){
+                        pathsMap.replace(newPosition, pathsMap.get(newPosition), newPrevPositions);
                     }
                 }
             }
@@ -104,15 +106,17 @@ public class FollowPlayer implements IMovingBehaviour{
         return false;
     }
 
-    public int pathIncreasedBySwampTiles(EntitiesControl entitiesControl, List<Position> newPrevPositions){
+    public int numRequiredMoves(EntitiesControl entitiesControl, List<Position> PrevPositions){
         SwampEntity potentialSwampEntity = new SwampEntity();
         int movementFactor = potentialSwampEntity.getMovementFactor();
-        int numSwampTiles = 0;
-        for (Position pos: newPrevPositions) {
+        int numRequiredMoves = 0;
+        for (Position pos: PrevPositions) {
             if(entitiesControl.positionContainsEntityType(pos, SwampEntity.class)) {
-                numSwampTiles += 1;
+                numRequiredMoves += movementFactor;
+            } else {
+                numRequiredMoves++;
             }
         }
-        return numSwampTiles*movementFactor;    
+        return numRequiredMoves;    
     }
 }

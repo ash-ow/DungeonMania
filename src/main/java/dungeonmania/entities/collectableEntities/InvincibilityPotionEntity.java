@@ -42,7 +42,7 @@ public class InvincibilityPotionEntity extends CollectableEntity implements ITic
     public void used(CharacterEntity player) {
         if (!player.getGameMode().equals(GameModeType.HARD)){
             player.getInventory().getItems().remove(this);
-            player.activeAffectingItems.add(this);
+            player.addActiveItem(this);
             this.durability = 10;
         }
     }
@@ -51,6 +51,7 @@ public class InvincibilityPotionEntity extends CollectableEntity implements ITic
     public void tick(EntitiesControl entitiesControl) {
         if (this.durability == 0) {
             entitiesControl.setMovingEntitiesBehaviour(null);
+            player.removeActiveItem(this);
         }
         entitiesControl.setMovingEntitiesBehaviour(new RunAway());
         this.decrementDurability();

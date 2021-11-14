@@ -13,6 +13,8 @@ import dungeonmania.entities.movingEntities.moveBehaviour.Freeze;
 
 
 public class InvisibilityPotionEntity extends CollectableEntity implements ITicker {
+    CharacterEntity player;
+
     /**
      * Invisibility potion constructor
      */
@@ -39,14 +41,16 @@ public class InvisibilityPotionEntity extends CollectableEntity implements ITick
      */
     @Override
     public void used(CharacterEntity player) {
+
         player.getInventory().getItems().remove(this);
-        player.activeAffectingItems.add(this);
+        player.addActiveItem(this);
         this.durability = 10;
     }
 
     @Override
     public void tick(EntitiesControl entitiesControl) {
         if (this.durability == 0) {
+            player.removeActiveItem(this);
             entitiesControl.setMovingEntitiesBehaviour(null);
         }
         List<MercenaryEntity> mercenaries = entitiesControl.getAllEntitiesOfType(MercenaryEntity.class);

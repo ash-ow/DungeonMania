@@ -1,9 +1,9 @@
 package dungeonmania.dungeon;
 
 public enum GameModeType {
-    STANDARD("Standard"),
-    PEACEFUL("Peaceful"),
-    HARD("Hard")
+    STANDARD("standard"),
+    PEACEFUL("peaceful"),
+    HARD("hard")
     ;
 
     private final String type;
@@ -13,7 +13,7 @@ public enum GameModeType {
 
     public static GameModeType getGameModeType(String type) {
         for (GameModeType gameModeType : GameModeType.values()) { 
-            if (type.equals(gameModeType.toString())) {
+            if (type.toLowerCase().equals(gameModeType.toString())) {
                 return gameModeType;
             }
         }

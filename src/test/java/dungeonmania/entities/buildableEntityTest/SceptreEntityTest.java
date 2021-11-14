@@ -1,6 +1,9 @@
 package dungeonmania.entities.buildableEntityTest;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,11 +11,15 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import dungeonmania.dungeon.Dungeon;
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.IEntity;
 import dungeonmania.entities.Logic;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.SceptreEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.MercenaryEntity;
+import dungeonmania.util.Direction;
 import dungeonmania.entities.movingEntities.Inventory;
 import dungeonmania.util.Position;
 
@@ -114,7 +121,19 @@ public class SceptreEntityTest implements IBuildableEntityTests {
     @Test
     @Override
     public void TestUseCollectable() {
-        //  TODO A character with a sceptre does not need to bribe mercenaries or assassins to become allies, as they can use the sceptre to control their minds. The effects only last for 10 ticks.
+        CharacterEntity player = new CharacterEntity(0, 0);
+        SceptreEntity sceptre = new SceptreEntity();
+        player.getInventoryItems().add(sceptre);
+        ArrayList<IEntity> entities = new ArrayList<>();
+        MercenaryEntity mercenary = new MercenaryEntity(0, 1);
+        entities.add(mercenary);
+        Dungeon dungeon = new Dungeon(entities, "standard", player);
+        dungeon.tick(sceptre.getId());
+        assertTrue(mercenary.isBribed());
+        for (int i = 0; i < 10; i++) {
+            dungeon.tick(Direction.NONE);
+        }
+        assertFalse(mercenary.isBribed());
     }
 
     @Test

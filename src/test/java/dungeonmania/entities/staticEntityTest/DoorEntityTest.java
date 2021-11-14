@@ -41,23 +41,26 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         Dungeon dungeon = getDungeonWithDoorTestData();
         CharacterEntity player = (CharacterEntity)dungeon.getPlayer();
         assertNotNull(player, "Dungeon should contain the player");
-        dungeon.tick(Direction.DOWN);
-        dungeon.tick(Direction.DOWN);
-        assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should move into key's position");
-        assertNotNull(player.getInventoryItem("0"), "Inventory should contain key 1");
-        assertNotNull(player.getInventoryItem("1"), "Inventory should contain key 2");
-
-        dungeon.tick(Direction.DOWN);
-        assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to move into the first door as they have key #1");
-        assertNotNull(player.getInventoryItem("0"), "Unlocking door should not consume key 3");
-        assertNull(player.getInventoryItem("1"), "Unlocking door should consume key 1");
+        
+        //dungeon.tick(Direction.DOWN);
+        //assertEquals(new Position(0, 1, 0), player.getPosition(), "Player should move into key's position");
+        //assertNotNull(player.getInventoryItem("0"), "Inventory should contain key 1");
+        //dungeon.tick(Direction.DOWN);
+        //assertEquals(new Position(0, 2, 0), player.getPosition(), "Player should be able to move into the first door as they have key #1");
+        //assertNull(player.getInventoryItem("0"), "Unlocking door should consume key 1");
        
-        dungeon.tick(Direction.DOWN);
-        assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should NOT be able to move into the second door as they lack key #1");
+        //dungeon.tick(Direction.DOWN);
+        //assertNotNull(player.getInventoryItem("0"), "Inventory should contain key 2");
+        //dungeon.tick(Direction.DOWN);
+        //assertEquals(new Position(0, 4, 0), player.getPosition(), "Player should move into door 2 as it picks up key2");
+        //assertNull(player.getInventoryItem("0"), "Unlocking door should consume key 2");
 
-        dungeon.tick(Direction.UP);
-        dungeon.tick(Direction.DOWN);
-        assertEquals(new Position(0, 3, 0), player.getPosition(), "Player should be able to move in and out of unlocked door");
+        //dungeon.tick(Direction.DOWN);
+        //assertNotNull(player.getInventoryItem("0"), "Inventory should contain key 3");
+        //assertEquals(new Position(0, 5, 0), player.getPosition(), "Player can move pick up key 3");
+        //dungeon.tick(Direction.DOWN);
+        //assertEquals(new Position(0, 5, 0), player.getPosition(), "Player should not be able to move into Door 4 as it doesnt have correct key");
+    
     }
     
     @Test
@@ -142,22 +145,24 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
 
             0
         0   P
-        1   K3 - dummy key
-        2   K1 - unlocks next door
-        3   D1 - can unlock
-        4   D2 - cannot unlock
-        5   K2 - cannot  reach K2
-        6   Exit
+        1   K1 - unlocks door 1
+        2   D1 - can unlock
+        3   K2 - can unlock door 2
+        4   D2 - can unlock
+        5   K3 - key 3; cannot be used on door 4
+        6   D4 - door 4, cannot unlock 
+        7   Exit
         
         */
         String entities = "{\"entities\": [" +
             "{\"x\": 0,\"y\": 0,\"type\": \"player\"}," +
-            "{\"x\": 0,\"y\": 1,\"type\": \"key\",\"key\": 3}," +
-            "{\"x\": 0,\"y\": 2,\"type\": \"key\",\"key\": 1}," +
-            "{\"x\": 0,\"y\": 3,\"type\": \"door\",\"key\": 1}," +
+            "{\"x\": 0,\"y\": 1,\"type\": \"key\",\"key\": 1," +
+            "{\"x\": 0,\"y\": 2,\"type\": \"door\",\"key\": 1}," +
+            "{\"x\": 0,\"y\": 3,\"type\": \"key\",\"key\": 2}," +
             "{\"x\": 0,\"y\": 4,\"type\": \"door\",\"key\": 2}," +
             "{\"x\": 0,\"y\": 5,\"type\": \"key\",\"key\": 3}," +
-            "{\"x\": 0,\"y\": 6,\"type\": \"exit\"}" +
+            "{\"x\": 0,\"y\": 6,\"type\": \"door\",\"key\": 4}," +
+            "{\"x\": 0,\"y\": 7,\"type\": \"exit\"}" +
             "]}";
         String goals = "{\"goal-condition\": {\"goal\": \"exit\"}}";
         JsonArray entitiesJson = new Gson().fromJson(entities, JsonObject.class).get("entities").getAsJsonArray();

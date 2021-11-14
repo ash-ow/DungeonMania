@@ -19,6 +19,7 @@ import dungeonmania.entities.collectableEntities.buildableEntities.*;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.generators.Generator;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
+import dungeonmania.entities.collectableEntities.KeyEntity;
 import dungeonmania.response.models.EntityResponse;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Direction;
@@ -34,6 +35,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     private int invisibilityRemaining = 0;
     private GameModeType gameMode;
     private boolean isTimeTravelling = false;
+    private boolean hasKey = false;
 
     /**
      * Character constructor
@@ -156,6 +158,30 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     
 //endregion
 
+    public boolean getHasKey() {
+        return hasKey;
+    }
+
+    public void setHasKey(boolean hasKey) {
+        this.hasKey = hasKey;
+    }
+
+    public boolean checkKeyState()
+    {
+        for(ICollectable k: inventory)
+        {
+            if(k.getType().equals(EntityTypes.KEY))
+            {
+                KeyEntity key = (KeyEntity) k;
+                if (key.keyPickedUp())
+                {
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
 //region Inventory
 
     List<ICollectable> getItemsFromInventory(Class<?> cls) {
@@ -163,7 +189,23 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     public void addEntityToInventory(ICollectable entity) {
-        inventory.add(entity);
+        if(entity.getType().equals(EntityTypes.KEY))
+        {
+
+            KeyEntity key = (KeyEntity) entity;
+            if (!checkKeyState())
+            {
+                key.setkeyPickedUp(true);
+                this.setHasKey(true);
+            }else{
+                return ;
+            }
+            
+        }
+
+       
+            inventory.add(entity);
+        
     }
 
     public List<ICollectable> getInventory() {
@@ -433,4 +475,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     public void setTimeTravelling(boolean timeTravel) {
         this.isTimeTravelling = timeTravel;
     }
+
+
 }

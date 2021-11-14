@@ -18,6 +18,7 @@ public class KeyEntity extends CollectableEntity implements IBlocker {
     private int keyNumber;
     protected int durability = 1;
     boolean keyPickedUp = false;
+    
 
     /**
      * Key constructor
@@ -66,7 +67,7 @@ public class KeyEntity extends CollectableEntity implements IBlocker {
     */
     @Override
     public void used(CharacterEntity player){
-        this.keyPickedUp = false;
+        this.setkeyPickedUp(false);
         player.removeEntityFromInventory(this);
     }
 
@@ -95,18 +96,25 @@ public class KeyEntity extends CollectableEntity implements IBlocker {
             .anyMatch(e -> e.getType().equals(EntityTypes.KEY));
     }
 
+    public void setkeyPickedUp(boolean isPicked) {
+        this.keyPickedUp = isPicked;
+    }
+
+    //if keypicked is teu
     @Override
     public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
         if (ent instanceof CharacterEntity) {
             CharacterEntity player = (CharacterEntity) ent;
             boolean KeyInInventory = checkKeyInInventory(player);
                 if (KeyInInventory){
-                    this.keyPickedUp = true;
+                    return true;
+                    //this.keyPickedUp = true;
                 }
             }
-        return !this.keyPickedUp;
+        //return this.keyPickedUp = false;
+        return false;
     }
-
+    
     @Override
     public JsonObject buildJson() {
         JsonObject entityInfo = super.buildJson();

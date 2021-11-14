@@ -41,7 +41,7 @@ public class Inventory {
     }
 
     public <T extends ICollectable> T getFirstItemOfType(Class<T> cls) {
-        return this.items.stream().filter(item -> item.getClass().equals(cls)).map(cls::cast).findFirst().orElse(null);
+        return this.items.stream().filter(cls::isInstance).map(cls::cast).findFirst().orElse(null);
     }
 
     public boolean containsItemOfType(EntityTypes type) {

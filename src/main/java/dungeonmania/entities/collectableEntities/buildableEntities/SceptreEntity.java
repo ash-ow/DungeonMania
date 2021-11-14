@@ -111,11 +111,11 @@ public class SceptreEntity extends BuildableEntity implements ITicker {
     @Override
     public void used(CharacterEntity player) {
         this.durability = 10; 
+        player.addActiveItem(this);
     }
         
     public void build(Inventory inventory) {
         inventory.addItem(this);
-
         inventory.removeBuildMaterials(EntityTypes.SUN_STONE, 1);
         if(inventory.containsItemOfType(EntityTypes.TREASURE)) {
             inventory.removeBuildMaterials(EntityTypes.TREASURE, 1);

@@ -32,7 +32,7 @@ public class DungeonManiaController {
     }
 
     public List<String> getGameModes() {
-        return Arrays.asList("Standard", "Peaceful", "Hard");
+        return Arrays.asList("standard", "peaceful", "hard");
     }
 
     /**
@@ -52,7 +52,7 @@ public class DungeonManiaController {
         if (!dungeons().contains(dungeonName)) {
             throw new IllegalArgumentException("dungeonName does not exist");
         }
-        if (!getGameModes().contains(gameMode)) {
+        if (!getGameModes().contains(gameMode.toLowerCase())) {
             throw new IllegalArgumentException("invalid gameMode");
         }
         try {
@@ -125,7 +125,7 @@ public class DungeonManiaController {
     }
 
     public DungeonResponse generateDungeon(int xStart, int yStart, int xEnd, int yEnd, String gameMode) throws IllegalArgumentException {
-        if (!getGameModes().contains(gameMode)) {
+        if (!getGameModes().contains(gameMode.toLowerCase())) {
             throw new IllegalArgumentException("invalid gameMode");
         }
 

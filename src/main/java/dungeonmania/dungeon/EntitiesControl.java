@@ -28,6 +28,7 @@ public class EntitiesControl {
         usableItems.add(EntityTypes.INVINCIBILITY_POTION);
         usableItems.add(EntityTypes.BOMB);
         usableItems.add(EntityTypes.INVISIBILITY_POTION);
+        usableItems.add(EntityTypes.SCEPTRE);
     }
 
     public EntitiesControl() {

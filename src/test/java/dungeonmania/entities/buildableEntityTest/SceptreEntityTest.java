@@ -128,7 +128,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         MercenaryEntity mercenary = new MercenaryEntity(0, 1);
         entities.add(mercenary);
         Dungeon dungeon = new Dungeon(entities, "standard", player);
-        dungeon.interact(mercenary.getId());
+        dungeon.tick(sceptre.getId());
         assertTrue(mercenary.isBribed());
         for (int i = 0; i < 10; i++) {
             dungeon.tick(Direction.NONE);

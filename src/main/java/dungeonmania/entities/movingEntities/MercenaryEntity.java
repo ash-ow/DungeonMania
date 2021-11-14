@@ -115,7 +115,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
             }
         } else {
             this.move(Direction.NONE);
-        } 
+        }
     }
 
     /**
@@ -124,8 +124,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      */
     public void interactWith(CharacterEntity player) throws InvalidActionException {
         TreasureEntity treasureFound = player.getInventory().getFirstItemOfType(TreasureEntity.class);
-        IEntity sunStoneFound = player.getInventory().getFirstItemOfType(SunStoneEntity.class);
-        if (treasureFound == null && sunStoneFound == null) {
+        if (treasureFound == null) {
             throw new InvalidActionException("Player has no treasure");
         }
         if (!isInRange(player)) {

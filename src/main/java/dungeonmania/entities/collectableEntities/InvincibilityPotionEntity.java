@@ -8,6 +8,7 @@ import dungeonmania.entities.movingEntities.CharacterEntity;
 
 
 public class InvincibilityPotionEntity extends CollectableEntity implements IAffectingEntity {
+    
     /**
      * Invincibility potion constructor
      */

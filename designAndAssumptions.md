@@ -225,3 +225,6 @@ We utilised the factory pattern to create entities on the map
 - If you take an item that causes an exception to be thrown when the older player uses it- the exception is swallowed and the older player dissapears
 - The older player dissapears at the end of the ticks regardless if it gets to the portal.
 
+**Dungeon Generator:**
+
+The default maze size is 50x50, meaning axis X and Y extends from coordinate 0 to 49. This is to prevent double-wall boundaries. Discussed and approved here: https://edstem.org/au/courses/7065/discussion/674057

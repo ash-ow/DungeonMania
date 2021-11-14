@@ -15,6 +15,7 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class FollowPlayer implements IMovingBehaviour{
+    List<Position> positionsChecked = new ArrayList<>();
 
     /**
      * Takes the current position and finds the fastest path to the player
@@ -26,6 +27,7 @@ public class FollowPlayer implements IMovingBehaviour{
             return Direction.NONE;
         }
         List<Position> path = shortestPathToPlayer(entitiesControl, player, position);
+        this.positionsChecked = new ArrayList<>();
         return nextDirection(path, player, position);
     }
     
@@ -36,8 +38,12 @@ public class FollowPlayer implements IMovingBehaviour{
     public List<Position> shortestPathToPlayer(EntitiesControl entitiesControl, CharacterEntity player, Position position){
         Map<Position, List<Position>> mainPathsMap = new HashMap<>();
         mainPathsMap.put(position, new ArrayList<>());
-        Position largestPos = new Position(1000, 1000);
-        while(!mainPathsMap.containsKey(largestPos) && !mainPathsMap.containsKey(player.getPosition())) {
+        this.positionsChecked.add(position);
+
+        //Position largestPos = entitiesControl.getLargestCoordinate();
+        Position largestPos = new Position(20,20);
+
+        while(!this.positionsChecked.contains(largestPos)) {
             Map<Position, List<Position>> newPaths = new HashMap<>();
             newPaths.putAll(mainPathsMap);
             for(Position entry: mainPathsMap.keySet()) {
@@ -55,7 +61,8 @@ public class FollowPlayer implements IMovingBehaviour{
     public Map<Position, List<Position>> dijkstra(Position currentPosition, Map<Position, List<Position>> pathsMap, EntitiesControl entitiesControl) {
         List<Position> currentPrevPositions = pathsMap.get(currentPosition);
         for (Position newPosition:currentPosition.getCardinallyAdjacentPositions()){
-            if(!EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(newPosition))) {
+            this.positionsChecked.add(newPosition);
+            if(positionIsValid(entitiesControl, newPosition)){
                 List<Position> newPrevPositions = new ArrayList<>();
                 for(Position prevPosition: currentPrevPositions) {
                     newPrevPositions.add(prevPosition);
@@ -63,7 +70,7 @@ public class FollowPlayer implements IMovingBehaviour{
                 newPrevPositions.add(currentPosition);
                 if (!pathsMap.containsKey(newPosition)){
                     pathsMap.put(newPosition, newPrevPositions);
-                } else {
+                } else if (pathsMap.containsKey(newPosition)){
                     int newPathLength = numRequiredMoves(entitiesControl, newPrevPositions);
                     int oldPathLength = numRequiredMoves(entitiesControl, pathsMap.get(newPosition));
                     if (newPathLength < oldPathLength){
@@ -100,6 +107,15 @@ public class FollowPlayer implements IMovingBehaviour{
     public boolean playerIsReachable(CharacterEntity player, EntitiesControl entitiesControl){
         for (Position pos: player.getPosition().getCardinallyAdjacentPositions()) {
             if (!EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(pos))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean positionIsValid(EntitiesControl entitiesControl, Position newPosition){
+        if(!EntitiesControl.containsBlockingEntities(entitiesControl.getAllEntitiesFromPosition(newPosition))) {
+            if(newPosition.getX() >= 0 && newPosition.getY() >= 0) {
                 return true;
             }
         }

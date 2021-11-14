@@ -319,4 +319,25 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         // Mercenary should be in the same position as the player, however, in this case, the mercenary should not be in the list of entities as they would have battled
         assertFalse(entities.contains(merc));
     }
+
+    @Test
+    public void TestSimpleSwamp() {
+        ArrayList<IEntity> entities = new ArrayList<>();
+
+        MercenaryEntity merc = new MercenaryEntity();
+        entities.add(merc);
+        SwampEntity swamp = new SwampEntity(0, 1);
+        entities.add(swamp);
+        SwampEntity swamp2 = new SwampEntity(1, 1);
+        entities.add(swamp2);
+        CharacterEntity player = new CharacterEntity(2, 1);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        
+        dungeon.tick(Direction.NONE);
+        assertEquals(merc.getPosition(), new Position(1, 0));
+        dungeon.tick(Direction.NONE);
+        assertEquals(merc.getPosition(), new Position(2, 0));
+        dungeon.tick(Direction.NONE);
+        assertFalse(entities.contains(merc));
+    }
 }

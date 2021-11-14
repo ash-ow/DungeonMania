@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
-import dungeonmania.entities.movingEntities.HydraEntity;
 import dungeonmania.entities.movingEntities.IBattlingEntity;
 import dungeonmania.entities.movingEntities.IBoss;
 

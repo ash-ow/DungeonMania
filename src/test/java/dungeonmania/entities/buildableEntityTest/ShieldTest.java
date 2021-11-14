@@ -3,8 +3,6 @@ package dungeonmania.entities.buildableEntityTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,11 +14,11 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.IEntity;
 import dungeonmania.entities.Logic;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.ShieldEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.Inventory;
 import dungeonmania.entities.movingEntities.ZombieToastEntity;
 import dungeonmania.response.models.ItemResponse;
 import dungeonmania.util.Position;
@@ -29,9 +27,10 @@ public class ShieldTest implements IBuildableEntityTests {
     @Test
     @Override
     public void TestIsBuildable() {
-        Assertions.assertAll( "Can build shield with treasure or key",
+        Assertions.assertAll( "Can build shield with treasure or key or sun stone",
             () -> assertCanBuildShieldWithTreasure(),
-            () -> assertCanBuildShieldWithKey()   
+            () -> assertCanBuildShieldWithKey(),
+            () -> assertCanBuildShieldWithSunStone()  
         );
     }
 
@@ -40,15 +39,15 @@ public class ShieldTest implements IBuildableEntityTests {
         WoodEntity wood = new WoodEntity();
         WoodEntity wood2 = new WoodEntity();
         TreasureEntity treasure = new TreasureEntity();
-        player.addEntityToInventory(wood);
-        player.addEntityToInventory(wood2);
-        player.addEntityToInventory(treasure);
+        player.getInventoryItems().add(wood);
+        player.getInventoryItems().add(wood2);
+        player.getInventoryItems().add(treasure);
         player.build(EntityTypes.SHIELD);
         List<ItemResponse> inventory = player.getInventoryInfo();
         for (ItemResponse item : inventory) {
             assertEquals(EntityTypes.SHIELD.toString(), item.getType());
         }
-        assertEquals(1, player.getInventory().size());
+        assertEquals(1, player.getInventoryItems().size());
     }
 
     public void assertCanBuildShieldWithKey() {
@@ -56,15 +55,31 @@ public class ShieldTest implements IBuildableEntityTests {
         WoodEntity wood = new WoodEntity();
         WoodEntity wood2 = new WoodEntity();
         KeyEntity key = new KeyEntity(0, 0, 1);
-        player.addEntityToInventory(wood);
-        player.addEntityToInventory(wood2);
-        player.addEntityToInventory(key);
+        player.getInventoryItems().add(wood);
+        player.getInventoryItems().add(wood2);
+        player.getInventoryItems().add(key);
         player.build(EntityTypes.SHIELD);
         List<ItemResponse> inventory = player.getInventoryInfo();
         for (ItemResponse item : inventory) {
             assertEquals(EntityTypes.SHIELD.toString(), item.getType());
         }
-        assertTrue(player.getInventory().size() == 1);
+        assertEquals(1, player.getInventoryItems().size());
+    }
+
+    public void assertCanBuildShieldWithSunStone() {
+        CharacterEntity player = new CharacterEntity();
+        WoodEntity wood = new WoodEntity();
+        WoodEntity wood2 = new WoodEntity();
+        SunStoneEntity sun_stone = new SunStoneEntity();
+        player.getInventoryItems().add(wood);
+        player.getInventoryItems().add(wood2);
+        player.getInventoryItems().add(sun_stone);
+        player.build(EntityTypes.SHIELD);
+        List<ItemResponse> inventory = player.getInventoryInfo();
+        for (ItemResponse item : inventory) {
+            assertEquals(EntityTypes.SHIELD.toString(), item.getType());
+        }
+        assertEquals(1, player.getInventoryItems().size());
     }
 
     @Test
@@ -72,7 +87,7 @@ public class ShieldTest implements IBuildableEntityTests {
     public void TestIsNotBuildable_EmptyInventory() {
         ShieldEntity shield = new ShieldEntity();
         List<ICollectable> inventory = new ArrayList<ICollectable>();
-        assertFalse(shield.isBuildable(inventory));
+        assertFalse(shield.isBuildable(new Inventory(inventory)));
     }
 
     @Test
@@ -82,7 +97,7 @@ public class ShieldTest implements IBuildableEntityTests {
         List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new ArrowsEntity());
         inventory.add(new BombEntity(Logic.ANY));
-        assertFalse(shield.isBuildable(inventory));
+        assertFalse(shield.isBuildable(new Inventory(inventory)));
         
     }
 
@@ -94,7 +109,7 @@ public class ShieldTest implements IBuildableEntityTests {
         inventory.add(new WoodEntity());
         inventory.add(new KeyEntity(0, 0, 1));
         inventory.add(new TreasureEntity());
-        assertFalse(shield.isBuildable(inventory));
+        assertFalse(shield.isBuildable(new Inventory(inventory)));
     }
 
     @Override
@@ -136,14 +151,14 @@ public class ShieldTest implements IBuildableEntityTests {
         WoodEntity wood2 = new WoodEntity();
         TreasureEntity treasure = new TreasureEntity();
         KeyEntity key = new KeyEntity(0, 0, 1);
-        player.addEntityToInventory(wood);
-        player.addEntityToInventory(wood2);
-        player.addEntityToInventory(treasure);
-        player.addEntityToInventory(key);
+        player.getInventoryItems().add(wood);
+        player.getInventoryItems().add(wood2);
+        player.getInventoryItems().add(treasure);
+        player.getInventoryItems().add(key);
         player.build(EntityTypes.SHIELD);
         
         List<EntityTypes> expectedInventory = Arrays.asList(EntityTypes.KEY, EntityTypes.SHIELD);
-        List<EntityTypes> actualInventory = player.getInventory().stream().map(item -> item.getType()).collect(Collectors.toList());
+        List<EntityTypes> actualInventory = player.getInventoryItems().stream().map(item -> item.getType()).collect(Collectors.toList());
         assertIterableEquals(expectedInventory, actualInventory);
     }
 }

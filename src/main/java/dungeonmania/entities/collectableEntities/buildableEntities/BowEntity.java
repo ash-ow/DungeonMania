@@ -2,6 +2,7 @@ package dungeonmania.entities.collectableEntities.buildableEntities;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.IWeaponEntity;
+import dungeonmania.entities.movingEntities.Inventory;
 
 public class BowEntity extends BuildableEntity implements IWeaponEntity {
     
@@ -34,5 +35,12 @@ public class BowEntity extends BuildableEntity implements IWeaponEntity {
     @Override
     public float getDamage() {
         return 2;
+    }
+
+    @Override
+    public void build(Inventory inventory) {
+        inventory.addItem(this);
+        inventory.removeBuildMaterials(EntityTypes.WOOD, 1);
+        inventory.removeBuildMaterials(EntityTypes.ARROW, 3);
     }
 }

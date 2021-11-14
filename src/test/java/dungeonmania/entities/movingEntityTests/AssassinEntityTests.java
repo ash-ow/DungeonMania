@@ -3,33 +3,54 @@ package dungeonmania.entities.movingEntityTests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.Dungeon;
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
+import dungeonmania.entities.collectableEntities.SunStoneEntity;
 import dungeonmania.entities.movingEntities.AssassinEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.exceptions.InvalidActionException;
+import dungeonmania.util.Position;
 
 public class AssassinEntityTests extends MercenaryEntityTests {
     @Test
-    public void testBribe() {
+    public void testBribeTreasure() {
         CharacterEntity player = new CharacterEntity(0, 5);
         AssassinEntity assassin = new AssassinEntity(0, 4);
         TreasureEntity treasure = new TreasureEntity();
         OneRingEntity oneRing = new OneRingEntity();
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(assassin);        
-        player.addEntityToInventory(treasure); 
-        player.addEntityToInventory(oneRing);
+        player.getInventoryItems().add(treasure); 
+        player.getInventoryItems().add(oneRing);
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         dungeon.interact(assassin.getId());
         assertTrue(assassin.isBribed());
+    }
+
+    @Test
+    //Test if assassin bribed by sun_stone & check that item is not removed
+    public void testBribeSunStone() {
+        CharacterEntity player = new CharacterEntity(0, 5);
+        AssassinEntity assassin = new AssassinEntity(0, 4);
+        SunStoneEntity sun_stone = new SunStoneEntity();
+        OneRingEntity oneRing = new OneRingEntity();
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(assassin);        
+        player.getInventoryItems().add(sun_stone); 
+        player.getInventoryItems().add(oneRing);
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        dungeon.interact(assassin.getId());
+        assertTrue(assassin.isBribed());
+        assertNotNull(player.getInventory().getInventoryItemById(sun_stone.getId()), "Inventory should contain entity " + sun_stone.getId());
     }
 
     @Test
@@ -39,7 +60,7 @@ public class AssassinEntityTests extends MercenaryEntityTests {
         TreasureEntity treasure = new TreasureEntity();
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(assassin);        
-        player.addEntityToInventory(treasure); 
+        player.getInventoryItems().add(treasure); 
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         assertThrows(InvalidActionException.class, () -> dungeon.interact(assassin.getId()));
     }
@@ -57,5 +78,17 @@ public class AssassinEntityTests extends MercenaryEntityTests {
 
         assertEquals(60, character.getHealth());
         assertEquals(20.0, assassin.getHealth());
+    }
+
+    @Test
+    public void moveAgainAfterAttack() {
+        EntitiesControl entitiesControl = new EntitiesControl();
+        AssassinEntity assassin = new AssassinEntity();
+        entitiesControl.addEntity(assassin);
+        CharacterEntity player = new CharacterEntity(0, 5);
+        entitiesControl.addEntity(player);
+
+        entitiesControl.moveMercenariesAfterAttack(player);
+        assertEquals(new Position(0, 1), assassin.getPosition());
     }
 }

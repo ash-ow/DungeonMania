@@ -6,7 +6,7 @@ import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.staticEntities.SwitchEntity;
 import dungeonmania.entities.staticEntities.WireEntity;
 
-public abstract class LogicEntity extends Entity implements ITicker {
+public abstract class LogicEntity extends Entity {
 
     private Logic logic;
 
@@ -15,8 +15,7 @@ public abstract class LogicEntity extends Entity implements ITicker {
         this.logic = logic;
     }
 
-    @Override
-    public void tick(EntitiesControl entitiesControl) {
+    public void checkLogic(EntitiesControl entitiesControl) {
         List<SwitchEntity> adjacentSwitches = getAdjacentSwitches(entitiesControl);
         if (getLogicFromSwitches(adjacentSwitches)) {
             this.activate(entitiesControl);

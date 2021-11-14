@@ -15,12 +15,21 @@ import dungeonmania.util.Direction;
 public class DoorEntity extends Entity implements IBlocker {
     private int keyNumber;
     private boolean isLocked;
-    private KeyEntity key;
 
+     /**
+     * Door constructor
+     * @param keyNumber      denotes the door id 
+     */
     public DoorEntity(int keyNumber) {
         this(0, 0, keyNumber);
     }
     
+    /**
+     * Door constructor
+     * @param x             x-coordinate on the map
+     * @param y             y-coordinate on the map
+     * @param keyNumber     denotes the door id which is unlockable by a key with corresponding keyNumber 
+     */
     public DoorEntity(int x, int y, int keyNumber) {
         super(x, y, EntityTypes.DOOR);
         this.keyNumber = keyNumber;
@@ -35,10 +44,14 @@ public class DoorEntity extends Entity implements IBlocker {
         return keyNumber;
     }
 
+    /**
+     * Checks whether a key with a specific keyNumber is in the inventory and returns it
+     * @param player       the player which should have key in inventory 
+     * @param keyNumber    denotes which door the key should open
+     */
     private KeyEntity getKeyFromInventory(CharacterEntity player, int keyNumber) {
-        // TODO move this to the inventory implementation
         return player
-            .getInventory()
+            .getInventoryItems()
             .stream()
             .filter(e -> e.getType().equals(EntityTypes.KEY))
             .map(KeyEntity.class::cast)
@@ -47,7 +60,23 @@ public class DoorEntity extends Entity implements IBlocker {
             .orElse(null);
     }
 
-    private void unlockWith(KeyEntity key, CharacterEntity player) {
+    /**
+     * Checks whether the player has a sun_stone in inventory and returns either TRUE or FALSE
+     * @param player       the player has a sun_stone in inventory 
+     */
+    private boolean getStoneFromInventory(CharacterEntity player) {
+        return player
+            .getInventoryItems()
+            .stream()
+            .anyMatch(e -> e.getType().equals(EntityTypes.SUN_STONE));
+    }
+    
+    /**
+     * Unlocks the door when key is in inventory and is removed from inventory after use 
+     *  @param key          Key Entity 
+     *  @param player       the player which should have key in inventory 
+     */
+    private void tryUnlockWithKey(KeyEntity key, CharacterEntity player) {
         if (key != null) {
             key.used(player);
             this.isLocked = false;
@@ -55,17 +84,39 @@ public class DoorEntity extends Entity implements IBlocker {
         }
     }
 
+    /**
+     * Unlocks the door as sun_stone is in inventory 
+     *  @param sun_stone    Sun Stone Entity 
+     *  @param player       the player which should have sun_stone in inventory 
+     */
+    private void tryUnlockWithStone() {
+        this.isLocked = false;
+        this.type = EntityTypes.UNLOCKED_DOOR;
+    }
+
     @Override
     public boolean isBlocking() {
         return this.isLocked;
     }
 
+    /**
+     *  Checks whether the conditions have been met to unlock the door thus unblocking player movement on that entity 
+     * @param ent             the entity trying to move the entity
+     * @param direction        direction the chatacter is moving
+     * @param entitiesControl  list of all entities    
+     */
     @Override
     public boolean unblockCore(IMovingEntity ent, Direction direction, EntitiesControl entitiesControl) {
         if (ent instanceof CharacterEntity) {
             CharacterEntity player = (CharacterEntity) ent;
-            this.key = getKeyFromInventory(player, this.keyNumber);
-            this.unlockWith(key, player);
+            boolean stoneInInventory = getStoneFromInventory(player);
+            if (player.getInventory().containsItemOfType(EntityTypes.KEY)){
+                KeyEntity key = getKeyFromInventory(player, this.keyNumber);
+                this.tryUnlockWithKey(key, player);
+            }
+            else if (stoneInInventory){
+                this.tryUnlockWithStone(); 
+            }
         }
         return !this.isLocked;
     }

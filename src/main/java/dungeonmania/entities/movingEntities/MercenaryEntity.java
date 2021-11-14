@@ -1,15 +1,5 @@
 package dungeonmania.entities.movingEntities;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Map.Entry;
-
 import com.google.gson.JsonObject;
 
 import dungeonmania.dungeon.EntitiesControl;
@@ -18,6 +8,7 @@ import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IEntity;
 import dungeonmania.entities.IInteractableEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
+import dungeonmania.entities.collectableEntities.SunStoneEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.FollowPlayer;
 import dungeonmania.entities.movingEntities.moveBehaviour.IMovingBehaviour;
 import dungeonmania.exceptions.InvalidActionException;
@@ -86,9 +77,9 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
 
     @Override
     public float loseHealth(float enemyHealth, float enemyDamage) {
-        float damage = ((enemyHealth * enemyDamage) / 5);
-        this.health -= damage;
-        return damage;
+        float damageReceived = ((enemyHealth * enemyDamage) / 5);
+        this.health -= damageReceived;
+        return damageReceived;
     }
 
     @Override
@@ -132,17 +123,19 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      * @param player the player with which the mercenary will interact with 
      */
     public void interactWith(CharacterEntity player) throws InvalidActionException {
-        IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);
-        if (treasureFound == null) {
+        TreasureEntity treasureFound = player.getInventory().getFirstItemOfType(TreasureEntity.class);
+        IEntity sunStoneFound = player.getInventory().getFirstItemOfType(SunStoneEntity.class);
+        if (treasureFound == null && sunStoneFound == null) {
             throw new InvalidActionException("Player has no treasure");
         }
         if (!isInRange(player)) {
             throw new InvalidActionException("Player is too far away");
         }
-        player.removeEntityFromInventory(treasureFound);
+        treasureFound.used(player);
         player.addTeammates(this);
         this.isBribed = true;
     }
+    
 
     /**
      * Determines if the player is in range of the mercenary
@@ -171,3 +164,4 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     }
 
 }
+

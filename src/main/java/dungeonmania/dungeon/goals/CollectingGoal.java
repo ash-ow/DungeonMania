@@ -3,6 +3,7 @@ package dungeonmania.dungeon.goals;
 import java.util.List;
 
 import dungeonmania.dungeon.Dungeon;
+
 import dungeonmania.entities.collectableEntities.TreasureEntity;
 
 public class CollectingGoal  implements IGoal {

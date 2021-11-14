@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,10 +13,10 @@ import dungeonmania.dungeon.Dungeon;
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.dungeon.GameModeType;
 import dungeonmania.entities.IEntity;
-import dungeonmania.entities.collectableEntities.ICollectable;
 import dungeonmania.entities.collectableEntities.InvincibilityPotionEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.collectableEntities.TreasureEntity;
+import dungeonmania.entities.collectableEntities.SunStoneEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
@@ -134,13 +133,13 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
     }
     
     @Test
-    public void mercenaryMovesOutofWay() {
+    public void TestBribeMercenaryWithTreasure() {
         CharacterEntity player = new CharacterEntity(0, 5);
         MercenaryEntity mercenary = new MercenaryEntity(0, 4);
         TreasureEntity treasure = new TreasureEntity();
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(mercenary);        
-        player.addEntityToInventory(treasure); 
+        player.getInventoryItems().add(treasure); 
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         dungeon.interact(mercenary.getId());
         assertTrue(mercenary.isBribed());
@@ -149,6 +148,25 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         assertEquals(new Position(0, 5), mercenary.getPosition());
         dungeon.tick(Direction.DOWN);
         assertEquals(new Position(0, 4), mercenary.getPosition());
+    }
+
+    @Test
+    public void TestBribeMercenaryWithStone() {
+        CharacterEntity player = new CharacterEntity(0, 5);
+        MercenaryEntity mercenary = new MercenaryEntity(0, 4);
+        SunStoneEntity sun_stone = new SunStoneEntity();
+        ArrayList<IEntity> entities = new ArrayList<>();
+        entities.add(mercenary);        
+        player.getInventoryItems().add(sun_stone); 
+        Dungeon dungeon = new Dungeon(entities, "Standard", player);
+        dungeon.interact(mercenary.getId());
+        assertTrue(mercenary.isBribed());
+        dungeon.tick(Direction.UP);
+        assertTrue(dungeon.entitiesControl.contains(mercenary));
+        assertEquals(new Position(0, 5), mercenary.getPosition());
+        dungeon.tick(Direction.DOWN);
+        assertEquals(new Position(0, 4), mercenary.getPosition());
+        assertNotNull(player.getInventory().getInventoryItemById(sun_stone.getId()), "Inventory should contain entity " + sun_stone.getId());
     }
 
     @Test
@@ -188,8 +206,7 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
         CharacterEntity player = new CharacterEntity();
         MercenaryEntity mercenary = new MercenaryEntity(0, 0);
         mercenary.dropEntities(player, 1f);
-        List<ICollectable> inventory = player.getInventory();
-        assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
+        assertNotNull(player.getInventory().getFirstItemOfType(OneRingEntity.class));
     }
 
     @Test
@@ -246,5 +263,17 @@ public class MercenaryEntityTests implements IMovingEntityTest, IBattlingEntityT
 
         mercenary.move(entitiesControl, player);
         assertEquals(new Position(11, 5), mercenary.getPosition());
+    }
+
+    @Test
+    public void moveAgainAfterAttack() {
+        EntitiesControl entitiesControl = new EntitiesControl();
+        MercenaryEntity mercenary = new MercenaryEntity();
+        entitiesControl.addEntity(mercenary);
+        CharacterEntity player = new CharacterEntity(0, 5);
+        entitiesControl.addEntity(player);
+
+        entitiesControl.moveMercenariesAfterAttack(player);
+        assertEquals(new Position(0, 1), mercenary.getPosition());
     }
 }

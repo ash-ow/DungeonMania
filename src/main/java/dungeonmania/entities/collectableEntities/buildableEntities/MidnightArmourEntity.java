@@ -2,6 +2,7 @@ package dungeonmania.entities.collectableEntities.buildableEntities;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.Inventory;
 import dungeonmania.entities.collectableEntities.IDefensiveEntity;
 import dungeonmania.entities.collectableEntities.IWeaponEntity;
 
@@ -42,5 +43,12 @@ public class MidnightArmourEntity extends BuildableEntity implements IDefensiveE
     @Override
     public float getDamage() {
         return 7;
+    }
+
+    @Override
+    public void build(Inventory inventory) {
+        inventory.addItem(this);
+        inventory.removeBuildMaterials(EntityTypes.SUN_STONE, 1);
+        inventory.removeBuildMaterials(EntityTypes.ARMOUR, 1);
     }
 }

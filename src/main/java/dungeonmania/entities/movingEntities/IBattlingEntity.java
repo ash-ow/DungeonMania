@@ -26,6 +26,7 @@ public interface IBattlingEntity extends IContactingEntity {
         ) {
             doBattle(player);
         }
+        entitiesControl.moveMercenariesAfterAttack(player);
     }
 
     /**
@@ -56,9 +57,9 @@ public interface IBattlingEntity extends IContactingEntity {
             for (IBattlingEntity teammate : player.teammates) {
                 this.loseHealth(teammate.getHealth(), teammate.getDamage());
             }
-            for (IWeaponEntity weapon : EntitiesControl.getEntitiesOfType(player.getInventory(), IWeaponEntity.class)) {
+            for (IWeaponEntity weapon : player.getInventory().getItemsFromInventoryOfType(IWeaponEntity.class)) {
                 weapon.attack(this, player);
-                ICollectable weaponUsed = (ICollectable) weapon;
+                ICollectable weaponUsed = weapon;
                 weaponUsed.used(player);
             }
             player.loseHealth(enemyInitialHealth, this.getDamage());
@@ -76,7 +77,7 @@ public interface IBattlingEntity extends IContactingEntity {
     default void dropEntities(CharacterEntity player) {
         OneRingEntity ring = new OneRingEntity();
         if (RandomChance.getRandomBoolean(ring.getDropChance())) {
-            player.addEntityToInventory(ring);
+            player.getInventoryItems().add(ring);
         }
     }
 
@@ -87,7 +88,7 @@ public interface IBattlingEntity extends IContactingEntity {
     default void dropEntities(CharacterEntity player, float probability) {
         OneRingEntity ring = new OneRingEntity();
         if (RandomChance.getRandomBoolean(probability)) {
-            player.addEntityToInventory(ring);
+            player.getInventoryItems().add(ring);
         }
     }
     

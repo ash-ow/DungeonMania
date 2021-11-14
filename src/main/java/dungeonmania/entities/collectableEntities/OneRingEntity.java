@@ -2,7 +2,6 @@ package dungeonmania.entities.collectableEntities;
 
 import com.google.gson.JsonObject;
 
-import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
@@ -41,6 +40,6 @@ public class OneRingEntity extends CollectableEntity {
     @Override
     public void used(CharacterEntity player) {
         player.setHealth(100);
-        player.removeEntityFromInventory(this);
+        player.getInventoryItems().remove(this);
     }
 }

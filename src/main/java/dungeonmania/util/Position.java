@@ -111,11 +111,15 @@ public final class Position {
     }
 
     public List<Position> getCardinallyAdjacentPositions() {
+        return getCardinallyAdjacentPositionsWithRange(1);
+    }
+
+    public List<Position> getCardinallyAdjacentPositionsWithRange(int range) {
         List<Position> adjacentPositions = new ArrayList<>();
-        adjacentPositions.add(new Position(x  , y-1));
-        adjacentPositions.add(new Position(x+1, y));
-        adjacentPositions.add(new Position(x  , y+1));
-        adjacentPositions.add(new Position(x-1, y));
+        adjacentPositions.add(new Position(x  , y-range));
+        adjacentPositions.add(new Position(x+range, y));
+        adjacentPositions.add(new Position(x  , y+range));
+        adjacentPositions.add(new Position(x-range, y));
         return adjacentPositions;
     }
 }

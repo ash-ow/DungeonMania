@@ -215,7 +215,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @return true if still invincible
      */
     public boolean isInvincible() {
-        if (gameMode.equals("Hard")) {
+        if (gameMode.toString().equals("Hard")) {
             return false;
         }
         return this.invincibilityRemaining > 0;

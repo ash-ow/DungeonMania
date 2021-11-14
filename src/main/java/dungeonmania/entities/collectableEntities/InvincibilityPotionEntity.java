@@ -2,12 +2,12 @@ package dungeonmania.entities.collectableEntities;
 
 import com.google.gson.JsonObject;
 
-import dungeonmania.entities.Entity;
+import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 
 
-public class InvincibilityPotionEntity extends CollectableEntity {
+public class InvincibilityPotionEntity extends CollectableEntity implements IAffectingEntity {
     /**
      * Invincibility potion constructor
      */
@@ -36,5 +36,11 @@ public class InvincibilityPotionEntity extends CollectableEntity {
     public void used(CharacterEntity player) {
        player.setInvincibilityRemaining(10);
        player.removeEntityFromInventory(this);
+    }
+
+    @Override
+    public void activateAffects(EntitiesControl entities) {
+        // TODO Auto-generated method stub
+        
     } 
 }

@@ -284,7 +284,9 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
                         removeBuildMaterials(EntityTypes.TREASURE, 1);
                     } else if (this.containedInInventory(EntityTypes.KEY)) {
                         removeBuildMaterials(EntityTypes.KEY, 1);
-                    } 
+                    } else if (this.containedInInventory(EntityTypes.SUN_STONE)) {
+                        removeBuildMaterials(EntityTypes.SUN_STONE, 1);
+                    }
                 } else {
                     throw new InvalidActionException(itemToBuild.toString());
                 }

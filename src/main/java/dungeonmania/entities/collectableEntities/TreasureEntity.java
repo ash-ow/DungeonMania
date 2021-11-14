@@ -2,8 +2,8 @@ package dungeonmania.entities.collectableEntities;
 
 import com.google.gson.JsonObject;
 
-import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
+import dungeonmania.entities.movingEntities.CharacterEntity;
 
 
 public class TreasureEntity extends CollectableEntity {
@@ -20,10 +20,23 @@ public class TreasureEntity extends CollectableEntity {
      * @param y y-coordinate on the map
      */
     public TreasureEntity(int x, int y) {
-        super(x, y, EntityTypes.TREASURE);
+        this(x, y, EntityTypes.TREASURE);
     }
 
     public TreasureEntity(JsonObject jsonInfo) {
         this(jsonInfo.get("x").getAsInt(), jsonInfo.get("y").getAsInt());
     }
+
+    public TreasureEntity(int x, int y, EntityTypes type) {
+        super(x, y, type);
+    }
+
+     /**
+     * When treasure is used for bribing it is removed from the inventory 
+     * @param player CharacterEntity using the treasure
+     */
+    public void used(CharacterEntity player) {
+        player.removeEntityFromInventory(this);
+    }   
+
 }

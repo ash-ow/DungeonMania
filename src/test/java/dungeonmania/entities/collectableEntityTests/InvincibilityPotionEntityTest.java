@@ -3,6 +3,7 @@ package dungeonmania.entities.collectableEntityTests;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.ArrayList;
 
@@ -113,6 +114,6 @@ public class InvincibilityPotionEntityTest implements ICollectableEntityTest {
 
         dungeon.tick(invincibility_potion.getId());
 
-        assertEquals(new Position(5, 5), (merc.getPosition()));
+        assertNotEquals(new Position(5, 5), (merc.getPosition()));
     }
 }

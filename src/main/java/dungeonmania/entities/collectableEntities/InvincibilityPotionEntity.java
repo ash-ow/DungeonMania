@@ -41,10 +41,10 @@ public class InvincibilityPotionEntity extends CollectableEntity implements IAff
     @Override
     public void used(CharacterEntity player) {
         if (!player.getGameMode().equals(GameModeType.HARD)){
-            player.getInventory().getItems().remove(this);
             player.addActiveItem(this);
             this.durability = 10;
         }
+        player.getInventory().getItems().remove(this);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package dungeonmania.dungeon;
 
-import java.io.ObjectInputStream.GetField;
-
 import dungeonmania.util.Direction;
 
 public class Instruction {

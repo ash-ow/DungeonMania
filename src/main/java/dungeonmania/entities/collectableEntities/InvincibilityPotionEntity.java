@@ -38,7 +38,7 @@ public class InvincibilityPotionEntity extends CollectableEntity implements IAff
      */
     @Override
     public void used(CharacterEntity player) {
-       player.removeEntityFromInventory(this);
+       player.getInventory().getItems().remove(this);
     }
 
     @Override

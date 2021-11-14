@@ -1,13 +1,11 @@
 package dungeonmania.entities.collectableEntities.buildableEntities;
 
-import java.util.List;
 import java.util.Map;
 
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.collectableEntities.CollectableEntity;
-import dungeonmania.entities.collectableEntities.ICollectable;
+import dungeonmania.entities.movingEntities.Inventory;
 
 
 public class SceptreEntity extends BuildableEntity {
@@ -52,7 +50,7 @@ public class SceptreEntity extends BuildableEntity {
      * @return true or false depnding on whether a sceptre is buildable
      */
     @Override
-    public boolean isBuildable(List<ICollectable> inventory) {
+    public boolean isBuildable(Inventory inventory) {
         boolean requiredSunStone = false;
         boolean requiredWood = false;
         boolean requiredArrows = false;
@@ -62,7 +60,7 @@ public class SceptreEntity extends BuildableEntity {
         for (Map.Entry<EntityTypes, Integer> entry : requiredComponents.entrySet()) {
             EntityTypes component = entry.getKey();
             int quantity = entry.getValue();
-            if (numberOfComponentItemsInInventory(inventory, component) >= quantity) {
+            if (inventory.numberOfComponentItemsInInventory(component) >= quantity) {
                 switch (component) {
                     case SUN_STONE:
                         requiredSunStone = true;
@@ -91,5 +89,21 @@ public class SceptreEntity extends BuildableEntity {
             (requiredTreasure || requiredKey)
         );
     }
-    
+
+    @Override
+    public void build(Inventory inventory) {
+        inventory.addItem(this);
+
+        inventory.removeBuildMaterials(EntityTypes.SUN_STONE, 1);
+        if(inventory.containsItemOfType(EntityTypes.TREASURE)) {
+            inventory.removeBuildMaterials(EntityTypes.TREASURE, 1);
+        } else if (inventory.containsItemOfType(EntityTypes.KEY)) {
+            inventory.removeBuildMaterials(EntityTypes.KEY, 1);
+        } 
+        if(inventory.containsItemOfType(EntityTypes.WOOD)) {
+            inventory.removeBuildMaterials(EntityTypes.WOOD, 1);
+        } else if (inventory.containsItemOfType(EntityTypes.ARROW)) {
+            inventory.removeBuildMaterials(EntityTypes.ARROW, 1);
+        }
+    }
 }

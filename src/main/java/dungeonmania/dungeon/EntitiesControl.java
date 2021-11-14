@@ -3,7 +3,6 @@ package dungeonmania.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.google.gson.JsonObject;
 
@@ -16,13 +15,13 @@ import dungeonmania.dungeon.entitiesFactory.EntitiesFactory;
 import dungeonmania.entities.*;
 import dungeonmania.entities.movingEntities.*;
 import dungeonmania.entities.movingEntities.moveBehaviour.RunAway;
-import dungeonmania.generators.Generator;
+import dungeonmania.generators.EnemyEntityGenerator;
 
 public class EntitiesControl {
     private List<IEntity> entities;
     private Integer tickCounter = 1;
     private Integer entityCounter = 0;
-    public final static List<EntityTypes> usableItems;
+    public static final List<EntityTypes> usableItems;
     static {
         usableItems = new ArrayList<>();
         usableItems.add(EntityTypes.HEALTH_POTION);
@@ -45,6 +44,10 @@ public class EntitiesControl {
      * @param entity  entity to be created
      */
     public void createNewEntityOnMap(IEntity entity) {
+        if (entity == null) {
+            throw new IllegalArgumentException("entity parameter cannot be null.");
+        }
+
         entity.setId(Integer.toString(entityCounter));
         entities.add(entity);
         entityCounter++;
@@ -77,15 +80,27 @@ public class EntitiesControl {
     }
 
     public List<ITicker> getAllTickingEntities() {
-        List<ITicker> tickers = this.entities.stream()
+        return this.entities.stream()
             .filter(ITicker.class::isInstance)
             .map(ITicker.class::cast)
             .collect(Collectors.toList());
+    }
 
-        // get the logic entities last because they depend on other tickers
-        Stream<ITicker> logicEntities = tickers.stream().filter(c -> c instanceof LogicEntity);
-        Stream<ITicker> otherEntities = tickers.stream().filter(c -> !(c instanceof LogicEntity));
-        return Stream.concat(otherEntities, logicEntities).collect(Collectors.toList());
+    /**
+     * Activates all logic entities based on their switches
+     */
+    public void checkLogicEntities() {
+        List<LogicEntity> logicEnt = getAllLogicEntities();
+        for (LogicEntity le : logicEnt) {
+            le.checkLogic(this);
+        }
+    }
+
+    public List<LogicEntity> getAllLogicEntities() {
+        return this.entities.stream()
+            .filter(LogicEntity.class::isInstance)
+            .map(LogicEntity.class::cast)
+            .collect(Collectors.toList());
     }
 
     /**
@@ -147,22 +162,18 @@ public class EntitiesControl {
         return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findFirst().orElse(null);
     }
 
-    public <T extends IEntity> IEntity getFirstEntityOfType(Class<?> cls) {
+    public <T extends IEntity> IEntity getFirstEntityOfType(Class<T> cls) {
         return getFirstEntityOfType(this.entities, cls);
     }
 
-    public boolean positionContainsEntityType(Position position, Class<?> cls) {
+    public <T extends IEntity> boolean positionContainsEntityType(Position position, Class<T> cls) {
         List<IEntity> entityList =  this.getAllEntitiesFromPosition(position);
-        
-        if (getFirstEntityOfType(entityList, cls) != null) {
-            return true;
-        }
-        return false;
+        return getFirstEntityOfType(entityList, cls) != null;
     }
     // endregion
     
     
-    public void createEntity(JsonObject jsonInfo, GameModeType gameMode) {
+    public void createEntity(JsonObject jsonInfo) {
         EntitiesFactory.generateEntity(jsonInfo, this);
     }
     
@@ -181,7 +192,8 @@ public class EntitiesControl {
     }
 
     public Position getLargestCoordinate() {
-        int x = 1, y = 1;
+        int x = 1;
+        int y = 1;
         for (IEntity entity : entities) {
             if (entity.getPosition().getX() > x) {
                 x = entity.getPosition().getX();
@@ -198,7 +210,7 @@ public class EntitiesControl {
      * @param gameMode         difficulty of the game
      */
     public void generateEnemyEntities(GameModeType gameMode, Position playerStartPosition) {
-        Generator.generateEnemyEntities(this, this.tickCounter, gameMode, playerStartPosition);
+        EnemyEntityGenerator.generateEnemyEntities(this, this.tickCounter, gameMode, playerStartPosition);
         tickCounter++;
     }
 
@@ -234,5 +246,12 @@ public class EntitiesControl {
             .filter(entity -> entity.getId().equals(id))
             .findFirst()
             .orElse(null);
+    }
+
+    public void moveMercenariesAfterAttack(CharacterEntity player) {
+        List<MercenaryEntity> movingEntities = getAllEntitiesOfType(MercenaryEntity.class);
+        for (MercenaryEntity merc : movingEntities) {
+            merc.move(this, player);
+        }
     }
 }

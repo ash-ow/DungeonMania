@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.sound.sampled.BooleanControl;
-
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Direction;

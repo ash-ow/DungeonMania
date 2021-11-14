@@ -1,6 +1,5 @@
 package dungeonmania.entities;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import dungeonmania.response.models.*;

@@ -17,6 +17,7 @@ import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.MidnightArmourEntity;
 import dungeonmania.entities.movingEntities.AssassinEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.movingEntities.Inventory;
 import dungeonmania.util.Position;
 
 public class MidnightArmourEntityTest implements IBuildableEntityTests {
@@ -24,8 +25,8 @@ public class MidnightArmourEntityTest implements IBuildableEntityTests {
     @Override
     public void TestIsBuildable() {
         CharacterEntity player = new CharacterEntity();
-        player.addEntityToInventory(new SunStoneEntity());
-        player.addEntityToInventory(new ArmourEntity());
+        player.getInventoryItems().add(new SunStoneEntity());
+        player.getInventoryItems().add(new ArmourEntity());
         player.build(EntityTypes.MIDNIGHT_ARMOUR);
         assertInventoryTypesAsExpected(Arrays.asList(EntityTypes.MIDNIGHT_ARMOUR), player);
     }
@@ -35,7 +36,7 @@ public class MidnightArmourEntityTest implements IBuildableEntityTests {
     public void TestIsNotBuildable_EmptyInventory() {
         MidnightArmourEntity midnightArmour = new MidnightArmourEntity();
         List<ICollectable> inventory = new ArrayList<ICollectable>();
-        assertFalse(midnightArmour.isBuildable(inventory));
+        assertFalse(midnightArmour.isBuildable(new Inventory(inventory)));
     }
 
     @Test
@@ -45,7 +46,7 @@ public class MidnightArmourEntityTest implements IBuildableEntityTests {
         List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new ArrowsEntity());
         inventory.add(new BombEntity(Logic.ANY));
-        assertFalse(midnightArmour.isBuildable(inventory));
+        assertFalse(midnightArmour.isBuildable(new Inventory(inventory)));
         
     }
 
@@ -55,12 +56,12 @@ public class MidnightArmourEntityTest implements IBuildableEntityTests {
         MidnightArmourEntity midnightArmour = new MidnightArmourEntity();
         List<ICollectable> inventory = new ArrayList<ICollectable>();
         inventory.add(new SunStoneEntity());
-        assertFalse(midnightArmour.isBuildable(inventory));
+        assertFalse(midnightArmour.isBuildable(new Inventory(inventory)));
 
         
         List<ICollectable> inventory2 = new ArrayList<ICollectable>();
         inventory2.add(new ArmourEntity());
-        assertFalse(midnightArmour.isBuildable(inventory2));
+        assertFalse(midnightArmour.isBuildable(new Inventory(inventory2)));
     }
 
     @Override
@@ -82,7 +83,7 @@ public class MidnightArmourEntityTest implements IBuildableEntityTests {
     public void TestUseCollectable() {
         // Do battle with Midnight Armour
         CharacterEntity player1 = new CharacterEntity();
-        player1.addEntityToInventory(new MidnightArmourEntity());
+        player1.getInventoryItems().add(new MidnightArmourEntity());
         AssassinEntity assassin1 = new AssassinEntity();
         assassin1.doBattle(player1);
         

@@ -36,7 +36,7 @@ public class TreasureEntity extends CollectableEntity {
      * @param player CharacterEntity using the treasure
      */
     public void used(CharacterEntity player) {
-        player.removeEntityFromInventory(this);
+        player.getInventoryItems().remove(this);
     }   
 
 }

@@ -1,29 +1,25 @@
 package dungeonmania;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.parallel.ResourceLock;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.junit.jupiter.api.Test;
+
+import dungeonmania.entities.movingEntities.CharacterEntity;
+import dungeonmania.entities.staticEntities.ExitEntity;
+import dungeonmania.entities.staticEntities.WallEntity;
 import dungeonmania.exceptions.InvalidActionException;
-import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.util.Direction;
+import dungeonmania.util.Position;
 
 public class DungeonManiaControllerTests {
-    @Test
-    public void testCreateBoulders() {
-        DungeonManiaController dungeonManiaController = new DungeonManiaController();
-        DungeonResponse d1 = dungeonManiaController.newGame("boulders", "Standard");
-        dungeonManiaController.tick(null, Direction.DOWN);
-    }
-
-    @Test
-    public void testCreateAdvance() {
-        DungeonManiaController dungeonManiaController = new DungeonManiaController();
-        DungeonResponse d1 = dungeonManiaController.newGame("advanced", "Standard");
-        dungeonManiaController.tick(null, Direction.DOWN);
-    }
 
     @Test
     public void testNewGameWrongMode() {
@@ -96,5 +92,36 @@ public class DungeonManiaControllerTests {
         dungeonManiaController.tick(null, Direction.DOWN);
         assertDoesNotThrow(() -> dungeonManiaController.tick("0", Direction.DOWN));
         assertDoesNotThrow(() -> dungeonManiaController.build("bow"));
+    }
+
+    @Test
+    public void testDungeonGeneratorBoundary() {
+        DungeonManiaController dungeonManiaController = new DungeonManiaController();
+        dungeonManiaController.generateDungeon(5, 5, 45, 39, "Standard");
+        List<WallEntity> walls =  dungeonManiaController.dungeon.entitiesControl.getAllEntitiesOfType(WallEntity.class);
+        List<Position> wallPositions = new ArrayList<>();
+        for (WallEntity wall : walls) {
+            wallPositions.add(wall.getPosition());
+        }
+        for(int i = 0; i < 49; i++) {
+            Position position = new Position(i, 0);
+            assertFalse(!wallPositions.contains(position));
+            position.translateBy(0, i);
+            assertFalse(!wallPositions.contains(position));
+            position.translateBy(i, 49);
+            assertFalse(!wallPositions.contains(position));
+            position.translateBy(49, i);
+            assertFalse(!wallPositions.contains(position));
+        }
+    }
+
+    @Test
+    public void testDungeonGeneratorEntities() {
+        DungeonManiaController dungeonManiaController = new DungeonManiaController();
+        dungeonManiaController.generateDungeon(5, 5, 45, 39, "Standard");
+        List<ExitEntity> exit =  dungeonManiaController.dungeon.entitiesControl.getAllEntitiesOfType(ExitEntity.class);
+
+        assertNotNull(dungeonManiaController.dungeon.getPlayer());
+        assertEquals(1, exit.size());
     }
 }

@@ -11,8 +11,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.dungeon.EntitiesControl;
-import dungeonmania.entities.collectableEntities.CollectableEntity;
-import dungeonmania.entities.collectableEntities.ICollectable;
 import dungeonmania.entities.collectableEntities.AndurilEntity;
 import dungeonmania.entities.collectableEntities.OneRingEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
@@ -64,7 +62,7 @@ public class HydraEntityTests implements IMovingEntityTest, IBattlingEntityTest 
         HydraEntity hydra = new HydraEntity();
         AndurilEntity anduril = new AndurilEntity();
         
-        character.addEntityToInventory(anduril);
+        character.getInventoryItems().add(anduril);
 
         EntitiesControl entitiesControl = new EntitiesControl();
         entitiesControl.addEntity(hydra);
@@ -80,8 +78,7 @@ public class HydraEntityTests implements IMovingEntityTest, IBattlingEntityTest 
         CharacterEntity player = new CharacterEntity();
         HydraEntity hydra = new HydraEntity();
         hydra.dropEntities(player, 1f);
-        List<ICollectable> inventory = player.getInventory();
-        assertNotNull(EntitiesControl.getFirstEntityOfType(inventory, OneRingEntity.class));
+        assertNotNull(player.getInventory().getFirstItemOfType(OneRingEntity.class));
     }
 
     @Override

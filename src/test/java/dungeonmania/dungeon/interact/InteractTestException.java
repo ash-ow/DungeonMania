@@ -56,7 +56,7 @@ public class InteractTestException {
         MercenaryEntity mercenary = new MercenaryEntity(0, 2);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(mercenary);        
-        player.addEntityToInventory(new TreasureEntity()); 
+        player.getInventoryItems().add(new TreasureEntity()); 
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         assertThrows(InvalidActionException.class, () -> {dungeon.interact(mercenary.getId());});
     }
@@ -68,11 +68,11 @@ public class InteractTestException {
         TreasureEntity treasure = new TreasureEntity();
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(mercenary);        
-        player.addEntityToInventory(treasure); 
+        player.getInventoryItems().add(treasure); 
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         assertDoesNotThrow(() -> {dungeon.interact(mercenary.getId());});
         assertTrue(mercenary.isBribed());
-        assertFalse(player.getInventory().contains(treasure));
+        assertFalse(player.getInventoryItems().contains(treasure));
     }
 
     @Test
@@ -81,7 +81,7 @@ public class InteractTestException {
         ZombieToastSpawnerEntity spawner = new ZombieToastSpawnerEntity(0, 0);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spawner);        
-        player.addEntityToInventory(new SwordEntity());
+        player.getInventoryItems().add(new SwordEntity());
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         assertThrows(InvalidActionException.class, () -> {dungeon.interact(spawner.getId());});
     }
@@ -102,7 +102,7 @@ public class InteractTestException {
         ZombieToastSpawnerEntity spawner = new ZombieToastSpawnerEntity(0, 4);
         ArrayList<IEntity> entities = new ArrayList<>();
         entities.add(spawner);    
-        player.addEntityToInventory(new SwordEntity());    
+        player.getInventoryItems().add(new SwordEntity());    
         Dungeon dungeon = new Dungeon(entities, "Standard", player);
         assertDoesNotThrow(() -> {dungeon.interact(spawner.getId());});
     }

@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -57,7 +56,7 @@ public class OlderCharacterTest implements IEntityTests {
         entitiesControl.moveAllMovingEntities(player);
         Assertions.assertAll(
             () -> assertFalse(entitiesControl.contains(bomb)),
-            () -> assertTrue(olderCharacter.getInventory().contains(bomb)),
+            () -> assertTrue(olderCharacter.getInventoryItems().contains(bomb)),
             () -> entitiesControl.moveAllMovingEntities(player),
             () -> assertEquals(olderCharacter.getPosition(), new Position(0, 2)),
             () -> assertEquals(olderCharacter.getPosition(), new Position(0, 2)),
@@ -65,7 +64,7 @@ public class OlderCharacterTest implements IEntityTests {
             () -> entitiesControl.moveAllMovingEntities(player),
             () -> assertTrue(entitiesControl.contains(bomb)),
             () -> entitiesControl.moveAllMovingEntities(player),
-            () -> assertFalse(olderCharacter.getInventory().contains(bomb)),
+            () -> assertFalse(olderCharacter.getInventoryItems().contains(bomb)),
             () -> entitiesControl.moveAllMovingEntities(player),
             () -> assertEquals(olderCharacter.getPosition(), new Position(0, 3)),
             () -> entitiesControl.moveAllMovingEntities(player),

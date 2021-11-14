@@ -46,6 +46,9 @@
         "sun_stone": "images/tileset/entities/sun_stone.png",
         "hydra": "images/tileset/entities/hydra.png",
         "time_turner": "images/tileset/entities/time_turner.png",
-        "time_travelling_portal": "images/tileset/entities/portal_04.png"
+        "time_travelling_portal": "images/tileset/entities/portal_04.png",
+        "wire": "images/tileset/entities/wire.png",
+        "light_bulb_on": "images/tileset/entities/lightbulb.png",
+        "light_bulb_off": "images/tileset/entities/light-bulb-off.png"
     }
 }

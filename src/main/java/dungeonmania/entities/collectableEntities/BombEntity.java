@@ -84,7 +84,7 @@ public class BombEntity extends LogicEntity implements ICollectable, IBlocker {
      * @param entitiesControl
      */
     private void explode(EntitiesControl entitiesControl) {
-        List<IEntity> adjacentEntities = entitiesControl.getAllAdjacentEntities(this.getPosition());
+        List<IEntity> adjacentEntities = entitiesControl.getBombAdjacent(this.getPosition());
         adjacentEntities.addAll(entitiesControl.getAllEntitiesFromPosition(this.getPosition()));
         explodeNonCharacterEntities(adjacentEntities, entitiesControl);               
     }

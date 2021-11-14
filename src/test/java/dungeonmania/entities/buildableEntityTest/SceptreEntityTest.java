@@ -17,6 +17,7 @@ import dungeonmania.entities.IEntity;
 import dungeonmania.entities.Logic;
 import dungeonmania.entities.collectableEntities.*;
 import dungeonmania.entities.collectableEntities.buildableEntities.SceptreEntity;
+import dungeonmania.entities.movingEntities.AssassinEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.MercenaryEntity;
 import dungeonmania.util.Direction;
@@ -125,7 +126,7 @@ public class SceptreEntityTest implements IBuildableEntityTests {
         SceptreEntity sceptre = new SceptreEntity();
         player.getInventoryItems().add(sceptre);
         ArrayList<IEntity> entities = new ArrayList<>();
-        MercenaryEntity mercenary = new MercenaryEntity(0, 1);
+        AssassinEntity mercenary = new AssassinEntity(0, 1);
         entities.add(mercenary);
         Dungeon dungeon = new Dungeon(entities, "standard", player);
         dungeon.tick(sceptre.getId());

@@ -70,7 +70,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
         dungeon.tick(Direction.LEFT);
 
         Assertions.assertAll( "Before the bomb is armed, nothing will explode",
-            () -> assertEntityStillOnMap( dungeon, "0",  EntityTypes.SPIDER),
+            () -> assertEntityStillOnMap( dungeon, "0",  EntityTypes.TREASURE),
             () -> assertEntityStillOnMap( dungeon, "1",  EntityTypes.WALL),
             () -> assertEntityStillOnMap( dungeon, "2",  EntityTypes.WALL),
             () -> assertEntityStillOnMap( dungeon, "3",  EntityTypes.SWITCH),
@@ -79,8 +79,8 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
             () -> assertEntityStillOnMap( dungeon, "6",  EntityTypes.BOMB),
             () -> assertEntityStillOnMap( dungeon, "7",  EntityTypes.SWITCH),
             () -> assertEntityStillOnMap( dungeon, "8",  EntityTypes.WOOD),
-            () -> assertEntityStillOnMap( dungeon, "9",  EntityTypes.SPIDER),
-            () -> assertEntityStillOnMap( dungeon, "11", EntityTypes.SPIDER),
+            () -> assertEntityStillOnMap( dungeon, "9",  EntityTypes.TREASURE),
+            () -> assertEntityStillOnMap( dungeon, "11", EntityTypes.TREASURE),
             () -> assertEntityStillOnMap( dungeon, "10", EntityTypes.ARROW),
             () -> assertEntityStillOnMap( dungeon, "12", EntityTypes.EXIT),
 
@@ -93,18 +93,18 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
         dungeon.tick("6");
 
         Assertions.assertAll( "Once the bomb is armed, it will explode",
-            () -> assertEntityStillOnMap( dungeon, "0",  EntityTypes.SPIDER),
+            () -> assertEntityStillOnMap( dungeon, "0",  EntityTypes.TREASURE),
             () -> assertEntityStillOnMap( dungeon, "1",  EntityTypes.WALL),
-            () -> assertEntityStillOnMap( dungeon, "2",  EntityTypes.WALL),
+            () -> assertEntityNotOnMap( dungeon, "2",  EntityTypes.WALL),
             () -> assertEntityNotOnMap(   dungeon, "3",  EntityTypes.SWITCH),
             () -> assertEntityNotOnMap(   dungeon, "4",  EntityTypes.BOULDER),
             () -> assertEntityNotOnMap(   dungeon, "5",  EntityTypes.WALL),
             () -> assertEntityNotOnMap(   dungeon, "6",  EntityTypes.BOMB),
             () -> assertEntityNotOnMap(   dungeon, "7",  EntityTypes.SWITCH),
             () -> assertItemInInventory("8", dungeon.getPlayer(), dungeon.entitiesControl),
-            () -> assertEntityNotOnMap( dungeon, "9",    EntityTypes.SPIDER),
+            () -> assertEntityNotOnMap( dungeon, "9",    EntityTypes.TREASURE),
             () -> assertEntityNotOnMap( dungeon, "10",   EntityTypes.ARROW),
-            () -> assertEntityStillOnMap( dungeon, "11", EntityTypes.SPIDER),
+            () -> assertEntityStillOnMap( dungeon, "11", EntityTypes.TREASURE),
             () -> assertEntityStillOnMap( dungeon, "12", EntityTypes.EXIT),
 
             () -> assertNotNull( dungeon.getPlayer())
@@ -133,7 +133,7 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
         5  X . . T
         */
 
-        String entities = "{\"entities\": [" + "{\"x\": 0,\"y\": 1,\"type\": \"spider\"}," + // X 0
+        String entities = "{\"entities\": [" + "{\"x\": 0,\"y\": 1,\"type\": \"treasure\"}," + // X 0
                 "{\"x\": 1,\"y\": 1,\"type\": \"wall\"}," + // W 1
 
                 "{\"x\": 0,\"y\": 2,\"type\": \"wall\"}," + // W 2
@@ -146,10 +146,10 @@ public class BombEntityTest implements IBlockerTest, ICollectableEntityTest {
                 "{\"x\": 1,\"y\": 3,\"type\": \"switch\"}," + // S 7
                 "{\"x\": 2,\"y\": 3,\"type\": \"wood\"}," + // I 8
 
-                "{\"x\": 0,\"y\": 4,\"type\": \"spider\"}," + // X 9
+                "{\"x\": 0,\"y\": 4,\"type\": \"treasure\"}," + // X 9
                 "{\"x\": 1,\"y\": 4,\"type\": \"arrow\"}," + // A 10
 
-                "{\"x\": 0,\"y\": 5,\"type\": \"spider\"}," + // X 11
+                "{\"x\": 0,\"y\": 5,\"type\": \"treasure\"}," + // X 11
                 "{\"x\": 3,\"y\": 5,\"type\": \"exit\"}" + // T 12
 
                 "]}";

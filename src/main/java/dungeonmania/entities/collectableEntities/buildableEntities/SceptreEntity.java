@@ -16,6 +16,7 @@ import dungeonmania.entities.movingEntities.Inventory;
 
 
 public class SceptreEntity extends BuildableEntity implements ITicker {
+    private CharacterEntity owner;
 
     /**
      * Sceptre constructor
@@ -101,10 +102,10 @@ public class SceptreEntity extends BuildableEntity implements ITicker {
         decrementDurability();
         if (this.durability == 0) {
             List<MercenaryEntity> mercenaries = entitiesControl.getAllEntitiesOfType(MercenaryEntity.class);
-            mercenaries.stream().forEach(m -> m.setBribed(false));
+            mercenaries.stream().forEach(m -> m.bribe(owner));
         } else if (this.durability > 0) {
             List<MercenaryEntity> mercenaries = entitiesControl.getAllEntitiesOfType(MercenaryEntity.class);
-            mercenaries.stream().forEach(m -> m.setBribed(true));
+            mercenaries.stream().forEach(m -> m.betray(owner));
         }
     }
 
@@ -112,6 +113,7 @@ public class SceptreEntity extends BuildableEntity implements ITicker {
     public void used(CharacterEntity player) {
         this.durability = 10; 
         player.addActiveItem(this);
+        this.owner = player;
     }
         
     public void build(Inventory inventory) {

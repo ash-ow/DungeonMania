@@ -130,7 +130,15 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @param teamMemeber a battling entity which will be added to the list of team mates   
      */
     public void addTeammates(IBattlingEntity teamMember) {
-        teammates.add(teamMember);
+        if (!teammates.contains(teamMember)) {
+            teammates.add(teamMember);
+        }
+    }
+
+    public void removeTeammates(IBattlingEntity teamMember) {
+        if (teammates.contains(teamMember)) {
+            teammates.remove(teamMember);
+        }
     }
 
     /**

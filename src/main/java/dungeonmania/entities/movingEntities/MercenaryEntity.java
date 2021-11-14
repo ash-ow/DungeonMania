@@ -131,8 +131,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
             throw new InvalidActionException("Player is too far away");
         }
         treasureFound.used(player);
-        player.addTeammates(this);
-        this.isBribed = true;
+        this.bribe(player);
     }
     
 
@@ -158,9 +157,14 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         return false;
     }
 
-    public void setBribed(boolean bribed) {
-        this.isBribed = bribed;
+    public void bribe(CharacterEntity player) {
+        this.isBribed = true;
+        player.addTeammates(this);
     }
 
+    public void betray(CharacterEntity player) {
+        this.isBribed = false;
+        player.removeTeammates(this);
+    }
 }
 

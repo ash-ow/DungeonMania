@@ -56,6 +56,14 @@ We utilised the state pattern to solve solutions regarding spider movement
 
 The state pattern is used in SpiderEntity to determine the direction of the spider movement (Clockwise or Anti-Clockwise). After trying to implement this without using the state pattern, it became clear that trying to store different movement pattern is very difficult. Especially when reaching edge cases. SpiderState is an interface that each movement direction implements. SpiderEntity (Context) then only needs to check what state it is in and move accordingly.
 
+# Factory Pattern: 
+
+--------------
+We utilised the factory pattern to create entities on the map
+
+- EntityFactory
+
+
 # Assumptions
 
 ## Difficulty
@@ -142,8 +150,11 @@ The state pattern is used in SpiderEntity to determine the direction of the spid
 - When the player does battle, the mercenary will attack the enemy from a range before the enemy can attack the player, as the spec details
 - mercenary has a health of 70
 
-### Collectable Entities
+**assasin:**
 
+- assasin extends mercenary- similar functionality
+
+### Collectable Entities
 
 **bomb:**
 
@@ -193,6 +204,11 @@ The state pattern is used in SpiderEntity to determine the direction of the spid
 - Our implementation of Sun Stone being used "interchangeably with treasure" means it can be used in all instances i.e. collecting treasure goal,      building sheilds and bribing assassins/mercenaries. 
 - Sunstone will not be removed when bribing mercenary or assassin. It is only removed from inventory when used as a building material. 
 - SunStone will unlock all doors but if player has a key, the player will use the key first
+- No priority over treasure
+
+**sceptre:**
+- sceptre mind controls all of the current mercenaries on the map
+
 ### Extension
 
 **Logic Gates:**
@@ -202,3 +218,13 @@ The state pattern is used in SpiderEntity to determine the direction of the spid
     - bombs explode
     - light bulbs flicker on and off after on tick
 
+**Time travel:**
+
+- Can only time travel once at a time
+- Any mercenaries will follow the current player not the old player
+- If you take an item that causes an exception to be thrown when the older player uses it- the exception is swallowed and the older player dissapears
+- The older player dissapears at the end of the ticks regardless if it gets to the portal.
+
+**Dungeon Generator:**
+
+The default maze size is 50x50, meaning axis X and Y extends from coordinate 0 to 49. This is to prevent double-wall boundaries. Discussed and approved here: https://edstem.org/au/courses/7065/discussion/674057

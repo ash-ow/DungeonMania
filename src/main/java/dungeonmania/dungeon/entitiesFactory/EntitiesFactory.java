@@ -54,7 +54,7 @@ public class EntitiesFactory extends EntitiesControl {
             case LIGHT_BULB_OFF:         entity = new LightBulbEntity(jsonInfo);             break;
             case WIRE:                   entity = new WireEntity(jsonInfo);                  break;
             case ANDURIL:                entity = new AndurilEntity(jsonInfo);               break;
-            case SWITCH_DOOR:            entity = new SwitchDoorEntity(jsonInfo);           break;
+            case SWITCH_DOOR:            entity = new SwitchDoorEntity(jsonInfo);            break;
             // Cannot create an instance of these items directly on the map
             case BOW:             throw new InvalidActionException(CANNOT_ADD_ENTITY_TO_MAP + EntityTypes.BOW.toString());
             case LIGHT_BULB_ON:   throw new InvalidActionException(CANNOT_ADD_ENTITY_TO_MAP + EntityTypes.LIGHT_BULB_ON.toString());

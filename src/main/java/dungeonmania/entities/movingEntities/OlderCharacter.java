@@ -53,7 +53,11 @@ public class OlderCharacter extends CharacterEntity implements IAutoMovingEntity
             } else {
                 super.move(dir, entitiesControl);
                 if (this.isInSamePositionAs(player)) {
-                    contactWithPlayer(entitiesControl, player);
+                    ICollectable midnight = player.findFirstInInventory(EntityTypes.MIDNIGHT_ARMOUR);
+                    ICollectable sunStone = player.findFirstInInventory(EntityTypes.SUN_STONE);
+                    if (midnight == null && sunStone == null) {
+                        contactWithPlayer(entitiesControl, player);
+                    }
                 }
             }
             currentInstruction++;

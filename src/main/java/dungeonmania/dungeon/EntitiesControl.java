@@ -196,8 +196,8 @@ public class EntitiesControl {
             if (entity.getPosition().getX() > x) {
                 x = entity.getPosition().getX();
             }
-            if (entity.getPosition().getX() > y) {
-                y = entity.getPosition().getX();
+            if (entity.getPosition().getY() > y) {
+                y = entity.getPosition().getY();
             }
         }
         return new Position(x, y);

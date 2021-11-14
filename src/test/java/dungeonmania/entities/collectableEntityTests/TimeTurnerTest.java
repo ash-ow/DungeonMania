@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.collectableEntities.TimeTurnerEntity;
-import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.util.Position;
 
 
@@ -34,7 +33,6 @@ public class TimeTurnerTest implements ICollectableEntityTest {
     @Override
     @Test
     public void TestUseCollectable() {
-        // Time Turner never used
+        assertTrue(true, "Time Turner never used");
     }
-
 }

@@ -1,15 +1,5 @@
 package dungeonmania.entities.movingEntities;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Map.Entry;
-
 import com.google.gson.JsonObject;
 
 import dungeonmania.dungeon.EntitiesControl;
@@ -88,9 +78,9 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
 
     @Override
     public float loseHealth(float enemyHealth, float enemyDamage) {
-        float damage = ((enemyHealth * enemyDamage) / 5);
-        this.health -= damage;
-        return damage;
+        float damageReceived = ((enemyHealth * enemyDamage) / 5);
+        this.health -= damageReceived;
+        return damageReceived;
     }
 
     @Override

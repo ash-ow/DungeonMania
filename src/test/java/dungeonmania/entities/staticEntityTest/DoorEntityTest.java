@@ -83,9 +83,9 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         assertNotNull(player.getInventoryItem("0"), "Unlocking door should not consume sun_stone");
     }
 
+    @Override
     @Test
-    //(Assumption): Test whether key is removed when both key and sun_stone are in inventory 
-    public void TestUnlockDoorKeyAndStone() {
+    public void TestUnblock() {
         Dungeon dungeon = getDungeonWithKeyStoneData();
         CharacterEntity player = (CharacterEntity)dungeon.getPlayer();
         assertNotNull(player, "Dungeon should contain the player");
@@ -115,7 +115,8 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
     }
 
     @Test
-    public void TestCreateDoor() {
+    @Override
+    public void TestBlock() {
         Dungeon dungeon = getDungeonWithDoorTestData();
 
         KeyEntity key_dummy = (KeyEntity) dungeon.entitiesControl.getEntityById("0");
@@ -217,16 +218,5 @@ public class DoorEntityTest implements IEntityTests, IBlockerTest {
         JsonArray entitiesJson = new Gson().fromJson(entities, JsonObject.class).get("entities").getAsJsonArray();
         JsonObject goalsJson = new Gson().fromJson(goals, JsonObject.class).get("goal-condition").getAsJsonObject();
         return new Dungeon(entitiesJson, goalsJson, "Standard", "", "");
-    }
-    @Override
-    public void TestBlock() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void TestUnblock() {
-        // TODO Auto-generated method stub
-        
     }
 }

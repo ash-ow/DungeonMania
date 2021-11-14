@@ -117,7 +117,6 @@ public class CharacterEntityTest implements IMovingEntityTest, IEntityTests, IBa
     @Override
     @Test
     public void TestBattle() {
-        // TODO Auto-generated method stub
         CharacterEntity character = new CharacterEntity();
         ZombieToastEntity zombie = new ZombieToastEntity();
         EntitiesControl entitiesControl = new EntitiesControl();

@@ -1,24 +1,23 @@
 package dungeonmania.entities.staticEntities;
 
+import java.util.stream.Collectors;
+
 import com.google.gson.JsonObject;
 
 import dungeonmania.dungeon.EntitiesControl;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityTypes;
 import dungeonmania.entities.IBlocker;
+import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.KeyEntity;
-import dungeonmania.entities.collectableEntities.SunStoneEntity;
 import dungeonmania.entities.movingEntities.CharacterEntity;
 import dungeonmania.entities.movingEntities.IMovingEntity;
-import dungeonmania.response.models.EntityResponse;
 import dungeonmania.util.Direction;
 
 
 public class DoorEntity extends Entity implements IBlocker {
     private int keyNumber;
     private boolean isLocked;
-    private KeyEntity key;
-    private SunStoneEntity sun_stone;
 
      /**
      * Door constructor
@@ -93,10 +92,10 @@ public class DoorEntity extends Entity implements IBlocker {
      *  @param sun_stone    Sun Stone Entity 
      *  @param player       the player which should have sun_stone in inventory 
      */
-    private void tryUnlockWithStone(SunStoneEntity sun_stone, CharacterEntity player) {
-            this.isLocked = false;
-            this.type = EntityTypes.UNLOCKED_DOOR;
-        }
+    private void tryUnlockWithStone() {
+        this.isLocked = false;
+        this.type = EntityTypes.UNLOCKED_DOOR;
+    }
 
     @Override
     public boolean isBlocking() {
@@ -114,12 +113,12 @@ public class DoorEntity extends Entity implements IBlocker {
         if (ent instanceof CharacterEntity) {
             CharacterEntity player = (CharacterEntity) ent;
             boolean stoneInInventory = getStoneFromInventory(player);
-            if (player.containedInInventory(EntityTypes.KEY)){
-                this.key = getKeyFromInventory(player, this.keyNumber);
+            if (player.getInventory().stream().map(IEntity::getType).collect(Collectors.toList()).contains(EntityTypes.KEY)){
+                KeyEntity key = getKeyFromInventory(player, this.keyNumber);
                 this.tryUnlockWithKey(key, player);
             }
             else if (stoneInInventory){
-                this.tryUnlockWithStone(sun_stone, player); 
+                this.tryUnlockWithStone(); 
             }
         }
         return !this.isLocked;

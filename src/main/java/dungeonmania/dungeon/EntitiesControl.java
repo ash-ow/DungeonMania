@@ -22,7 +22,7 @@ public class EntitiesControl {
     private List<IEntity> entities;
     private Integer tickCounter = 1;
     private Integer entityCounter = 0;
-    public final static List<EntityTypes> usableItems;
+    public static final List<EntityTypes> usableItems;
     static {
         usableItems = new ArrayList<>();
         usableItems.add(EntityTypes.HEALTH_POTION);
@@ -45,6 +45,10 @@ public class EntitiesControl {
      * @param entity  entity to be created
      */
     public void createNewEntityOnMap(IEntity entity) {
+        if (entity == null) {
+            throw new IllegalArgumentException("entity parameter cannot be null.");
+        }
+
         entity.setId(Integer.toString(entityCounter));
         entities.add(entity);
         entityCounter++;
@@ -147,11 +151,11 @@ public class EntitiesControl {
         return entityList.stream().filter(entity -> entity.getClass().equals(cls)).findFirst().orElse(null);
     }
 
-    public <T extends IEntity> IEntity getFirstEntityOfType(Class<?> cls) {
+    public <T extends IEntity> IEntity getFirstEntityOfType(Class<T> cls) {
         return getFirstEntityOfType(this.entities, cls);
     }
 
-    public boolean positionContainsEntityType(Position position, Class<?> cls) {
+    public <T extends IEntity> boolean positionContainsEntityType(Position position, Class<T> cls) {
         List<IEntity> entityList =  this.getAllEntitiesFromPosition(position);
         
         if (getFirstEntityOfType(entityList, cls) != null) {
@@ -162,7 +166,7 @@ public class EntitiesControl {
     // endregion
     
     
-    public void createEntity(JsonObject jsonInfo, GameModeType gameMode) {
+    public void createEntity(JsonObject jsonInfo) {
         EntitiesFactory.generateEntity(jsonInfo, this);
     }
     

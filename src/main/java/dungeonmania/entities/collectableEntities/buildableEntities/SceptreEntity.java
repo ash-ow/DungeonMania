@@ -2,11 +2,12 @@ package dungeonmania.entities.collectableEntities.buildableEntities;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.google.gson.JsonObject;
 
 import dungeonmania.entities.EntityTypes;
-import dungeonmania.entities.collectableEntities.CollectableEntity;
+import dungeonmania.entities.IEntity;
 import dungeonmania.entities.collectableEntities.ICollectable;
 
 
@@ -91,5 +92,20 @@ public class SceptreEntity extends BuildableEntity {
             (requiredTreasure || requiredKey)
         );
     }
-    
+
+    @Override
+    public void build(List<ICollectable> inventory) {
+        inventory.add(this);
+        removeBuildMaterials(inventory, EntityTypes.SUN_STONE, 1);
+        if(inventory.stream().map(IEntity::getType).collect(Collectors.toList()).contains(EntityTypes.TREASURE)) {
+            removeBuildMaterials(inventory, EntityTypes.TREASURE, 1);
+        } else if (inventory.stream().map(IEntity::getType).collect(Collectors.toList()).contains(EntityTypes.KEY)) {
+            removeBuildMaterials(inventory, EntityTypes.KEY, 1);
+        } 
+        if(inventory.stream().map(IEntity::getType).collect(Collectors.toList()).contains(EntityTypes.WOOD)) {
+            removeBuildMaterials(inventory, EntityTypes.WOOD, 1);
+        } else if (inventory.stream().map(IEntity::getType).collect(Collectors.toList()).contains(EntityTypes.ARROW)) {
+            removeBuildMaterials(inventory, EntityTypes.ARROW, 1);
+        }
+    }
 }

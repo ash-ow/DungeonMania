@@ -75,6 +75,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         this(info.get("x").getAsInt(), info.get("y").getAsInt(), gameMode);
     }
 
+    @Override
     public EntityResponse getInfo() {
         return new EntityResponse(this.getId(), this.getType(), this.getPosition(), false);
     }
@@ -183,19 +184,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
     }
 
     /**
-     * Checks whether a type of item is in the inventory
-     * @param type the type of item being searched for
-     */
-    public boolean containedInInventory(EntityTypes type) {
-        for (ICollectable entity: inventory) {
-            if(entity.getType().equals(type)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Finds the first instance of an item type in the inventory
      * @param type the type of item being searched for
      */
@@ -215,7 +203,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
      * @return true if still invincible
      */
     public boolean isInvincible() {
-        if (gameMode.equals("Hard")) {
+        if (gameMode.equals(GameModeType.HARD)) {
             return false;
         }
         return this.invincibilityRemaining > 0;
@@ -268,9 +256,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
             case BOW:
                 BowEntity bow = new BowEntity();
                 if (bow.isBuildable(this.inventory)) {
-                    this.addEntityToInventory(bow);
-                    removeBuildMaterials(EntityTypes.WOOD, 1);
-                    removeBuildMaterials(EntityTypes.ARROW, 3);
+                    bow.build(this.inventory);
                 } else {
                     throw new InvalidActionException(itemToBuild.toString());
                 }
@@ -278,15 +264,7 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
             case SHIELD:
                 ShieldEntity shield = new ShieldEntity();
                 if (shield.isBuildable(this.inventory)) {
-                    this.addEntityToInventory(shield);
-                    removeBuildMaterials(EntityTypes.WOOD, 2);
-                    if(this.containedInInventory(EntityTypes.TREASURE)) {
-                        removeBuildMaterials(EntityTypes.TREASURE, 1);
-                    } else if (this.containedInInventory(EntityTypes.KEY)) {
-                        removeBuildMaterials(EntityTypes.KEY, 1);
-                    } else if (this.containedInInventory(EntityTypes.SUN_STONE)) {
-                        removeBuildMaterials(EntityTypes.SUN_STONE, 1);
-                    }
+                    shield.build(this.inventory);
                 } else {
                     throw new InvalidActionException(itemToBuild.toString());
                 }
@@ -294,26 +272,17 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
             case SCEPTRE:
                 SceptreEntity sceptre = new SceptreEntity();
                 if (sceptre.isBuildable(this.inventory)) {
-                    this.addEntityToInventory(sceptre);
-                    removeBuildMaterials(EntityTypes.SUN_STONE, 1);
-                    if(this.containedInInventory(EntityTypes.TREASURE)) {
-                        removeBuildMaterials(EntityTypes.TREASURE, 1);
-                    } else if (this.containedInInventory(EntityTypes.KEY)) {
-                        removeBuildMaterials(EntityTypes.KEY, 1);
-                    } 
-                    if(this.containedInInventory(EntityTypes.WOOD)) {
-                        removeBuildMaterials(EntityTypes.WOOD, 1);
-                    } else if (this.containedInInventory(EntityTypes.ARROW)) {
-                        removeBuildMaterials(EntityTypes.ARROW, 1);
-                    } 
+                    sceptre.build(this.inventory);
+                } else {
+                    throw new InvalidActionException(itemToBuild.toString());
                 }
                 break;
             case MIDNIGHT_ARMOUR:
                 MidnightArmourEntity midnightArmour = new MidnightArmourEntity();
                 if (midnightArmour.isBuildable(this.inventory)) {
-                    this.addEntityToInventory(midnightArmour);
-                    removeBuildMaterials(EntityTypes.SUN_STONE, 1);
-                    removeBuildMaterials(EntityTypes.ARMOUR, 1);
+                    midnightArmour.build(this.inventory);
+                } else {
+                    throw new InvalidActionException(itemToBuild.toString());
                 }
                 break;
             default:
@@ -321,27 +290,6 @@ public class CharacterEntity extends Entity implements IMovingEntity, IBattlingE
         }
     }
 
-    /**
-     * Removes build materials based on their type, and the amount of materials which need to be removed
-     * @param type   type of entity to be removed
-     * @param amount amount of material that needs to be removed for each type
-     */
-    public void removeBuildMaterials(EntityTypes type, int amount) {
-        int removed = 0;
-        List<ICollectable> toRemove = new ArrayList<>();
-        while(removed < amount) {
-            for(ICollectable material : this.inventory) {
-                if (material.getType().equals(type)){
-                    toRemove.add(material);
-                    removed++;
-                }
-            }
-        }
-        for (ICollectable material : toRemove) {
-            removeEntityFromInventory(material);
-        }
-    }
-    
     /**
      * Returns the list of items which can be built
      */

@@ -102,10 +102,10 @@ public class SceptreEntity extends BuildableEntity implements ITicker {
         decrementDurability();
         if (this.durability == 0) {
             List<MercenaryEntity> mercenaries = entitiesControl.getAllEntitiesOfType(MercenaryEntity.class);
-            mercenaries.stream().forEach(m -> m.bribe(owner));
+            mercenaries.stream().forEach(m -> m.betray(owner));
         } else if (this.durability > 0) {
             List<MercenaryEntity> mercenaries = entitiesControl.getAllEntitiesOfType(MercenaryEntity.class);
-            mercenaries.stream().forEach(m -> m.betray(owner));
+            mercenaries.stream().forEach(m -> m.bribe(owner));
         }
     }
 

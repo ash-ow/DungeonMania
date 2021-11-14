@@ -27,7 +27,6 @@ import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
 public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMovingEntity, IInteractableEntity {
-
     protected float health;
     protected float damage;
     protected boolean isBribed;
@@ -132,7 +131,7 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
      * Determines the interactions of the mercenary with the player based on range and whether they have treasure
      * @param player the player with which the mercenary will interact with 
      */
-    public boolean interactWith(CharacterEntity player) throws InvalidActionException {
+    public void interactWith(CharacterEntity player) throws InvalidActionException {
         IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);
         if (treasureFound == null) {
             throw new InvalidActionException("Player has no treasure");
@@ -143,7 +142,6 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
         player.removeEntityFromInventory(treasureFound);
         player.addTeammates(this);
         this.isBribed = true;
-        return removeAfterInteraction();    
     }
 
     /**
@@ -166,6 +164,10 @@ public class MercenaryEntity extends Entity implements IBattlingEntity, IAutoMov
     @Override
     public boolean removeAfterInteraction() {
         return false;
+    }
+
+    public void setBribed(boolean bribed) {
+        this.isBribed = bribed;
     }
 
 }

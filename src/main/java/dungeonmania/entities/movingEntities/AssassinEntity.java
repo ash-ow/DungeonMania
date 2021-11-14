@@ -27,7 +27,7 @@ public class AssassinEntity extends MercenaryEntity implements IBoss {
     }
     
     @Override
-    public boolean interactWith(CharacterEntity player) throws InvalidActionException {
+    public void interactWith(CharacterEntity player) throws InvalidActionException {
         IEntity treasureFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), TreasureEntity.class);
         IEntity oneRingFound = EntitiesControl.getFirstEntityOfType(player.getInventory(), OneRingEntity.class);
         if (oneRingFound == null) {
@@ -43,12 +43,11 @@ public class AssassinEntity extends MercenaryEntity implements IBoss {
         player.removeEntityFromInventory(oneRingFound);
         player.addTeammates(this);
         this.isBribed = true;   
-        return removeAfterInteraction();   
     }
 
     @Override
     public boolean removeAfterInteraction() {
-        return true;
+        return false;
     }
 
     @Override

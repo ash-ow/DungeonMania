@@ -164,8 +164,8 @@ public class Dungeon {
     public void interact(String entityID) throws IllegalArgumentException, InvalidActionException{
         try {
             IInteractableEntity interacting = (IInteractableEntity) this.entitiesControl.getEntityById(entityID);
-            boolean toRemove = interacting.interactWith(player);
-            if (toRemove) {
+            interacting.interactWith(player);
+            if (interacting.removeAfterInteraction()) {
                 entitiesControl.removeEntity(interacting);
             }
         } catch (ClassCastException e) {
